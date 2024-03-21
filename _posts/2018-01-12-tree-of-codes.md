@@ -2,17 +2,33 @@
 layout: post
 title:  "Tree of Codes"
 author: sal
-categories: [ Jekyll, tutorial ]
+categories: [ React ]
 image: assets/images/2.jpg
 ---
-The first mass-produced book to deviate from a rectilinear format, at least in the United States, is thought to be this 1863 edition of Red Riding Hood, cut into the shape of the protagonist herself with the troublesome wolf curled at her feet. Produced by the Boston-based publisher Louis Prang, this is the first in their “Doll Series”, a set of five “die-cut” books, known also as shape books — the other titles being Robinson Crusoe, Goody Two-Shoes (also written by Red Riding Hood author Lydia Very), Cinderella, and King Winter. 
+# 리액트 셋팅
 
-As for this particular rendition of Charles Perrault’s classic tale, the text and design is by Lydia Very (1823-1901), sister of Transcendentalist poet Jones Very. The gruesome ending of the original — which sees Little Red Riding Hood being gobbled up as well as her grandmother — is avoided here, the gore giving way to the less bloody aims of the morality tale, and the lesson that one should not disobey one’s mother.
+0. 깔것
+node.js LTS 깔기
+1. 프로젝트 생성
+```
+npx create-react-app 프로젝트 이름
+```
+2. 프로젝트 오픈
+cd 프로젝트 이름 하고 npm start나 yarn start
+3. 개발 시작
+src 안에 있는 app.js에다가 코드를 짜긔
 
-> It would seem the claim could also extend to die cut books in general, as we can’t find anything sooner, but do let us know in the comments if you have further light to shed on this! Such books are, of course, still popular in children’s publishing today, though the die cutting is not now limited to mere outlines, as evidenced in a beautiful 2014 version of the same Little Red Riding Hood story. 
+https://codingapple.com/unit/how-to-install-typescript-in-local-vue-react/
 
-
-An 1868 Prang catalogue would later claim that such “books in the shape of a regular paper Doll… originated with us”. 
-
-The die cut has also been employed in the non-juvenile sphere as well, a recent example being Jonathan Safran Foer’s ambitious Tree of Codes. 
-
+* 타입스크립트 추가하기
+1) yarn add해주기
+```
+yarn add typescript @types/node @types/react @types/react-dom @types/jest
+```
+2) tsx로 확장자 변경하기
+3) js 라이브러리들 타입스크립트랑 호환가능하도록 설치하기
+styled-components도 ts호환 가능하도록
+```
+yarn add -D @type/styled-components
+```
++) tsconfig.json파일을 추가하기
