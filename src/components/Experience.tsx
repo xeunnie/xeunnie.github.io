@@ -35,6 +35,11 @@ function CareerCard({ career, index }: { career: Career; index: number }) {
               <h3 className="text-lg font-bold text-slate-100 group-hover:text-ice-300 transition-colors">
                 {career.company}
               </h3>
+              {career.team && (
+                <span className="text-[10px] font-medium tracking-wider px-2 py-0.5 rounded-full bg-slate-800/80 text-slate-400 border border-slate-700/40">
+                  {career.team}
+                </span>
+              )}
               <span className={`text-[10px] font-medium tracking-wider uppercase px-2 py-0.5 rounded-full border ${style.color}`}>
                 {style.label}
               </span>

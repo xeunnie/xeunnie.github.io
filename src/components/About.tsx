@@ -2,8 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { ABOUT_TRAITS, ABOUT_KEYWORDS, EDUCATION } from "@/lib/constants";
-import TechBadge from "./TechBadge";
+import { ABOUT_TRAITS, ABOUT_KEYWORDS } from "@/lib/constants";
 
 export default function About() {
   const ref = useRef(null);
@@ -48,7 +47,7 @@ export default function About() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.7 }}
-          className="flex flex-wrap gap-3 mb-16"
+          className="flex flex-wrap gap-3"
         >
           {ABOUT_KEYWORDS.map((kw) => (
             <span
@@ -58,44 +57,6 @@ export default function About() {
               {kw}
             </span>
           ))}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.8 }}
-        >
-          <h3 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">
-            Education
-          </h3>
-          <div className="space-y-5">
-            {EDUCATION.map((edu) => (
-              <div key={edu.school} className="p-4 rounded-xl border border-slate-800/40 bg-slate-900/20">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-sm mb-1">
-                  <span className="font-medium text-slate-200">{edu.school}</span>
-                  <span className="text-slate-500">{edu.major}</span>
-                  <span className="text-slate-600 font-mono text-xs sm:ml-auto">{edu.period}</span>
-                </div>
-                {edu.highlights && (
-                  <ul className="mt-2 space-y-1">
-                    {edu.highlights.map((h) => (
-                      <li key={h} className="flex items-start gap-2 text-xs text-slate-400">
-                        <span className="mt-1 w-1 h-1 rounded-full bg-ice-500 shrink-0" />
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {edu.techs && (
-                  <div className="flex flex-wrap gap-1 mt-3">
-                    {edu.techs.map((t) => (
-                      <TechBadge key={t} name={t} size="sm" />
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
         </motion.div>
       </div>
     </section>

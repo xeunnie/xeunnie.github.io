@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import Link from "next/link";
 import { SITE } from "@/lib/constants";
 import type { Project } from "@/lib/constants";
@@ -12,6 +13,22 @@ const CATEGORY_STYLE = {
   company: "bg-ice-500/10 text-ice-400 border border-ice-500/20",
   personal: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
 } as const;
+
+function ScrollSection({ children, className }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 32 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 interface Props {
   project: Project;
@@ -55,64 +72,93 @@ export default function ProjectDetail({ project, prevProject, nextProject }: Pro
       </section>
 
       <section className="py-16">
-        <div className="mx-auto max-w-4xl px-6 space-y-16">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
+        <div className="mx-auto max-w-4xl px-6 space-y-20">
+          <ScrollSection>
             <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Overview</h2>
             <p className="text-base text-slate-300 leading-relaxed">{project.overview}</p>
-          </motion.div>
+          </ScrollSection>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>
+          <ScrollSection>
             <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Tech Stack</h2>
             <div className="flex flex-wrap gap-2">
-              {project.techs.map((tech) => (<TechBadge key={tech} name={tech} />))}
-            </div>
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}>
-            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Key Highlights</h2>
-            <ul className="space-y-4">
-              {project.highlights.map((h, i) => (
-                <motion.li
-                  key={h}
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: 0.5 + i * 0.06 }}
-                  className="flex items-start gap-3"
+              {project.techs.map((tech, i) => (
+                <motion.div
+                  key={tech}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: i * 0.03 }}
                 >
-                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-ice-500 shrink-0" />
-                  <span className="text-sm text-slate-300 leading-relaxed">{h}</span>
-                </motion.li>
+                  <TechBadge name={tech} />
+                </motion.div>
               ))}
-            </ul>
-          </motion.div>
+            </div>
+          </ScrollSection>
 
-          {project.sections && project.sections.length > 0 && project.sections.map((section, si) => (
-            <motion.div
-              key={section.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 + si * 0.1 }}
-            >
-              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">{section.title}</h2>
-              <ul className="space-y-3">
-                {section.items.map((item, i) => (
-                  <motion.li
-                    key={item}
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.6 + si * 0.1 + i * 0.04 }}
-                    className="flex items-start gap-3"
+          <ScrollSection>
+            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-8">Key Highlights</h2>
+            <div className="space-y-5">
+              {project.highlights.map((h, i) => {
+                const [title, ...rest] = h.split(" — ");
+                const desc = rest.join(" — ");
+                return (
+                  <motion.div
+                    key={h}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-30px" }}
+                    transition={{ duration: 0.5, delay: i * 0.06 }}
+                    className="relative pl-6 border-l-2 border-ice-500/20 hover:border-ice-500/50 transition-colors"
                   >
-                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-ice-500 shrink-0" />
-                    <span className="text-sm text-slate-300 leading-relaxed">{item}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+                    <span className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-ice-500" />
+                    {desc ? (
+                      <>
+                        <p className="text-sm font-semibold text-slate-200 mb-1">{title}</p>
+                        <p className="text-sm text-slate-400 leading-relaxed">{desc}</p>
+                      </>
+                    ) : (
+                      <p className="text-sm text-slate-300 leading-relaxed">{title}</p>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </div>
+          </ScrollSection>
+
+          {project.sections && project.sections.length > 0 && project.sections.map((section) => (
+            <ScrollSection key={section.title}>
+              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-8">{section.title}</h2>
+              <div className="space-y-4">
+                {section.items.map((item, i) => {
+                  const [title, ...rest] = item.split(" — ");
+                  const desc = rest.join(" — ");
+                  return (
+                    <motion.div
+                      key={item}
+                      initial={{ opacity: 0, x: -16 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-30px" }}
+                      transition={{ duration: 0.4, delay: i * 0.05 }}
+                      className="relative pl-6 border-l-2 border-slate-800/60 hover:border-ice-500/40 transition-colors"
+                    >
+                      <span className="absolute left-[-4px] top-1.5 w-1.5 h-1.5 rounded-full bg-ice-500/60" />
+                      {desc ? (
+                        <>
+                          <p className="text-sm font-medium text-slate-200 mb-0.5">{title}</p>
+                          <p className="text-sm text-slate-400 leading-relaxed">{desc}</p>
+                        </>
+                      ) : (
+                        <p className="text-sm text-slate-300 leading-relaxed">{title}</p>
+                      )}
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </ScrollSection>
           ))}
 
           {project.links && project.links.length > 0 && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.7 }}>
+            <ScrollSection>
               <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Links</h2>
               <div className="flex flex-wrap gap-3">
                 {project.links.map((link) => (
@@ -132,10 +178,10 @@ export default function ProjectDetail({ project, prevProject, nextProject }: Pro
                   </a>
                 ))}
               </div>
-            </motion.div>
+            </ScrollSection>
           )}
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.8 }}>
+          <ScrollSection>
             <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Screenshots</h2>
             <div className="grid md:grid-cols-2 gap-4">
               {Array.from({ length: project.imageCount ?? 2 }, (_, i) => (
@@ -144,7 +190,7 @@ export default function ProjectDetail({ project, prevProject, nextProject }: Pro
                 </div>
               ))}
             </div>
-          </motion.div>
+          </ScrollSection>
         </div>
       </section>
 

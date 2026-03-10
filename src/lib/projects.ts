@@ -38,7 +38,7 @@ export const PROJECTS: Project[] = [
     period: "2024",
     role: "프로젝트 팀장 · Frontend 단독 개발 + Backend MSA 설계·구현",
     description:
-      "프론트엔드 전체를 단독 개발하고, Polyglot MSA 7개 서비스(Kotlin·Java·Go) 백엔드를 설계·구현한 B2B 화상회의 플랫폼입니다.",
+      "프론트 단독 + Polyglot MSA 7개 서비스 설계 — Go 전환으로 메모리 96% 감소, LiveKit SFU로 대역폭 O(N²)→O(N)",
     overview:
       "AI 회의록 자동 생성 기능을 갖춘 B2B 화상회의 SaaS 플랫폼입니다. 프론트엔드를 단독 개발(React + Vite + Zustand + TanStack Query)하고, 백엔드 Polyglot MSA 7개 서비스(Gateway/Auth/Video/AI/Notification/File/Email)를 설계·구현했습니다. 화상회의·채팅 영역을 중심으로 주도하며, LiveKit SFU 기반 WebRTC, Kafka 이벤트 드리븐 비동기 통신, Zod 런타임 스키마 검증, SSE 실시간 STT 스트리밍, Defense-in-Depth 보안까지 프론트-백 전 영역을 아우르는 풀스택 프로젝트입니다.",
     techs: ["react", "typescript", "zustand", "reactquery", "vite", "tailwind", "radix", "framer", "zod", "sentry", "firebase", "kotlin", "java", "go", "springboot", "livekit", "webrtc", "kafka", "redis", "s3", "docker", "mysql", "postgresql", "nginx", "gcp", "openai"],
@@ -131,7 +131,7 @@ export const PROJECTS: Project[] = [
     period: "2022 — 2023",
     role: "Frontend 단독 개발 (프론트 100%, 백엔드 30%)",
     description:
-      "부산 지하철 1호선 전체 노선의 3D 관제 시스템. Three.js 기반 시설물 시각화, WebRTC CCTV 스트리밍, GPS 차량 추적을 단독 개발했습니다.",
+      "폐쇄망에서 TURN/STUN 없이 WebRTC CCTV를 스트리밍하고, Three.js 3D 관제 + GPS 차량 추적을 단독 개발",
     overview:
       "부산교통공사 1호선 전체 노선의 시설물을 실시간으로 모니터링하고 제어하는 3D 관제 시스템입니다. Three.js 기반 3D 시각화, GPS 실시간 차량 위치 추적, WebRTC 기반 현장 CCTV 영상 스트리밍, WebSocket 센서 데이터 수신을 프론트엔드 단독으로 개발했습니다. 특히 폐쇄망 환경에서의 WebRTC CCTV 스트리밍 구조를 분석·구현하며 실시간 미디어 처리 역량을 심화했고, 현장에서 바로 배포하고 오류 발생 시 즉시 수정·재배포하는 현장 대응 경험을 쌓았습니다.",
     techs: ["react", "typescript", "threejs", "webrtc", "websocket", "webview"],
@@ -184,7 +184,7 @@ export const PROJECTS: Project[] = [
     period: "2024 — 현재",
     role: "Frontend Developer (경기관제 태블릿 + F&B 단독 개발)",
     description:
-      "GPS 카트 추적, 실시간 스코어링, F&B 주문까지 통합한 프로덕션 운영 앱. 태블릿 경기관제와 식음 PWA를 개발했습니다.",
+      "매일 운영되는 프로덕션 서비스 — GPS→Proj4 좌표 변환, 움직이는 카트 위 터치 UX, F&B PWA 단독 개발",
     overview:
       "골프장 실시간 라운드 관리 플랫폼입니다. 태블릿/모바일 듀얼 디바이스 경기관제 앱(Vgolf App, v1.1.24, 26K+ LOC)과 F&B 주문·관리 PWA(Next.js 14)를 개발했습니다. GPS 기반 카트 추적, Proj4 좌표 변환, 지오펜싱 자동 홀 전환, 움직이는 카트 환경에서의 터치 UX 최적화 등 골프장 특수 환경에 최적화된 기술을 구현했습니다. 현재 운영 중인 프로덕션 서비스로, 실사용 환경에서의 안정성과 마감 품질에 특히 주력했습니다.",
     techs: ["react", "typescript", "nextjs", "vite", "recoil", "reactquery", "pwa", "scss", "mui", "i18n", "proj4", "indexeddb", "webview", "docker", "nginx"],
@@ -253,7 +253,7 @@ export const PROJECTS: Project[] = [
     period: "2024.08 — 2024.10",
     role: "프로젝트 팀장 · Frontend 단독 개발 (FE 1 / BE 4)",
     description:
-      "Vue 기반 스크럼 관리 대시보드. 100개 이상의 API를 연동하고 프론트엔드를 단독 개발했습니다.",
+      "프론트 단독으로 100+ API 연동, Kafka 채팅·Jenkins CI/CD·Prometheus 모니터링까지 풀스택 기여",
     overview:
       "한화시스템 Beyond SW 풀스택 부트캠프 최종 프로젝트입니다. Vue 기반의 대시보드로 스크럼 관리, 실시간 알림, 채팅 기능을 통합했습니다. 프론트엔드를 단독으로 개발하며 100개 이상의 API를 연동하고, 렌더링 최소화 전략과 Pinia 상태 관리를 적용해 대규모 코드베이스를 안정적으로 유지했습니다. Jenkins CI/CD 파이프라인 구축, Kafka 기반 채팅 시스템 구현, Prometheus + Grafana 모니터링 등 백엔드 협업에도 적극 기여했습니다.",
     techs: ["vue", "javascript", "pinia", "springboot", "kafka", "redis", "mariadb", "jenkins", "kubernetes", "prometheus", "grafana"],
@@ -304,7 +304,7 @@ export const PROJECTS: Project[] = [
     period: "2025.02 — 2025.03",
     role: "프로젝트 팀장 (FE 4 / BE 1 / DE 1)",
     description:
-      "Next.js 기반 실시간 모임 매칭 서비스. SSR/ISR, 테스트, 성능 최적화까지 기획부터 배포까지 전방위 주도했습니다.",
+      "PWA로 FCP 3.2s→1.2s, Zustand+RQ로 리렌더 50%↓ — Jest·Cypress·CircleCI 완전 자동화 CI/CD",
     overview:
       "코드잇 프론트엔드 단기심화 최종 프로젝트입니다. Next.js 기반의 실시간 모임 매칭 플랫폼으로, 기획부터 배포까지 팀장으로서 전방위 리딩했습니다. SSR + ISR 최적화로 초기 로딩 속도를 개선하고, PWA 적용으로 FCP를 3.2s에서 1.2s로 단축했습니다. Zustand + React-Query 병행으로 불필요한 리렌더링 50% 감소, API 호출량 40% 감소를 달성했습니다. Jest + RTL 단위 테스트, Cypress E2E 테스트 20개 이상 작성, CircleCI + Codecov 기반 완전 자동화 CI/CD 파이프라인을 구축했습니다.",
     techs: ["nextjs", "typescript", "reactquery", "zustand", "tailwind", "framer", "webpack", "pwa", "jest", "cypress", "circleci", "sentry", "codecov", "jira", "indexeddb"],
@@ -374,7 +374,7 @@ export const PROJECTS: Project[] = [
     period: "2025.01.11 — 2025.01.12",
     role: "프로젝트 팀장",
     description:
-      "구글 삐약톤 해커톤 출시 프로젝트. 20시간 집중 개발로 MVP를 완성하여 해커톤 기간 내 배포했습니다.",
+      "20시간 해커톤 집중 개발 — 카카오 맵 API 기반 중간 거리 계산 + 1km 반경 추천 장소 시스템",
     overview:
       "구글 삐약톤 해커톤에서 20시간 집중 개발로 완성한 위치 기반 스터디 모집 플랫폼입니다. 카카오 맵 API를 연동하여 스터디원들의 중간 거리를 계산하고 1km 반경 내 추천 장소를 리스트업하는 기능을 구현했습니다. PWA 적용으로 모바일 환경에서도 최적화된 사용성을 제공하며, Storybook을 도입해 디자이너와의 협업 효율을 높였습니다.",
     techs: ["react", "typescript", "emotion", "framer", "pwa", "storybook"],
@@ -418,7 +418,7 @@ export const PROJECTS: Project[] = [
     period: "2025.01 — 2025.03",
     role: "프로젝트 팀장 (FE 2 / BE 2)",
     description:
-      "Kubernetes DevOps 스터디 최종 프로젝트. 디스코드 클론으로 WebRTC 화상통화, WebSocket 채팅, 카나리 무중단 배포를 구현했습니다.",
+      "WebRTC 화상·음성·화면공유 + WebSocket 채팅 — Kubernetes 카나리 무중단 배포까지 풀스택 구현",
     overview:
       "Kubernetes 기반 마이크로서비스 환경에서 구축한 실시간 커뮤니케이션 플랫폼(디스코드 클론)입니다. WebRTC를 활용한 화면 공유·음성·화상 통화, WebSocket(SockJS + STOMP) 기반 실시간 채팅, SWR + Redux를 조합한 네트워크 성능 최적화, PWA 크로스 플랫폼 대응, 카나리 무중단 배포까지 풀스택 커뮤니케이션 시스템을 설계·구현했습니다.",
     techs: ["react", "typescript", "redux", "swr", "reactquery", "tailwind", "framer", "websocket", "webrtc", "firebase", "webpack", "pwa", "jest", "rtl", "cypress", "jira", "kubernetes", "docker"],

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import Link from "next/link";
 import type { Career } from "@/lib/constants";
 import TechBadge from "@/components/TechBadge";
@@ -10,6 +11,21 @@ const TYPE_STYLE = {
   intern: { label: "인턴", color: "bg-amber-500/10 text-amber-400 border-amber-500/20" },
   education: { label: "교육", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
 } as const;
+
+function ScrollSection({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 32 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 interface Props {
   career: Career;
@@ -43,10 +59,15 @@ export default function CareerDetail({ career, prev, next }: Props) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex flex-wrap items-center gap-3 mb-4">
               <span className={`text-[10px] font-medium tracking-wider uppercase px-2.5 py-1 rounded-full border ${style.color}`}>
                 {style.label}
               </span>
+              {career.team && (
+                <span className="text-[10px] font-medium tracking-wider px-2.5 py-1 rounded-full bg-slate-800/80 text-slate-400 border border-slate-700/40">
+                  {career.team}
+                </span>
+              )}
               <span className="text-xs font-mono text-slate-500">{career.period}</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-50 mb-3">
@@ -59,70 +80,78 @@ export default function CareerDetail({ career, prev, next }: Props) {
       </section>
 
       <section className="py-16">
-        <div className="mx-auto max-w-4xl px-6 space-y-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+        <div className="mx-auto max-w-4xl px-6 space-y-20">
+          <ScrollSection>
             <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Overview</h2>
             <p className="text-base text-slate-300 leading-relaxed">{career.summary}</p>
-          </motion.div>
+          </ScrollSection>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Details</h2>
-            <ul className="space-y-4">
-              {career.details.map((d, i) => (
-                <motion.li
-                  key={d}
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: 0.4 + i * 0.06 }}
-                  className="flex items-start gap-3"
-                >
-                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-ice-500 shrink-0" />
-                  <span className="text-sm text-slate-300 leading-relaxed">{d}</span>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
+          <ScrollSection>
+            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-8">What I Did</h2>
+            <div className="space-y-6">
+              {career.details.map((d, i) => {
+                const [title, ...rest] = d.split(" — ");
+                const desc = rest.join(" — ");
+                return (
+                  <motion.div
+                    key={d}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.5, delay: i * 0.06 }}
+                    className="relative pl-6 border-l-2 border-ice-500/20 hover:border-ice-500/50 transition-colors"
+                  >
+                    <span className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-ice-500" />
+                    {desc ? (
+                      <>
+                        <p className="text-sm font-semibold text-slate-200 mb-1">{title}</p>
+                        <p className="text-sm text-slate-400 leading-relaxed">{desc}</p>
+                      </>
+                    ) : (
+                      <p className="text-sm text-slate-300 leading-relaxed">{title}</p>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </div>
+          </ScrollSection>
 
           {career.projects && career.projects.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            >
-              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">참여 프로젝트</h2>
+            <ScrollSection>
+              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Projects</h2>
               <div className="flex flex-wrap gap-2">
-                {career.projects.map((p) => (
-                  <span
+                {career.projects.map((p, i) => (
+                  <motion.span
                     key={p}
-                    className="text-sm px-3 py-1.5 rounded-lg bg-slate-800/60 text-slate-300 border border-slate-700/40"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: i * 0.05 }}
+                    className="text-sm px-4 py-2 rounded-xl bg-slate-800/60 text-slate-300 border border-slate-700/40 hover:border-ice-500/30 hover:text-ice-400 transition-all"
                   >
                     {p}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
-            </motion.div>
+            </ScrollSection>
           )}
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
+          <ScrollSection>
             <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Tech Stack</h2>
             <div className="flex flex-wrap gap-2">
-              {career.techs.map((tech) => (
-                <TechBadge key={tech} name={tech} />
+              {career.techs.map((tech, i) => (
+                <motion.div
+                  key={tech}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: i * 0.04 }}
+                >
+                  <TechBadge name={tech} />
+                </motion.div>
               ))}
             </div>
-          </motion.div>
+          </ScrollSection>
         </div>
       </section>
 
@@ -137,7 +166,7 @@ export default function CareerDetail({ career, prev, next }: Props) {
                 <path d="M11 3L5 9l6 6" />
               </svg>
               <div>
-                <p className="text-xs text-slate-600 mb-0.5">이전</p>
+                <p className="text-xs text-slate-600 mb-0.5">Prev</p>
                 <p className="group-hover:text-ice-400">{prev.name}</p>
               </div>
             </Link>
@@ -148,7 +177,7 @@ export default function CareerDetail({ career, prev, next }: Props) {
               className="group flex items-center gap-3 text-sm text-slate-400 hover:text-ice-400 transition-colors text-right"
             >
               <div>
-                <p className="text-xs text-slate-600 mb-0.5">다음</p>
+                <p className="text-xs text-slate-600 mb-0.5">Next</p>
                 <p className="group-hover:text-ice-400">{next.name}</p>
               </div>
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
