@@ -34,7 +34,7 @@ export default function Education() {
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
-              className="p-5 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 transition-all duration-300"
+              className="p-5 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 card-hover transition-all duration-300"
             >
               <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-sm mb-1">
                 <span className="font-semibold text-slate-100">{edu.school}</span>

@@ -65,11 +65,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
+      whileHover={{ y: -6 }}
       transition={{ duration: 0.6, delay: index * 0.12 }}
     >
       <Link
         href={`/projects/${project.slug}`}
-        className="group block relative rounded-2xl border border-slate-800/60 bg-slate-900/20 hover:border-ice-500/20 hover:bg-slate-900/40 transition-all duration-500 overflow-hidden"
+        className="group block relative rounded-2xl border border-slate-800/60 bg-slate-900/20 hover:border-ice-500/20 hover:bg-slate-900/40 card-hover transition-all duration-500 overflow-hidden"
       >
         <div className="absolute inset-0 bg-ice-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
@@ -88,7 +89,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 )}
                 <span className="text-xs text-slate-500">{project.period}</span>
               </div>
-              <h3 className="text-2xl font-bold text-white group-hover:text-ice-300 transition-colors">
+              <h3 className="text-2xl font-bold text-slate-50 group-hover:text-ice-300 transition-colors">
                 {project.title}
               </h3>
               <p className="text-sm text-ice-400/90 font-medium mt-1">{project.subtitle}</p>
@@ -139,7 +140,7 @@ function CompactCard({ project, index }: { project: Project; index: number }) {
     >
       <Link
         href={`/projects/${project.slug}`}
-        className="group block p-5 rounded-2xl border border-slate-800/60 bg-slate-900/20 hover:border-ice-500/20 hover:bg-slate-900/40 transition-all duration-300"
+        className="group block p-5 rounded-2xl border border-slate-800/60 bg-slate-900/20 hover:border-ice-500/20 hover:bg-slate-900/40 card-hover transition-all duration-300"
       >
         <div className="flex items-start justify-between mb-3">
           <div>

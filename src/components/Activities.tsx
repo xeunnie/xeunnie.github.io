@@ -15,7 +15,7 @@ function ActivityCard({ activity, index }: { activity: Activity; index: number }
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.06 }}
-      className="group p-5 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 hover:bg-slate-900/50 transition-all duration-300"
+      className="group p-5 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 hover:bg-slate-900/50 card-hover transition-all duration-300"
     >
       <div className="flex items-start justify-between mb-3">
         <div>

@@ -18,7 +18,7 @@ export default function TechBadge({ name, size = "md" }: Props) {
       src={src}
       alt={badge.label}
       height={height}
-      className="inline-block"
+      className="inline-block rounded-[3px] ring-1 ring-slate-800/10"
       loading="lazy"
     />
   );

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Fira_Code } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SITE } from "@/lib/constants";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -60,6 +61,17 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+const themeScript = `
+  (function(){
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'light' || t === 'dark') {
+        document.documentElement.setAttribute('data-theme', t);
+      }
+    } catch(e){}
+  })();
+`;
+
 export default function RootLayout({
   children,
 }: {
@@ -67,8 +79,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className={`scroll-smooth ${inter.variable} ${firaCode.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="font-sans antialiased">
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
         {SITE.ga_id && <GoogleAnalytics gaId={SITE.ga_id} />}
       </body>
     </html>

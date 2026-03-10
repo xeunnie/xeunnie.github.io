@@ -46,14 +46,14 @@ export default function PeerReview() {
           함께 일했던 동료들의 이야기
         </motion.p>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {PEER_REVIEWS.map((review, i) => (
             <motion.div
               key={review.name}
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.4 + i * 0.12 }}
-              className="relative p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 transition-all duration-300"
+              className="peer-review-card relative p-6 md:p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 card-hover transition-all duration-300"
             >
               <span className="absolute -top-3 left-6 text-4xl text-ice-500/20 font-serif leading-none select-none">
                 &ldquo;

@@ -41,7 +41,7 @@ function CareerCard({ career, index }: { career: Career; index: number }) {
     >
       <Link
         href={`/career/${index}`}
-        className="group block p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 hover:bg-slate-900/50 transition-all duration-300"
+        className="group block p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 hover:bg-slate-900/50 card-hover transition-all duration-300"
       >
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
           <div>
@@ -102,7 +102,7 @@ function GroupedCareerCard({ careers, startIndex }: { careers: Career[]; startIn
       initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6 }}
-      className="rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 transition-all duration-300 overflow-hidden"
+      className="rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 card-hover transition-all duration-300 overflow-hidden"
     >
       <div className="p-6 pb-4">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">

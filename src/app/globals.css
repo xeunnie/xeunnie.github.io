@@ -29,6 +29,27 @@
   --animate-glow: glow 3s ease-in-out infinite alternate;
 }
 
+/* ─── Light Mode ─── */
+[data-theme="light"] {
+  --color-slate-50: oklch(0.15 0.02 260);
+  --color-slate-100: oklch(0.22 0.02 260);
+  --color-slate-200: oklch(0.32 0.02 260);
+  --color-slate-300: oklch(0.42 0.02 260);
+  --color-slate-400: oklch(0.52 0.02 260);
+  --color-slate-500: oklch(0.60 0.02 260);
+  --color-slate-600: oklch(0.68 0.015 260);
+  --color-slate-700: oklch(0.78 0.01 260);
+  --color-slate-800: oklch(0.87 0.008 260);
+  --color-slate-900: oklch(0.95 0.005 260);
+  --color-slate-950: oklch(0.99 0.003 260);
+
+  --color-ice-300: oklch(0.52 0.13 224);
+  --color-ice-400: oklch(0.46 0.15 226);
+  --color-ice-500: oklch(0.40 0.16 228);
+  --color-ice-600: oklch(0.34 0.14 230);
+}
+
+/* ─── Keyframes ─── */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
@@ -65,27 +86,42 @@
   100% { background-position: 200% 0; }
 }
 
+/* ─── Base ─── */
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   background: var(--color-slate-950);
   color: var(--color-slate-200);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
   background: oklch(0.58 0.15 230 / 0.3);
 }
 
+[data-theme="light"] ::selection {
+  background: oklch(0.58 0.15 230 / 0.2);
+}
+
+/* ─── Glass ─── */
 .glass {
   background: oklch(0.14 0.03 260 / 0.6);
   backdrop-filter: blur(20px) saturate(1.4);
   border: 1px solid oklch(1 0 0 / 0.06);
 }
 
+[data-theme="light"] .glass {
+  background: oklch(0.99 0.003 260 / 0.7);
+  backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid oklch(0 0 0 / 0.06);
+}
+
+/* ─── Gradient Text ─── */
 .gradient-text {
   background: linear-gradient(135deg, var(--color-ice-300), var(--color-ice-500));
   -webkit-background-clip: text;
@@ -93,6 +129,7 @@ body {
   background-clip: text;
 }
 
+/* ─── Mesh Background ─── */
 .mesh-bg {
   background:
     radial-gradient(ellipse 80% 60% at 20% 40%, oklch(0.58 0.15 230 / 0.08), transparent),
@@ -100,6 +137,14 @@ body {
     radial-gradient(ellipse 50% 50% at 50% 80%, oklch(0.68 0.13 230 / 0.04), transparent);
 }
 
+[data-theme="light"] .mesh-bg {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 40%, oklch(0.58 0.15 228 / 0.06), transparent),
+    radial-gradient(ellipse 60% 80% at 80% 20%, oklch(0.48 0.14 228 / 0.04), transparent),
+    radial-gradient(ellipse 50% 50% at 50% 80%, oklch(0.68 0.13 228 / 0.03), transparent);
+}
+
+/* ─── Grid Overlay ─── */
 .grid-overlay {
   background-image:
     linear-gradient(oklch(1 0 0 / 0.02) 1px, transparent 1px),
@@ -107,6 +152,33 @@ body {
   background-size: 60px 60px;
 }
 
+[data-theme="light"] .grid-overlay {
+  background-image:
+    linear-gradient(oklch(0.46 0.15 226 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.46 0.15 226 / 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ─── Blueprint Grid (Hero) ─── */
+.blueprint-grid {
+  background-image:
+    linear-gradient(oklch(0.74 0.10 226 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.74 0.10 226 / 0.06) 1px, transparent 1px),
+    linear-gradient(oklch(0.74 0.10 226 / 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.74 0.10 226 / 0.03) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+}
+
+[data-theme="light"] .blueprint-grid {
+  background-image:
+    linear-gradient(oklch(0.46 0.15 226 / 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.46 0.15 226 / 0.10) 1px, transparent 1px),
+    linear-gradient(oklch(0.46 0.15 226 / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.46 0.15 226 / 0.04) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+}
+
+/* ─── Shimmer ─── */
 .shimmer {
   background: linear-gradient(
     90deg,
@@ -118,7 +190,33 @@ body {
   animation: shimmer 3s ease-in-out infinite;
 }
 
+/* ─── Scrollbar ─── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--color-slate-950); }
 ::-webkit-scrollbar-thumb { background: var(--color-slate-700); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-ice-500); }
+
+/* ─── Card Hover Lift ─── */
+.card-hover {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              background-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px oklch(0.58 0.15 230 / 0.08);
+}
+
+[data-theme="light"] .card-hover:hover {
+  box-shadow: 0 12px 40px oklch(0.46 0.15 226 / 0.12);
+}
+
+/* ─── Mobile spacing ─── */
+@media (max-width: 640px) {
+  .peer-review-card p {
+    font-size: 0.8125rem;
+    line-height: 1.7;
+  }
+}

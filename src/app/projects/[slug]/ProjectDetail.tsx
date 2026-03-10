@@ -38,7 +38,7 @@ interface Props {
 
 export default function ProjectDetail({ project, prevProject, nextProject }: Props) {
   return (
-    <main className="min-h-screen bg-slate-950">
+    <main className="min-h-screen">
       <nav className="fixed top-0 inset-x-0 z-50 glass border-b border-white/5">
         <div className="mx-auto max-w-4xl px-6 h-16 flex items-center justify-between">
           <Link
