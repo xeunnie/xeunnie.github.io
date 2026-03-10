@@ -86,7 +86,56 @@ export default function ProjectDetail({ project, prevProject, nextProject }: Pro
             </ul>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }}>
+          {project.sections && project.sections.length > 0 && project.sections.map((section, si) => (
+            <motion.div
+              key={section.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 + si * 0.1 }}
+            >
+              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">{section.title}</h2>
+              <ul className="space-y-3">
+                {section.items.map((item, i) => (
+                  <motion.li
+                    key={item}
+                    initial={{ opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.6 + si * 0.1 + i * 0.04 }}
+                    className="flex items-start gap-3"
+                  >
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-ice-500 shrink-0" />
+                    <span className="text-sm text-slate-300 leading-relaxed">{item}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+
+          {project.links && project.links.length > 0 && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.7 }}>
+              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Links</h2>
+              <div className="flex flex-wrap gap-3">
+                {project.links.map((link) => (
+                  <a
+                    key={link.url}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-800/60 bg-slate-900/30 text-sm text-slate-300 hover:border-ice-500/30 hover:text-ice-400 transition-all"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.8 }}>
             <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Screenshots</h2>
             <div className="grid md:grid-cols-2 gap-4">
               {[1, 2].map((n) => (

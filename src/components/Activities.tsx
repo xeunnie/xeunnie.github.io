@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, useState } from "react";
 import { ACTIVITIES } from "@/lib/constants";
 import type { Activity } from "@/lib/constants";
 
@@ -51,6 +51,7 @@ function ActivityCard({ activity, index }: { activity: Activity; index: number }
 export default function Activities() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [showLeadership, setShowLeadership] = useState(false);
 
   const devActivities = ACTIVITIES.filter((a) => a.category === "dev");
   const leadershipActivities = ACTIVITIES.filter((a) => a.category === "leadership");
@@ -73,7 +74,7 @@ export default function Activities() {
           className="h-px w-16 bg-ice-500 origin-left mb-16"
         />
 
-        <div className="mb-14">
+        <div className="mb-10">
           <h3 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">
             Development & Study
           </h3>
@@ -85,14 +86,40 @@ export default function Activities() {
         </div>
 
         <div>
-          <h3 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">
+          <button
+            onClick={() => setShowLeadership(!showLeadership)}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-800/60 bg-slate-900/30 text-sm text-slate-400 hover:border-ice-500/20 hover:text-ice-400 transition-all"
+          >
             Leadership & Community
-          </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {leadershipActivities.map((a, i) => (
-              <ActivityCard key={a.name} activity={a} index={i} />
-            ))}
-          </div>
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className={`transition-transform duration-300 ${showLeadership ? "rotate-180" : ""}`}
+            >
+              <path d="M3 5l4 4 4-4" />
+            </svg>
+          </button>
+
+          <AnimatePresence>
+            {showLeadership && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                  {leadershipActivities.map((a, i) => (
+                    <ActivityCard key={a.name} activity={a} index={i} />
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>
