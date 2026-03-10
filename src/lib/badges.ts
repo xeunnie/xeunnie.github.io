@@ -87,16 +87,16 @@ export const BADGES = {
 export type BadgeKey = keyof typeof BADGES;
 
 export const CORE_SKILLS = [
-  { title: "Core", badges: ["react", "nextjs", "typescript", "vue"] as BadgeKey[] },
-  { title: "Realtime & 3D", badges: ["webrtc", "livekit", "websocket", "threejs"] as BadgeKey[] },
+  { title: "Frontend Core", badges: ["react", "nextjs", "typescript", "vue"] as BadgeKey[] },
+  { title: "Realtime & 3D", badges: ["webrtc", "livekit", "websocket", "threejs", "webgl"] as BadgeKey[] },
   { title: "Testing & QA", badges: ["storybook", "jest", "rtl", "cypress", "playwright"] as BadgeKey[] },
-  { title: "Backend", badges: ["springboot", "docker", "kafka", "redis"] as BadgeKey[] },
+  { title: "Backend & Infra", badges: ["springboot", "kotlin", "go", "docker", "kafka", "redis"] as BadgeKey[] },
 ] as const;
 
 export const MORE_SKILLS = [
   { title: "Language", badges: ["javascript", "java"] as BadgeKey[] },
-  { title: "Frameworks", badges: ["svelte"] as BadgeKey[] },
-  { title: "State & Data", badges: ["redux", "pinia", "mongodb", "mariadb", "s3"] as BadgeKey[] },
-  { title: "DevOps", badges: ["kubernetes", "jenkins", "haproxy", "chromatic"] as BadgeKey[] },
-  { title: "Monitoring", badges: ["prometheus", "grafana", "jmeter", "sentry"] as BadgeKey[] },
+  { title: "Frameworks", badges: ["svelte", "zustand", "reactquery", "redux", "pinia"] as BadgeKey[] },
+  { title: "Database", badges: ["mysql", "postgresql", "mongodb", "mariadb", "s3"] as BadgeKey[] },
+  { title: "DevOps", badges: ["kubernetes", "jenkins", "haproxy", "nginx", "gcp"] as BadgeKey[] },
+  { title: "Monitoring", badges: ["prometheus", "grafana", "jmeter", "sentry", "codecov"] as BadgeKey[] },
 ] as const;

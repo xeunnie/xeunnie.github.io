@@ -15,7 +15,7 @@ export default function About() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-3xl font-bold tracking-tight text-slate-100 mb-4"
+          className="text-3xl font-bold tracking-tight text-slate-50 mb-4"
         >
           About
         </motion.h2>
@@ -38,7 +38,7 @@ export default function About() {
               <h3 className="text-base font-semibold text-slate-100 mb-2 group-hover:text-ice-400 transition-colors">
                 {trait.title}
               </h3>
-              <p className="text-sm text-slate-400 leading-relaxed">{trait.desc}</p>
+              <p className="text-sm text-slate-300 leading-relaxed">{trait.desc}</p>
             </motion.div>
           ))}
         </div>

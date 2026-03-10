@@ -35,7 +35,7 @@ export const PROJECTS: Project[] = [
     subtitle: "AI 회의록 자동 생성 B2B 화상회의 SaaS 플랫폼",
     category: "personal",
     featured: true,
-    period: "2024",
+    period: "2024 — 2026",
     role: "프로젝트 팀장 · Frontend 단독 개발 + Backend MSA 설계·구현",
     description:
       "프론트 단독 + Polyglot MSA 7개 서비스 설계 — Go 전환으로 메모리 96% 감소, LiveKit SFU로 대역폭 O(N²)→O(N)",
@@ -128,7 +128,7 @@ export const PROJECTS: Project[] = [
     category: "company",
     featured: true,
     company: "플럭시티",
-    period: "2022 — 2023",
+    period: "2025",
     role: "Frontend 단독 개발 (프론트 100%, 백엔드 30%)",
     description:
       "폐쇄망에서 TURN/STUN 없이 WebRTC CCTV를 스트리밍하고, Three.js 3D 관제 + GPS 차량 추적을 단독 개발",
@@ -181,7 +181,7 @@ export const PROJECTS: Project[] = [
     category: "company",
     featured: true,
     company: "플럭시티",
-    period: "2024 — 현재",
+    period: "2025 — 2026",
     role: "Frontend Developer (경기관제 태블릿 + F&B 단독 개발)",
     description:
       "매일 운영되는 프로덕션 서비스 — GPS→Proj4 좌표 변환, 움직이는 카트 위 터치 UX, F&B PWA 단독 개발",

@@ -22,6 +22,11 @@ export const metadata: Metadata = {
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
+  keywords: [
+    "프론트엔드 개발자", "Frontend Developer", "React", "Next.js", "TypeScript",
+    "WebRTC", "Three.js", "실시간 통신", "3D 웹", "포트폴리오",
+    "Seungeun Choi", "최승은",
+  ],
   metadataBase: new URL(SITE.url),
   openGraph: {
     title: `${SITE.name} — ${SITE.title}`,

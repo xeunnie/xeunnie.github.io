@@ -17,7 +17,7 @@ export default function Skills() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-3xl font-bold tracking-tight text-slate-100 mb-4"
+          className="text-3xl font-bold tracking-tight text-slate-50 mb-4"
         >
           Skills
         </motion.h2>
@@ -25,9 +25,18 @@ export default function Skills() {
           initial={{ scaleX: 0 }}
           animate={inView ? { scaleX: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="h-px w-16 bg-ice-500 origin-left mb-16"
+          className="h-px w-16 bg-ice-500 origin-left mb-6"
         />
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-sm text-slate-400 mb-14"
+        >
+          프론트엔드 전문성을 중심으로, 3D·실시간 통신·백엔드까지 확장된 기술 스택
+        </motion.p>
 
+        <h3 className="text-xs font-mono tracking-widest text-ice-400 uppercase mb-5">Core</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {CORE_SKILLS.map((group, i) => (
             <motion.div
@@ -37,9 +46,9 @@ export default function Skills() {
               transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
               className="group p-5 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 hover:bg-slate-900/50 transition-all duration-300"
             >
-              <h3 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-4">
+              <h4 className="text-sm font-mono tracking-widest text-slate-200 uppercase mb-4">
                 {group.title}
-              </h3>
+              </h4>
               <div className="flex flex-wrap gap-1.5">
                 {group.badges.map((key) => (
                   <TechBadge key={key} name={key} size="sm" />
@@ -49,12 +58,12 @@ export default function Skills() {
           ))}
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-10 text-center">
           <button
             onClick={() => setShowMore(!showMore)}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-800/60 bg-slate-900/30 text-sm text-slate-400 hover:border-ice-500/20 hover:text-ice-400 transition-all"
           >
-            {showMore ? "접기" : "더 보기"}
+            {showMore ? "접기" : "Extended"}
             <svg
               width="14"
               height="14"
@@ -77,7 +86,8 @@ export default function Skills() {
               transition={{ duration: 0.3 }}
               className="overflow-hidden"
             >
-              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5 mt-5">
+              <h3 className="text-xs font-mono tracking-widest text-slate-500 uppercase mt-8 mb-5">Extended</h3>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
                 {MORE_SKILLS.map((group, i) => (
                   <motion.div
                     key={group.title}
@@ -86,9 +96,9 @@ export default function Skills() {
                     transition={{ duration: 0.4, delay: i * 0.05 }}
                     className="group p-5 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 hover:bg-slate-900/50 transition-all duration-300"
                   >
-                    <h3 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-4">
+                    <h4 className="text-sm font-mono tracking-widest text-slate-300 uppercase mb-4">
                       {group.title}
-                    </h3>
+                    </h4>
                     <div className="flex flex-wrap gap-1.5">
                       {group.badges.map((key) => (
                         <TechBadge key={key} name={key} size="sm" />
