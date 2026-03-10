@@ -138,8 +138,8 @@ export default function ProjectDetail({ project, prevProject, nextProject }: Pro
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.8 }}>
             <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Screenshots</h2>
             <div className="grid md:grid-cols-2 gap-4">
-              {[1, 2].map((n) => (
-                <div key={n} className="aspect-video rounded-xl bg-slate-900/50 border border-slate-800/60 flex items-center justify-center">
+              {Array.from({ length: project.imageCount ?? 2 }, (_, i) => (
+                <div key={i} className="aspect-video rounded-xl bg-slate-900/50 border border-slate-800/60 flex items-center justify-center">
                   <p className="text-xs text-slate-600">이미지 추가 예정</p>
                 </div>
               ))}

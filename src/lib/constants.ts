@@ -88,6 +88,10 @@ export const BADGES = {
   vite: { label: "Vite", logo: "vite", logoColor: "646CFF" },
   zod: { label: "Zod", logo: "zod", logoColor: "3E67B1" },
   radix: { label: "Radix UI", logo: "radixui", logoColor: "161618" },
+  recoil: { label: "Recoil", logo: "react", logoColor: "3578E5" },
+  scss: { label: "SCSS", logo: "sass", logoColor: "CC6699" },
+  mui: { label: "MUI", logo: "mui", logoColor: "007FFF" },
+  proj4: { label: "Proj4", logo: "openstreetmap", logoColor: "7EBC6F" },
 } satisfies Record<string, Badge>;
 
 export type BadgeKey = keyof typeof BADGES;
@@ -157,6 +161,7 @@ export interface Project {
   overview: string;
   techs: BadgeKey[];
   highlights: string[];
+  imageCount?: number;
   links?: ProjectLink[];
   sections?: ProjectSection[];
 }
@@ -257,43 +262,125 @@ export const PROJECTS: Project[] = [
   {
     slug: "busan-metro",
     title: "부산교통공사 1호선 시설 관제 시스템",
-    subtitle: "3D 시설 모니터링 & 제어 UI",
+    subtitle: "3D 시설 모니터링 & WebRTC CCTV 스트리밍",
     category: "company",
+    featured: true,
     company: "플럭시티",
     period: "2022 — 2023",
-    role: "Frontend Developer",
+    role: "Frontend 단독 개발 (프론트 100%, 백엔드 30%)",
     description:
-      "부산 지하철 1호선의 실시간 시설 관제 시스템. GPS 기반 차량 위치 추적과 현장 영상 스트리밍을 구현했습니다.",
+      "부산 지하철 1호선 전체 노선의 3D 관제 시스템. Three.js 기반 시설물 시각화, WebRTC CCTV 스트리밍, GPS 차량 추적을 단독 개발했습니다.",
     overview:
-      "부산교통공사 1호선 전체 노선의 시설물을 실시간으로 모니터링하고 제어하는 관제 시스템입니다. Three.js 기반 3D 시각화로 시설물 상태를 직관적으로 파악하고, GPS 데이터를 활용한 실시간 차량 위치 추적, WebRTC 기반 현장 영상 스트리밍, WebSocket을 통한 실시간 데이터 수신 등 다양한 실시간 기술을 통합 구현했습니다.",
-    techs: ["react", "typescript", "threejs", "websocket", "webrtc", "webview"],
+      "부산교통공사 1호선 전체 노선의 시설물을 실시간으로 모니터링하고 제어하는 3D 관제 시스템입니다. Three.js 기반 3D 시각화, GPS 실시간 차량 위치 추적, WebRTC 기반 현장 CCTV 영상 스트리밍, WebSocket 센서 데이터 수신을 프론트엔드 단독으로 개발했습니다. 특히 폐쇄망 환경에서의 WebRTC CCTV 스트리밍 구조를 분석·구현하며 실시간 미디어 처리 역량을 심화했고, 현장에서 바로 배포하고 오류 발생 시 즉시 수정·재배포하는 현장 대응 경험을 쌓았습니다.",
+    techs: ["react", "typescript", "threejs", "webrtc", "websocket", "webview"],
+    imageCount: 4,
     highlights: [
-      "Three.js 기반 3D 시설물 모니터링 뷰 구현",
-      "GPS 기반 실시간 차량 위치 추적 UI",
-      "WebSocket을 통한 실시간 센서 데이터 수신 및 시각화",
-      "WebRTC 기반 현장 CCTV 영상 스트리밍",
-      "WebView 컴포넌트 통합으로 레거시 시스템 연동",
+      "프론트엔드 단독 개발 — Three.js 3D 관제 + WebRTC + WebSocket + GPS 통합",
+      "폐쇄망 환경 WebRTC CCTV 스트리밍 — 구조 분석부터 샘플 코드 작성까지",
+      "3D 맵 POI·조명·장치 관리 UI/UX — 시설물 상태 직관적 시각화",
+      "GPS 기반 실시간 차량 위치 추적 — 노선 위 차량 위치 렌더링",
+      "SSE 기반 실시간 이벤트 알림 시스템",
+      "현장 배포·즉시 수정·재배포 — 실시간 버그 현장 대응",
+    ],
+    sections: [
+      {
+        title: "WebRTC CCTV 스트리밍",
+        items: [
+          "폐쇄망 환경에서 동작하는 WebRTC CCTV 스트리밍 구조 분석 및 구현",
+          "TURN/STUN 서버 없이 폐쇄망 내부 시그널링 처리",
+          "다중 CCTV 동시 스트리밍 — 관제 화면에서 복수 영상 동시 모니터링",
+          "스트림 연결 끊김 자동 감지 및 재연결 로직",
+        ],
+      },
+      {
+        title: "3D 시설물 관제",
+        items: [
+          "Three.js 기반 전체 노선 3D 시설물 모니터링 뷰",
+          "3D 맵 위 POI·조명·장치 관리 UI — 실시간 상태 반영",
+          "WebSocket 센서 데이터 수신 — 시설물 상태 실시간 시각화",
+          "카메라 제어 및 시점 전환 — 역사별·구간별 빠른 탐색",
+        ],
+      },
+      {
+        title: "실시간 차량 추적 & 현장 대응",
+        items: [
+          "GPS 데이터 기반 실시간 차량 위치 추적 — 노선 위 차량 렌더링",
+          "SSE 기반 실시간 이벤트 알림 — 관리자 즉시 인지",
+          "WebView 컴포넌트 통합으로 레거시 시스템 연동",
+          "현장 폐쇄망 환경 배포 — 오류 발생 시 즉시 수정·재배포 반복",
+        ],
+      },
     ],
   },
   {
-    slug: "golf-platform",
-    title: "골프장 운영 플랫폼",
-    subtitle: "F&B 주문 및 운영 관리 시스템",
+    slug: "vgolf",
+    title: "Vgolf",
+    subtitle: "골프장 실시간 라운드 관리 & F&B 주문 플랫폼",
     category: "company",
+    featured: true,
     company: "플럭시티",
-    period: "2023 — 2024",
-    role: "Frontend Developer",
+    period: "2024 — 현재",
+    role: "Frontend Developer (경기관제 태블릿 + F&B 단독 개발)",
     description:
-      "골프 코스 현장 주문부터 운영 관리까지 통합한 PWA 기반 플랫폼.",
+      "GPS 카트 추적, 실시간 스코어링, F&B 주문까지 통합한 프로덕션 운영 앱. 태블릿 경기관제와 식음 PWA를 개발했습니다.",
     overview:
-      "골프장 현장에서 F&B 주문, 코스 관리, 운영 현황 모니터링까지 통합한 운영 플랫폼입니다. PWA로 구축하여 네이티브 앱 수준의 사용 경험을 제공하고, IndexedDB를 활용한 오프라인 대응으로 네트워크 불안정 환경에서도 안정적으로 동작합니다. Markdown 기반 개발 태스크 문서화 템플릿을 설계하여 팀 전체의 개발 프로세스를 체계화했습니다.",
-    techs: ["react", "typescript", "pwa", "indexeddb", "redux"],
+      "골프장 실시간 라운드 관리 플랫폼입니다. 태블릿/모바일 듀얼 디바이스 경기관제 앱(Vgolf App, v1.1.24, 26K+ LOC)과 F&B 주문·관리 PWA(Next.js 14)를 개발했습니다. GPS 기반 카트 추적, Proj4 좌표 변환, 지오펜싱 자동 홀 전환, 움직이는 카트 환경에서의 터치 UX 최적화 등 골프장 특수 환경에 최적화된 기술을 구현했습니다. 현재 운영 중인 프로덕션 서비스로, 실사용 환경에서의 안정성과 마감 품질에 특히 주력했습니다.",
+    techs: ["react", "typescript", "nextjs", "vite", "recoil", "reactquery", "pwa", "scss", "mui", "i18n", "proj4", "indexeddb", "webview", "docker", "nginx"],
+    imageCount: 5,
     highlights: [
-      "PWA 기반 현장 주문 시스템 구축 및 안정화",
-      "IndexedDB를 활용한 오프라인 퍼스트 아키텍처",
-      "Service Worker 기반 백그라운드 동기화",
-      "Markdown 기반 개발 태스크 문서화 템플릿 설계",
-      "팀 내 코드 리뷰 프로세스 도입 및 정착",
+      "프로덕션 운영 서비스 — 실사용 환경에서의 안정성·마감 품질에 주력",
+      "GPS 카트 추적 — 500ms 주기 GPS 읽기, Proj4 좌표 변환(위경도→코스맵 픽셀), 지오펜싱 자동 홀 전환",
+      "움직이는 카트 환경 터치 UX — Ghost Click 방지, useTap(30px 흔들림 허용), 더블클릭 가드",
+      "태블릿 140+ / 모바일 45+ 컴포넌트 — 듀얼 디바이스 공통 모듈 분리",
+      "F&B 단독 개발 — Web Worker 백그라운드 폴링, Canvas 테이블 배치(Pan/Zoom + AABB 충돌), Web Audio 알림",
+      "네트워크 탄력성 — ConsecutiveErrorGuard, Recoil Persist, React Query 캐싱, Teams Webhook 텔레메트리",
+    ],
+    sections: [
+      {
+        title: "경기관제 앱 — GPS & 실시간 시스템",
+        items: [
+          "GPS 카트 추적 — 500ms 주기 디바이스 GPS, 3초 주기 서버 전송 (대역폭 최적화)",
+          "Proj4 좌표 변환 — 위경도 → 코스맵 이미지 픽셀 좌표 매핑, 고도 기반 그린 슬로프 계산",
+          "지오펜싱 — 홀 폴리곤 영역 진입/이탈 감지로 자동 홀 전환, 해저드/이벤트 존 TTS 경고",
+          "라운드 상태 머신: START → OUT RUN → TURN → IN RUN → END, 9홀 추가·코스 변경 동적 대응",
+          "SSE 기반 다채널 실시간 동기화 — 예약, F&B 주문, 장비, 메시지",
+          "Android WebView + PlugGolf 브릿지 — 네이티브 GPS, 카메라, 알림 통합",
+        ],
+      },
+      {
+        title: "경기관제 앱 — UX & 안정성",
+        items: [
+          "움직이는 카트 환경 터치 최적화 — Ghost Click 방지(preventGhostClick), useTap 훅(스와이프 vs 탭 구분, 30px 임계값)",
+          "더블클릭 가드 — 스코어 저장 등 중요 액션 보호",
+          "듀얼 디바이스 아키텍처 — 태블릿 140+ / 모바일 45+ 컴포넌트, 공통 모듈 분리로 재사용 극대화",
+          "92+ Recoil 아톰 + recoil-persist — 앱 재시작 시 서버 왕복 없이 상태 복원",
+          "ConsecutiveErrorGuard — 연속 에러 시 폴링 자동 일시정지/재개",
+          "Teams Webhook 텔레메트리 — 에러 실시간 모니터링",
+          "4개 언어 동적 로딩 (한/영/일/태국어) — i18next",
+        ],
+      },
+      {
+        title: "F&B 주문 시스템 — 단독 개발",
+        items: [
+          "Web Worker 기반 백그라운드 폴링(useBackgroundPolling) — 탭 비활성화 시에도 3초 간격 주문 업데이트",
+          "Canvas 테이블 배치 UI — Pan & Zoom(마우스/터치), AABB 충돌 감지, 드래그&드롭(@dnd-kit), 90° 회전",
+          "Web Audio API + HTML5 Audio 폴백 — Web Worker 타이머로 백그라운드 쓰로틀링 우회, Browser Notification 연동",
+          "주문 상태 플로우: 접수요청 → 수락 → 완료 → 취소, 부분 취소, 테이블 재배정, ERP 연동",
+          "IndexedDB + 메모리 캐시 하이브리드 토큰 저장 — localStorage 자동 마이그레이션 포함",
+          "통합 모달 관리(useUnifiedModal) — 9개+ 모달 타입 단일 훅으로 관리",
+        ],
+      },
+      {
+        title: "프로덕션 운영 & 마감 품질",
+        items: [
+          "현재 운영 중인 프로덕션 서비스 — 실사용 골프장에서 매일 사용",
+          "엣지 케이스 꼼꼼한 처리 — 중복 주문 방지, 에러 큐잉, Pub/Sub 에러 핸들링",
+          "PWA 오프라인 폴백 + Cache-Control 무효화 전략",
+          "Docker + Nginx Alpine 정적 배포, 빌드 ID 자동 생성 (YYMMDDHHMI)",
+          "엑셀 매출 리포트 자동 생성 (ExcelJS 스타일 적용)",
+          "usePullToRefresh, useDragScroll 등 모바일 UX 커스텀 훅",
+        ],
+      },
     ],
   },
   {
@@ -301,7 +388,6 @@ export const PROJECTS: Project[] = [
     title: "CalIT",
     subtitle: "개발자를 위한 대시보드 기반 스크럼 관리 시스템",
     category: "personal",
-    featured: true,
     period: "2024.08 — 2024.10",
     role: "프로젝트 팀장 · Frontend 단독 개발 (FE 1 / BE 4)",
     description:
@@ -353,7 +439,6 @@ export const PROJECTS: Project[] = [
     title: "번개팅",
     subtitle: "실시간 모임 매칭 플랫폼",
     category: "personal",
-    featured: true,
     period: "2025.02 — 2025.03",
     role: "프로젝트 팀장 (FE 4 / BE 1 / DE 1)",
     description:
@@ -539,45 +624,44 @@ export interface Career {
 
 export const CAREERS: Career[] = [
   {
-    company: "플럭시티",
-    role: "개발자 (프론트엔드, 백엔드)",
-    period: "2025.04 — 현재",
+    company: "플럭시티 — 클라우드팀",
+    role: "Frontend Developer",
+    period: "2025.11 — 현재",
     type: "full-time",
-    chapter: "도약 — 모노레포·디자인 시스템·현장 대응",
+    chapter: "운영 — 프로덕션 서비스와 마감 품질",
     summary:
-      "DX 기술 팀에서 모노레포 기반 디자인 시스템 구축과 부산 사상하단선 프로젝트를 담당하고 있습니다. 지하철 현장에서 바로 배포하고 오류를 즉시 수정·재배포하는 현장 대응 경험을 쌓으며, 코드를 작성하는 것을 넘어 서비스가 실제로 동작하는 순간까지 책임지는 개발자로 성장하고 있습니다.",
+      "클라우드팀에서 Vgolf 프로덕션 서비스의 경기관제 태블릿 앱과 F&B 주문 시스템을 개발하고 있습니다. GPS 카트 추적, 좌표 변환, 지오펜싱, 움직이는 환경에서의 터치 UX 등 골프장 특수 환경에 최적화된 기술을 구현하며, 실사용 운영 서비스의 안정성과 마감 품질에 주력하고 있습니다.",
     details: [
-      "모노레포 기반 디자인 시스템 구축",
-      "부산 사상하단선 프로젝트 — 현장 배포 및 실시간 버그·데이터 오류 현장 대응",
-      "CCTV WebRTC 스트리밍 구조 분석 — 폐쇄망 환경 대응 샘플 코드 작성",
-      "3D 맵 기반 POI·조명·장치 관리 UI/UX 개선",
-      "SSE 기반 실시간 이벤트 알림 시스템 구현",
+      "Vgolf App 경기관제 태블릿 앱 개발 — GPS 카트 추적, Proj4 좌표 변환, 지오펜싱 자동 홀 전환",
+      "Vgolf F&B 주문 시스템 단독 개발 — Web Worker 폴링, Canvas 테이블 배치, Web Audio 알림",
+      "듀얼 디바이스 아키텍처 — 태블릿 140+ / 모바일 45+ 컴포넌트",
+      "92+ Recoil 아톰 + recoil-persist + React Query 캐싱으로 네트워크 탄력성 확보",
+      "프로덕션 운영 환경에서의 엣지 케이스 처리 및 마감 품질 관리",
     ],
-    projects: ["부산 사상하단선 관제 시스템", "모노레포 디자인 시스템"],
-    techs: ["react", "typescript", "threejs", "webgl", "webrtc", "websocket"],
+    projects: ["Vgolf App 경기관제", "Vgolf F&B 주문 시스템"],
+    techs: ["react", "typescript", "nextjs", "vite", "recoil", "reactquery", "pwa", "i18n", "indexeddb"],
   },
   {
-    company: "플럭시티",
-    role: "Frontend Developer",
-    period: "2022 — 2024",
+    company: "플럭시티 — DX 기술팀",
+    role: "개발자 (프론트엔드, 백엔드)",
+    period: "2025.04 — 2025.11",
     type: "full-time",
-    chapter: "심화 — 3D·실시간·폐쇄망, 기술의 깊이",
+    chapter: "심화 — 3D·실시간·폐쇄망·현장 대응",
     summary:
-      "WebGL 기반 3D 엔진 개발사에서 관제 시스템 SI 프로젝트를 주도했습니다. 폐쇄망·내부망 환경의 배포, 서버 프록시 보안 설정까지 담당하며 프론트엔드를 넘어선 인프라 감각을 키웠습니다.",
+      "DX 기술팀에서 3D 관제 시스템 SI 프로젝트를 주도했습니다. 부산교통공사 1호선 관제 시스템을 프론트엔드 단독 개발하고, 부산 사상하단선, 모노레포 디자인 시스템 등을 담당했습니다. 폐쇄망 WebRTC CCTV 스트리밍, 현장 즉시 배포·수정 등 서비스가 실제로 동작하는 순간까지 책임지는 경험을 쌓았습니다.",
     details: [
-      "WebGL 기반 3D 엔진 개발 보조 — 디지털 트윈 플랫폼 에셋·데이터 연동",
-      "부산교통공사 3D 관제 시스템 (프론트 100%, 백엔드 30%)",
-      "탄천 오염도 모니터링 시스템 (프론트 50%, 백엔드 20%)",
-      "GS 인증용 사내 플랫폼 개발 (프론트 70%, 백엔드 20%)",
-      "성남 AIOT 공원 관제 시스템 (프론트 60%, 백엔드 30%)",
-      "골프장 운영 플랫폼: PWA 기반 현장 주문 시스템 및 오프라인 대응",
+      "부산교통공사 1호선 3D 관제 시스템 단독 개발 (프론트 100%, 백엔드 30%)",
+      "부산 사상하단선 — 현장 배포 및 실시간 버그 현장 대응",
+      "폐쇄망 WebRTC CCTV 스트리밍 구조 분석·구현",
+      "모노레포 기반 디자인 시스템 구축",
+      "탄천 오염도 모니터링, GS 인증 플랫폼, 성남 AIOT 공원 관제 등 다수 SI",
       "현장 폐쇄망·내부망 환경별 배포 전략 수립 및 서버 프록시 보안 설정",
     ],
     projects: [
-      "부산교통공사 3D 관제", "탄천 오염도 모니터링",
-      "GS 인증 플랫폼", "성남 AIOT 관제", "골프장 운영 플랫폼",
+      "부산교통공사 1호선 3D 관제", "부산 사상하단선",
+      "모노레포 디자인 시스템", "탄천 오염도 모니터링", "GS 인증 플랫폼", "성남 AIOT 관제",
     ],
-    techs: ["react", "typescript", "threejs", "webgl", "webrtc", "websocket", "pwa", "indexeddb", "webview"],
+    techs: ["react", "typescript", "threejs", "webgl", "webrtc", "websocket", "webview"],
   },
   {
     company: "웹비즈 크리에이티브",
