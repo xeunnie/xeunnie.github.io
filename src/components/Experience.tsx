@@ -8,13 +8,13 @@ import type { Career } from "@/lib/constants";
 import TechBadge from "./TechBadge";
 
 const TYPE_STYLE = {
-  "full-time": { label: "정규직", color: "bg-ice-500/15 text-ice-400 border-ice-500/25" },
+  "full-time": { label: "정규직", color: "bg-ice-100 text-ice-400 border-ice-500/25" },
   intern: { label: "인턴", color: "bg-amber-500/10 text-amber-400 border-amber-500/20" },
   education: { label: "교육", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
 } as const;
 
 const CHAPTER_CHIP: Record<string, { keyword: string; color: string }> = {
-  "운영": { keyword: "운영", color: "bg-ice-500/10 text-ice-300 border-ice-500/20" },
+  "운영": { keyword: "운영", color: "bg-ice-100 text-ice-300 border-ice-500/20" },
   "심화": { keyword: "심화", color: "bg-violet-500/10 text-violet-400 border-violet-500/20" },
   "성장": { keyword: "성장", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
   "확장": { keyword: "확장", color: "bg-amber-500/10 text-amber-400 border-amber-500/20" },
@@ -63,7 +63,7 @@ function CareerCard({ career, index }: { career: Career; index: number }) {
                 </span>
               )}
             </div>
-            <p className="text-sm text-ice-400/90 font-medium">{career.role}</p>
+            <p className="text-sm text-ice-400 font-medium">{career.role}</p>
           </div>
           <div className="flex items-center gap-3 shrink-0">
             <span className="text-xs font-mono text-slate-400">{career.period}</span>
@@ -109,7 +109,7 @@ function GroupedCareerCard({ careers, startIndex }: { careers: Career[]; startIn
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1.5">
               <h3 className="text-lg font-bold text-slate-50">{company}</h3>
-              <span className="text-[10px] font-medium tracking-wider uppercase px-2 py-0.5 rounded-full border bg-ice-500/15 text-ice-400 border-ice-500/25">
+              <span className="text-[10px] font-medium tracking-wider uppercase px-2 py-0.5 rounded-full border bg-ice-100 text-ice-400 border-ice-500/25">
                 정규직
               </span>
             </div>
@@ -140,7 +140,7 @@ function GroupedCareerCard({ careers, startIndex }: { careers: Career[]; startIn
                       {chip.keyword}
                     </span>
                   )}
-                  <span className="text-xs text-ice-400/80 font-medium">{career.role}</span>
+                  <span className="text-xs text-ice-400 font-medium">{career.role}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-mono text-slate-500">{career.period}</span>
@@ -201,7 +201,7 @@ export default function Experience() {
           transition={{ duration: 0.6 }}
           className="text-3xl font-bold tracking-tight text-slate-50 mb-4"
         >
-          Career
+          커리어
         </motion.h2>
         <motion.div
           initial={{ scaleX: 0 }}
