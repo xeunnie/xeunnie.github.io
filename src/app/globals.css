@@ -1,89 +1,132 @@
 @import "tailwindcss";
 
-@theme {
-  --color-ice-50: oklch(0.98 0.015 220);
-  --color-ice-100: oklch(0.95 0.03 220);
-  --color-ice-200: oklch(0.90 0.06 222);
-  --color-ice-300: oklch(0.82 0.08 224);
-  --color-ice-400: oklch(0.74 0.10 226);
-  --color-ice-500: oklch(0.64 0.12 228);
-  --color-ice-600: oklch(0.52 0.12 230);
+/* ─────────────────────────────────────────────────────────
+   토큰
+   slate-*  는 "명도 계단"이 아니라 역할 이름으로 쓴다.
+     slate-950 = 페이지 배경 · slate-900 = 표면 · slate-800 = 경계선
+     slate-500~400 = 보조 텍스트 · slate-300~200 = 본문 · slate-100~50 = 제목
+   라이트가 기본이고, 다크에서는 이 계단을 뒤집는다.
+   덕분에 컴포넌트는 테마를 몰라도 된다.
+   ───────────────────────────────────────────────────────── */
 
-  --color-slate-50: oklch(0.98 0.005 260);
-  --color-slate-100: oklch(0.96 0.01 260);
-  --color-slate-200: oklch(0.91 0.015 260);
-  --color-slate-300: oklch(0.83 0.02 260);
-  --color-slate-400: oklch(0.70 0.025 260);
-  --color-slate-500: oklch(0.55 0.025 260);
-  --color-slate-600: oklch(0.45 0.025 260);
-  --color-slate-700: oklch(0.37 0.025 260);
-  --color-slate-800: oklch(0.28 0.025 260);
-  --color-slate-900: oklch(0.20 0.03 260);
-  --color-slate-950: oklch(0.14 0.03 260);
+/* 원시 팔레트 — 테마는 이 값만 갈아끼운다 */
+:root {
+  --g-page: #ffffff;
+  --g-sunken: #f4f6f8;
+  --g-border: #e8ebed;
+  --g-line: #d1d6db;
+  --g-faint: #656e7b;   /* 흰 배경 5.16 · 틴트 위 4.7 */
+  --g-muted: #616a77;   /* 흰 배경 5.47 · 틴트 위 5.0 */
+  --g-soft: #5b6472;    /* 5.98:1 */
+  --g-body: #4e5968;    /* 7.11:1 */
+  --g-strong: #333d4b;
+  --g-title: #191f28;
+  --g-ink: #0b0e14;
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: "Fira Code", "JetBrains Mono", ui-monospace, monospace;
+  --acc-pale: #fef8fb;
+  --acc-light: #fbeef4;  /* 아주 연한 마젠타 — 액센트가 얹히는 면 */
+  --acc-soft: #f0c8dc;
+  --acc: #c20663;        /* 마젠타 — 흰 배경 6.0:1 */
+  --acc-deep: #a10552;
 
-  --animate-fade-up: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-fade-in: fade-in 0.5s ease forwards;
-  --animate-glow: glow 3s ease-in-out infinite alternate;
+  /* 마젠타와 같은 쿨톤 계열로 맞춘 보조색 */
+  --c-amber: #7a2e63;        /* 자두 — 수상·featured */
+  --c-amber-vivid: #a8437f;
+  --c-emerald: #0e6b76;      /* 틸 — 개인·팀 */
+  --c-emerald-vivid: #158b98;
+  --c-violet: #4338a8;       /* 인디고 — 디자이너 */
+  --c-violet-vivid: #6355d4;
+  --c-rose: #2b5f8a;         /* 스틸블루 — 현장 */
+  --c-rose-vivid: #3d7cb0;
+
+  --surface: #ffffff;
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.04), 0 2px 12px rgb(16 24 40 / 0.04);
+  --shadow-lift: 0 4px 10px rgb(16 24 40 / 0.06), 0 14px 34px rgb(16 24 40 / 0.08);
 }
 
-/* ─── Light Mode ─── */
-[data-theme="light"] {
-  --color-slate-50: oklch(0.15 0.02 260);
-  --color-slate-100: oklch(0.22 0.02 260);
-  --color-slate-200: oklch(0.32 0.02 260);
-  --color-slate-300: oklch(0.42 0.02 260);
-  --color-slate-400: oklch(0.52 0.02 260);
-  --color-slate-500: oklch(0.60 0.02 260);
-  --color-slate-600: oklch(0.68 0.015 260);
-  --color-slate-700: oklch(0.78 0.01 260);
-  --color-slate-800: oklch(0.87 0.008 260);
-  --color-slate-900: oklch(0.95 0.005 260);
-  --color-slate-950: oklch(0.99 0.003 260);
+[data-theme="dark"] {
+  --g-page: #0b0d10;
+  --g-sunken: #14171c;
+  --g-border: #262a31;
+  --g-line: #363b44;
+  --g-faint: #848c99;   /* 카드 위 4.63:1 */
+  --g-muted: #858e9a;   /* 5.87:1 */
+  --g-soft: #9aa3af;    /* 7.63:1 */
+  --g-body: #b9c0c9;
+  --g-strong: #d7dce2;
+  --g-title: #eef1f4;
+  --g-ink: #ffffff;
 
-  --color-ice-300: oklch(0.52 0.13 224);
-  --color-ice-400: oklch(0.46 0.15 226);
-  --color-ice-500: oklch(0.40 0.16 228);
-  --color-ice-600: oklch(0.34 0.14 230);
+  --acc-pale: #161014;
+  --acc-light: #221620;  /* 마젠타를 어둡게 눕힌 면 */
+  --acc-soft: #4a2338;
+  --acc: #ff5fa2;        /* 마젠타 — 다크 배경 6.87:1 */
+  --acc-deep: #ffa0c6;
+
+  --c-amber: #e79ac9;    /* 자두 */
+  --c-emerald: #5ec7d4;  /* 틸 */
+  --c-violet: #a89ff8;   /* 인디고 */
+  --c-rose: #7ab5e8;     /* 스틸블루 */
+
+  --surface: #14171c;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-lift: 0 6px 16px rgb(0 0 0 / 0.4), 0 16px 40px rgb(0 0 0 / 0.3);
+}
+
+/*
+  inline 이어야 Tailwind 가 유틸리티에 var() 를 그대로 심는다.
+  일반 @theme 로 두면 내장 색상명(slate-*)이 리터럴로 굳어 테마 전환이 먹지 않는다.
+*/
+@theme inline {
+  --color-slate-950: var(--g-page);
+  --color-slate-900: var(--g-sunken);
+  --color-slate-800: var(--g-border);
+  --color-slate-700: var(--g-line);
+  --color-slate-600: var(--g-faint);
+  --color-slate-500: var(--g-muted);
+  --color-slate-400: var(--g-soft);
+  --color-slate-300: var(--g-body);
+  --color-slate-200: var(--g-strong);
+  --color-slate-100: var(--g-title);
+  --color-slate-50: var(--g-ink);
+
+  --color-ice-50: var(--acc-pale);
+  --color-ice-100: var(--acc-light);
+  --color-ice-200: var(--acc-soft);
+  --color-ice-300: var(--acc);
+  --color-ice-400: var(--acc);
+  --color-ice-500: var(--acc);
+  --color-ice-600: var(--acc-deep);
+
+  --color-amber-300: var(--c-amber);
+  --color-amber-400: var(--c-amber);
+  --color-amber-500: var(--c-amber-vivid);
+  --color-emerald-300: var(--c-emerald);
+  --color-emerald-400: var(--c-emerald);
+  --color-emerald-500: var(--c-emerald-vivid);
+  --color-violet-300: var(--c-violet);
+  --color-violet-400: var(--c-violet);
+  --color-violet-500: var(--c-violet-vivid);
+  --color-rose-300: var(--c-rose);
+  --color-rose-400: var(--c-rose);
+  --color-rose-500: var(--c-rose-vivid);
+
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, "Apple SD Gothic Neo", "Inter", system-ui, sans-serif;
+  --font-mono: "SF Mono", "Fira Code", ui-monospace, SFMono-Regular, monospace;
+
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fade-in 0.4s ease forwards;
 }
 
 /* ─── Keyframes ─── */
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-
-@keyframes glow {
-  from { box-shadow: 0 0 40px oklch(0.78 0.10 230 / 0.15); }
-  to { box-shadow: 0 0 80px oklch(0.68 0.13 230 / 0.25); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-@keyframes orbit {
-  from { transform: rotate(0deg) translateX(140px) rotate(0deg); }
-  to { transform: rotate(360deg) translateX(140px) rotate(-360deg); }
-}
-
-@keyframes pulse-ring {
-  0% { transform: scale(0.8); opacity: 0.6; }
-  50% { transform: scale(1.2); opacity: 0; }
-  100% { transform: scale(0.8); opacity: 0; }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
 }
 
 /* ─── Base ─── */
@@ -92,131 +135,94 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
+  scroll-padding-top: 84px;
 }
 
 body {
-  background: var(--color-slate-950);
-  color: var(--color-slate-200);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: var(--g-page);
+  color: var(--color-slate-300);
+  letter-spacing: -0.011em;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 제목은 조금 더 조이고, 본문은 편하게 */
+h1, h2, h3, h4 {
+  letter-spacing: -0.028em;
 }
 
 ::selection {
-  background: oklch(0.58 0.15 230 / 0.3);
+  background: color-mix(in srgb, var(--acc) 20%, transparent);
 }
 
-[data-theme="light"] ::selection {
-  background: oklch(0.58 0.15 230 / 0.2);
-}
+/* ─────────────────────────────────────────────────────────
+   레이어 밖 규칙이라 Tailwind 유틸리티보다 우선한다.
+   컴포넌트를 일일이 고치지 않고 톤을 바꾸기 위한 장치.
+   ───────────────────────────────────────────────────────── */
 
-/* ─── Glass ─── */
+/* 상단 내비 — 애플식 반투명 바 */
 .glass {
-  background: oklch(0.14 0.03 260 / 0.6);
-  backdrop-filter: blur(20px) saturate(1.4);
-  border: 1px solid oklch(1 0 0 / 0.06);
+  background: color-mix(in srgb, var(--g-page) 72%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border: 0;
+  border-bottom: 1px solid var(--g-border);
 }
 
-[data-theme="light"] .glass {
-  background: oklch(0.99 0.003 260 / 0.7);
-  backdrop-filter: blur(20px) saturate(1.2);
-  border: 1px solid oklch(0 0 0 / 0.06);
-}
-
-/* ─── Gradient Text ─── */
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-ice-300), var(--color-ice-500));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ─── Mesh Background ─── */
-.mesh-bg {
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 40%, oklch(0.58 0.15 230 / 0.08), transparent),
-    radial-gradient(ellipse 60% 80% at 80% 20%, oklch(0.48 0.14 230 / 0.06), transparent),
-    radial-gradient(ellipse 50% 50% at 50% 80%, oklch(0.68 0.13 230 / 0.04), transparent);
-}
-
-[data-theme="light"] .mesh-bg {
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 40%, oklch(0.58 0.15 228 / 0.06), transparent),
-    radial-gradient(ellipse 60% 80% at 80% 20%, oklch(0.48 0.14 228 / 0.04), transparent),
-    radial-gradient(ellipse 50% 50% at 50% 80%, oklch(0.68 0.13 228 / 0.03), transparent);
-}
-
-/* ─── Grid Overlay ─── */
-.grid-overlay {
-  background-image:
-    linear-gradient(oklch(1 0 0 / 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, oklch(1 0 0 / 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-[data-theme="light"] .grid-overlay {
-  background-image:
-    linear-gradient(oklch(0.46 0.15 226 / 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, oklch(0.46 0.15 226 / 0.06) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-/* ─── Blueprint Grid (Hero) ─── */
-.blueprint-grid {
-  background-image:
-    linear-gradient(oklch(0.74 0.10 226 / 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, oklch(0.74 0.10 226 / 0.06) 1px, transparent 1px),
-    linear-gradient(oklch(0.74 0.10 226 / 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, oklch(0.74 0.10 226 / 0.03) 1px, transparent 1px);
-  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
-}
-
-[data-theme="light"] .blueprint-grid {
-  background-image:
-    linear-gradient(oklch(0.46 0.15 226 / 0.10) 1px, transparent 1px),
-    linear-gradient(90deg, oklch(0.46 0.15 226 / 0.10) 1px, transparent 1px),
-    linear-gradient(oklch(0.46 0.15 226 / 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, oklch(0.46 0.15 226 / 0.04) 1px, transparent 1px);
-  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
-}
-
-/* ─── Shimmer ─── */
+/* 장식용 배경은 전부 걷어낸다 */
+.mesh-bg,
+.blueprint-grid,
+.grid-overlay,
 .shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    oklch(0.68 0.13 230 / 0.06) 50%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 3s ease-in-out infinite;
+  background: none !important;
+  background-image: none !important;
+  animation: none !important;
 }
 
-/* ─── Scrollbar ─── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-slate-950); }
-::-webkit-scrollbar-thumb { background: var(--color-slate-700); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-ice-500); }
+/* 그라데이션 글자 대신 단색 */
+.gradient-text {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--color-slate-50);
+}
 
-/* ─── Card Hover Lift ─── */
+/* 카드 — 토스처럼 흰 면 + 얇은 경계 + 부드러운 그림자 */
 .card-hover {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s ease,
-              background-color 0.3s ease,
-              box-shadow 0.3s ease;
+  background: var(--surface);
+  border-color: var(--g-border);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px oklch(0.58 0.15 230 / 0.08);
+  transform: translateY(-3px);
+  border-color: var(--g-line);
+  box-shadow: var(--shadow-lift);
 }
 
-[data-theme="light"] .card-hover:hover {
-  box-shadow: 0 12px 40px oklch(0.46 0.15 226 / 0.12);
+/* 스크롤바 */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--g-line);
+  border-radius: 99px;
+  border: 3px solid var(--g-page);
 }
+::-webkit-scrollbar-thumb:hover { background: var(--color-slate-500); }
 
-/* ─── Mobile spacing ─── */
+/* 모바일 여백 */
 @media (max-width: 640px) {
   .peer-review-card p {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     line-height: 1.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

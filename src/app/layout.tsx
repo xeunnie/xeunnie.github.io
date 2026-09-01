@@ -1,21 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Fira_Code } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SITE } from "@/lib/constants";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const firaCode = Fira_Code({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -56,7 +43,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0f172a",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0d10" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
@@ -65,9 +55,7 @@ const themeScript = `
   (function(){
     try {
       var t = localStorage.getItem('theme');
-      if (t === 'light' || t === 'dark') {
-        document.documentElement.setAttribute('data-theme', t);
-      }
+      document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
     } catch(e){}
   })();
 `;
@@ -78,8 +66,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className={`scroll-smooth ${inter.variable} ${firaCode.variable}`}>
+    <html lang="ko" className="scroll-smooth" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="font-sans antialiased">
