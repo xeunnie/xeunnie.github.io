@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CAREERS, SITE } from "@/lib/constants";
+import { CAREERS } from "@/lib/constants";
 import CareerDetail from "./CareerDetail";
 
 export function generateStaticParams() {
@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!career) return {};
 
   return {
-    title: `${career.company} | ${SITE.name}`,
+    title: career.company,
     description: career.summary,
   };
 }
