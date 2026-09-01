@@ -29,7 +29,7 @@ export default function PeerReview() {
           transition={{ duration: 0.6 }}
           className="text-3xl font-bold tracking-tight text-slate-50 mb-4"
         >
-          Peer Review
+          동료 평가
         </motion.h2>
         <motion.div
           initial={{ scaleX: 0 }}
@@ -43,7 +43,7 @@ export default function PeerReview() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-sm text-slate-400 mb-14"
         >
-          함께 일했던 동료들의 이야기
+          함께 일했던 동료들의 이야기 · {PEER_REVIEWS.length}건
         </motion.p>
 
         <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
@@ -52,20 +52,32 @@ export default function PeerReview() {
               key={review.name}
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.4 + i * 0.12 }}
+              transition={{ duration: 0.5, delay: 0.4 + Math.min(i * 0.08, 0.5) }}
               className="peer-review-card relative p-6 md:p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 card-hover transition-all duration-300"
             >
-              <span className="absolute -top-3 left-6 text-4xl text-ice-500/20 font-serif leading-none select-none">
+              <span className="absolute -top-3 left-6 text-4xl text-ice-500/25 font-serif leading-none select-none">
                 &ldquo;
               </span>
               <p className="text-sm text-slate-300 leading-relaxed mb-4 mt-2">
                 <HighlightedContent content={review.content} highlight={review.highlight} />
               </p>
-              <div className="px-3 py-2 rounded-lg bg-ice-500/5 border border-ice-500/10 mb-4">
+              <div className="px-3 py-2 rounded-lg bg-ice-100 border border-ice-500/10 mb-4">
                 <p className="text-xs text-ice-300 font-medium">&ldquo;{review.highlight}&rdquo;</p>
               </div>
               <div className="border-t border-slate-800/60 pt-4">
-                <p className="text-sm font-medium text-slate-100">{review.name}</p>
+                {review.github ? (
+                  <a
+                    href={`https://github.com/${review.github}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-100 transition-colors hover:text-ice-400"
+                  >
+                    {review.name}
+                    <span className="font-mono text-[11px] text-slate-500">@{review.github}</span>
+                  </a>
+                ) : (
+                  <p className="text-sm font-medium text-slate-100">{review.name}</p>
+                )}
                 <p className="text-xs text-slate-500">{review.role} &middot; {review.relation}</p>
               </div>
             </motion.div>

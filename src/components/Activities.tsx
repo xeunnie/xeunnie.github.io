@@ -2,7 +2,8 @@
 
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
-import { ACTIVITIES } from "@/lib/constants";
+import Link from "next/link";
+import { ACTIVITIES, PROJECTS } from "@/lib/constants";
 import type { Activity } from "@/lib/constants";
 
 function ActivityCard({ activity, index }: { activity: Activity; index: number }) {
@@ -44,6 +45,42 @@ function ActivityCard({ activity, index }: { activity: Activity; index: number }
           </li>
         ))}
       </ul>
+      {(activity.links?.length || activity.projects?.length) && (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {activity.projects?.map((slug) => {
+            const p = PROJECTS.find((x) => x.slug === slug);
+            if (!p) return null;
+            return (
+              <Link
+                key={slug}
+                href={`/projects/${slug}`}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-ice-500/25 bg-ice-100 px-2.5 py-1 text-[11px] font-medium text-ice-400 transition-colors hover:border-ice-500/50"
+              >
+                {p.title} 상세
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                  <path d="M5 3l5 5-5 5" />
+                </svg>
+              </Link>
+            );
+          })}
+          {activity.links?.map((l) => (
+            <a
+              key={l.url}
+              href={l.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/50 px-2.5 py-1 text-[11px] text-slate-400 transition-colors hover:border-slate-600 hover:text-slate-200"
+            >
+              {l.label}
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </a>
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 }
@@ -65,7 +102,7 @@ export default function Activities() {
           transition={{ duration: 0.6 }}
           className="text-3xl font-bold tracking-tight text-slate-100 mb-4"
         >
-          Activities
+          활동과 커뮤니티
         </motion.h2>
         <motion.div
           initial={{ scaleX: 0 }}
