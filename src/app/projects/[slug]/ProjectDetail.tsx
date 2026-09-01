@@ -4,13 +4,13 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 import { SITE } from "@/lib/constants";
-import type { Project } from "@/lib/constants";
+import type { Project, Career } from "@/lib/constants";
 import TechBadge from "@/components/TechBadge";
 import ViewCounter from "@/components/ViewCounter";
 
 const CATEGORY_LABEL = { company: "Company Project", personal: "Personal Project" } as const;
 const CATEGORY_STYLE = {
-  company: "bg-ice-500/10 text-ice-400 border border-ice-500/20",
+  company: "bg-ice-100 text-ice-400 border border-ice-500/20",
   personal: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
 } as const;
 
@@ -34,21 +34,29 @@ interface Props {
   project: Project;
   prevProject: Project | null;
   nextProject: Project | null;
+  related: Project[];
+  career: { index: number; career: Career } | null;
 }
 
-export default function ProjectDetail({ project, prevProject, nextProject }: Props) {
+export default function ProjectDetail({
+  project,
+  prevProject,
+  nextProject,
+  related,
+  career,
+}: Props) {
   return (
     <main className="min-h-screen">
       <nav className="fixed top-0 inset-x-0 z-50 glass border-b border-white/5">
         <div className="mx-auto max-w-4xl px-6 h-16 flex items-center justify-between">
           <Link
-            href="/#projects"
+            href="/projects"
             className="flex items-center gap-2 text-sm text-slate-400 hover:text-ice-400 transition-colors"
           >
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M11 3L5 9l6 6" />
             </svg>
-            Home
+            프로젝트 목록
           </Link>
           <ViewCounter slug={project.slug} />
         </div>
@@ -62,17 +70,72 @@ export default function ProjectDetail({ project, prevProject, nextProject }: Pro
                 {CATEGORY_LABEL[project.category]}
               </span>
               {project.company && <span className="text-xs text-slate-500">@ {project.company}</span>}
+              {!project.company && project.org && (
+                <span className="text-xs text-slate-500">{project.org}</span>
+              )}
               <span className="text-xs font-mono text-slate-500">{project.period}</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-50 mb-3">{project.title}</h1>
-            <p className="text-lg text-ice-400/80 font-medium mb-2">{project.subtitle}</p>
+            <p className="text-lg text-ice-400 font-medium mb-2">{project.subtitle}</p>
             <p className="text-sm font-mono text-slate-500">Role: {project.role}</p>
+            {project.award && (
+              <div className="mt-6 inline-flex items-start gap-3 rounded-xl border border-amber-400/25 bg-amber-400/[0.07] px-5 py-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0 text-amber-300" aria-hidden>
+                  <circle cx="12" cy="8" r="6" />
+                  <path d="M8.2 13.9 7 22l5-3 5 3-1.2-8.1" />
+                </svg>
+                <div>
+                  <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-amber-300/80 mb-1">
+                    Award
+                  </p>
+                  <p className="text-base font-semibold text-amber-400">{project.award}</p>
+                  {project.awardImage && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={project.awardImage}
+                      alt={project.award}
+                      className="mt-4 max-w-sm w-full rounded-lg border border-amber-400/20"
+                      loading="lazy"
+                    />
+                  )}
+                </div>
+              </div>
+            )}
           </motion.div>
         </div>
       </section>
 
       <section className="py-16">
         <div className="mx-auto max-w-4xl px-6 space-y-20">
+          {project.shots && project.shots.length > 0 && (
+            <ScrollSection>
+              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">
+                Screens
+              </h2>
+              <div className="flex flex-col gap-10">
+                {project.shots.map((shot) => (
+                  <figure key={shot.src}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={shot.src}
+                      alt={shot.caption}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full rounded-xl border border-slate-800 bg-slate-900"
+                    />
+                    <figcaption className="mt-3 text-sm text-slate-400 leading-relaxed">
+                      {shot.caption}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+              <p className="mt-6 text-xs text-slate-500 leading-relaxed">
+                실제 운영 화면입니다. CCTV 영상에 잡힌 이용객은 알아볼 수 없게 처리했고,
+                내부 접속 주소는 잘라냈습니다.
+              </p>
+            </ScrollSection>
+          )}
+
           <ScrollSection>
             <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Overview</h2>
             <p className="text-base text-slate-300 leading-relaxed">{project.overview}</p>
@@ -180,19 +243,71 @@ export default function ProjectDetail({ project, prevProject, nextProject }: Pro
               </div>
             </ScrollSection>
           )}
-
-          <ScrollSection>
-            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Screenshots</h2>
-            <div className="grid md:grid-cols-2 gap-4">
-              {Array.from({ length: project.imageCount ?? 2 }, (_, i) => (
-                <div key={i} className="aspect-video rounded-xl bg-slate-900/50 border border-slate-800/60 flex items-center justify-center">
-                  <p className="text-xs text-slate-600">이미지 추가 예정</p>
-                </div>
-              ))}
-            </div>
-          </ScrollSection>
-        </div>
+</div>
       </section>
+
+      {(related.length > 0 || career) && (
+        <section className="border-t border-slate-800/60 py-12">
+          <div className="mx-auto max-w-4xl px-6">
+            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">
+              이어서 볼 것
+            </h2>
+
+            {career && (
+              <Link
+                href={`/career/${career.index}`}
+                className="group mb-4 flex items-center justify-between gap-4 rounded-xl border border-slate-800 bg-slate-900/40 px-5 py-4 transition-colors hover:border-ice-500/40"
+              >
+                <span>
+                  <span className="block text-xs text-slate-500 mb-1">이 프로젝트를 한 자리</span>
+                  <span className="text-sm font-semibold text-slate-100 group-hover:text-ice-400 transition-colors">
+                    {career.career.company}
+                    {career.career.team ? ` · ${career.career.team}` : ""}
+                    <span className="ml-2 font-mono text-xs font-normal text-slate-500">
+                      {career.career.period}
+                    </span>
+                  </span>
+                </span>
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 text-slate-600 group-hover:text-ice-500 transition-colors" aria-hidden>
+                  <path d="M5 3l5 5-5 5" />
+                </svg>
+              </Link>
+            )}
+
+            {related.length > 0 && (
+              <>
+                <p className="mb-3 text-xs text-slate-500">
+                  {project.company ?? project.org}에서 한 다른 프로젝트
+                </p>
+                <ul className="grid sm:grid-cols-2 gap-3">
+                  {related.map((r) => (
+                    <li key={r.slug}>
+                      <Link
+                        href={`/projects/${r.slug}`}
+                        className="group flex h-full flex-col rounded-xl border border-slate-800 bg-slate-900/40 px-5 py-4 transition-colors hover:border-ice-500/40"
+                      >
+                        <span className="flex items-baseline gap-2">
+                          <span className="text-sm font-semibold text-slate-100 group-hover:text-ice-400 transition-colors">
+                            {r.title}
+                          </span>
+                          {r.group === project.group && r.group && (
+                            <span className="rounded border border-ice-500/25 bg-ice-100 px-1.5 py-px font-mono text-[9px] uppercase text-ice-400">
+                              같은 제품군
+                            </span>
+                          )}
+                        </span>
+                        <span className="mt-1 text-xs text-slate-400 leading-relaxed">
+                          {r.subtitle}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        </section>
+      )}
 
       <section className="border-t border-slate-800/60 py-12">
         <div className="mx-auto max-w-4xl px-6 flex justify-between items-center">

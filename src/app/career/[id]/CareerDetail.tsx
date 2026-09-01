@@ -3,11 +3,12 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import { PROJECTS } from "@/lib/constants";
 import type { Career } from "@/lib/constants";
 import TechBadge from "@/components/TechBadge";
 
 const TYPE_STYLE = {
-  "full-time": { label: "정규직", color: "bg-ice-500/15 text-ice-400 border-ice-500/25" },
+  "full-time": { label: "정규직", color: "bg-ice-100 text-ice-400 border-ice-500/25" },
   intern: { label: "인턴", color: "bg-amber-500/10 text-amber-400 border-amber-500/20" },
   education: { label: "교육", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
 } as const;
@@ -41,13 +42,13 @@ export default function CareerDetail({ career, prev, next }: Props) {
       <nav className="fixed top-0 inset-x-0 z-50 glass border-b border-white/5">
         <div className="mx-auto max-w-4xl px-6 h-16 flex items-center justify-between">
           <Link
-            href="/#career"
+            href="/about#career"
             className="flex items-center gap-2 text-sm text-slate-400 hover:text-ice-400 transition-colors"
           >
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M11 3L5 9l6 6" />
             </svg>
-            Home
+            About
           </Link>
         </div>
       </nav>
@@ -73,7 +74,7 @@ export default function CareerDetail({ career, prev, next }: Props) {
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-50 mb-3">
               {career.company}
             </h1>
-            <p className="text-lg text-ice-400/80 font-medium mb-2">{career.role}</p>
+            <p className="text-lg text-ice-400 font-medium mb-2">{career.role}</p>
             <p className="text-sm font-mono text-slate-500">{career.chapter}</p>
           </motion.div>
         </div>
@@ -120,18 +121,37 @@ export default function CareerDetail({ career, prev, next }: Props) {
             <ScrollSection>
               <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Projects</h2>
               <div className="flex flex-wrap gap-2">
-                {career.projects.map((p, i) => (
-                  <motion.span
-                    key={p}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: i * 0.05 }}
-                    className="text-sm px-4 py-2 rounded-xl bg-slate-800/60 text-slate-300 border border-slate-700/40 hover:border-ice-500/30 hover:text-ice-400 transition-all"
-                  >
-                    {p}
-                  </motion.span>
-                ))}
+                {career.projects.map((name, i) => {
+                  // 상세 페이지가 있는 프로젝트면 링크로, 아니면 그대로 칩
+                  const hit = PROJECTS.find(
+                    (x) => name.includes(x.title) || x.title.includes(name)
+                  );
+                  const cls =
+                    "inline-flex items-center gap-1.5 text-sm px-4 py-2 rounded-xl bg-slate-800/60 text-slate-300 border border-slate-700/40 transition-all";
+                  return (
+                    <motion.div
+                      key={name}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: i * 0.05 }}
+                    >
+                      {hit ? (
+                        <Link
+                          href={`/projects/${hit.slug}`}
+                          className={`${cls} hover:border-ice-500/40 hover:text-ice-400`}
+                        >
+                          {name}
+                          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                            <path d="M5 3l5 5-5 5" />
+                          </svg>
+                        </Link>
+                      ) : (
+                        <span className={cls}>{name}</span>
+                      )}
+                    </motion.div>
+                  );
+                })}
               </div>
             </ScrollSection>
           )}
