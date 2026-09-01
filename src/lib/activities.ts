@@ -1,3 +1,8 @@
+export interface ActivityLink {
+  label: string;
+  url: string;
+}
+
 export interface Activity {
   name: string;
   category: "dev" | "leadership";
@@ -6,6 +11,9 @@ export interface Activity {
   role: string;
   active: boolean;
   highlights: string[];
+  links?: ActivityLink[];
+  /** 이 활동에서 나온 프로젝트 slug — 상세로 이어준다 */
+  projects?: string[];
 }
 
 export const ACTIVITIES: Activity[] = [
@@ -17,9 +25,13 @@ export const ACTIVITIES: Activity[] = [
     role: "스터디 팀장",
     active: true,
     highlights: [
-      "프론트엔드 성능 최적화·고도화 주제로 스터디 기획 및 리드",
-      "React 렌더링 최적화, TDD, 테스트 자동화, 번들링 개선 등 실무 중심 주제 매주 선정",
-      "발표 기반 Wiki 정리 시스템 도입 — 지식 공유 및 트러블슈팅 문서화 체계 확립",
+      "프론트엔드 딥다이브 스터디를 기획하고 리드 — 주차마다 주제 하나를 실습까지 끌고 감",
+      "31주차까지 누적, 주차별 레포로 기록 — CSR/SSR·SSG 렌더링, 테스트, CI/CD, React Query, SWR, useTransition, 번들링, 코드 스플리팅, 메모이제이션, WebP, PWA, 웹 접근성, 마이크로 프론트엔드, 브라우저 렌더링, 웹 아키텍처, CDN",
+      "매주 발표 후 정리를 남기는 방식 — 읽고 끝내지 않고 실습과 문서가 함께 남게 함",
+    ],
+    links: [
+      { label: "스터디 조직", url: "https://github.com/FESIStudy" },
+      { label: "주차별 레포", url: "https://github.com/orgs/FESIStudy/repositories" },
     ],
   },
   {
@@ -34,6 +46,11 @@ export const ACTIVITIES: Activity[] = [
       "코드 리뷰 및 기술 토론 운영으로 실무에 가까운 협업 경험 축적",
       "코드 품질, 타입 안정성, 아키텍처 설계 관점의 깊이 있는 논의 주도",
     ],
+    links: [
+      { label: "스터디 조직", url: "https://github.com/Front-Ninjas" },
+      { label: "모던 JS 딥다이브", url: "https://github.com/Front-Ninjas/modern-javascript-deep-dive" },
+      { label: "우아한 타입스크립트", url: "https://github.com/Front-Ninjas/woowahan-typescript-with-react" },
+    ],
   },
   {
     name: "Devlog Challengers",
@@ -46,6 +63,10 @@ export const ACTIVITIES: Activity[] = [
       "프론트·백엔드 개발자 간 지식 교류 목적의 블로그 기반 기술 스터디",
       "REST API 설계, DB 모델링, 서버 구조 등 백엔드 주제를 프론트 입장에서 학습",
       "매주 1개 이상 기술 블로그 작성 및 발표",
+    ],
+    links: [
+      { label: "velog", url: "https://velog.io/@xeunnie" },
+      { label: "Tistory", url: "https://xeunnie.tistory.com" },
     ],
   },
   {
@@ -60,6 +81,8 @@ export const ACTIVITIES: Activity[] = [
       "WebSocket 및 브라우저 저장소를 활용한 실시간 서비스 구현",
       "디자이너·백엔드와 애자일 방식의 빠른 기획-개발-피드백 루프 수행",
     ],
+    links: [{ label: "팀 조직", url: "https://github.com/chickHackathon" }],
+    projects: ["ppiyo"],
   },
   {
     name: "Kubernetes & Docker Study",
@@ -73,6 +96,8 @@ export const ACTIVITIES: Activity[] = [
       "카나리 무중단 배포 전략 설계 및 적용",
       "최종 프로젝트: 디스코드 클론 플랫폼 (ChatFlow) 구축",
     ],
+    links: [{ label: "팀 조직", url: "https://github.com/ChatFlowProject" }],
+    projects: ["chatflow"],
   },
   {
     name: "아주대학교 학보사",

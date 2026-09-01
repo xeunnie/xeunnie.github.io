@@ -5,6 +5,12 @@ export interface ProjectLink {
   url: string;
 }
 
+export interface ProjectShot {
+  /** public/ 기준 경로 */
+  src: string;
+  caption: string;
+}
+
 export interface ProjectSection {
   title: string;
   items: string[];
@@ -16,33 +22,68 @@ export interface Project {
   subtitle: string;
   category: "company" | "personal";
   featured?: boolean;
+  /**
+   * 목록에서의 우선순위. 낮을수록 앞.
+   * "무엇을 먼저 보여줄지"는 최신순으로 자동 정해지지 않아서 손으로 정한다.
+   * 기준 — 혼자 끝까지 책임진 범위 · 문제의 난이도 · 검증 가능한 근거(수상·커밋·스크린샷).
+   */
+  rank?: number;
+  /**
+   * 목록에서 접어 두는 프로젝트.
+   * 개별로 힘을 싣기보다 "여러 도메인·규모·협업을 쉬지 않고 겪었다"는 묶음으로 보여줄 것들.
+   * 상세 페이지는 그대로 살아 있다.
+   */
+  minor?: boolean;
+  /**
+   * 같은 제품군을 묶는 이름. 지정하면 /projects 에서 한 덩어리로 렌더된다.
+   * 한 제품이 여러 앱으로 쪼개져도 목록이 그 제품으로 도배되지 않게 하는 장치.
+   */
+  group?: string;
   company?: string;
+  /** 소속 팀. 회사 안에서 어느 조직에 있었는지 필터링하기 위한 것. */
+  team?: string;
+  /** 회사 밖 프로젝트의 출처 — 부트캠프·해커톤·수업 이름. */
+  org?: string;
+  /** 수상 내역. 있으면 카드와 상세에 강조 표시된다. */
+  award?: string;
+  /** public/ 기준 상장·수상 이미지 경로. 파일이 있을 때만 채운다. */
+  awardImage?: string;
   period: string;
   role: string;
   description: string;
   overview: string;
   techs: BadgeKey[];
   highlights: string[];
-  imageCount?: number;
   links?: ProjectLink[];
+  /** 화면 캡처. 첫 장이 목록 카드의 썸네일로도 쓰인다. */
+  shots?: ProjectShot[];
   sections?: ProjectSection[];
 }
 
 export const PROJECTS: Project[] = [
   {
     slug: "onmeet",
+    rank: 5,
+    org: "코리아IT 풀스택 과정",
+    award: "코리아IT 풀스택 과정 수강생 우수상",
     title: "OnMeet",
     subtitle: "AI 회의록 자동 생성 B2B 화상회의 SaaS 플랫폼",
     category: "personal",
     featured: true,
     period: "2024 — 2026",
-    role: "프로젝트 팀장 · Frontend 단독 개발 + Backend MSA 설계·구현",
+    role: "팀장 · Frontend 단독 개발 + Backend MSA 설계·구현",
     description:
       "프론트 단독 + Polyglot MSA 7개 서비스 설계 — Go 전환으로 메모리 96% 감소, LiveKit SFU로 대역폭 O(N²)→O(N)",
     overview:
-      "AI 회의록 자동 생성 기능을 갖춘 B2B 화상회의 SaaS 플랫폼입니다. 프론트엔드를 단독 개발(React + Vite + Zustand + TanStack Query)하고, 백엔드 Polyglot MSA 7개 서비스(Gateway/Auth/Video/AI/Notification/File/Email)를 설계·구현했습니다. 화상회의·채팅 영역을 중심으로 주도하며, LiveKit SFU 기반 WebRTC, Kafka 이벤트 드리븐 비동기 통신, Zod 런타임 스키마 검증, SSE 실시간 STT 스트리밍, Defense-in-Depth 보안까지 프론트-백 전 영역을 아우르는 풀스택 프로젝트입니다.",
+      "코리아IT에서 들은 풀스택 보강 수업에서 팀장을 맡아 시작한 프로젝트로, 과정 내 수강생 우수상을 받았습니다. AI 회의록 자동 생성 기능을 갖춘 B2B 화상회의 SaaS 플랫폼입니다. 프론트엔드를 단독 개발(React + Vite + Zustand + TanStack Query)하고, 백엔드 Polyglot MSA 7개 서비스(Gateway/Auth/Video/AI/Notification/File/Email)를 설계·구현했습니다. 화상회의·채팅 영역을 중심으로 주도하며, LiveKit SFU 기반 WebRTC, Kafka 이벤트 드리븐 비동기 통신, Zod 런타임 스키마 검증, SSE 실시간 STT 스트리밍, Defense-in-Depth 보안까지 프론트-백 전 영역을 아우르는 풀스택 프로젝트입니다.",
     techs: ["react", "typescript", "zustand", "reactquery", "vite", "tailwind", "radix", "framer", "zod", "sentry", "firebase", "kotlin", "java", "go", "springboot", "livekit", "webrtc", "kafka", "redis", "s3", "docker", "mysql", "postgresql", "nginx", "gcp", "openai"],
+    links: [
+      { label: "배포", url: "https://onmeet.cloud" },
+      { label: "GitHub", url: "https://github.com/evencoding/onmeet-frontend" },
+      { label: "조직 전체", url: "https://github.com/evencoding" },
+    ],
     highlights: [
+      "코리아IT 풀스택 과정 수강생 우수상 — 팀장으로 기획부터 배포까지 주도",
       "프론트엔드 단독 개발 — Feature-Based 아키텍처, Zustand + TanStack Query 하이브리드 상태 관리",
       "Zod 런타임 스키마 검증 fetcher 패턴 — 타입 안전한 API 계층 설계",
       "SSE 기반 실시간 STT 스트리밍 — Ref 버퍼링 + 쓰로틀링 + 자동 재연결 커스텀 훅",
@@ -123,78 +164,285 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "busan-metro",
-    title: "부산교통공사 1호선 시설 관제 시스템",
-    subtitle: "3D 시설 모니터링 & WebRTC CCTV 스트리밍",
+    rank: 2,
+    title: "부산 도시철도 통합 관제",
+    subtitle: "3D 역사 관제 + WebRTC CCTV 실시간 스트리밍",
     category: "company",
     featured: true,
     company: "플럭시티",
-    period: "2025",
-    role: "Frontend 단독 개발 (프론트 100%, 백엔드 30%)",
+    team: "DX 기술팀",
+    group: "Plug Platform",
+    period: "2025.05 — 2025.09",
+    role: "Frontend 단독 개발 (3D 관제 · CCTV 스트리밍 · 외부 플랫폼 연동)",
     description:
-      "폐쇄망에서 TURN/STUN 없이 WebRTC CCTV를 스트리밍하고, Three.js 3D 관제 + GPS 차량 추적을 단독 개발",
+      "협업처 플랫폼 API 스펙에 맞춰 시설물 9종을 연결하고, WebRTC로 현장 CCTV를 붙여 실제 운영까지 도달시킨 도시철도 관제 화면",
     overview:
-      "부산교통공사 1호선 전체 노선의 시설물을 실시간으로 모니터링하고 제어하는 3D 관제 시스템입니다. Three.js 기반 3D 시각화, GPS 실시간 차량 위치 추적, WebRTC 기반 현장 CCTV 영상 스트리밍, WebSocket 센서 데이터 수신을 프론트엔드 단독으로 개발했습니다. 특히 폐쇄망 환경에서의 WebRTC CCTV 스트리밍 구조를 분석·구현하며 실시간 미디어 처리 역량을 심화했고, 현장에서 바로 배포하고 오류 발생 시 즉시 수정·재배포하는 현장 대응 경험을 쌓았습니다.",
-    techs: ["react", "typescript", "threejs", "webrtc", "websocket", "webview"],
-    imageCount: 4,
+      "부산교통공사 도시철도(사상하단선) 역사의 시설물을 3D 도면 위에서 관제하는 시스템입니다. 자체 3D 엔진으로 역사 모델을 띄우고 층별 전환·POI를 붙였고, 협업처 관제 플랫폼이 제공한 API 스펙에 맞춰 조명·셔터·CCTV·화재감지 등 시설물 9종과 제어 인터페이스를 연결했습니다. 가장 중요한 축은 CCTV였습니다 — RTSP 카메라를 브라우저에서 보려면 WebRTC 게이트웨이와 SDP를 직접 교환해야 했고, 이 연결을 붙여 현장에서 실제로 영상이 도는 상태까지 만들었습니다. 디자인 협업처 시안을 반영하면서 두 개의 서로 다른 백엔드(협업처 플랫폼 · 자사 API)를 한 화면에서 다뤘고, 현장에 배포한 뒤 즉시 수정·재배포하는 사이클도 직접 돌렸습니다.",
+    techs: ["react", "typescript", "vite", "threejs", "webgl", "webrtc", "sse", "zustand", "ky", "tailwind", "pnpm"],
+    links: [{ label: "GitHub", url: "https://github.com/seung-choi/busan-sasang" }],
+    shots: [
+      {
+        src: "/shot/busan-cctv.jpg",
+        caption:
+          "3D 역사 도면 위에서 CCTV를 고르면 WebRTC 스트림이 모달로 열린다. 좌측은 역사 내 CCTV 68대 목록, 상단은 대합실·승강장·외부 환경값, 우측은 층 전환.",
+      },
+      {
+        src: "/shot/busan-admin-space.jpg",
+        caption:
+          "관리자 공간 관리 — 좌측 GLB 장비 라이브러리(화재센서·공기청정기·소방펌프·FAN·물탱크 등)에서 모델을 골라 역사 도면 위에 배치하고, 이동·회전·삭제로 POI를 편집한다.",
+      },
+      {
+        src: "/shot/busan-escalator.jpg",
+        caption:
+          "에스컬레이터 상세 — 중간·대합 두 대의 카메라를 동시에 스트리밍하면서 운행 상태와 장애 상태를 함께 표시.",
+      },
+      {
+        src: "/shot/busan-elevator.jpg",
+        caption: "엘리베이터 상세 — 대합·내부 카메라 2개와 동작·장애 상태를 한 모달에서.",
+      },
+      {
+        src: "/shot/busan-shutter.jpg",
+        caption: "셔터 상세 — 출구 CCTV와 화재수신기 감지 상태를 함께 확인.",
+      },
+      {
+        src: "/shot/busan-fire.jpg",
+        caption: "화재감지기 39개를 목록과 3D POI로 관리하고 감지 상태를 조회.",
+      },
+      {
+        src: "/shot/busan-ventilation.jpg",
+        caption:
+          "환기시설 18개 — 원격 여부, 운전 상태, 제어 모드, 회전 방향까지 제어 정보를 표출.",
+      },
+    ],
     highlights: [
-      "프론트엔드 단독 개발 — Three.js 3D 관제 + WebRTC + WebSocket + GPS 통합",
-      "폐쇄망 환경 WebRTC CCTV 스트리밍 — 구조 분석부터 샘플 코드 작성까지",
-      "3D 맵 POI·조명·장치 관리 UI/UX — 시설물 상태 직관적 시각화",
-      "GPS 기반 실시간 차량 위치 추적 — 노선 위 차량 위치 렌더링",
-      "SSE 기반 실시간 이벤트 알림 시스템",
-      "현장 배포·즉시 수정·재배포 — 실시간 버그 현장 대응",
+      "협업처가 어떻게 구현했는지 알 수 없는 상태에서, 가능한 연결 방식을 미리 다 준비해 가서 현장에서 하나씩 붙여 보며 맞는 것을 찾아냄",
+      "WebRTC CCTV 연결 — RTCPeerConnection recvonly 트랜시버로 게이트웨이와 SDP를 교환해 RTSP 카메라를 브라우저에서 재생, 현장 운영까지 도달",
+      "ICE 상태 감시 + 스트림 정리 — failed/disconnected 시 연결을 닫고, 트랙 stop·srcObject 해제 후 재연결하는 경로를 분리",
+      "협업처 플랫폼 API 스펙 기반 연결 — 조명·셔터·CCTV·화재감지·엘리베이터·에스컬레이터·물탱크·집수정·공기청정기 9종 + 역사 환경정보·이벤트 현황·제어 요청을 타입으로 고정",
+      "서로 다른 두 백엔드를 한 화면에서 — 협업처 관제 플랫폼과 자사 API를 클라이언트 레벨에서 분리해 호출",
+      "3D 역사 관제 — 자체 엔진으로 GLTF 모델 로드, 전체층/층별 전환 셀렉터, POI·장치 상태 표시",
+      "SSE 실시간 수신 — 열차 도착(ttc) · 이벤트 · 셔터 3개 채널을 이름 있는 이벤트로 구독하고 도착역 코드로 필터링",
+      "관리자 공간 관리 — GLB 장비 모델을 3D 도면 위에 배치·이동·회전·삭제하는 편집기 구현",
+      "현장 배포·즉시 수정·재배포 — 사무실에서 재현되지 않는 실시간 버그를 현장에서 직접 잡음",
     ],
     sections: [
       {
-        title: "WebRTC CCTV 스트리밍",
+        title: "안 알려주는 상대와 붙이기 — 경우의 수를 준비해 갔다",
         items: [
-          "폐쇄망 환경에서 동작하는 WebRTC CCTV 스트리밍 구조 분석 및 구현",
-          "TURN/STUN 서버 없이 폐쇄망 내부 시그널링 처리",
-          "다중 CCTV 동시 스트리밍 — 관제 화면에서 복수 영상 동시 모니터링",
-          "스트림 연결 끊김 자동 감지 및 재연결 로직",
+          "협업처는 CCTV 연동 코드도 문서도 주지 않았습니다. 카메라 주소만 넘어왔고, 저쪽이 서버를 어떤 방식으로 세웠는지는 붙여 보기 전까지 알 수 없었습니다.",
+          "물어봐도 안 나올 답을 기다리는 대신, 먼저 WebRTC 자체를 파고들었습니다 — RTSP 카메라를 브라우저까지 가져오는 경로에 어떤 것들이 있는지, P2P·SFU·게이트웨이가 각각 무엇을 요구하는지, 폐쇄망에서 무엇이 살아남는지.",
+          "그래서 '이렇게 만들었을 수도 있다'는 경우를 미리 나열하고, 각 경우에 맞는 연결 코드를 준비한 상태로 들어갔습니다. 현장에서 처음부터 알아보는 게 아니라, 준비한 것을 하나씩 대 보는 방식이었습니다.",
+          "그렇게 맞춰 가며 알아낸 것들 — SDP를 base64로 감싸 주고받는 규약을 쓴다는 것, 수신 전용이라 recvonly 트랜시버만 두면 된다는 것, 스트림 타입과 구간 파라미터를 함께 보내야 한다는 것.",
+          "연결이 확인된 조합을 샘플로 먼저 세운 뒤, 재연결·스트림 정리 로직을 얹어 제품 코드로 옮겼습니다. 이후 카메라가 늘어나도 백엔드가 주는 주소만 갈아 끼우면 되게 만들었습니다.",
+          "결과적으로 알려준 대로 붙인 연동이 아니라, 붙는 방법을 스스로 찾아 정한 연동이 됐습니다.",
         ],
       },
       {
-        title: "3D 시설물 관제",
+        title: "WebRTC CCTV — 현장에서 도는 상태까지",
         items: [
-          "Three.js 기반 전체 노선 3D 시설물 모니터링 뷰",
-          "3D 맵 위 POI·조명·장치 관리 UI — 실시간 상태 반영",
-          "WebSocket 센서 데이터 수신 — 시설물 상태 실시간 시각화",
-          "카메라 제어 및 시점 전환 — 역사별·구간별 빠른 탐색",
+          "RTCPeerConnection에 video recvonly 트랜시버만 추가해 수신 전용 연결을 구성, ontrack으로 받은 트랙을 MediaStream에 붙여 video 엘리먼트에 연결",
+          "onnegotiationneeded에서 offer 생성 → base64로 감싼 SDP(sdp64)를 게이트웨이 스트림 엔드포인트에 POST → 응답 SDP를 디코드해 setRemoteDescription",
+          "oniceconnectionstatechange로 failed·disconnected를 감지해 연결을 닫고, 사용자가 다시 시도할 수 있는 재연결 핸들러를 분리",
+          "언마운트·재연결 시 getTracks().stop()과 srcObject 해제를 한 곳(cleanupStream)에 모아 스트림이 남지 않게 처리",
+          "카메라 주소는 백엔드가 내려주는 streamAddress를 그대로 사용 — 현장 카메라가 늘어나도 코드 변경 없이 붙음",
+          "다중 CCTV 동시 스트리밍 — 관제 화면에서 복수 영상을 함께 모니터링",
         ],
       },
       {
-        title: "실시간 차량 추적 & 현장 대응",
+        title: "협업처 백엔드 스펙 연결",
         items: [
-          "GPS 데이터 기반 실시간 차량 위치 추적 — 노선 위 차량 렌더링",
-          "SSE 기반 실시간 이벤트 알림 — 관리자 즉시 인지",
-          "WebView 컴포넌트 통합으로 레거시 시스템 연동",
-          "현장 폐쇄망 환경 배포 — 오류 발생 시 즉시 수정·재배포 반복",
+          "관제 플랫폼이 제공한 스펙에 맞춰 역사 단위 API 클라이언트를 만들고, 시설물 9종을 각각 타입 정의와 함께 서비스로 분리",
+          "역사 환경정보·이벤트 현황 조회와 제어 요청/응답(ControlRequest·ControlResponse)까지 계약을 타입으로 고정해 화면이 응답 형태를 추측하지 않게 함",
+          "협업처 플랫폼과 자사 API를 별도 클라이언트로 나눠, 한쪽 스펙이 바뀌어도 다른 쪽 화면이 영향받지 않도록 경계를 둠",
+          "위젯·역사 단위로 서비스 파일을 쪼개고 index에서 재노출 — 기존 호출부 호환을 유지한 채 구조만 정리",
+        ],
+      },
+      {
+        title: "3D 관제 화면 & 실시간",
+        items: [
+          "자체 3D 엔진을 컨테이너에 마운트하고 역사 GLTF 모델을 로드, 로드 완료·실패 콜백으로 화면 상태를 분기",
+          "층 목록에 '전체층'을 자동으로 끼워 넣고 정렬 순서대로 노출하는 층 셀렉터 — 층 데이터가 비어 있어도 화면이 깨지지 않음",
+          "3D 맵 위 POI·조명·장치 관리 UI로 시설물 상태를 직관적으로 시각화",
+          "SSE로 열차 도착·이벤트·셔터 3개 채널을 구독하고 스토어에 누적, 도착역 코드가 맞는 것만 반영",
+          "장비 상세·CCTV 모달을 스토어 기반으로 열고 닫아 3D 뷰와 패널 상태를 분리",
+        ],
+      },
+      {
+        title: "관리자 페이지 — 3D 공간을 편집하는 화면",
+        items: [
+          "GLB 장비 모델 라이브러리 — 화재센서·공기청정기·소방펌프·FAN·물탱크·에어컨 등 3D 에셋을 썸네일로 고르고 도면 위에 배치",
+          "배치한 POI를 이동·회전·스케일·삭제하는 편집 도구 — 관제 화면에 뜰 장비 위치를 운영자가 직접 잡을 수 있게 함",
+          "역사·층(B1/B2/B3) 단위로 도면을 전환하며 편집 — 서면역 B2 승강장처럼 층마다 다른 배치를 따로 관리",
+          "배치 결과가 그대로 관제 뷰의 POI로 이어지도록 좌표계를 맞춤 — 관리자가 옮기면 관제 화면에서도 옮겨짐",
+          "자산(Asset)·장비(Device)·시설(Facility)·노선(Line)·사용자(User)·뷰어(Viewer)·대시보드 관리 화면 구성",
+          "토스트·에러 바운더리를 공통 컴포넌트로 두고 화면마다 개별 처리하지 않도록 정리",
+          "디자인 협업처 시안을 반영하며 헤더·서비스 페이지 UI/UX를 반복 개선",
+          "현장 폐쇄망 환경에 배포한 뒤 발생하는 실시간 버그·데이터 오류를 그 자리에서 디버깅·수정·재배포",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "plug-platform",
+    rank: 6,
+    team: "DX 기술팀",
+    group: "Plug Platform",
+    title: "Plug Platform",
+    subtitle: "SI 프로젝트 공통 모노레포 — 디자인 시스템 · API 계층",
+    category: "company",
+    company: "플럭시티",
+    period: "2025.04 — 2025.09",
+    role: "Frontend 개발 (디자인 시스템 · 공통 API 계층)",
+    description:
+      "프로젝트마다 복사되던 컴포넌트와 API 호출을 모노레포 패키지로 걷어낸 작업 — 머지된 PR 17건, +13,391 / −9,701줄",
+    overview:
+      "여러 관제 SI 프로젝트가 각자 비슷한 컴포넌트와 API 호출을 복사해 쓰던 상황을 정리하기 위한 pnpm 워크스페이스 모노레포입니다. UI 디자인 시스템(@plug/ui), 공통 API 훅 계층(@plug/api-hooks), 도메인 서비스(@plug/common-services)를 패키지로 분리하고, 부산 사상하단선을 포함한 실제 프로젝트 앱이 이 패키지들을 가져다 쓰도록 구성했습니다. 2025년 4월부터 9월까지 PR 19건(머지 17건)을 올렸고, 컴포넌트 신규 구현부터 아토믹 구조 재편, HTTP 클라이언트 교체, 도메인 서비스 이관까지 담당했습니다.",
+    techs: ["react", "typescript", "vite", "tailwind", "storybook", "shadcn", "radix", "ky", "swr", "pnpm", "github"],
+    links: [{ label: "GitHub", url: "https://github.com/pluxity/plug-platform" }],
+    highlights: [
+      "머지된 PR 17건 · +13,391 / −9,701줄 · 450개 파일 (2025.04 — 2025.09)",
+      "디자인 시스템 구축 — Form·Input·Checkbox·Radio·Select·Slider·Sheet·Accordion·Table 등을 Storybook 스토리와 함께 패키지화",
+      "자체 폼 시스템 — useForm 훅과 validationUtils를 직접 구현해 폼 상태·검증을 컴포넌트 밖으로 분리",
+      "아토믹 구조 재편 — 평면적이던 컴포넌트를 atom / molecule 계층으로 정리하고 shadcn 기반으로 전환",
+      "공통 API 클라이언트를 fetch에서 ky로 리팩토링 — 인터셉터·에러 처리·prefix URL을 한 곳으로 수렴",
+      "useApi · useSWRApi · useReducer 훅과 요청/응답 타입 체계를 api-hooks 패키지로 분리",
+      "도메인 서비스 공통화 — auth·user·role·building·file 서비스를 common-services로 이관해 프로젝트 간 중복 제거",
+    ],
+    sections: [
+      {
+        title: "@plug/ui — 디자인 시스템",
+        items: [
+          "Form·Input·InputText·Checkbox·Radio·Slider·Sheet·Accordion·Button·Dropdown·BreadCrumb·Label 구현 및 Storybook 스토리 작성",
+          "useForm 훅 + validationUtils를 직접 만들어 폼 상태와 검증 규칙을 컴포넌트에서 분리 — 프로젝트마다 폼 로직을 다시 짜지 않게 함",
+          "atom(Button·Input·Select·MultiSelect·Table·Textarea·Card·Badge·SearchInput·DropdownMenu·Avatar) / molecule(Form·AdminProfile) 계층으로 재편",
+          "shadcn 의존성을 도입해 접근성·동작이 검증된 프리미티브 위에 자체 스타일을 얹는 방향으로 전환",
+          "사이드바 접기/펼치기 아이콘, 프로필 아바타 등 관리자 화면용 공통 에셋 정리",
+        ],
+      },
+      {
+        title: "@plug/api-hooks — 공통 API 계층",
+        items: [
+          "fetch 기반 클라이언트를 ky로 리팩토링 — 재시도·에러 처리·prefix URL 설정을 클라이언트 한 곳에서 관리",
+          "일반 요청용 client와 파일 업로드용 fileClient를 분리해 헤더·바디 처리 차이를 호출부가 신경 쓰지 않게 함",
+          "useApi · useSWRApi · useReducer 훅과 request/response 타입을 함께 제공해 호출부에서 타입이 자동으로 따라오게 구성",
+          "PR #131에서 훅 로직 전면 개편(+2,042 / −467) — 사용처가 늘어난 뒤 드러난 인터페이스 문제를 한 번에 정리",
+        ],
+      },
+      {
+        title: "@plug/common-services — 도메인 서비스",
+        items: [
+          "auth·user·user_admin·role·building·file 서비스를 패키지로 분리해 프로젝트별 중복 구현 제거",
+          "사상하단 프로젝트의 역사(station) 서비스를 common-services로 이관하고 토스트·confirm 처리를 함께 정리",
+          "인증 흐름 정비 — 로그인, 토큰 리프레시, 만료 처리, protected router, 리프레시 실패 시 로그아웃까지 연결",
+        ],
+      },
+      {
+        title: "모노레포 운영",
+        items: [
+          "pnpm 워크스페이스로 packages(ui · api-hooks · common-services · engine)와 apps(프로젝트별 앱)를 분리",
+          "husky + lint-staged로 커밋 시점 린트를 걸어 프로젝트 앱 기준 규칙을 강제",
+          "보일러플레이트 프로젝트 세팅(라우팅·린트) 정리로 새 SI 프로젝트의 출발선을 만듦",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "plug-atlas",
+    rank: 8,
+    team: "DX 기술팀",
+    group: "Plug Platform",
+    title: "Plug Atlas",
+    subtitle: "Cesium 실외 지도 기반 IoT 관제 — 이벤트 · 알람 시스템",
+    category: "company",
+    company: "플럭시티",
+    period: "2025.10 — 2025.11",
+    role: "Frontend 개발 (이벤트·알람 시스템 · 공원 관리 · 지도 인터랙션)",
+    description:
+      "센서가 언제 이벤트를 낼지 정하는 조건 관리부터 알람 수신·조치·통계까지, 관제의 이벤트 흐름 전체를 구현 — 머지된 PR 11건, +8,239 / −2,227줄",
+    overview:
+      "Cesium 기반 실외 지도 위에서 공원 시설과 IoT 센서를 관제하는 시스템입니다. 실내 3D 도면을 다루던 이전 관제 프로젝트와 달리 지구 좌표계 위에서 마커·폴리곤을 다뤄야 했습니다. 저는 이벤트 도메인 전체를 맡았습니다 — 센서 종류별로 '무엇을 이벤트로 볼지' 정하는 조건 관리, 발생한 이벤트의 조회·필터·시계열 통계, 실시간 알람 수신과 조치 이력, 알람에서 이벤트 상세·발생 위치로 이어지는 흐름까지입니다. 공원 관리(영역 폴리곤 그리기·썸네일)와 지도 마커 인터랙션 개선도 함께 담당했습니다.",
+    techs: ["react", "typescript", "vite", "cesium", "zustand", "recharts", "hookform", "tailwind", "pnpm"],
+    links: [{ label: "GitHub", url: "https://github.com/pluxity/plug-platform-atlas" }],
+    shots: [
+      {
+        src: "/shot/atlas-dashboard-all.jpg",
+        caption:
+          "성남시 시민안심공원 서비스 전체보기 — Cesium 위성 지도에 공원 POI를 얹고, 공원 12곳·CCTV 55대·IoT 센서 153개를 한 화면에서 본다. 아래로 장비 상태 분포, 기간별 자동·수동 조치 집계, 공원별 운영상태, 경고 알림과 조치 현황이 이어진다.",
+      },
+      {
+        src: "/shot/atlas-dashboard-park.jpg",
+        caption:
+          "공원별 보기 — 센서를 상태(정상·주의·경계·위험·연결끊김)별로 색이 다른 마커로 지도에 찍는다. 하단에서 해당 공원의 장치 이력, 종류별 센서 목록, 장치 배터리 알람까지 내려간다.",
+      },
+    ],
+    highlights: [
+      "머지된 PR 11건 · +8,239 / −2,227줄 · 188개 파일 (2025.10 — 2025.11)",
+      "센서 종류별 이벤트 조건 관리 — 어떤 값이 어떤 범위일 때 이벤트로 볼지 정의하는 규칙 편집기와 검증 로직",
+      "이벤트 조회·통계 페이지 — 필터, 목록, Recharts 시계열 차트, 통계 섹션",
+      "이벤트 상세 모달 — 조치 이력, 발생 위치 지도, 임계값 대비 실측값을 보여주는 ValueRangeIndicator",
+      "실시간 알람 — 알림 팝업과 스토어를 붙여 수신·조치까지 연결, 알림 클릭 시 해당 이벤트 상세로 데이터 연동",
+      "공원(Site) 관리 — Cesium 폴리곤으로 공원 영역을 직접 그려 저장, 목록 썸네일 업로드 지원",
+      "Cesium 마커 인터랙션 개선 및 대시보드 지도뷰 UX 정리",
+    ],
+    sections: [
+      {
+        title: "이벤트 조건 관리 — 관제의 입력단",
+        items: [
+          "센서 종류마다 이벤트 판단 기준이 달라, 종류별로 조건을 정의하고 편집하는 관리 화면을 구성",
+          "조건 편집 상태와 검증을 useEventConditionManager 훅으로 분리해 화면은 표시에만 집중하게 함",
+          "조건 검증 규칙을 별도 유틸로 빼서, 잘못된 범위·중복 조건이 저장되기 전에 걸러지도록 처리",
+        ],
+      },
+      {
+        title: "이벤트 조회 · 통계",
+        items: [
+          "필터(기간·레벨·상태)와 목록을 분리해 조합이 늘어도 화면이 복잡해지지 않게 구성",
+          "Recharts 기반 시계열 차트로 기간별 이벤트 발생 추이를 표시하고, 통계 섹션과 함께 배치",
+          "레벨·상태·시간 포맷을 levelUtils · statusUtils · timeUtils로 분리해 목록·모달·차트가 같은 규칙을 공유",
+        ],
+      },
+      {
+        title: "실시간 알람과 조치",
+        items: [
+          "알림 팝업 컴포넌트와 zustand 알림 스토어를 붙여 실시간으로 들어오는 알람을 화면에 반영",
+          "알람 목록에서 바로 조치할 수 있게 하고, 조치 이력을 이벤트 상세 모달에서 확인하도록 연결",
+          "알림 클릭 시 해당 이벤트의 상세 데이터가 정확히 열리도록 데이터 연동 경로를 정리",
+          "이벤트 상세에서 발생 위치를 지도로 보여주고, 측정값이 임계 범위의 어디에 있는지 시각적으로 표시",
+        ],
+      },
+      {
+        title: "공원 관리 · 지도 인터랙션",
+        items: [
+          "Cesium 위에서 공원 영역 폴리곤을 직접 그려 저장하는 편집기(CesiumPolygonDrawer) 구현",
+          "공원 목록 썸네일 지원 및 업로드 기능 추가, 업로드 시 content-type 고정으로 실패하던 문제 수정",
+          "지도 마커 인터랙션(선택·호버·클릭 반응) 개선 및 대시보드 지도뷰 스타일·UX 정리",
+          "센서·CCTV 장비 관리 화면 구성",
         ],
       },
     ],
   },
   {
     slug: "vgolf",
+    rank: 9,
+    team: "클라우드팀",
+    group: "VGOLF",
     title: "Vgolf",
-    subtitle: "골프장 실시간 라운드 관리 & F&B 주문 플랫폼",
+    subtitle: "골프장 경기관제 — GPS 카트 추적 & 실시간 라운드 관리",
     category: "company",
     featured: true,
     company: "플럭시티",
     period: "2025 — 2026",
-    role: "Frontend Developer (경기관제 태블릿 + F&B 단독 개발)",
+    role: "Frontend Developer (경기관제 태블릿·모바일)",
     description:
-      "매일 운영되는 프로덕션 서비스 — GPS→Proj4 좌표 변환, 움직이는 카트 위 터치 UX, F&B PWA 단독 개발",
+      "매일 운영되는 프로덕션 서비스 — GPS→Proj4 좌표 변환, 지오펜싱 자동 홀 전환, 움직이는 카트 위 터치 UX",
     overview:
-      "골프장 실시간 라운드 관리 플랫폼입니다. 태블릿/모바일 듀얼 디바이스 경기관제 앱(Vgolf App, v1.1.24, 26K+ LOC)과 F&B 주문·관리 PWA(Next.js 14)를 개발했습니다. GPS 기반 카트 추적, Proj4 좌표 변환, 지오펜싱 자동 홀 전환, 움직이는 카트 환경에서의 터치 UX 최적화 등 골프장 특수 환경에 최적화된 기술을 구현했습니다. 현재 운영 중인 프로덕션 서비스로, 실사용 환경에서의 안정성과 마감 품질에 특히 주력했습니다.",
-    techs: ["react", "typescript", "nextjs", "vite", "recoil", "reactquery", "pwa", "scss", "mui", "i18n", "proj4", "indexeddb", "webview", "docker", "nginx"],
-    imageCount: 5,
+      "골프장 실시간 라운드 관리 플랫폼의 경기관제 앱입니다. 태블릿/모바일 듀얼 디바이스(Vgolf App, v1.1.24, 26K+ LOC)로 GPS 기반 카트 추적, Proj4 좌표 변환, 지오펜싱 자동 홀 전환, 움직이는 카트 환경에서의 터치 UX 최적화 등 골프장 특수 환경에 최적화된 기술을 구현했습니다. 현재 운영 중인 프로덕션 서비스로, 실사용 환경에서의 안정성과 마감 품질에 특히 주력했습니다. 같은 플랫폼의 F&B 주문·사이니지 서브시스템은 별도 프로젝트(VGOLF F&B)로 정리했습니다.",
+    techs: ["react", "typescript", "vite", "recoil", "reactquery", "scss", "mui", "i18n", "proj4", "webview", "docker", "nginx"],
     highlights: [
       "프로덕션 운영 서비스 — 실사용 환경에서의 안정성·마감 품질에 주력",
       "GPS 카트 추적 — 500ms 주기 GPS 읽기, Proj4 좌표 변환(위경도→코스맵 픽셀), 지오펜싱 자동 홀 전환",
       "움직이는 카트 환경 터치 UX — Ghost Click 방지, useTap(30px 흔들림 허용), 더블클릭 가드",
       "태블릿 140+ / 모바일 45+ 컴포넌트 — 듀얼 디바이스 공통 모듈 분리",
-      "F&B 단독 개발 — Web Worker 백그라운드 폴링, Canvas 테이블 배치(Pan/Zoom + AABB 충돌), Web Audio 알림",
       "네트워크 탄력성 — ConsecutiveErrorGuard, Recoil Persist, React Query 캐싱, Teams Webhook 텔레메트리",
     ],
     sections: [
@@ -222,31 +470,618 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
-        title: "F&B 주문 시스템 — 단독 개발",
-        items: [
-          "Web Worker 기반 백그라운드 폴링(useBackgroundPolling) — 탭 비활성화 시에도 3초 간격 주문 업데이트",
-          "Canvas 테이블 배치 UI — Pan & Zoom(마우스/터치), AABB 충돌 감지, 드래그&드롭(@dnd-kit), 90° 회전",
-          "Web Audio API + HTML5 Audio 폴백 — Web Worker 타이머로 백그라운드 쓰로틀링 우회, Browser Notification 연동",
-          "주문 상태 플로우: 접수요청 → 수락 → 완료 → 취소, 부분 취소, 테이블 재배정, ERP 연동",
-          "IndexedDB + 메모리 캐시 하이브리드 토큰 저장 — localStorage 자동 마이그레이션 포함",
-          "통합 모달 관리(useUnifiedModal) — 9개+ 모달 타입 단일 훅으로 관리",
-        ],
-      },
-      {
         title: "프로덕션 운영 & 마감 품질",
         items: [
           "현재 운영 중인 프로덕션 서비스 — 실사용 골프장에서 매일 사용",
-          "엣지 케이스 꼼꼼한 처리 — 중복 주문 방지, 에러 큐잉, Pub/Sub 에러 핸들링",
-          "PWA 오프라인 폴백 + Cache-Control 무효화 전략",
+          "엣지 케이스 꼼꼼한 처리 — 에러 큐잉, Pub/Sub 에러 핸들링, 중복 동작 방지",
           "Docker + Nginx Alpine 정적 배포, 빌드 ID 자동 생성 (YYMMDDHHMI)",
-          "엑셀 매출 리포트 자동 생성 (ExcelJS 스타일 적용)",
           "usePullToRefresh, useDragScroll 등 모바일 UX 커스텀 훅",
         ],
       },
     ],
   },
   {
+    slug: "vgolf-app",
+    rank: 3,
+    team: "클라우드팀",
+    group: "VGOLF",
+    title: "VGOLF 앱",
+    subtitle: "골프 라운드 기록 모바일 앱 (iOS · Android)",
+    category: "company",
+    featured: true,
+    company: "플럭시티",
+    period: "2026.06 — 2026.08",
+    role: "Frontend Developer · React Native 앱 단독 개발",
+    description:
+      "React Native 앱을 개발부터 스토어 제출까지 단독 수행 — 2개월 487커밋, zod 2층 계약 테스트로 무증상 데이터 오류를 화면 반영 전에 검출",
+    overview:
+      "골프 라운드 기록을 관리하는 React Native 앱입니다. 화면 구현부터 네이티브 설정, 릴리스 서명, Play Console 제출까지 앱 전체를 단독으로 개발했습니다. 2개월간 487커밋 · 화면 21개 · 소스 15.5k LOC · 문서 52편 규모로, FSD 5레이어 아키텍처와 3겹 에러 안전망을 세우고, zod 2층 스키마 기반 실서버 계약 테스트로 백엔드 응답 계약을 프론트가 주도해 정리했습니다. Expo 없이 ios/ · android/ 프로젝트를 직접 소유하며 소셜 로그인 4종, 2겹 스플래시, 릴리스 서명·환경 분리까지 네이티브 영역을 직접 다뤘습니다.",
+    techs: ["reactnative", "typescript", "zustand", "reactquery", "zod", "hookform", "nativewind", "reanimated", "mmkv", "axios", "sentry", "jest", "ios", "android", "figma", "storybook"],
+    highlights: [
+      "React Native 앱 단독 개발 — 2개월, 487커밋, 화면 21개, 15.5k LOC, iOS·Android 동시 대응",
+      "FSD 5레이어 + 세그먼트 구조 — 슬라이스 공개 API 규칙으로 '기능 삭제 = 폴더 삭제'가 성립하는 코드베이스",
+      "zod 2층 스키마(런타임·엄격) 실서버 계약 테스트 — 서버 par: null로 모든 홀이 더블보기로 표시되던 무증상 오류를 사전 검출",
+      "API 응답 불일치 12건을 영향·우선순위(P0/P1) 표로 문서화해 백엔드에 전달 — 하위 호환을 지키는 형태로 제안",
+      "3겹 안전망(ErrorBoundary · 전역 핸들러 · QueryState) + axios 에러 6종 정규화 — 로딩·에러·빈 상태를 컴포넌트 3개로 수렴",
+      "Expo 없이 네이티브 직접 소유 — 소셜 로그인 4종, 2겹 스플래시, 적응형 아이콘, 릴리스 서명·cleartext 분리",
+      "MMKV 암호화 키를 Keychain/Keystore에 보관 + 토큰 재발급 single-flight — 동시 401 중복 재발급·재시도 루프 제거",
+      "Play Console 제출 실무 — 데이터 보안 매핑, 공개 약관·개인정보처리방침·회원 탈퇴 페이지 제공",
+    ],
+    sections: [
+      {
+        title: "아키텍처 — 레이어를 정하고 끝까지 지킨 구조",
+        items: [
+          "FSD 5레이어(shared → entities → features → pages → app) 단방향 의존 + api/model/ui/lib 세그먼트 분리 — 슬라이스 밖에서는 index.ts로만 import",
+          "상태를 역할로 3분할 — 서버 데이터는 react-query, 사용자 선택값은 zustand + MMKV 영속, 폼은 react-hook-form + zod로 고정하고 겹치지 않게 규칙 문서화",
+          "버전을 '최신'이 아니라 '호환'으로 선택 — MMKV v4(Nitro 네이티브 의존)·zod v4(ESM ↔ RN Babel 충돌)를 v3에 고정하고 올리지 않은 이유를 아키텍처 문서에 기록",
+        ],
+      },
+      {
+        title: "안정성 — 사용자 폰에서 조용히 죽지 않게",
+        items: [
+          "3겹 안전망 — ErrorBoundary(렌더) + ErrorUtils.setGlobalHandler(렌더 밖, 기본 핸들러 체이닝) + QueryState(로딩·에러·빈 상태 render-prop 단일 분기)",
+          "모든 실패를 ApiError 하나로 정규화 — axios 인터셉터에서 timeout/network/client/server/invalid/unknown 6종 분류 + 상태코드별 한국어 문구 테이블",
+          "조건부 재시도 정책 — network·timeout·5xx만 1회 재시도, 4xx 제외(408·429는 예외), staleTime 60s, 스키마 불일치(invalid)는 재시도 대상에서 제외",
+          "Sentry 크래시 대응 — 짝 없는 서로게이트가 네이티브 UTF-8 직렬화에서 앱을 죽이는 문제를 전송 전 정제 단계로 차단",
+        ],
+      },
+      {
+        title: "백엔드 협업 — 프론트가 API 계약을 주도",
+        items: [
+          "두 층 스키마 계약 테스트 — 같은 응답을 런타임 스키마(앱이 깨지는가)와 엄격 스키마(서버가 문서대로 주는가)로 이중 파싱",
+          "실서버 호출 테스트는 자격증명 없으면 전부 skip + 기본 test/pre-commit에서 제외 — 서버 장애가 커밋을 막지 않게 설계",
+          "무증상 버그 검출 사례 — 서버 par: null을 앱이 0으로 보정해 모든 홀이 더블보기로 색칠되던 오류를 엄격 스키마로 검출, '0 보정은 임시 조치'까지 함께 전달",
+          "에러 응답 계약 요청서 — 인증 실패 코드 3분리 + retryAfterSeconds 추가 요청, 불일치 12건을 엔드포인트·필드·기대값·앱 영향·P0/P1 표로 정리",
+          "결정하지 않은 것도 결정으로 기록 — 동반자 수 계산 불일치는 추측 수정 대신 3안·비용·필요한 최소 정보를 문서화하고 계약 테스트에 비실패 [확인] 항목으로 관찰",
+        ],
+      },
+      {
+        title: "디자이너 협업 — 시안을 시스템으로 받기",
+        items: [
+          "타입 스케일 재정의 — 기준폭 375 → 실기기 393 차이(≈1.05)를 Tailwind 기본 램프 한 스텝 상향으로 흡수, 런타임 폭 스케일은 실익이 작아 채택하지 않음",
+          "디자이너가 고칠 파일을 3개로 축소 — 모든 화면을 QueryState로 감싸고 실제 모양은 LoadingState·ErrorState·EmptyState에만 두어 교체 지점을 합의",
+          "색 토큰화 — 임의 hex(bg-[#6600FF]) 제거, 단일 팔레트에서 Tailwind 설정과 네이티브 prop용 JS 색상값이 함께 파생되도록 통합 (디자인 커밋 65건)",
+          "역으로 스펙 제공 — iOS 투명 배경 거부·Android 적응형 아이콘 세이프존 66% 등 플랫폼 규칙을 체크리스트로 정리해 재작업 없이 산출물 수령",
+          "iOS·Android 폰트 정합 — fontWeight를 패밀리명으로 매핑하는 함수를 공용 Text·TextInput이 공유, includeFontPadding: false로 세로 간격까지 일치",
+        ],
+      },
+      {
+        title: "인터랙션 — 손맛을 토큰으로 관리",
+        items: [
+          "공통 모션 토큰 — 스프링 2종·타이밍 3종으로 어휘를 고정하고 모든 애니메이션이 motion.ts를 참조",
+          "PressableScale — 눌림 축소를 Reanimated worklet으로 UI 스레드에서 실행해 JS가 바빠도 끊기지 않음",
+          "Android 리플 제거 판단 — 축소 애니메이션과 충돌해 양 플랫폼을 opacity 0.6 + 햅틱으로 통일, bottom-tabs PlatformPressable 기본 리플까지 tabBarButton 직접 구현으로 차단",
+          "햅틱 적용 기준 표 — 화면 전환 CTA·되돌릴 수 없는 확정은 light, 값 선택은 selection, 목록 카드는 없음. 네이티브 모듈 부재 기기에서는 조용히 무시",
+          "접근성 — useReducedMotion()으로 눌림 축소 생략, 공용 Touchable accessibilityRole·TextField 라벨 연결을 기본값화",
+        ],
+      },
+      {
+        title: "네이티브 — Expo 없이 ios/ · android/ 직접 소유",
+        items: [
+          "bare RN 선택 근거를 작업량으로 설명 — 소셜 SDK 3종의 URL 스킴·Info.plist 예외·인텐트 필터·modular_headers·SHA-1 등록, 다이얼로그 테마·cleartext 예외·스플래시 조정이 상시 필요",
+          "2겹 스플래시 — 네이티브 런치 화면과 JS 스플래시 배경을 동일 색으로 맞춰 흰 화면 깜빡임 제거, values-v31/styles.xml·스토리보드로 라이브러리 없이 처리, 부팅 대기 구간에 홈 데이터 prefetch",
+          "키보드 대응 — automaticallyAdjustKeyboardInsets/adjustResize로 부족한 부분을 measureInWindow 기반 겹침 계산 래퍼로 해결, 계산부는 순수 함수로 분리해 테스트",
+          "소셜 로그인 4종 — 카카오·네이버·구글은 email 기준, 애플만 socialId 기준으로 분기(최초 1회 정보 제공·릴레이 주소·Android 네이티브 SDK 부재)를 통합 훅 내부에서 처리",
+        ],
+      },
+      {
+        title: "도메인 — 골프 스코어의 규칙에서 나온 문제",
+        items: [
+          "리스트 키 충돌 — 자동연동(bookingId)과 직접입력(roundedNo)이 별개 시퀀스라 값이 겹치는 문제를 booking-5 / rounded-5 이름공간 분리로 해결",
+          "서버 total을 믿지 않는 무한 스크롤 — 다음 페이지 판단을 순수 함수로 분리하고 빈 페이지 수신 시 중단, 화면은 합쳐진 배열만 수신",
+          "입력 속도를 위한 도메인 기본값 — 파 72 프리셋 + 수정 방식, 직접입력 칸이 열린 '이유'에 따라 키보드 노출 여부 분기",
+          "스코어카드 캡처 공유 — view-shot 캡처 직후 상태 즉시 해제로 멈춤 해결, 저장 URI에 file:// 스킴을 보장해 공유·저장 경로 통일",
+          "오프라인 대응 — NetInfo를 react-query onlineManager·focusManager에 연결, isInternetReachable로 '연결됐지만 인터넷 없음'을 배제, 배너는 절대위치로 레이아웃 미영향",
+        ],
+      },
+      {
+        title: "보안 · 세션 · 릴리스",
+        items: [
+          "MMKV 암호화 키를 OS 보안 저장소에 — 256비트 키를 crypto.getRandomValues로 생성해 Keychain/Keystore에 보관, 부팅 시퀀스(키 조회 → 저장소 오픈 → 토큰·persist 복원) 고정",
+          "토큰 재발급 single-flight — 공유 프로미스로 1회만 수행하고 재발급 호출은 인터셉터 없는 별도 axios로 보내 401 재시도 루프 차단",
+          "빌드 타입 분리 — 키스토어 자격을 레포 밖 gradle.properties에서 로드(없으면 debug 폴백), manifestPlaceholders로 cleartext를 debug=true/release=false 분기, version:set|build로 iOS·Android 버전 동시 상향",
+          "Play Console 제출 — 수집 항목을 Play 데이터 타입에 매핑(Sentry는 위탁 처리자), 약관·개인정보처리방침·회원 탈퇴를 로그인 없이 접근 가능한 공개 페이지로 제공",
+          "문서 52편 — setup/app/features/api/release/troubleshooting으로 나눠 대안·비용·되돌린 이력까지 남겨 사실상 ADR 역할, pre-commit은 타입체크·린트만 실행",
+        ],
+      },
+      {
+        title: "되돌린 결정 — 붙였다가 뺀 것들",
+        items: [
+          "PressableScale 1차 도입 — cssInterop과 애니메이션 스타일이 같은 자리를 두고 충돌해 하단 CTA·FAB·카드가 사라짐. 공용 Text의 동작 방식과 비교해 원인을 규명하고 같은 방식으로 고쳐 재도입",
+          "탭 전환 페이드 — 첫 탭을 씹고 빈 화면이 노출되어 하단 탭은 즉시 전환으로 되돌리고 스택 전환에만 모션 유지, '레이아웃을 흔들지 않는다 · 입력 중에는 넣지 않는다'를 모션 원칙으로 문서화",
+          "인증 카운트다운 클라이언트 계산 — 쿨다운을 서버가 번호 기준으로 관리하므로 제거하고 판단을 서버로 이관, 그 전제에 맞는 응답 필드를 백엔드에 요청 (제거와 요청서가 한 세트)",
+          "목록 항목별 진입 애니메이션 — 카드가 겹쳐 보여 제거하고 첫 로딩 스태거만 유지, 로딩은 스켈레톤으로 대체",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "vgolf-fnb",
+    rank: 1,
+    team: "클라우드팀",
+    group: "VGOLF",
+    title: "VGOLF F&B",
+    subtitle: "주방 프린터부터 디지털 사이니지까지, 매장을 돌리는 F&B 시스템",
+    category: "company",
+    featured: true,
+    company: "플럭시티",
+    period: "2025.12 — 2026.08",
+    role: "Frontend Developer · F&B 제품 전반 단독 개발",
+    description:
+      "9개월 460+커밋 단독 — 클라우드 웹앱을 매장 사설망 프린터와 잇고, 무네트워크 부팅 사이니지까지 붙인 매장 운영 시스템",
+    overview:
+      "골프장 F&B 플랫폼의 주문·관리자·주방 영수증 출력·매장 사이니지 서브시스템을 초기 보일러플레이트 위에서 단독으로 설계·구현했습니다. 앱 로직을 넘어 매장 하드웨어 연동, 오프라인·실시간 견고성, 상태별 조건 렌더링처럼 실제 배포 현장에서 깨지는 지점들을 붙잡아 해결한 것이 핵심입니다. 초기 인프라(axios·recoil·SSE 훅·login shell)와 일부 모듈은 선행 팀원 기반이며, 2025년 12월 합류 이후 F&B 제품 전반을 단독 개발했습니다.",
+    techs: ["nextjs", "react", "typescript", "reactquery", "recoil", "pwa", "workbox", "sse", "dndkit", "pdfjs", "exceljs", "escpos", "indexeddb", "scss"],
+    shots: [
+      {
+        src: "/shot/fnb-did-installed.jpg",
+        caption:
+          "만든 사이니지가 실제로 걸려 있는 모습. 편집기에서 지정한 배경·제목·영문 표기가 그대로 매장 벽면 디스플레이에 표출된다.",
+      },
+      {
+        src: "/shot/fnb-did-editor.jpg",
+        caption:
+          "DID 관리 — 1~4분할을 고르고 칸마다 일반/PDF를 지정한다. 기기별 연결 탭, 배경 이미지, 글자 색, 정렬, 텍스트 3종의 크기를 조절하면 오른쪽 미리보기가 실제 표출과 같은 방식으로 다시 그려진다.",
+      },
+      {
+        src: "/shot/fnb-did-output.jpg",
+        caption:
+          "편집기에서 만든 화면이 실제로 표출된 상태. 해상도가 달라도 위치가 유지되도록 텍스트를 중앙 기준 %오프셋으로 저장하고, 글자 크기는 container-query로 화면 폭을 따라간다.",
+      },
+      {
+        src: "/shot/fnb-layout-editor.jpg",
+        caption:
+          "배치도 관리 — 좌측 팔레트에서 4·6·8·10·12인 테이블을 끌어다 놓고 캔버스에서 이동·회전·페이지 추가를 한다. 겹치지 않도록 충돌을 검사하고, 우측 번호 목록은 ERP와 연동된다.",
+      },
+      {
+        src: "/shot/fnb-layout-live.jpg",
+        caption:
+          "같은 배치가 매장 운영 화면으로 그대로 이어진다. 편집기에서 옮긴 자리가 주문·경과시간이 뜨는 실제 테이블 화면이 된다.",
+      },
+    ],
+    highlights: [
+      "9개월 단독 개발 · 460+ 커밋 — Next.js App Router 정적 export, TypeScript strict",
+      "ESC/POS 열전사 프린팅 직접 구현 — 80mm 주방 영수증 바이트열 생성 + EUC-KR 인코딩, CJK를 폭 2로 계산하는 고정폭 레이아웃 엔진",
+      "클라우드→LAN 브릿지 설계 — 정적 배포 앱과 매장 사설망 프린터가 서로 닿지 못하는 구조를, 로컬 프린트 에이전트를 경유해 raw TCP로 해결",
+      "오프라인 부팅 사이니지(DID) — 망분리 미니 PC가 네트워크 없이 부팅해도 화면이 뜨도록 서비스워커 문서 프리캐시 설계",
+      "WYSIWYG 사이니지 편집기 — 편집 화면과 실제 표출이 동일하게 렌더되도록 %오프셋 저장 + container-query 폰트 자동 스케일",
+      "이중 실시간 전략 — 사이니지는 SSE 구독, 주문 화면은 폴링 + 야간모드 상태머신 + 연속에러 서킷브레이커로 24시간 무인 운영",
+      "다축 조건 렌더링 설계 — 주문 상태·ERP·권한·화면 분할·네트워크·운영 시간대 6개 축을 독립 분기해 조합 폭발을 관리",
+    ],
+    sections: [
+      {
+        title: "하드웨어 연동 — ESC/POS 주방 영수증",
+        items: [
+          "80mm 열전사 프린터용 ESC/POS 바이트열을 직접 생성하고, 프린터가 이해하는 EUC-KR로 인코딩",
+          "CJK 문자를 폭 2로 계산하는 고정폭 레이아웃 엔진으로 한/영 혼용 표 정렬을 맞춤",
+          "빌지번호 클라이언트 채번 + IndexedDB 일자 단위 중복방지 — 재시작해도 같은 영수증이 다시 출력되지 않음",
+          "구조가 가장 큰 난점 — 앱은 클라우드 정적배포인데 프린터는 매장 사설망(192.168.x.x)이라 서로 닿지 못함",
+          "브라우저가 로컬 프린트 에이전트(127.0.0.1:9110)로 명령을 보내고, 에이전트가 raw TCP:9100으로 프린터에 쏘는 브릿지로 해결",
+        ],
+      },
+      {
+        title: "디지털 사이니지(DID) — 오프라인 우선",
+        items: [
+          "망분리 미니 PC가 네트워크 없이 부팅해도 화면이 뜨도록 서비스워커 캐싱을 설계 — 문서 프리캐시를 빌드ID revision과 함께 주입",
+          "CDN 폰트가 오프라인에서 누락되는 문제를 자체 호스팅으로 해결",
+          "PDF는 브라우저 기본 뷰어를 피하고 canvas 직접 렌더 + 로컬 워커로 처리해 오프라인에서도 표출",
+          "배경이 지정되지 않은 경우 템플릿 fallback으로 빈 화면이 뜨지 않게 방어",
+        ],
+      },
+      {
+        title: "WYSIWYG 사이니지 편집기",
+        items: [
+          "1~4분할 레이아웃을 grid-template-areas로 구성해 분할 수가 바뀌어도 같은 렌더 경로를 씀",
+          "텍스트 세트 드래그 위치를 중앙 기준 % 오프셋으로 저장 — 편집 해상도와 표출 해상도가 달라도 위치가 유지됨",
+          "container-query 기반 폰트 자동 스케일로 화면 크기에 따라 글자가 함께 커지고 작아짐",
+          "정렬·폰트·크기·색상·PDF 오버레이·전체화면 미리보기까지 편집기와 실제 표출이 동일하게 렌더",
+        ],
+      },
+      {
+        title: "실시간 · 무인 운영 견고성",
+        items: [
+          "사이니지는 SSE 채널을 구독해 콘텐츠 변경만 수신 — 불필요한 폴링 트래픽 제거",
+          "주문 화면은 React Query 폴링에 야간모드 상태머신(off / idle 30s / active 5s)을 얹어 영업 시간대별로 주기를 조정",
+          "연속에러 서킷브레이커 가드로 백엔드 장애 시 폴링을 자동 중단, 24시간 무인 환경에서 요청이 쌓이지 않게 함",
+          "visibilitychange 연동으로 화면이 보이지 않을 때의 동작을 분리",
+          "캐시 무효화는 ERP 연동 여부를 아는(ERP-aware) 중앙집중 방식으로 관리",
+        ],
+      },
+      {
+        title: "실시간 골퍼 코스진행 관제 바",
+        items: [
+          "각 홀의 실제 너비·간격 비율로 트랙을 구성해 코스 형태가 바 위에 그대로 반영되게 함",
+          "골퍼를 progress·gap 기반으로 배치 — 홀 내부 진행률과 홀 사이 이동 구간을 구분해 표시",
+          "정방향·역방향 진행 순서까지 계산해 한눈에 코스 상황을 읽을 수 있게 구성",
+        ],
+      },
+      {
+        title: "매장 배치도 캔버스 에디터",
+        items: [
+          "pan / zoom과 페이지 간 드래그 이동(포인터 히트테스트)을 지원하는 캔버스 편집기",
+          "회전 시 w/h 스왑까지 반영한 AABB 충돌검출로 테이블이 겹치지 않게 배치",
+          "근사정사각 멀티페이지 그리드 구성, 좌표는 \"x,y,r\" · \"1920,1080,page\" 형태로 인코딩해 저장·복원",
+        ],
+      },
+      {
+        title: "조건별 렌더링 설계",
+        items: [
+          "하나의 화면이 여러 축의 상태를 동시에 만족해야 해, 상태를 형태(칩·컬러·레이아웃)로 인코딩하고 각 축을 독립 분기해 조합 폭발을 관리",
+          "주문 상태 — 접수(R) · 재주문(RN) · 수락(P) · 취소(N) · 완료(Y)에 따라 카드/즉석조리/알림 분기",
+          "ERP 연동 — 연동 시 공급가·VAT·전표 컬럼을 조건부 주입하고 orderErp가 있는 행만 필터",
+          "화면 분할 — 1~4분할, 일반 ↔ PDF, 텍스트 오버레이 조합",
+          "네트워크 — online(최신) / offline(캐시본) / connecting(백오프 재시도)",
+          "권한 — canPrintBill · canManageGoods · canCancelOrder 기반 RBAC와 역할별 랜딩 라우팅",
+        ],
+      },
+      {
+        title: "정산 · ERP",
+        items: [
+          "ExcelJS로 서식·병합·테두리를 적용한 매출 시트 export",
+          "ERP 연동 시 공급가·VAT·전표 컬럼을 조건부로 주입하고, orderErp가 있는 행만 필터링",
+          "그룹 행 forward-fill로 회계 대사에 바로 쓸 수 있는 형태로 정리",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "kikihi",
+    rank: 10,
+    title: "키키하이 (KiKiHi)",
+    subtitle: "커스텀 키보드 조립 웹앱 — 3D 뷰어 & 호환성 검사",
+    category: "personal",
+    org: "사이드 프로젝트",
+    period: "2025.03 — 2025.09",
+    role: "Frontend 단독 개발 (프론트 커밋 44건 전부)",
+    description:
+      "부품을 고르면 3D로 조립되는 커스텀 키보드 웹앱 — 부품 간 호환성 자동 검사와 실시간 3D 렌더링을 프론트 단독으로 구현",
+    overview:
+      "하우징·키캡·스위치를 골라 나만의 키보드를 조립하고, 3D 뷰어로 확인한 뒤 그대로 구매까지 이어지는 웹앱입니다. 프론트엔드를 단독으로 맡아 조립 로직, 3D 뷰어, 쇼핑 흐름을 모두 구현했습니다. 회사 일과 병행한 사이드 프로젝트라 6개월에 걸쳐 천천히 붙였고, 3D를 실무(관제)가 아닌 커머스 맥락에서 다뤄 본 경험이 됐습니다.",
+    techs: ["react", "typescript", "redux", "threejs", "axios", "pwa", "springboot", "mariadb", "docker", "nginx", "aws", "figma"],
+    links: [
+      { label: "배포", url: "https://kikihi.netlify.app" },
+      { label: "GitHub", url: "https://github.com/KiKi-Hi/Platorm-Front" },
+      { label: "조직 전체", url: "https://github.com/KiKi-Hi" },
+      { label: "Swagger", url: "https://kikihi.store/swagger-ui/index.html" },
+    ],
+    highlights: [
+      "프론트엔드 단독 개발 — 프론트 레포 커밋 44건을 전부 담당",
+      "부품 간 호환성 자동 검사 — 하우징·키캡·스위치 조합이 성립하는지 고르는 즉시 판정",
+      "3D 커스터마이징 뷰어 — 확대·축소·회전, 부품을 고르면 그 자리에서 다시 렌더링",
+      "합계 금액 실시간 계산과 완성본 다운로드·공유·장바구니 담기",
+      "쇼핑 흐름 — 카테고리·인기순 정렬, 북마크 찜, 토스페이 결제, 배송지·메시지 입력",
+      "PWA 적용으로 모바일에서도 앱처럼 동작",
+    ],
+    sections: [
+      {
+        title: "조립과 호환성",
+        items: [
+          "하우징·키캡·스위치 등 부품을 고르면 조립 결과가 즉시 반영되는 구성 화면",
+          "부품 간 호환성을 자동으로 검사해, 성립하지 않는 조합을 고르는 순간 막음",
+          "선택이 바뀔 때마다 합계 금액을 다시 계산해 함께 표시",
+        ],
+      },
+      {
+        title: "3D 뷰어",
+        items: [
+          "확대·축소·회전이 가능한 3D 뷰어로 조립 중인 키보드를 실시간 확인",
+          "부품을 클릭하면 뷰어에 바로 적용되어 다시 렌더링",
+          "완성된 키보드를 이미지로 내려받거나 공유하고, 그대로 장바구니에 담는 흐름 연결",
+        ],
+      },
+      {
+        title: "쇼핑 · 배포",
+        items: [
+          "카테고리·인기순 필터와 정렬, 북마크 기반 관심 목록",
+          "토스페이 결제 연동, 배송지 지정과 요청 메시지 입력",
+          "React + TypeScript + Redux + styled-components 구성, Netlify 배포",
+          "백엔드는 Spring Boot·MariaDB, EC2에 Docker·Nginx로 배포하는 팀 구성",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "vgolf-scorecard",
+    company: "플럭시티",
+    team: "클라우드팀",
+    group: "VGOLF",
+    rank: 7,
+    title: "VGOLF 스코어카드",
+    subtitle: "라운드 결과 공유 웹 — 인앱브라우저 이미지 저장",
+    category: "company",
+    period: "2026.01 — 2026.08",
+    role: "Frontend 단독 유지보수·고도화 (인수인계 후, 본업과 병행)",
+    description:
+      "인수인계받아 본업과 병행하며 8개월간 혼자 맡은 레거시 — 카카오·네이버 인앱브라우저에서 이미지 저장이 안 되던 문제를 재현부터 문서화까지 끝냄",
+    overview:
+      "스크린골프 라운드 결과를 개인·팀·단체(시상 포함) 스코어카드로 보여주고, 카카오·네이버 같은 인앱브라우저에서 이미지로 저장·공유하는 모바일 웹입니다. 원 개발자에게서 인수인계받아 F&B·앱 개발과 병행하며 8개월간 단독으로 맡았습니다(전체 111커밋 중 본인 47건). 새로 설계한 제품이 아니라 남이 짜 둔 코드를 이해하고 안전하게 바꿔 나가는 일이었고, 그중 웹뷰 파편화로 생기는 저장 문제를 끝까지 파고들어 문서로 남긴 것이 가장 값어치 있는 부분입니다.",
+    techs: ["react", "typescript", "vite", "recoil", "reactrouter", "scss", "i18n", "html2canvas", "axios", "gitea"],
+    links: [
+      {
+        label: "관련 글 — 인앱브라우저 이미지 저장",
+        url: "https://xeunnie.tistory.com/entry/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1-%EC%9D%B8%EC%95%B1%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EC%97%90%EC%84%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%A0%80%EC%9E%A5%EC%9D%B4-%EC%95%88-%EB%90%98%EB%8A%94-%EC%9D%B4%EC%9C%A0-%E2%80%94-blob-URL%EA%B3%BC-WebView-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C-%EC%9C%84%EC%9E%84",
+      },
+    ],
+    highlights: [
+      "레거시 인수인계 후 8개월 단독 유지보수·고도화 — 전체 111커밋 중 본인 47건, 본업과 병행",
+      "인앱브라우저 이미지 저장 문제 해결 — 카카오·네이버 웹뷰에서 저장이 동작하지 않던 것을 재현·분석·해결하고 360줄 트러블슈팅 문서로 남김",
+      "저장 이미지가 뿌옇게 나오던 문제 — devicePixelRatio 기반 스케일 처리로 선명도 확보",
+      "캡처 로직을 util + 커스텀 훅(useSaveCardImage)으로 추출해 팀·단체 페이지가 공통으로 사용",
+      "i18n 리소스를 public HTTP 로드에서 번들 인라인으로 옮겨 네트워크·캐시·MIME·타이밍 이슈 제거",
+      "스코어카드 전면 리디자인 + 히어로 헤더 공통 컴포넌트화 — 팀 전용 스타일 122줄 제거",
+      "백업 페이지(/team_bu, /scores_bu)를 두고 무중단으로 전환해 리스크 최소화",
+    ],
+    sections: [
+      {
+        title: "대표 성과 — 인앱브라우저에서 이미지가 저장되지 않던 문제",
+        items: [
+          "증상은 두 가지였습니다. 카카오·네이버 인앱브라우저에서 스코어카드 저장 버튼이 아무 반응이 없었고, 저장이 되더라도 이미지가 뿌옇게 나왔습니다.",
+          "일반 브라우저에서는 재현되지 않아, 웹뷰가 다운로드를 어떻게 다루는지부터 파고들었습니다. 환경마다 동작이 갈리는 지점을 하나씩 좁혀 원인을 특정했습니다.",
+          "선명도는 devicePixelRatio를 캡처 스케일에 반영해 해결했습니다 — 기기 픽셀 밀도를 무시하고 CSS 픽셀 기준으로 그리던 것이 원인이었습니다.",
+          "저장 자체는 인앱브라우저 환경을 감지해 별도 저장 오버레이(SaveImageOverlay)를 띄우고 캡처 플로우를 다시 설계해 우회했습니다.",
+          "같은 로직을 팀·단체 페이지가 각자 갖고 있지 않도록 util/captureImage.ts와 useSaveCardImage 훅으로 추출했습니다.",
+          "원인·환경별 대응·재발 방지를 360줄짜리 트러블슈팅 문서(docs/image-save-troubleshooting.md)로 남겼고, 같은 내용을 블로그에도 정리했습니다.",
+        ],
+      },
+      {
+        title: "리디자인 & 리팩토링 — 안전하게 바꾸기",
+        items: [
+          "개인·팀 상세와 단체 결과 페이지에 신규 디자인 적용 — 히어로 헤더, 순위 메달, 시상 카드",
+          "팀·단체 페이지가 각자 갖고 있던 히어로 헤더를 공통 컴포넌트(ScoreHero)로 추출해 팀 전용 스타일 122줄 제거",
+          "인라인 SVG 아이콘 모듈화, 반복되던 JSX를 배열 기반 렌더링으로, 포맷 로직은 util로 분리",
+          "인수인계받은 레거시라 한 번에 갈아엎지 않고, 백업 페이지(/team_bu, /scores_bu)를 띄워 둔 채 전환한 뒤 안정화되고 나서 정리 — 문제가 생기면 즉시 되돌릴 수 있는 상태를 유지",
+        ],
+      },
+      {
+        title: "스코어 연산 정비",
+        items: [
+          "파 기준을 홀별 par(holePar) 기반으로 바꾸고, 스코어를 실타수 기준 연산으로 정리",
+          "값이 어긋나는 경우를 잡기 위한 검증 로직 추가",
+          "파 대비 + 부호를 합계에만 표기하도록 표기 규칙을 하나로 통일",
+        ],
+      },
+      {
+        title: "설문 기능 & 배포",
+        items: [
+          "설문 페이지 신규 개발 — API 연동, 별점 인터랙션, 반응형",
+          "POST 응답 상태 분기(완료·중복 제출·오류)와 204 No Content 대응",
+          "Gitea Actions 배포 파이프라인(deploy.yml) 운영 — 성공·실패 알림, 운영 포트와 API 연결 정보 관리",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "public-sector-publishing",
+    rank: 11,
+    title: "공공기관 웹 퍼블리싱",
+    subtitle: "6개 기관 사이트 UI/UX 디자인 · 반응형 퍼블리싱",
+    category: "company",
+    company: "웹비즈 크리에이티브",
+    period: "2023.11 — 2024.02",
+    role: "웹디자이너 · 퍼블리셔 (디자인 · 마크업 · PHP 연동)",
+    description:
+      "이민재단·싸템·양구수목원 등 공공기관 사이트 약 200개 페이지를 디자인부터 반응형 마크업까지 단독으로 담당",
+    overview:
+      "공공기관 웹사이트를 디자인 시안부터 반응형 퍼블리싱까지 한 사람이 끌고 가는 일이었습니다. 기관마다 정보 구조와 접근성 요구가 달라 페이지 수가 많고 반복이 잦은데, 그만큼 공통 컴포넌트를 어디까지 묶을지 판단하는 감각이 붙은 시기였습니다. 산출물은 기관별 마크업 리스트로 관리했고, 각 페이지의 PC·모바일 시안과 퍼블리싱 결과를 함께 추적했습니다. 웹 접근성(A11Y)과 크로스 브라우징 대응이 상시 요건이었습니다.",
+    techs: ["html", "css", "javascript", "php", "jquery", "figma"],
+    highlights: [
+      "6개 기관 사이트 · 약 200개 페이지를 단독 퍼블리싱 — 이민재단(60) · 싸템(69) · 양구수목원(43) · 사회보장정보원(18) · 환경책임투자 플랫폼 · 코네틱",
+      "PC·모바일 시안과 퍼블리싱 산출물을 페이지 단위 마크업 리스트로 추적 — 진행 상태·갱신일·메뉴 경로까지 한 표에서 관리",
+      "웹 접근성(A11Y) 개선과 크로스 브라우징 대응을 상시 요건으로 처리",
+      "디자인 시안 · 반응형 마크업 · PHP 템플릿 연동 · 유지보수를 한 사람이 연결해 수행 — 마크업은 전량 단독 작업",
+    ],
+    links: [
+      { label: "이민재단 마크업 리스트", url: "http://121.167.147.150:8087/kiiptest/html_list.html" },
+      { label: "양구수목원 마크업 리스트", url: "http://121.167.147.150:8087/yg_eco/html_list.html" },
+      { label: "사회보장정보원 마크업 리스트", url: "http://121.167.147.150:8087/ssis/html_list.html" },
+      { label: "환경책임투자 마크업 리스트", url: "http://121.167.147.150:8087/gmi/html_list.html" },
+      { label: "싸템 마크업 리스트", url: "http://121.167.147.150:8087/ssatem/html_list.html" },
+      { label: "코네틱 마크업 리스트", url: "http://121.167.147.150:8087/konetic/html_list.html" },
+    ],
+    sections: [
+      {
+        title: "기관별 산출물",
+        items: [
+          "한국이민재단 KIIP — 회원·평가안내·평가접수·알림마당·마이페이지·구술감독관 등 9개 대분류 60페이지",
+          "양구수목원 — 이용안내·추천코스·아카이브·체험학습·수목원 이야기·마이페이지 등 9개 대분류 43페이지",
+          "싸템 — 판매·구매·채팅·회원·마이페이지 등 10개 대분류 69페이지의 거래 플랫폼",
+          "사회보장정보원 — 홈·통합검색·소식알림·발간자료 등 5개 대분류 18페이지",
+          "환경책임투자 종합플랫폼 사용자 화면, 코네틱 메인",
+        ],
+      },
+      {
+        title: "일하는 방식",
+        items: [
+          "페이지마다 PC·모바일 시안, 퍼블리싱 산출물, 진행 상태, 갱신일, 메뉴 경로를 한 표로 묶어 관리",
+          "마크업은 전량 직접 작업하고, 리스트의 담당 표기는 후반 QA 검수자를 구분하기 위한 것",
+          "공공기관 특성상 요구되는 웹 접근성과 구형 브라우저 대응을 마크업 단계에서 반영",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "cosmostation-extension",
+    rank: 12,
+    title: "Cosmostation 크롬 익스텐션",
+    subtitle: "멀티체인 지갑 — 토큰 검색 페이지 · 체인 추가",
+    category: "company",
+    company: "스탬퍼 (Cosmostation)",
+    period: "2022.10 — 2022.12",
+    role: "프론트엔드 개발 인턴 (토큰 검색 · 체인 추가)",
+    description:
+      "오픈소스 멀티체인 지갑에 Kujira 체인을 추가하고 ERC20·CW20 토큰 검색 페이지를 만들며, 리뷰를 반복해 반영한 첫 실무 경험",
+    overview:
+      "Cosmos·Ethereum 등 여러 체인을 지원하는 오픈소스 크롬 익스텐션 지갑입니다. 인턴으로 참여해 티켓 단위로 기능을 맡았고, 신규 체인(Kujira) 추가와 토큰 검색 페이지 제작을 담당했습니다. 여기서 처음으로 '동작하는 코드'와 '리뷰를 통과하는 코드'가 다르다는 걸 체감했습니다 — 같은 기능을 리뷰 코멘트에 따라 여러 번 다시 올렸고, 그 과정에서 디바운스 처리와 상태 흐름을 손보며 검색 입력의 반응을 개선했습니다.",
+    techs: ["react", "typescript", "redux", "emotion", "webpack", "i18n"],
+    links: [
+      { label: "GitHub", url: "https://github.com/xeunnie/Internship_Fork_Code" },
+    ],
+    highlights: [
+      "Kujira 체인 추가 — 체인 상수·심볼 에셋·체인 목록 등록까지 신규 체인 온보딩 전 과정",
+      "이더리움 ERC20 토큰 리스트·검색 페이지 제작 — entry/layout/styled 구조와 TokenItem 컴포넌트 구성",
+      "Cosmos CW20 토큰 검색 페이지 — 특정 체인 전용에서 전 체인 지원으로 확장",
+      "검색 입력에 디바운스 도입 — 입력마다 발생하던 조회를 줄이고, 직접 만든 로직을 공통 useDebounce 훅으로 정리",
+      "코드 리뷰 반영을 전제로 한 개발 — 같은 기능을 리뷰 코멘트에 따라 반복해 다시 올림",
+      "한국어·영어 번역 리소스 추가 — 신규 화면의 i18n 대응",
+    ],
+    sections: [
+      {
+        title: "체인 · 토큰 기능",
+        items: [
+          "Kujira 체인을 익스텐션에 추가 — 체인 정의 상수, 체인 목록 등록, 심볼 이미지까지 함께 반영",
+          "이더리움 ERC20 토큰 리스트 페이지 제작 — 검색 화면 구조(entry·layout·styled)와 개별 토큰 아이템 컴포넌트를 나눠 구성",
+          "Cosmos CW20 토큰 검색 화면을 만들고, 처음 특정 체인 대상이던 것을 전 체인 지원으로 확장",
+          "라우트 상수와 라우터에 새 화면을 연결하고, 지갑 화면의 토큰·코인 목록과 이어지게 함",
+        ],
+      },
+      {
+        title: "성능과 리뷰",
+        items: [
+          "검색 입력에 디바운스를 적용하고 useCallback으로 감싸 불필요한 조회와 재생성을 줄임",
+          "직접 만든 디바운스 로직을 이후 공통 useDebounce 훅으로 정리",
+          "리뷰 코멘트를 반영한 커밋이 여러 차례 — 조건 판단 로직 단순화, 불필요한 로그·주석 제거, 스타일 정리",
+          "신규 화면에 맞춰 한국어·영어 번역 리소스를 함께 추가",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "argos",
+    rank: 4,
+    title: "Argos",
+    subtitle: "AI 실시간 수업 분석 플랫폼",
+    category: "personal",
+    featured: true,
+    org: "코리아IT 바이브코딩 공모전",
+    period: "2026.04",
+    award: "제1회 코리아IT아카데미 바이브코딩 공모전(KIT 해커톤) 장려상 — 500팀 중 3위",
+    role: "Frontend 전담 (4개 역할 뷰 전체 구축)",
+    description:
+      "수강 전·수업 중·수업 후·운영까지 전 주기를 AI로 분석하는 플랫폼 — 프론트엔드를 전담해 약 16,000줄 기여, 500팀 중 3위(장려상)",
+    overview:
+      "학원의 수업 품질을 데이터로 보는 플랫폼입니다. 수강 신청 단계에서 AI가 지원자 역량을 사전 진단하고, 수업 중에는 실시간 이해도를 히트맵으로 보여주며, 수업 후에는 개인별 리포트를 만들고, 운영 차원에서는 이탈 위험을 조기에 감지합니다. 강사·수강생·원장·멘토 네 역할이 각각 다른 화면을 쓰기 때문에 같은 데이터를 네 가지 관점으로 다시 그려야 했고, 저는 이 프론트엔드 전체를 맡았습니다. 코리아IT아카데미가 주최한 제1회 바이브코딩 공모전(KIT 해커톤)에 출품해 500팀 중 3위(장려상)로 수상했습니다.",
+    techs: ["nextjs", "react", "typescript", "supabase", "postgresql", "gemini", "zod", "tailwind", "radix", "recharts", "vitest", "playwright", "vercel"],
+    links: [
+      { label: "배포", url: "https://argo-project.vercel.app" },
+      { label: "GitHub", url: "https://github.com/xeunnie/argo-project" },
+      { label: "팀 조직", url: "https://github.com/mythoscodes" },
+      { label: "대회 공식 페이지", url: "http://koreaacademyit.co.kr/2025/landing/kit_26.asp" },
+    ],
+    highlights: [
+      "제1회 코리아IT아카데미 바이브코딩 공모전(KIT 해커톤) 장려상 — 500팀 중 3위",
+      "프론트엔드 전담 — 약 16,000줄 기여, 강사·수강생·원장·멘토 4개 역할 뷰 전체 구축",
+      "실시간 이해도 히트맵 — 퀴즈 응답이 들어올 때마다 개념별 이해/미이해를 색으로 시각화",
+      "과목별 AI 역량 진단 — 정기 측정 결과를 레이더 차트로 시각화하고 역할별 화면에 연동",
+      "원장 경영 대시보드 5탭 + 멘토 이탈 방지 뷰 시각화 전면 개편",
+      "강사 AI 코칭 구조화 — 오개념 클러스터를 묶어 '어느 개념에서 몇 %가 약한지' 표출",
+      "Next.js 16 App Router + Supabase Realtime + Gemini, Zod로 AI 응답까지 전수 검증",
+    ],
+    sections: [
+      {
+        title: "네 역할, 네 개의 화면",
+        items: [
+          "강사 — 세션 생성과 참여 코드 발급, 라이브 대시보드에서 실시간 이해도 히트맵과 AI 코칭 확인",
+          "수강생 — 모바일에서 객관식·주관식 퀴즈에 실시간 응답, 개인 대시보드와 학습 리포트, 과목별 역량 진단",
+          "원장 — 학원 전체 수업 품질, 반별 평균 이해도, 이탈 위험 감지, 과목별 수준 분포를 5개 탭으로 구성",
+          "멘토 — 이탈 위험 레이더와 상담 브리핑을 보고 선제적으로 개입하는 뷰",
+          "같은 데이터를 네 관점으로 다시 그려야 해, 화면별로 무엇을 강조하고 무엇을 접을지 기준을 나눔",
+        ],
+      },
+      {
+        title: "실시간과 AI",
+        items: [
+          "Supabase Realtime 구독으로 퀴즈 응답이 들어올 때마다 이해도 히트맵을 갱신",
+          "양방향 피드백 루프 — 보충 설명 후 재퀴즈를 돌려 이해도 변화(델타)를 시각화",
+          "AI 코칭 결과를 그대로 나열하지 않고 오개념 클러스터로 묶어 강사가 바로 행동할 수 있는 형태로 구조화",
+          "Zod로 외부 입력뿐 아니라 AI 응답까지 전수 검증 — 모델이 형태를 흔들어도 화면이 깨지지 않게 함",
+          "레이더 차트·추이 그래프 등 Recharts 기반 시각화를 역할별 화면에 재사용",
+        ],
+      },
+      {
+        title: "마감 품질",
+        items: [
+          "심사 동선을 고려한 랜딩 페이지와 원클릭 테스트 계정 — 심사위원이 6개 역할 계정을 바로 체험",
+          "데모 시드 데이터 구성 — 이탈 위험·정체·향상 패턴을 가진 수강생을 미리 심어 시나리오가 보이게 함",
+          "Toast 피드백과 SEO 메타 정리, 미사용 데이터까지 전수 표출해 빈 화면을 없앰",
+          "팀 차원에서 E2E 1,146건과 15화면 97건 테스트케이스, 73페이지 위키를 함께 남김",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "boot-up",
+    minor: true,
+    title: "BOOT_UP",
+    subtitle: "부트캠프 수강생 커뮤니티 — 백엔드 · 프론트 · DevOps 전 단계",
+    category: "personal",
+    org: "한화시스템 Beyond SW Camp",
+    period: "2024.07 — 2024.08",
+    role: "Backend · Frontend(Vue) · DevOps (팀 5인, 단계별 역할 전환)",
+    description:
+      "같은 서비스를 백엔드 → 프론트 → 배포까지 세 번에 나눠 만든 캠프 프로젝트 — 프론트 단계에서는 팀 내 최다 기여, DevOps 단계는 단독 수행",
+    overview:
+      "한화시스템 BEYOND SW캠프 수강생 전용 커뮤니티 플랫폼입니다. 캠프가 디스코드만 쓰고 있어 기수 간·수료자 간 소통이 끊긴다는 문제에서 출발해, 커뮤니티·공지사항·출결 알림·스터디룸 예약을 하나로 묶었습니다. 특별한 점은 같은 서비스를 단계별로 다시 만들었다는 것입니다 — 2차에서 Spring 백엔드를, 3차에서 Vue 프론트를, 마지막에 Docker·GitHub Actions 배포를 붙였습니다. 덕분에 하나의 도메인을 서버·화면·배포 세 시점에서 보게 됐고, 이후 프로젝트에서 백엔드와 이야기할 때의 기준이 여기서 생겼습니다.",
+    techs: ["java", "springboot", "querydsl", "gradle", "vue", "javascript", "websocket", "mysql", "docker", "github"],
+    links: [
+      { label: "GitHub", url: "https://github.com/xeunnie/be06-2nd-Dopamines-BOOT_UP" },
+      { label: "프론트엔드 레포", url: "https://github.com/xeunnie/be06-3rd-Dopamines-BOOT_UP" },
+      { label: "DevOps 레포", url: "https://github.com/xeunnie/beyond-bootcamp-devops" },
+      { label: "백엔드 Wiki", url: "https://github.com/beyond-sw-camp/be06-2nd-Dopamines-BOOT_UP/wiki" },
+      { label: "프론트엔드 Wiki", url: "https://github.com/beyond-sw-camp/be06-3rd-Dopamines-BOOT_UP/wiki" },
+      { label: "팀 조직", url: "https://github.com/DopaminesBeyond" },
+    ],
+    highlights: [
+      "같은 서비스를 3단계로 — 2차 Spring 백엔드 → 3차 Vue 프론트 → DevOps 배포까지 역할을 바꿔가며 수행",
+      "프론트 단계 팀 내 최다 기여(54커밋) — 통합검색, 마켓 찜·검색, 댓글·대댓글, 게시글 상세, 공지사항, 메인",
+      "백엔드에서 QueryDSL 동적 쿼리와 검색 기능 구현",
+      "전역 예외처리와 BaseResponse 성공·에러 코드 체계를 세워 응답 형태를 팀 전체가 공유",
+      "DevOps 단계는 단독 수행 — GitHub Actions(JDK 17 + Gradle) → Docker 이미지 빌드 → docker-compose로 백엔드·프론트 동시 기동",
+      "PR·이슈 템플릿과 코드 컨벤션을 정해 5인 팀의 PR 기반 협업 규칙을 문서화",
+    ],
+    sections: [
+      {
+        title: "2차 — Spring 백엔드",
+        items: [
+          "QueryDSL로 동적 쿼리를 구성해 게시판 검색 기능 구현",
+          "전역 예외처리 메시지와 BaseResponse 성공·에러 코드 체계를 세워, 화면이 응답 형태를 추측하지 않게 함",
+          "공지사항(NOTICE) 도메인의 엔티티·컨트롤러 구현과 반환 타입 정리",
+          "스터디룸 좌석 예약의 시간 타입을 재정의해 예약 충돌 판단을 단순화",
+          "feature 브랜치 + PR 기반 협업 — PR·이슈 템플릿을 직접 작성해 팀 규칙으로 고정",
+        ],
+      },
+      {
+        title: "3차 — Vue 프론트엔드 (팀 내 최다 기여)",
+        items: [
+          "커뮤니티 게시판 전반 — 목록·상세·작성·수정, 댓글과 대댓글 조회를 화면에 연결",
+          "통합검색 구현 — 게시판·마켓·공지사항을 가로지르는 검색 화면 구성",
+          "마켓 찜하기와 마켓 검색 완성, 메인 페이지·공지사항 화면 정리",
+          "회원(User)·프로젝트 게시판·스터디 자리 예약 화면과 공통 레이아웃 작업",
+          "JWT를 HttpOnly로 다루고 액세스 토큰 만료를 1시간으로 두는 등, 팀 위키에 정리된 인증 정책에 맞춰 화면을 연결",
+        ],
+      },
+      {
+        title: "DevOps — 단독 수행",
+        items: [
+          "GitHub Actions 워크플로 작성 — JDK 17 설정, Gradle 셋업, gradlew 권한 부여 후 Docker 이미지 빌드까지 자동화",
+          "openjdk:17 기반 Dockerfile로 Spring 애플리케이션 이미지화 (JAR을 빌드 인자로 주입)",
+          "docker-compose로 백엔드(8080)와 프론트엔드(3000)를 함께 띄우는 구성 작성",
+          "main 브랜치 push를 트리거로 두어 코드가 올라가면 빌드가 도는 상태까지 만듦",
+        ],
+      },
+      {
+        title: "팀 문서화",
+        items: [
+          "백엔드 위키 8편 — API 명세(Swagger), 시퀀스 다이어그램, 기능 테스트, 코드 컨벤션, 시스템·소프트웨어 아키텍처, 성능 개선",
+          "프론트 위키 5편 — 시스템 아키텍처, 주요 적용 기술(JWT·WebSocket/STOMP·Vue 선택 근거), 상세 기능, 코드 컨벤션",
+          "기술 선택에 근거를 남기는 방식 — 'Vue를 왜 골랐는가'를 React와 비교해 팀의 상황(JS 숙련도, 남은 기간) 기준으로 서술",
+        ],
+      },
+    ],
+  },
+  {
     slug: "calit",
+    minor: true,
+    org: "한화시스템 Beyond SW Camp",
     title: "CalIT",
     subtitle: "개발자를 위한 대시보드 기반 스크럼 관리 시스템",
     category: "personal",
@@ -268,6 +1103,7 @@ export const PROJECTS: Project[] = [
     links: [
       { label: "배포", url: "https://calit.netlify.app/" },
       { label: "GitHub", url: "https://github.com/beyond-sw-camp/be06-fin-MINIONZ-CalIT" },
+      { label: "팀 조직", url: "https://github.com/MINIONZorg" },
       { label: "시연 영상", url: "https://drive.google.com/file/d/1X2cc5Vd348nsnsZcGp6ZbHRO0TeA-mc5/view?usp=drive_link" },
       { label: "발표 자료", url: "https://drive.google.com/file/d/1PhEqi3-RpG1aBW3tOVNXraTka1QhvWfE/view?usp=drive_link" },
     ],
@@ -298,6 +1134,8 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "thunderting",
+    minor: true,
+    org: "코드잇 프론트엔드 심화",
     title: "번개팅",
     subtitle: "실시간 모임 매칭 플랫폼",
     category: "personal",
@@ -318,7 +1156,8 @@ export const PROJECTS: Project[] = [
     ],
     links: [
       { label: "배포", url: "https://thunderting.site/" },
-      { label: "GitHub", url: "https://github.com/DoITFronts" },
+      { label: "GitHub", url: "https://github.com/DoITFronts/Frontend" },
+      { label: "조직 전체", url: "https://github.com/DoITFronts" },
       { label: "시연 영상", url: "https://drive.google.com/file/d/1d2EmOpNjbYYjr91hOSKF-g38vRaHODrf/view?usp=sharing" },
       { label: "Wiki", url: "https://github.com/DoITFronts/Frontend/wiki" },
     ],
@@ -368,6 +1207,8 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "ppiyo",
+    minor: true,
+    org: "Google 삐약톤 해커톤",
     title: "PPIYO",
     subtitle: "위치 기반 스터디 모집 플랫폼",
     category: "personal",
@@ -388,7 +1229,8 @@ export const PROJECTS: Project[] = [
     ],
     links: [
       { label: "배포", url: "https://bbiyagiez.netlify.app/" },
-      { label: "GitHub", url: "https://github.com/chickHackathon" },
+      { label: "GitHub", url: "https://github.com/chickHackathon/Frontend" },
+      { label: "조직 전체", url: "https://github.com/chickHackathon" },
     ],
     sections: [
       {
@@ -412,6 +1254,8 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "chatflow",
+    minor: true,
+    org: "Kubernetes & Docker 스터디",
     title: "ChatFlow",
     subtitle: "쿠버네티스 기반 실시간 커뮤니케이션 플랫폼",
     category: "personal",
@@ -432,7 +1276,8 @@ export const PROJECTS: Project[] = [
     ],
     links: [
       { label: "배포", url: "https://discord-clone-alpha-tawny.vercel.app/login" },
-      { label: "GitHub", url: "https://github.com/ChatFlowProject" },
+      { label: "GitHub", url: "https://github.com/ChatFlowProject/chatter" },
+      { label: "조직 전체", url: "https://github.com/ChatFlowProject" },
       { label: "Wiki", url: "https://github.com/ChatFlowProject/chatter/wiki" },
     ],
     sections: [
