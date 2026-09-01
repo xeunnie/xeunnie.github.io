@@ -1,0 +1,462 @@
+/* ────────────────────────────────────────────────
+   Resume — 문서(A4) 전용 스타일
+   화면에서는 종이 한 장처럼, 인쇄하면 그대로 PDF가 된다.
+   사이트의 다크 테마와 무관하게 항상 흰 종이 + 검은 글자.
+   ──────────────────────────────────────────────── */
+
+.rz-root {
+  --rz-ink: #16181d;
+  --rz-body: #33373f;
+  --rz-muted: #6b7280;
+  --rz-faint: #9aa1ab;
+  --rz-line: #dfe2e7;
+  --rz-line-soft: #eceef1;
+  --rz-accent: #1e5f8c;
+  --rz-accent-soft: #eef4f9;
+  --rz-paper: #ffffff;
+  --rz-desk: #e8eaee;
+
+  --rz-sans: "Inter", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic",
+    "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
+  --rz-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  min-height: 100vh;
+  background: var(--rz-desk);
+  color: var(--rz-body);
+  font-family: var(--rz-sans);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* ─── 컨트롤 바 (인쇄 시 사라짐) ─── */
+.rz-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: #12141a;
+  color: #e6e8ec;
+  border-bottom: 1px solid #262a33;
+}
+
+.rz-bar-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #9aa1ab;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.rz-bar-back:hover { color: #7fb8dd; }
+
+.rz-bar-spacer { flex: 1 1 auto; }
+
+.rz-seg {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid #2f3440;
+  border-radius: 8px;
+  background: #1a1d24;
+}
+
+.rz-seg button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #9aa1ab;
+  font: inherit;
+  font-size: 12.5px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.rz-seg button:hover { color: #dfe3e8; }
+.rz-seg button[data-on="true"] {
+  background: #2b303a;
+  color: #ffffff;
+}
+
+.rz-print-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px;
+  border: 1px solid #3d7fae;
+  border-radius: 8px;
+  background: #1e5f8c;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.rz-print-btn:hover { background: #24709f; border-color: #4f93c2; }
+
+.rz-hint {
+  font-size: 12px;
+  color: #7b828d;
+  flex-basis: 100%;
+  margin: 0;
+}
+
+/* ─── 종이 ─── */
+.rz-sheet {
+  width: 210mm;
+  max-width: 100%;
+  margin: 28px auto;
+  padding: 16mm 15mm 18mm;
+  background: var(--rz-paper);
+  box-shadow: 0 10px 40px rgb(0 0 0 / 0.14);
+  font-size: 13px;
+  line-height: 1.62;
+}
+
+/* ─── 머리말 ─── */
+.rz-head {
+  border-bottom: 2px solid var(--rz-ink);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+}
+
+.rz-name {
+  margin: 0;
+  font-size: 2.05em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--rz-ink);
+  line-height: 1.15;
+}
+
+.rz-name span {
+  font-size: 0.45em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--rz-accent);
+  margin-left: 10px;
+  vertical-align: 0.35em;
+}
+
+.rz-headline {
+  margin: 8px 0 0;
+  font-size: 1.02em;
+  color: var(--rz-muted);
+}
+
+.rz-contact {
+  margin: 12px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  font-family: var(--rz-mono);
+  font-size: 0.83em;
+  color: var(--rz-muted);
+}
+.rz-contact a { color: inherit; text-decoration: none; }
+.rz-contact a:hover { color: var(--rz-accent); }
+
+/* ─── 섹션 ─── */
+.rz-section { margin-top: 22px; }
+
+.rz-h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: 0.82em;
+  font-family: var(--rz-mono);
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--rz-accent);
+  break-after: avoid;
+  page-break-after: avoid;
+}
+.rz-h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--rz-line);
+}
+
+/* ─── 요약 ─── */
+.rz-summary {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rz-summary li {
+  position: relative;
+  padding-left: 14px;
+  color: var(--rz-body);
+}
+.rz-summary li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--rz-accent);
+}
+
+.rz-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 14px;
+  border: 1px solid var(--rz-line);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.rz-stat {
+  padding: 9px 12px;
+  border-right: 1px solid var(--rz-line-soft);
+}
+.rz-stat:last-child { border-right: 0; }
+.rz-stat dt {
+  font-family: var(--rz-mono);
+  font-size: 0.68em;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--rz-faint);
+}
+.rz-stat dd {
+  margin: 2px 0 0;
+  font-size: 0.87em;
+  font-weight: 600;
+  color: var(--rz-ink);
+}
+
+/* ─── 항목(경력·프로젝트·교육·활동 공통) ─── */
+.rz-entry {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  padding: 11px 0;
+  border-top: 1px solid var(--rz-line-soft);
+}
+.rz-entry:first-of-type { border-top: 0; padding-top: 0; }
+
+/* 상세본에서는 항목이 길어져 통째로 avoid 하면 빈 페이지가 생긴다 */
+.rz-root[data-detail="true"] .rz-entry {
+  break-inside: auto;
+  page-break-inside: auto;
+}
+
+.rz-entry-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.rz-entry-title {
+  margin: 0;
+  font-size: 1.02em;
+  font-weight: 700;
+  color: var(--rz-ink);
+  letter-spacing: -0.005em;
+}
+
+.rz-entry-period {
+  font-family: var(--rz-mono);
+  font-size: 0.78em;
+  color: var(--rz-muted);
+  white-space: nowrap;
+}
+
+.rz-entry-meta {
+  margin: 2px 0 0;
+  font-size: 0.87em;
+  color: var(--rz-accent);
+  font-weight: 500;
+}
+
+.rz-entry-summary {
+  margin: 6px 0 0;
+  font-size: 0.92em;
+  color: var(--rz-muted);
+}
+
+.rz-bullets {
+  margin: 7px 0 0;
+  padding: 0 0 0 14px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 0.92em;
+}
+.rz-bullets li { position: relative; }
+.rz-bullets li::before {
+  content: "–";
+  position: absolute;
+  left: -14px;
+  color: var(--rz-faint);
+}
+
+/* 프로젝트 상세 섹션 */
+.rz-sub {
+  margin-top: 9px;
+  padding-left: 12px;
+  border-left: 2px solid var(--rz-accent-soft);
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.rz-sub-title {
+  margin: 0;
+  font-size: 0.86em;
+  font-weight: 700;
+  color: var(--rz-ink);
+}
+.rz-sub .rz-bullets { font-size: 0.86em; margin-top: 4px; }
+
+/* 기술 태그 */
+.rz-techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+.rz-tech {
+  font-family: var(--rz-mono);
+  font-size: 0.7em;
+  line-height: 1.5;
+  padding: 1px 6px;
+  border: 1px solid var(--rz-line);
+  border-radius: 3px;
+  color: var(--rz-muted);
+  background: #fafbfc;
+}
+
+/* 스킬 표 */
+.rz-skills { display: flex; flex-direction: column; gap: 7px; }
+.rz-skill-row {
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.rz-skill-label {
+  font-family: var(--rz-mono);
+  font-size: 0.76em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--rz-faint);
+}
+.rz-skill-row .rz-techs { margin-top: 0; }
+
+/* 한 줄 목록 (그 외 프로젝트) */
+.rz-oneline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.92em;
+}
+.rz-oneline li {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.rz-oneline b { color: var(--rz-ink); font-weight: 700; }
+.rz-oneline .rz-entry-period { margin-left: 6px; }
+
+/* 동료 평가 */
+.rz-quote {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  padding: 9px 0 9px 12px;
+  border-left: 2px solid var(--rz-line);
+  margin: 0 0 9px;
+}
+.rz-quote p { margin: 0; font-size: 0.92em; color: var(--rz-body); }
+.rz-quote footer {
+  margin-top: 4px;
+  font-size: 0.78em;
+  font-family: var(--rz-mono);
+  color: var(--rz-faint);
+}
+
+.rz-foot {
+  margin-top: 26px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rz-line);
+  font-family: var(--rz-mono);
+  font-size: 0.72em;
+  color: var(--rz-faint);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ─── 좁은 화면 ─── */
+@media (max-width: 780px) {
+  .rz-sheet {
+    width: auto;
+    margin: 14px 12px;
+    padding: 22px 18px 26px;
+    font-size: 12.5px;
+  }
+  .rz-stats { grid-template-columns: repeat(2, 1fr); }
+  .rz-stat:nth-child(2) { border-right: 0; }
+  .rz-stat:nth-child(-n + 2) { border-bottom: 1px solid var(--rz-line-soft); }
+  .rz-skill-row { grid-template-columns: 1fr; gap: 3px; }
+}
+
+/* ─── 인쇄 / PDF ─── */
+@page {
+  size: A4;
+  margin: 13mm 13mm 15mm;
+}
+
+@media print {
+  .rz-no-print { display: none !important; }
+
+  html,
+  body {
+    background: #fff !important;
+  }
+
+  .rz-root {
+    min-height: 0;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .rz-sheet {
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    font-size: 9.6pt;
+    line-height: 1.5;
+  }
+
+  .rz-section { margin-top: 15pt; }
+  .rz-entry { padding: 7pt 0; }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* 표·목록이 페이지 경계에서 잘려 첫 줄만 남는 것 방지 */
+  .rz-h2 { break-after: avoid; page-break-after: avoid; }
+  .rz-entry-head { break-after: avoid; page-break-after: avoid; }
+  .rz-stats { break-inside: avoid; page-break-inside: avoid; }
+  .rz-bullets li { break-inside: avoid; page-break-inside: avoid; }
+}
