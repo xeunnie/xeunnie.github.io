@@ -37,3 +37,6 @@ next-env.d.ts
 
 # sentry
 .sentryclirc
+
+# claude code 로컬 프리뷰 설정
+.claude/
