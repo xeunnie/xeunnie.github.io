@@ -130,8 +130,8 @@ export default function ProjectDetail({
                 ))}
               </div>
               <p className="mt-6 text-xs text-slate-500 leading-relaxed">
-                실제 운영 화면입니다. CCTV 영상에 잡힌 이용객은 알아볼 수 없게 처리했고,
-                내부 접속 주소는 잘라냈습니다.
+                실제 운영 화면입니다. 손님·직원의 이름과 CCTV에 잡힌 이용객은 알아볼 수 없게
+                처리했고, 내부 접속 주소는 잘라냈습니다.
               </p>
             </ScrollSection>
           )}
