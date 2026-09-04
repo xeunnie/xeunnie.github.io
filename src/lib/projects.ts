@@ -614,6 +614,41 @@ export const PROJECTS: Project[] = [
     techs: ["nextjs", "react", "typescript", "reactquery", "recoil", "pwa", "workbox", "sse", "dndkit", "pdfjs", "exceljs", "escpos", "indexeddb", "scss"],
     shots: [
       {
+        src: "/shot/fnb-order-menu.jpg",
+        caption:
+          "주문 화면 — 카테고리 탭으로 나눈 메뉴판과 테이블별 주문서. NEW·BEST·시그니처 같은 태그와 품절 여부를 상태값으로 받아 조건부로 그린다.",
+      },
+      {
+        src: "/shot/fnb-order-live.jpg",
+        caption:
+          "진행중 오더 보드 — 상단에 홀 진행 상황과 캐디 위치가 흐르고, 주문은 테이블 카드로 쌓인다. 주방·홀에서 종일 띄워 두는 화면이라 새 주문과 상태 변화가 SSE로 바로 꽂히고 새로고침이 필요 없다.",
+      },
+      {
+        src: "/shot/fnb-order-board.jpg",
+        caption:
+          "정산이 끝난 주문을 모아 보는 화면. 한 팀이 여러 번 나눠 주문한 것을 카드 하나로 묶고, 묶음별 소계와 주문 합계를 같이 보여준다.",
+      },
+      {
+        src: "/shot/fnb-message.jpg",
+        caption:
+          "캐디와 라운지가 주고받는 메시지. \"경기과에 무전이 안 되서 여기로 보냅니다\" 같은 실제 사용 기록이 남아 있다. 무전이 닿지 않는 코스에서 주문 변경·취소가 이 경로로 들어온다.",
+      },
+      {
+        src: "/shot/fnb-teeoff.jpg",
+        caption:
+          "티오프 예약을 불러와 내장객을 테이블에 붙인다. 부·코스로 걸러 찾고 단체 예약도 함께 처리한다. 예약 데이터는 골프장 기간계에서 넘어온다.",
+      },
+      {
+        src: "/shot/fnb-menu-admin.jpg",
+        caption:
+          "메뉴 관리 — 124개 메뉴를 분류·태그·판매 상태·채널로 관리한다. 상품 정보는 ERP에서 받아 갱신하고, 매장에서는 판매/중지만 바로 바꿀 수 있게 했다.",
+      },
+      {
+        src: "/shot/fnb-sales.jpg",
+        caption:
+          "매출 조회 — 날짜와 캐디로 걸러 공급가·VAT·판매가를 전표 단위까지 본다. 정산 담당자가 그대로 쓰도록 엑셀 내보내기를 붙였다.",
+      },
+      {
         src: "/shot/fnb-did-installed.jpg",
         caption:
           "만든 사이니지가 실제로 걸려 있는 모습. 편집기에서 지정한 배경·제목·영문 표기가 그대로 매장 벽면 디스플레이에 표출된다.",
@@ -627,6 +662,16 @@ export const PROJECTS: Project[] = [
         src: "/shot/fnb-did-output.jpg",
         caption:
           "편집기에서 만든 화면이 실제로 표출된 상태. 해상도가 달라도 위치가 유지되도록 텍스트를 중앙 기준 %오프셋으로 저장하고, 글자 크기는 container-query로 화면 폭을 따라간다.",
+      },
+      {
+        src: "/shot/fnb-did-code.jpg",
+        caption:
+          "사이니지 기기는 코드 한 번으로 연결한다. 설치하러 간 사람이 계정도 주소도 몰라도 되도록, 관리자가 발급한 코드만 넣으면 그 매장 화면이 뜨게 했다.",
+      },
+      {
+        src: "/shot/fnb-did-autorun.jpg",
+        caption:
+          "설치 담당자를 위한 안내를 화면 안에 넣었다. 기기를 껐다 켜도 같은 화면이 다시 뜨게 하는 절차와, 반대로 빠져나오는 방법(Alt+F4·모서리 5번 탭)까지 적어 두었다. 현장에 개발자가 다시 갈 일을 줄이려고 만든 화면이다.",
       },
       {
         src: "/shot/fnb-layout-editor.jpg",
