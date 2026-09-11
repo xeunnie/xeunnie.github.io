@@ -149,6 +149,7 @@ export const CHRONICLE: ChronicleYear[] = [
     story: [
       "골프장에서 매일 쓰는 서비스를 맡았습니다. 클라우드에 정적 배포된 웹앱이 매장 사설망 프린터에 닿지 못하는 문제는 로컬 에이전트 브릿지로 풀었고, 망분리된 미니 PC가 네트워크 없이 부팅해도 화면이 뜨도록 서비스워커를 설계했습니다.",
       "React Native 앱은 Expo 없이 네이티브 프로젝트를 직접 관리하며 릴리스 서명과 스토어 제출까지 혼자 진행했습니다. 서버가 par에 null을 내려주는 바람에 모든 홀이 더블보기로 표시되던 오류는 zod 2층 계약 테스트로 화면에 반영되기 전에 잡았고, API 응답 불일치 12건은 영향·우선순위 표로 정리해 백엔드에 넘겼습니다.",
+      "9월에는 경기관제 앱을 소형 단말(PM30)로 옮기는 일을 맡았습니다. 기능을 옮기기 전에 모바일만 떼어낸 저장소를 만들고, 상태 저장 방식과 번들, 테스트부터 다시 세웠습니다.",
       "이때부터 막혔던 문제를 Tistory에 정리하기 시작했습니다. 무인 단말에서 CDN을 쓸 수 없는 문제, 인앱브라우저에서 blob URL 다운로드가 안 되는 문제처럼 검색해도 답이 잘 안 나오던 것들입니다.",
     ],
     moments: [
@@ -156,8 +157,9 @@ export const CHRONICLE: ChronicleYear[] = [
       { when: "2026.04", what: "제1회 코리아IT아카데미 바이브코딩 공모전 500팀 중 3위(장려상) — Argos 프론트엔드 전담" },
       { when: "2026.06 — 08", what: "VGOLF 앱 — React Native 개발부터 Play Console 제출까지 단독 수행 (2개월 487커밋)" },
       { when: "2026.04 —", what: "Tistory에 기술 정리와 실무 트러블슈팅 연재 시작" },
+      { when: "2026.09 —", what: "VGOLF 경기관제 PM30 — 모바일 저장소 분리, Recoil → zustand, 테스트 0 → 162개, 태블릿 기능 이관" },
     ],
-    projects: ["vgolf-fnb", "vgolf-app", "argos", "vgolf"],
+    projects: ["vgolf-fnb", "vgolf-app", "vgolf-pm30", "argos", "vgolf"],
     gained: [
       "React Native 네이티브 프로젝트를 Expo 없이 직접 관리하기",
       "릴리스 서명·환경 분리·스토어 심사 대응까지 배포 마지막 단계 처리하기",
@@ -166,6 +168,8 @@ export const CHRONICLE: ChronicleYear[] = [
       "zod 2층 스키마로 백엔드 응답을 계약 테스트하기",
       "영향·우선순위를 붙인 API 수정 요청서 쓰기",
       "Supabase RLS와 AI SDK로 역할별 데이터 격리 구현하기",
+      "기준을 세워 레거시 코드를 안전하게 걷어내고, 측정한 뒤에 구조 바꾸기",
+      "코드를 일부러 깨 보는 변형 검증으로 테스트가 실제로 버그를 잡는지 확인하기",
     ],
     techs: ["reactnative", "nextjs", "typescript", "zod", "supabase", "workbox", "escpos", "ios", "android"],
   },

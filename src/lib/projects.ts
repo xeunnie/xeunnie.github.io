@@ -57,13 +57,17 @@ export interface Project {
   links?: ProjectLink[];
   /** 화면 캡처. 첫 장이 목록 카드의 썸네일로도 쓰인다. */
   shots?: ProjectShot[];
+  /** 세로로 긴 휴대기기 캡처면 "phone" — 상세에서 격자로, 목록 카드에서 나란히 보여준다 */
+  shotsLayout?: "phone";
+  /** 캡처 아래 안내문. 없으면 운영 화면 기본 문구를 쓴다. */
+  shotsNote?: string;
   sections?: ProjectSection[];
 }
 
 export const PROJECTS: Project[] = [
   {
     slug: "onmeet",
-    rank: 5,
+    rank: 6,
     org: "코리아IT 풀스택 과정",
     award: "코리아IT 풀스택 과정 수강생 우수상",
     title: "OnMeet",
@@ -284,7 +288,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "plug-platform",
-    rank: 6,
+    rank: 7,
     team: "DX 기술팀",
     group: "Plug Platform",
     title: "Plug Platform",
@@ -348,7 +352,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "plug-atlas",
-    rank: 8,
+    rank: 9,
     team: "DX 기술팀",
     group: "Plug Platform",
     title: "Plug Atlas",
@@ -422,8 +426,140 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: "vgolf-pm30",
+    rank: 4,
+    team: "클라우드팀",
+    group: "VGOLF",
+    title: "VGOLF 경기관제 PM30",
+    subtitle: "태블릿 경기관제 앱을 소형 단말(PM30)로 옮기며 구조를 다시 세운 작업",
+    category: "company",
+    company: "플럭시티",
+    period: "2026.09 — 현재",
+    role: "Frontend 단독 — 저장소 분리 · 리팩토링 · 태블릿 기능 이관",
+    description:
+      "태블릿·모바일 통합 앱에서 모바일만 떼어내 PM30 전용으로 재정비 — 상태 저장 1회 7.89ms → 0.058ms, 진입 번들 −56%, 테스트 0 → 162개",
+    overview:
+      "골프장 경기관제 앱은 캐디용 태블릿과 모바일 코드가 한 저장소에 섞여 있었습니다. 현장 단말이 세로로 고정된 소형 기기(PM30)로 바뀌면서, 모바일만 떼어낸 저장소를 만들고 태블릿에만 있던 기능을 옮기는 일을 맡았습니다. 분리 이후 커밋 67건 중 65건이 제 작업입니다(나머지 2건은 배포 설정). 기능을 옮기기 전에 구조부터 손봤습니다. 유지보수가 끝난 Recoil을 zustand로 바꾸면서 0.5초마다 849KB를 다시 쓰던 저장 방식을 고쳤고, 운영 번들에 섞여 있던 개발용 데이터를 찾아 분리했고, 테스트가 하나도 없던 코드에 162개의 테스트를 붙였습니다. 다음 사람이 이어받을 수 있도록 구조·데이터 흐름·GPS 판정 원리·이관 목록을 문서 13개로 남겼습니다.",
+    techs: ["react", "typescript", "vite", "zustand", "reactquery", "vitest", "rtl", "reactrouter", "i18n", "proj4", "webview", "scss", "axios", "gitea"],
+    highlights: [
+      "저장소 분리 — 태블릿 코드 328파일·34,827줄을 걷어내되 '분리 때문에 새로 죽은 파일'만 골라 지움. JS 번들 1,991 → 1,557KB",
+      "Recoil → zustand 5 — 98개 상태를 쓰기 빈도×크기 기준 5개 저장 칸으로 나누고 직렬화를 몰아서 처리. 상태 저장 1회 7.89ms → 0.058ms",
+      "운영 번들에 통째로 들어 있던 개발자 모드 전용 목업 데이터를 찾아 분리 — 진입 청크 1,485 → 652KB(−56%)",
+      "테스트 0 → 162개(22파일). 코드를 일부러 깨서 테스트가 실제로 잡는지 확인하는 변형 검증까지",
+      "실기기 2대로 재현한 팀 스코어 버그 — 157ms 차이로 합류한 두 기기가 서로가 빠진 명단을 받던 원인을 찾아 수정",
+    ],
+    shotsLayout: "phone",
+    shotsNote:
+      "테스트 클럽과 테스트 계정으로 PM30 실기기에서 찍은 화면입니다. 기기 식별자는 가렸습니다.",
+    shots: [
+      {
+        src: "/shot/mob-splash.jpg",
+        caption: "초기 진입 화면. 새 시안에 맞춰 다시 만들었다. 기기번호·클럽 로고·언어 선택과 앱·서버 버전이 한 화면에 있다.",
+      },
+      {
+        src: "/shot/mob-hole.jpg",
+        caption: "현재 홀. GPS 위치를 코스 지도에 올리고 남은 거리·고저차·실시간 순위를 보여준다.",
+      },
+      {
+        src: "/shot/mob-score-table.jpg",
+        caption: "스코어 입력 — 전반·후반 표에서 4명의 홀별 스코어와 합계를 한 번에 본다.",
+      },
+      {
+        src: "/shot/mob-score-hole.jpg",
+        caption: "홀 단위 입력. 파 기준(−3 ~ +5) 행에서 한 번에 누르고 좌우로 홀을 넘긴다.",
+      },
+      {
+        src: "/shot/mob-longest.jpg",
+        caption: "롱기스트·니어리스트 기록. 거리 표에서 고르고 휠로 세부 값을 넣는다.",
+      },
+      {
+        src: "/shot/mob-caddie-note.jpg",
+        caption: "캐디노트 — 태블릿에만 있던 기능을 옮긴 화면. 고객별 라운드 안내 동의·클럽 장비·고객 정보 확인 상태를 본다.",
+      },
+      {
+        src: "/shot/mob-message.jpg",
+        caption: "메시지 — 라운드 중 식음·하우스와 주고받는다. 자주 쓰는 요청은 버튼으로 둔다.",
+      },
+      {
+        src: "/shot/mob-message-to.jpg",
+        caption: "받는 사람 선택. 코스·단체 일행·관리자·식음처럼 그룹 단위로 보내거나 캐디를 검색한다.",
+      },
+      {
+        src: "/shot/mob-message-alert.jpg",
+        caption: "메시지가 오면 어느 화면에 있든 위에 바로 띄운다.",
+      },
+    ],
+    sections: [
+      {
+        title: "저장소 분리 — 지우는 데도 기준을 세웠다",
+        items: [
+          "vgolf-app(태블릿+모바일)에서 모바일만 떼어낸 저장소. 히스토리를 그대로 승계해 git blame·bisect가 분리 이전 커밋까지 동작",
+          "삭제 기준 — 원래 죽어 있던 파일은 손대지 않고(분리와 무관한 기존 부채), 태블릿 제거로 새로 죽은 파일 중 살아남는 파일이 하나라도 참조하면 제외하는 고정점 계산으로 판정. 아직 화면에 붙지 않은 모바일 작업물은 그대로 보존",
+          "태블릿 폴더에 섞여 있던 공용 코드(GPS 좌표 변환 554줄 등)는 shared로 옮기되 하위 경로 깊이를 유지 — 태블릿 저장소의 커밋을 cherry-pick할 때 경로 치환만으로 대응되게",
+          "모바일 식음 화면 7개가 태블릿 번역 사전을 쓰고 있던 것을 발견 — 그대로 지웠으면 주문 화면 문구가 4개 언어 전부 깨질 상황. 태블릿에만 있던 키 44개를 4개 언어로 이관하고 모든 번역 키가 해석되는지 전수 검증",
+          "TS/TSX 589 → 342파일, JS 번들 1,991 → 1,557KB, CSS 778 → 623KB, 의존성 29 → 22개",
+        ],
+      },
+      {
+        title: "상태 저장 — 0.5초마다 849KB를 다시 쓰던 구조",
+        items: [
+          "recoil-persist는 75개 상태가 localStorage 키 하나를 공유해, GPS 좌표 24바이트가 바뀔 때마다 849KB를 읽고 파싱하고 다시 썼음. GPS 엔진은 이걸 0.5초마다 호출",
+          "Recoil은 2023년 이후 릴리스가 없고 저장소가 아카이브돼 React 19로 올라갈 수 없는 상태 — zustand 5로 이행",
+          "쓰기 빈도×크기에 따라 저장 칸을 hot·session·bulk·config·volatile 5종으로 나누고, 직렬화를 1초 단위로 몰아서 한 번만 수행",
+          "Chrome 측정(849KB, 쓰기 200회) — 1회 7.89ms → 0.058ms, 합계 1,578ms → 11.6ms",
+          "기존 사용자 데이터는 recoil-persist → zustand 1회 이관 코드로 옮기고, 모든 상태에 저장 정책이 등록돼 있는지 테스트로 전수 검사",
+        ],
+      },
+      {
+        title: "번들과 자산",
+        items: [
+          "페이지를 React.lazy로 나누고 번들을 열어 보니, 개발자 모드에서만 쓰는 목업 클럽 데이터가 부팅 화면을 통해 운영 번들에 통째로 들어 있었음 — 동적 import로 분리해 진입 청크 1,485 → 652KB",
+          "지연 로드하면 40KB를 더 줄일 수 있는 슬라이더는 남김 — 골퍼가 특정 지점에 도달하면 바로 떠야 하는 프로모션 모달이 쓰고 있어서",
+          "폰트 woff2 변환 29MB → 6.6MB, 이후 Pretendard 하나로 통일",
+          "상대경로 254곳을 @/ alias로 바꾸고 폴더를 기능 단위로 재편, 계층 간 의존 방향은 스크립트로 검사",
+        ],
+      },
+      {
+        title: "테스트 — 통과하는 테스트를 믿어도 되는지까지",
+        items: [
+          "0개에서 시작해 162개(22파일) — 저장 계층·데이터 이관·홀 영역 판정·스코어 병합·순위·라운드 시간 역산 같은 순수 함수부터",
+          "변형 검증 — 코드를 한 줄씩 일부러 깨고 테스트가 잡는지 확인. 실제 운영 버그(스코어 병합 인자 반전)를 되돌려 넣어 테스트가 실패하는지도 확인",
+          "부품 테스트는 전부 통과했는데 PM30에 올리자 앱 전체가 흰 화면 — Provider 밖에서 useQueryClient를 부르고 있었음. queryClient를 모듈 싱글턴으로 분리하고, 조립된 앱을 렌더하는 테스트를 추가",
+          "타입체크·lint·stylelint·prettier·테스트·계층·자산·전역 CSS 예산 검사를 npm run check 하나로 묶음 (CI가 아직 꺼져 있어 지금은 로컬 검사)",
+        ],
+      },
+      {
+        title: "실기기에서 잡은 버그",
+        items: [
+          "스코어·순위가 간헐적으로 멈추던 문제 — 병합 함수의 인자 순서가 뒤집혀 과거 로컬 값이 최신 서버 값을 덮고 있었음. '합계는 맞는데 홀 스코어와 순위만 안 바뀌는' 증상에서 원인을 역추적",
+          "수동 setInterval·AbortController 폴링을 React Query refetchInterval로 교체하고, 스코어 저장 중에는 팀 스코어 폴링을 멈춤",
+          "팀원끼리 서로의 스코어가 안 보이던 문제를 실기기 2대로 재현 — 태블릿 분기를 죽은 코드로 보고 지웠는데 그쪽이 올바른 데이터 경로였고, 서버 명단이 합류 순간의 스냅샷이라 157ms 차이로 합류한 두 기기가 서로를 못 봤음",
+          "첫 수정에서 고른 API가 단체팀 전용이라 틀렸던 것을 다음 커밋에서 바로잡고, 틀린 이유(API 요약만 보고 호출 조건을 확인하지 않음)를 커밋에 남김",
+          "관제로 보내는 팀원 점수가 null로 나가던 문제 — 내가 입력한 스코어로만 합계를 내던 것을 팀 스코어와 병합하도록 고치되, 명단은 건드리지 않아 GPS 전송 데이터가 오염되지 않게 함",
+        ],
+      },
+      {
+        title: "PM30 화면과 태블릿 기능 이관",
+        items: [
+          "세로 고정·360×640 소형 화면 전용으로 정리 — 태블릿 지도 분기와 화면 방향 분기 CSS 제거",
+          "새 시안에 맞춰 초기 진입 화면과 스플래시를 다시 구현, 지도 마커는 2배로 키우고 터치 영역을 48px로",
+          "태블릿 기능 이관 목록과 화면별 기능 대조표를 코드에서 직접 뽑아 작성 — 라우트 12개·엔드포인트 63개·SSE 메시지 11종은 이미 동등함을 확인하고, 캐디노트·메시지·롱기스트처럼 태블릿에만 있던 기능을 우선순위대로 이관",
+        ],
+      },
+      {
+        title: "인수인계 문서",
+        items: [
+          "문서 13개, 약 4,300줄 — 처음 맡은 사람이 읽는 순서부터 구조·데이터 흐름·상태 관리·GPS 판정 원리·테스트·도구·배포까지",
+          "상태·직렬화·하이드레이션 같은 용어와 홀 영역 판정(레이 캐스팅·바운딩 박스) 원리를 바닥부터 설명",
+          "GPS 엔진(2,069줄 컴포넌트)을 분석해, 문제는 성능이 아니라 구독과 ref의 이중화라는 점과 분해 순서를 기록 — 분해 자체는 다음 단계",
+          "문서가 사실과 어긋나면 고침 — 'CI가 막는다'는 서술이 실제와 달라 교정",
+        ],
+      },
+    ],
+  },
+  {
     slug: "vgolf",
-    rank: 9,
+    rank: 10,
     team: "클라우드팀",
     group: "VGOLF",
     title: "Vgolf",
@@ -771,7 +907,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "kikihi",
-    rank: 10,
+    rank: 11,
     title: "키키하이 (KiKiHi)",
     subtitle: "커스텀 키보드 조립 웹앱 — 3D 뷰어 & 호환성 검사",
     category: "personal",
@@ -830,7 +966,7 @@ export const PROJECTS: Project[] = [
     company: "플럭시티",
     team: "클라우드팀",
     group: "VGOLF",
-    rank: 7,
+    rank: 8,
     title: "VGOLF 스코어카드",
     subtitle: "라운드 결과 공유 웹 — 인앱브라우저 이미지 저장",
     category: "company",
@@ -897,7 +1033,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "public-sector-publishing",
-    rank: 11,
+    rank: 12,
     title: "공공기관 웹 퍼블리싱",
     subtitle: "6개 기관 사이트 UI/UX 디자인 · 반응형 퍼블리싱",
     category: "company",
@@ -946,7 +1082,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "cosmostation-extension",
-    rank: 12,
+    rank: 13,
     title: "Cosmostation 크롬 익스텐션",
     subtitle: "멀티체인 지갑 — 토큰 검색 페이지 · 체인 추가",
     category: "company",
@@ -992,7 +1128,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "argos",
-    rank: 4,
+    rank: 5,
     title: "Argos",
     subtitle: "AI 실시간 수업 분석 플랫폼",
     category: "personal",

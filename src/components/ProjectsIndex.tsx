@@ -61,16 +61,32 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         href={`/projects/${project.slug}`}
         className="group flex h-full flex-col p-6 rounded-2xl border border-slate-800/60 bg-slate-900/25 hover:border-ice-500/25 hover:bg-slate-900/50 card-hover transition-all duration-300"
       >
-        {project.shots?.[0] && (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            src={project.shots[0].src}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            className="mb-5 aspect-[16/9] w-full rounded-lg border border-slate-800 object-cover object-left-top"
-          />
-        )}
+        {project.shots?.[0] &&
+          (project.shotsLayout === "phone" ? (
+            // 세로 캡처는 16:9 로 자르면 윗부분만 남으므로 세 장을 나란히 둔다
+            <div className="mb-5 flex aspect-[16/9] w-full items-start justify-center gap-2 overflow-hidden rounded-lg border border-slate-800 bg-slate-900 px-4 pt-4">
+              {project.shots.slice(0, 3).map((shot) => (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  key={shot.src}
+                  src={shot.src}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="w-[28%] rounded-md border border-slate-800"
+                />
+              ))}
+            </div>
+          ) : (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={project.shots[0].src}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="mb-5 aspect-[16/9] w-full rounded-lg border border-slate-800 object-cover object-left-top"
+            />
+          ))}
 
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <span className={`text-[10px] font-medium tracking-wider uppercase px-2 py-0.5 rounded-full border ${style.color}`}>
