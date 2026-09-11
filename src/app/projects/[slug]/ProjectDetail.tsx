@@ -112,7 +112,14 @@ export default function ProjectDetail({
               <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">
                 Screens
               </h2>
-              <div className="flex flex-col gap-10">
+              {/* 세로 캡처는 한 장씩 전폭으로 두면 화면 몇 개 분량이 되므로 격자로 */}
+              <div
+                className={
+                  project.shotsLayout === "phone"
+                    ? "grid grid-cols-2 sm:grid-cols-3 gap-x-5 gap-y-8"
+                    : "flex flex-col gap-10"
+                }
+              >
                 {project.shots.map((shot) => (
                   <figure key={shot.src}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -121,17 +128,23 @@ export default function ProjectDetail({
                       alt={shot.caption}
                       loading="lazy"
                       decoding="async"
-                      className="w-full rounded-xl border border-slate-800 bg-slate-900"
+                      className={`w-full border border-slate-800 bg-slate-900 ${
+                        project.shotsLayout === "phone" ? "rounded-2xl" : "rounded-xl"
+                      }`}
                     />
-                    <figcaption className="mt-3 text-sm text-slate-400 leading-relaxed">
+                    <figcaption
+                      className={`mt-3 text-slate-400 leading-relaxed ${
+                        project.shotsLayout === "phone" ? "text-xs" : "text-sm"
+                      }`}
+                    >
                       {shot.caption}
                     </figcaption>
                   </figure>
                 ))}
               </div>
               <p className="mt-6 text-xs text-slate-500 leading-relaxed">
-                실제 운영 화면입니다. 손님·직원의 이름과 CCTV에 잡힌 이용객은 알아볼 수 없게
-                처리했고, 내부 접속 주소는 잘라냈습니다.
+                {project.shotsNote ??
+                  "실제 운영 화면입니다. 손님·직원의 이름과 CCTV에 잡힌 이용객은 알아볼 수 없게 처리했고, 내부 접속 주소는 잘라냈습니다."}
               </p>
             </ScrollSection>
           )}

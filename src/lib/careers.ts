@@ -37,10 +37,11 @@ export const CAREERS: Career[] = [
       "zod 2층 스키마(런타임·엄격) 기반 실서버 계약 테스트 도입 — 서버가 par: null을 주며 모든 홀이 더블보기로 표시되던 무증상 오류를 화면 반영 전에 검출",
       "API 응답 불일치 12건을 엔드포인트·기대값·앱 영향·P0/P1 표로 문서화해 백엔드에 전달 — 인증 에러 코드 세분화와 retryAfterSeconds 추가를 하위 호환 형태로 제안",
       "VGOLF 스코어카드 인수인계 후 단독 유지보수 — 카카오·네이버 인앱브라우저에서 이미지 저장이 되지 않던 문제를 devicePixelRatio 스케일과 저장 오버레이로 해결하고 360줄 문서로 남김",
+      "VGOLF 경기관제 PM30 이관 — 태블릿·모바일 통합 앱에서 모바일만 분리하고 Recoil을 zustand로 이행. 상태 저장 1회 7.89ms → 0.058ms, 진입 번들 −56%, 테스트 0 → 162개",
       "Argos(AI 실시간 수업 분석 플랫폼) 프론트엔드 전담 — 제1회 코리아IT아카데미 바이브코딩 공모전(KIT 해커톤) 500팀 중 3위(장려상)",
     ],
-    projects: ["Vgolf 경기관제", "VGOLF F&B", "VGOLF 앱 (React Native)", "VGOLF 스코어카드"],
-    techs: ["react", "reactnative", "typescript", "nextjs", "vite", "recoil", "reactquery", "zustand", "zod", "pwa", "workbox", "sse", "exceljs", "i18n", "indexeddb"],
+    projects: ["Vgolf 경기관제", "VGOLF F&B", "VGOLF 앱 (React Native)", "VGOLF 스코어카드", "VGOLF 경기관제 PM30"],
+    techs: ["react", "reactnative", "typescript", "nextjs", "vite", "recoil", "reactquery", "zustand", "zod", "vitest", "pwa", "workbox", "sse", "exceljs", "i18n", "indexeddb"],
   },
   {
     company: "플럭시티",
