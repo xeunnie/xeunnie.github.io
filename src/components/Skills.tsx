@@ -33,7 +33,7 @@ export default function Skills() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-sm text-slate-400 mb-14"
         >
-          프론트엔드 전문성을 중심으로, 3D·실시간 통신·백엔드까지 확장된 기술 스택
+          주로 쓰는 기술과, 프로젝트에서 필요할 때 써 온 기술
         </motion.p>
 
         <h3 className="text-xs font-mono tracking-widest text-ice-400 uppercase mb-5">Core</h3>
@@ -63,7 +63,7 @@ export default function Skills() {
             onClick={() => setShowMore(!showMore)}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-800/60 bg-slate-900/30 text-sm text-slate-400 hover:border-ice-500/20 hover:text-ice-400 transition-all"
           >
-            {showMore ? "접기" : "Extended"}
+            {showMore ? "접기" : "더 보기"}
             <svg
               width="14"
               height="14"

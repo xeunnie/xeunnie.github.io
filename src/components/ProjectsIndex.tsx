@@ -124,7 +124,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               : `핵심 ${project.highlights.length}개`}
           </span>
           <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ice-400 group-hover:gap-2.5 transition-all">
-            뜯어보기
+            자세히
             <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 3l6 6-6 6" />
             </svg>
@@ -337,13 +337,11 @@ export default function ProjectsIndex() {
         {minor.length > 0 && (
           <section className="mt-14 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-6 sm:p-7">
             <h2 className="text-base font-bold text-slate-100 mb-2">
-              그 밖에 {minor.length}개를 더 만들었습니다
+              부트캠프·스터디 프로젝트 {minor.length}개
             </h2>
             <p className="text-sm text-slate-400 leading-relaxed mb-6 max-w-2xl">
-              부트캠프와 스터디에서 쉬지 않고 이어 붙인 것들입니다. 하나하나를 자랑하려는
-              게 아니라, 짧은 기간에 다른 팀 구성·다른 스택·다른 도메인·다른 규모를 일부러
-              번갈아 겪으려고 만든 결과입니다. 백엔드·프론트·DevOps를 한 서비스에서 모두
-              해 보기도 했고, 20시간짜리 해커톤부터 두 달짜리 팀 프로젝트까지 폭을 넓혔습니다.
+              20시간 해커톤부터 두 달짜리 팀 프로젝트까지 기간과 팀 구성, 스택이 제각각입니다.
+              한 서비스의 백엔드·프론트·DevOps를 모두 맡아 본 것도 있습니다.
             </p>
             <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-1">
               {minor.map((p) => (

@@ -1,7 +1,7 @@
 export { SITE } from "./site";
 export { BADGES, CORE_SKILLS, MORE_SKILLS } from "./badges";
 export type { Badge, BadgeKey } from "./badges";
-export { ABOUT_TRAITS, ABOUT_KEYWORDS, ABOUT_INTRO, HERO_PROOF, DEV_SINCE } from "./about";
+export { ABOUT_TRAITS, ABOUT_INTRO, HERO_PROOF, DEV_SINCE } from "./about";
 export type { AboutTrait } from "./about";
 export { COLLABORATIONS, PARTNER_ORDER } from "./collaboration";
 export type { Collaboration, Partner } from "./collaboration";
@@ -11,8 +11,6 @@ export { CHRONICLE } from "./chronicle";
 export type { ChronicleYear, ChronicleMoment } from "./chronicle";
 export { BLOG_SOURCES } from "./blog";
 export type { BlogPost, BlogSource } from "./blog";
-export { GROWTH } from "./growth";
-export type { GrowthStage } from "./growth";
 export { CAREERS, workedMonths, formatMonths, devMonths } from "./careers";
 export type { Career } from "./careers";
 export { ACTIVITIES } from "./activities";

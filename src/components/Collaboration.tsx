@@ -104,8 +104,8 @@ export default function CollaborationSection() {
           <h2 className="text-3xl font-bold tracking-tight text-slate-50 mb-4">협업 기록</h2>
           <div className="h-px w-16 bg-ice-500 mb-6" />
           <p className="text-slate-400 max-w-2xl leading-relaxed">
-            &ldquo;협업을 잘합니다&rdquo;라고 쓰는 대신, 실제로 무엇을 어떻게 했는지를 적었습니다.
-            모두 근거가 남아 있는 건들입니다.
+            백엔드, 디자이너, 협업처와 일하면서 실제로 있었던 일입니다. 근거 문서가 남아 있는
+            것만 적었습니다.
           </p>
         </motion.div>
 

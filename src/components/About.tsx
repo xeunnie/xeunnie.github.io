@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { ABOUT_TRAITS, ABOUT_KEYWORDS, ABOUT_INTRO } from "@/lib/constants";
+import { ABOUT_TRAITS, ABOUT_INTRO } from "@/lib/constants";
 
 export default function About() {
   const ref = useRef(null);
@@ -16,23 +16,13 @@ export default function About() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl font-bold tracking-tight text-slate-50 mb-4">일하는 방식</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-50 mb-4">중요하게 보는 것</h2>
           <div className="h-px w-16 bg-ice-500 mb-8" />
-          <div className="max-w-2xl space-y-4 mb-10">
+          <div className="max-w-2xl space-y-4 mb-14">
             {ABOUT_INTRO.map((p) => (
               <p key={p} className="text-base text-slate-300 leading-relaxed">
                 {p}
               </p>
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-2.5 mb-14">
-            {ABOUT_KEYWORDS.map((kw) => (
-              <span
-                key={kw}
-                className="px-4 py-1.5 rounded-full text-xs font-medium bg-ice-100 text-ice-400 border border-ice-500/20"
-              >
-                {kw}
-              </span>
             ))}
           </div>
         </motion.div>
@@ -53,7 +43,7 @@ export default function About() {
               {trait.evidence && (
                 <p className="mt-4 pt-4 border-t border-slate-800/60 text-sm text-slate-400 leading-relaxed">
                   <span className="font-mono text-[10px] tracking-widest uppercase text-ice-500 mr-2">
-                    실제로는
+                    사례
                   </span>
                   {trait.evidence}
                 </p>

@@ -13,7 +13,7 @@ import Contact from "@/components/Contact";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "어떤 동료로 일하는지 — 일하는 방식과 실제 협업 기록, 함께 일한 사람들의 평가를 모았습니다.",
+    "실제로 어떻게 일해 왔는지 — 협업 기록, 커리어, 함께 일한 동료들의 평가",
 };
 
 export default function AboutPage() {
@@ -23,8 +23,8 @@ export default function AboutPage() {
       <main className="min-h-screen">
         <PageHeader
           eyebrow="About"
-          title="어떤 동료인가"
-          lede="기술 스택은 이력서에 있습니다. 이 페이지는 그 사람이 팀에 들어왔을 때 실제로 어떻게 일하는지에 대한 것입니다."
+          title="일하는 방식"
+          lede="실제로 어떻게 일해 왔는지를 협업 기록과 동료들의 평가로 정리했습니다."
         />
         <About />
         <CollaborationSection />

@@ -13,24 +13,10 @@ const TYPE_STYLE = {
   education: { label: "교육", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
 } as const;
 
-const CHAPTER_CHIP: Record<string, { keyword: string; color: string }> = {
-  "운영": { keyword: "운영", color: "bg-ice-100 text-ice-300 border-ice-500/20" },
-  "심화": { keyword: "심화", color: "bg-violet-500/10 text-violet-400 border-violet-500/20" },
-  "성장": { keyword: "성장", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
-  "확장": { keyword: "확장", color: "bg-amber-500/10 text-amber-400 border-amber-500/20" },
-  "시작": { keyword: "시작", color: "bg-rose-500/10 text-rose-400 border-rose-500/20" },
-};
-
-function getChapterChip(chapter: string) {
-  const keyword = chapter.split(" — ")[0];
-  return CHAPTER_CHIP[keyword] || null;
-}
-
 function CareerCard({ career, index }: { career: Career; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const style = TYPE_STYLE[career.type];
-  const chip = getChapterChip(career.chapter);
 
   return (
     <motion.div
@@ -57,11 +43,6 @@ function CareerCard({ career, index }: { career: Career; index: number }) {
               <span className={`text-[10px] font-medium tracking-wider uppercase px-2 py-0.5 rounded-full border ${style.color}`}>
                 {style.label}
               </span>
-              {chip && (
-                <span className={`text-[10px] font-medium tracking-wider px-2 py-0.5 rounded-full border ${chip.color}`}>
-                  {chip.keyword}
-                </span>
-              )}
             </div>
             <p className="text-sm text-ice-400 font-medium">{career.role}</p>
           </div>
@@ -121,8 +102,7 @@ function GroupedCareerCard({ careers, startIndex }: { careers: Career[]; startIn
 
       <div className="divide-y divide-slate-800/40">
         {careers.map((career, i) => {
-          const chip = getChapterChip(career.chapter);
-          return (
+                  return (
             <Link
               key={career.team}
               href={`/career/${startIndex + i}`}
@@ -133,11 +113,6 @@ function GroupedCareerCard({ careers, startIndex }: { careers: Career[]; startIn
                   {career.team && (
                     <span className="text-xs font-medium tracking-wider px-2.5 py-0.5 rounded-full bg-slate-800/80 text-slate-200 border border-slate-700/40">
                       {career.team}
-                    </span>
-                  )}
-                  {chip && (
-                    <span className={`text-[10px] font-medium tracking-wider px-2 py-0.5 rounded-full border ${chip.color}`}>
-                      {chip.keyword}
                     </span>
                   )}
                   <span className="text-xs text-ice-400 font-medium">{career.role}</span>
@@ -215,7 +190,7 @@ export default function Experience() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-sm text-slate-400 mb-14"
         >
-          최근부터 시작까지, 한 단계씩 깊어진 성장의 기록
+          최근 순
         </motion.p>
 
         <div className="space-y-4">
