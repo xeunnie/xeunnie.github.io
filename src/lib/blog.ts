@@ -10,7 +10,7 @@ export interface BlogSource {
   name: string;
   home: string;
   feed: string;
-  /** 이 블로그가 무엇을 담고 있는지 — 일대기에서 맥락으로 쓴다 */
+  /** 이 블로그가 무엇을 담고 있는지 — 타임라인에서 맥락으로 쓴다 */
   note: string;
 }
 
@@ -106,7 +106,7 @@ function parseFeed(xml: string, source: BlogSource["key"]): BlogPost[] {
 
 /**
  * 두 블로그의 글을 모아 최신순으로 돌려준다.
- * 한쪽이 실패해도 다른 쪽은 살린다 — 블로그가 죽어도 일대기 페이지는 떠야 한다.
+ * 한쪽이 실패해도 다른 쪽은 살린다 — 블로그가 죽어도 타임라인 페이지는 떠야 한다.
  */
 export async function getBlogPosts(): Promise<BlogPost[]> {
   const results = await Promise.all(

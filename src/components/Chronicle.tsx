@@ -85,9 +85,6 @@ function YearBlock({
         <span className="font-mono text-2xl sm:text-3xl font-bold text-ice-400 tabular-nums">
           {year.year}
         </span>
-        <span className="rounded-full border border-ice-500/25 bg-ice-100 px-3 py-0.5 text-xs font-medium text-ice-300">
-          {year.label}
-        </span>
       </div>
 
       <h2 className="text-xl sm:text-2xl font-bold text-slate-50 leading-snug mb-5 max-w-2xl">
@@ -113,11 +110,32 @@ function YearBlock({
         ))}
       </ol>
 
-      <div className="rounded-xl border border-ice-500/15 bg-ice-100 p-4 mb-6 max-w-2xl">
-        <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-ice-400 mb-2">
-          이 해가 남긴 것
-        </p>
-        <p className="text-sm text-slate-300 leading-relaxed">{year.turning}</p>
+      <div className="mb-6 max-w-2xl">
+        <p className="text-xs font-semibold text-slate-400 mb-2.5">할 수 있게 된 것</p>
+        <ul className="flex flex-wrap gap-2">
+          {year.gained.map((g) => (
+            <li
+              key={g}
+              className="inline-flex items-start gap-1.5 rounded-lg border border-slate-800/70 bg-slate-900/40 px-3 py-1.5 text-xs text-slate-300 leading-relaxed"
+            >
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mt-0.5 shrink-0 text-ice-500"
+                aria-hidden
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              {g}
+            </li>
+          ))}
+        </ul>
       </div>
 
       {projects.length > 0 && (
@@ -164,8 +182,7 @@ export default function Chronicle({ posts }: { posts: BlogPost[] }) {
       <div className="mx-auto max-w-4xl px-6">
         <div className="mb-12 flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-slate-400">
-            {CHRONICLE[0].year}년부터 {CHRONICLE[CHRONICLE.length - 1].year}년까지 ·{" "}
-            {CHRONICLE.length}개 연차
+            {CHRONICLE[0].year}년부터 {CHRONICLE[CHRONICLE.length - 1].year}년까지
           </p>
           <div className="inline-flex rounded-lg border border-slate-800 bg-slate-900/60 p-0.5">
             {(
@@ -204,10 +221,10 @@ export default function Chronicle({ posts }: { posts: BlogPost[] }) {
 
         {/* 블로그 안내 */}
         <div className="mt-16 pt-10 border-t border-slate-800/60">
-          <h2 className="text-lg font-bold text-slate-100 mb-2">기록해 온 곳</h2>
+          <h2 className="text-lg font-bold text-slate-100 mb-2">블로그</h2>
           <p className="text-sm text-slate-400 mb-6">
             {linked > 0
-              ? `위 연표에 두 블로그의 글 ${linked}편을 시기별로 붙여 두었습니다.`
+              ? `두 블로그의 글 ${linked}편을 위 타임라인의 해당 연도에 연결해 두었습니다.`
               : "글 목록을 불러오지 못했습니다. 아래에서 직접 확인하실 수 있습니다."}
           </p>
           <div className="grid sm:grid-cols-2 gap-4">

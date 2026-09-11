@@ -119,7 +119,7 @@ export default function Hero() {
             href="/growth"
             className="rounded-full border border-slate-700 px-7 py-3.5 text-[15px] font-semibold text-slate-200 transition-colors hover:border-slate-500 hover:text-slate-50"
           >
-            일대기
+            타임라인
           </Link>
         </motion.div>
 

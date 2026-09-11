@@ -9,7 +9,7 @@ export interface ResumeStat {
   value: string;
 }
 
-export const RESUME_HEADLINE = "실시간·3D·모바일까지, 화면 너머의 구조를 설계하는 프론트엔드 개발자";
+export const RESUME_HEADLINE = "실시간·3D·모바일 앱까지, 현장에서 쓰이는 서비스를 만들어 온 프론트엔드 개발자";
 
 export const RESUME_SUMMARY = [
   "폐쇄망 WebRTC CCTV, LiveKit SFU 화상회의, WebSocket·SSE 실시간 동기화 등 브라우저에서 다루기 까다로운 미디어·실시간 영역을 반복해서 맡아 왔습니다.",

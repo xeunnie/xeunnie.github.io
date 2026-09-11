@@ -8,7 +8,7 @@ import { NAV_ITEMS, PROJECTS, CAREERS, COLLABORATIONS, CHRONICLE } from "@/lib/c
 /** 각 영역이 지금 몇 개의 항목을 담고 있는지 — 데이터에서 직접 센다 */
 const COUNTS: Record<string, string> = {
   "/projects": `${PROJECTS.length}개 프로젝트`,
-  "/growth": `${CHRONICLE.length}개 연차 · 블로그 연동`,
+  "/growth": `${CHRONICLE[0].year} — ${CHRONICLE[CHRONICLE.length - 1].year} · 블로그 연결`,
   "/about": `협업 기록 ${COLLABORATIONS.length}건`,
   "/resume": `경력 ${CAREERS.filter((c) => c.type !== "education").length}곳 · PDF`,
 };
@@ -29,10 +29,7 @@ export default function AreaHub() {
           <h2 className="text-3xl font-bold tracking-tight text-slate-50 mb-4">
             보고 싶은 것부터
           </h2>
-          <div className="h-px w-16 bg-ice-500 mb-6" />
-          <p className="text-slate-400 max-w-xl leading-relaxed">
-            목적에 따라 필요한 게 다를 것 같아 영역을 나눠 두었습니다. 한 번에 다 읽지 않아도 됩니다.
-          </p>
+          <div className="h-px w-16 bg-ice-500" />
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
