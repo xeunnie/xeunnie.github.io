@@ -44,7 +44,7 @@ export const ACTIVITIES: Activity[] = [
     highlights: [
       "모던 자바스크립트 딥다이브, 우아한 타입스크립트 등 기술 서적 기반 이론→구현→발표 스터디",
       "코드 리뷰 및 기술 토론 운영으로 실무에 가까운 협업 경험 축적",
-      "코드 품질, 타입 안정성, 아키텍처 설계 관점의 깊이 있는 논의 주도",
+      "코드 품질, 타입 안정성, 아키텍처 설계 관점에서 논의",
     ],
     links: [
       { label: "스터디 조직", url: "https://github.com/Front-Ninjas" },

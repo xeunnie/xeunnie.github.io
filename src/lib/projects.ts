@@ -77,9 +77,9 @@ export const PROJECTS: Project[] = [
     period: "2024 — 2026",
     role: "팀장 · Frontend 단독 개발 + Backend MSA 설계·구현",
     description:
-      "프론트 단독 + Polyglot MSA 7개 서비스 설계 — Go 전환으로 메모리 96% 감소, LiveKit SFU로 대역폭 O(N²)→O(N)",
+      "프론트 구현 + Polyglot MSA 7개 서비스 설계 — Go 전환으로 메모리 96% 감소, LiveKit SFU로 대역폭 O(N²)→O(N)",
     overview:
-      "코리아IT에서 들은 풀스택 보강 수업에서 팀장을 맡아 시작한 프로젝트로, 과정 내 수강생 우수상을 받았습니다. AI 회의록 자동 생성 기능을 갖춘 B2B 화상회의 SaaS 플랫폼입니다. 프론트엔드를 단독 개발(React + Vite + Zustand + TanStack Query)하고, 백엔드 Polyglot MSA 7개 서비스(Gateway/Auth/Video/AI/Notification/File/Email)를 설계·구현했습니다. 화상회의·채팅 영역을 중심으로 주도하며, LiveKit SFU 기반 WebRTC, Kafka 이벤트 드리븐 비동기 통신, Zod 런타임 스키마 검증, SSE 실시간 STT 스트리밍, Defense-in-Depth 보안까지 프론트-백 전 영역을 아우르는 풀스택 프로젝트입니다.",
+      "코리아IT에서 들은 풀스택 보강 수업에서 팀장을 맡아 시작한 프로젝트로, 과정 내 수강생 우수상을 받았습니다. AI 회의록 자동 생성 기능을 갖춘 B2B 화상회의 SaaS 플랫폼입니다. 프론트엔드를 맡아 개발(React + Vite + Zustand + TanStack Query)하고, 백엔드 Polyglot MSA 7개 서비스(Gateway/Auth/Video/AI/Notification/File/Email)를 설계·구현했습니다. 화상회의·채팅 영역을 중심으로 주도하며, LiveKit SFU 기반 WebRTC, Kafka 이벤트 드리븐 비동기 통신, Zod 런타임 스키마 검증, SSE 실시간 STT 스트리밍, Defense-in-Depth 보안까지 프론트-백 전 영역을 아우르는 풀스택 프로젝트입니다.",
     techs: ["react", "typescript", "zustand", "reactquery", "vite", "tailwind", "radix", "framer", "zod", "sentry", "firebase", "kotlin", "java", "go", "springboot", "livekit", "webrtc", "kafka", "redis", "s3", "docker", "mysql", "postgresql", "nginx", "gcp", "openai"],
     links: [
       { label: "배포", url: "https://onmeet.cloud" },
@@ -88,7 +88,7 @@ export const PROJECTS: Project[] = [
     ],
     highlights: [
       "코리아IT 풀스택 과정 수강생 우수상 — 팀장으로 기획부터 배포까지 주도",
-      "프론트엔드 단독 개발 — Feature-Based 아키텍처, Zustand + TanStack Query 하이브리드 상태 관리",
+      "프론트엔드 구현 — Feature-Based 아키텍처, Zustand + TanStack Query 하이브리드 상태 관리",
       "Zod 런타임 스키마 검증 fetcher 패턴 — 타입 안전한 API 계층 설계",
       "SSE 기반 실시간 STT 스트리밍 — Ref 버퍼링 + 쓰로틀링 + 자동 재연결 커스텀 훅",
       "Polyglot MSA 7개 서비스 — 서비스 특성별 최적 언어 선택 (Kotlin/Java/Go)",
@@ -231,7 +231,7 @@ export const PROJECTS: Project[] = [
     ],
     sections: [
       {
-        title: "안 알려주는 상대와 붙이기 — 경우의 수를 준비해 갔다",
+        title: "코드도 문서도 없이 붙이기 — 경우의 수를 준비해 갔다",
         items: [
           "협업처는 CCTV 연동 코드도 문서도 주지 않았습니다. 카메라 주소만 넘어왔고, 저쪽이 서버를 어떤 방식으로 세웠는지는 붙여 보기 전까지 알 수 없었습니다.",
           "물어봐도 안 나올 답을 기다리는 대신, 먼저 WebRTC 자체를 파고들었습니다 — RTSP 카메라를 브라우저까지 가져오는 경로에 어떤 것들이 있는지, P2P·SFU·게이트웨이가 각각 무엇을 요구하는지, 폐쇄망에서 무엇이 살아남는지.",
@@ -491,7 +491,7 @@ export const PROJECTS: Project[] = [
     ],
     sections: [
       {
-        title: "저장소 분리 — 지우는 데도 기준을 세웠다",
+        title: "저장소 분리 — 무엇을 지울지 기준부터 정했다",
         items: [
           "vgolf-app(태블릿+모바일)에서 모바일만 떼어낸 저장소. 히스토리를 그대로 승계해 git blame·bisect가 분리 이전 커밋까지 동작",
           "삭제 기준 — 원래 죽어 있던 파일은 손대지 않고(분리와 무관한 기존 부채), 태블릿 제거로 새로 죽은 파일 중 살아남는 파일이 하나라도 참조하면 제외하는 고정점 계산으로 판정. 아직 화면에 붙지 않은 모바일 작업물은 그대로 보존",
@@ -598,7 +598,7 @@ export const PROJECTS: Project[] = [
         items: [
           "움직이는 카트 환경 터치 최적화 — Ghost Click 방지(preventGhostClick), useTap 훅(스와이프 vs 탭 구분, 30px 임계값)",
           "더블클릭 가드 — 스코어 저장 등 중요 액션 보호",
-          "듀얼 디바이스 아키텍처 — 태블릿 140+ / 모바일 45+ 컴포넌트, 공통 모듈 분리로 재사용 극대화",
+          "듀얼 디바이스 아키텍처 — 태블릿 140+ / 모바일 45+ 컴포넌트, 공통 모듈 분리",
           "92+ Recoil 아톰 + recoil-persist — 앱 재시작 시 서버 왕복 없이 상태 복원",
           "ConsecutiveErrorGuard — 연속 에러 시 폴링 자동 일시정지/재개",
           "Teams Webhook 텔레메트리 — 에러 실시간 모니터링",
@@ -629,12 +629,12 @@ export const PROJECTS: Project[] = [
     period: "2026.06 — 2026.08",
     role: "Frontend Developer · React Native 앱 단독 개발",
     description:
-      "React Native 앱을 개발부터 스토어 제출까지 단독 수행 — 2개월 487커밋, zod 2층 계약 테스트로 무증상 데이터 오류를 화면 반영 전에 검출",
+      "React Native 앱을 개발부터 스토어 제출까지 — 2개월 487커밋, zod 2층 계약 테스트로 무증상 데이터 오류를 화면 반영 전에 검출",
     overview:
-      "골프 라운드 기록을 관리하는 React Native 앱입니다. 화면 구현부터 네이티브 설정, 릴리스 서명, Play Console 제출까지 앱 전체를 단독으로 개발했습니다. 2개월간 487커밋 · 화면 21개 · 소스 15.5k LOC · 문서 52편 규모로, FSD 5레이어 아키텍처와 3겹 에러 안전망을 세우고, zod 2층 스키마 기반 실서버 계약 테스트로 백엔드 응답 계약을 프론트가 주도해 정리했습니다. Expo 없이 ios/ · android/ 프로젝트를 직접 소유하며 소셜 로그인 4종, 2겹 스플래시, 릴리스 서명·환경 분리까지 네이티브 영역을 직접 다뤘습니다.",
+      "골프 라운드 기록을 관리하는 React Native 앱입니다. 화면 구현부터 네이티브 설정, 릴리스 서명, Play Console 제출까지 앱 전체를 맡아 개발했습니다. 2개월간 487커밋 · 화면 21개 · 소스 15.5k LOC · 문서 52편 규모로, FSD 5레이어 아키텍처와 3겹 에러 안전망을 세우고, zod 2층 스키마 기반 실서버 계약 테스트로 백엔드 응답 계약을 프론트가 주도해 정리했습니다. Expo 없이 ios/ · android/ 프로젝트를 직접 소유하며 소셜 로그인 4종, 2겹 스플래시, 릴리스 서명·환경 분리까지 네이티브 영역을 직접 다뤘습니다.",
     techs: ["reactnative", "typescript", "zustand", "reactquery", "zod", "hookform", "nativewind", "reanimated", "mmkv", "axios", "sentry", "jest", "ios", "android", "figma", "storybook"],
     highlights: [
-      "React Native 앱 단독 개발 — 2개월, 487커밋, 화면 21개, 15.5k LOC, iOS·Android 동시 대응",
+      "React Native 앱 — 2개월, 487커밋, 화면 21개, 15.5k LOC, iOS·Android 동시 대응",
       "FSD 5레이어 + 세그먼트 구조 — 슬라이스 공개 API 규칙으로 '기능 삭제 = 폴더 삭제'가 성립하는 코드베이스",
       "zod 2층 스키마(런타임·엄격) 실서버 계약 테스트 — 서버 par: null로 모든 홀이 더블보기로 표시되던 무증상 오류를 사전 검출",
       "API 응답 불일치 12건을 영향·우선순위(P0/P1) 표로 문서화해 백엔드에 전달 — 하위 호환을 지키는 형태로 제안",
@@ -645,7 +645,7 @@ export const PROJECTS: Project[] = [
     ],
     sections: [
       {
-        title: "아키텍처 — 레이어를 정하고 끝까지 지킨 구조",
+        title: "아키텍처 — 레이어를 정하고 지킨 구조",
         items: [
           "FSD 5레이어(shared → entities → features → pages → app) 단방향 의존 + api/model/ui/lib 세그먼트 분리 — 슬라이스 밖에서는 index.ts로만 import",
           "상태를 역할로 3분할 — 서버 데이터는 react-query, 사용자 선택값은 zustand + MMKV 영속, 폼은 react-hook-form + zod로 고정하고 겹치지 않게 규칙 문서화",
@@ -662,7 +662,7 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
-        title: "백엔드 협업 — 프론트가 API 계약을 주도",
+        title: "백엔드 협업 — API 계약을 먼저 정리해 제안",
         items: [
           "두 층 스키마 계약 테스트 — 같은 응답을 런타임 스키마(앱이 깨지는가)와 엄격 스키마(서버가 문서대로 주는가)로 이중 파싱",
           "실서버 호출 테스트는 자격증명 없으면 전부 skip + 기본 test/pre-commit에서 제외 — 서버 장애가 커밋을 막지 않게 설계",
@@ -744,9 +744,9 @@ export const PROJECTS: Project[] = [
     period: "2025.12 — 2026.08",
     role: "Frontend Developer · F&B 제품 전반 단독 개발",
     description:
-      "9개월 460+커밋 단독 — 클라우드 웹앱을 매장 사설망 프린터와 잇고, 무네트워크 부팅 사이니지까지 붙인 매장 운영 시스템",
+      "9개월 460+커밋 — 클라우드 웹앱을 매장 사설망 프린터와 잇고, 무네트워크 부팅 사이니지까지 붙인 매장 운영 시스템",
     overview:
-      "골프장 F&B 플랫폼의 주문·관리자·주방 영수증 출력·매장 사이니지 서브시스템을 초기 보일러플레이트 위에서 단독으로 설계·구현했습니다. 앱 로직을 넘어 매장 하드웨어 연동, 오프라인·실시간 견고성, 상태별 조건 렌더링처럼 실제 배포 현장에서 깨지는 지점들을 붙잡아 해결한 것이 핵심입니다. 초기 인프라(axios·recoil·SSE 훅·login shell)와 일부 모듈은 선행 팀원 기반이며, 2025년 12월 합류 이후 F&B 제품 전반을 단독 개발했습니다.",
+      "골프장 F&B 플랫폼의 주문·관리자·주방 영수증 출력·매장 사이니지 서브시스템을 초기 보일러플레이트 위에서 설계·구현했습니다. 앱 로직을 넘어 매장 하드웨어 연동, 오프라인·실시간 견고성, 상태별 조건 렌더링처럼 실제 배포 현장에서 깨지는 지점들을 붙잡아 해결한 것이 핵심입니다. 초기 인프라(axios·recoil·SSE 훅·login shell)와 일부 모듈은 선행 팀원 기반이며, 2025년 12월 합류 이후 F&B 제품 전반을 맡아 개발했습니다.",
     techs: ["nextjs", "react", "typescript", "reactquery", "recoil", "pwa", "workbox", "sse", "dndkit", "pdfjs", "exceljs", "escpos", "indexeddb", "scss"],
     shots: [
       {
@@ -821,7 +821,7 @@ export const PROJECTS: Project[] = [
       },
     ],
     highlights: [
-      "9개월 단독 개발 · 460+ 커밋 — Next.js App Router 정적 export, TypeScript strict",
+      "9개월 · 460+ 커밋 — Next.js App Router 정적 export, TypeScript strict",
       "ESC/POS 열전사 프린팅 직접 구현 — 80mm 주방 영수증 바이트열 생성 + EUC-KR 인코딩, CJK를 폭 2로 계산하는 고정폭 레이아웃 엔진",
       "클라우드→LAN 브릿지 설계 — 정적 배포 앱과 매장 사설망 프린터가 서로 닿지 못하는 구조를, 로컬 프린트 에이전트를 경유해 raw TCP로 해결",
       "오프라인 부팅 사이니지(DID) — 망분리 미니 PC가 네트워크 없이 부팅해도 화면이 뜨도록 서비스워커 문서 프리캐시 설계",
@@ -913,11 +913,11 @@ export const PROJECTS: Project[] = [
     category: "personal",
     org: "사이드 프로젝트",
     period: "2025.03 — 2025.09",
-    role: "Frontend 단독 개발 (프론트 커밋 44건 전부)",
+    role: "Frontend 단독 개발 (프론트 커밋 44건)",
     description:
-      "부품을 고르면 3D로 조립되는 커스텀 키보드 웹앱 — 부품 간 호환성 자동 검사와 실시간 3D 렌더링을 프론트 단독으로 구현",
+      "부품을 고르면 3D로 조립되는 커스텀 키보드 웹앱 — 부품 간 호환성 자동 검사와 실시간 3D 렌더링을 프론트에서 구현",
     overview:
-      "하우징·키캡·스위치를 골라 나만의 키보드를 조립하고, 3D 뷰어로 확인한 뒤 그대로 구매까지 이어지는 웹앱입니다. 프론트엔드를 단독으로 맡아 조립 로직, 3D 뷰어, 쇼핑 흐름을 모두 구현했습니다. 회사 일과 병행한 사이드 프로젝트라 6개월에 걸쳐 천천히 붙였고, 3D를 실무(관제)가 아닌 커머스 맥락에서 다뤄 본 경험이 됐습니다.",
+      "하우징·키캡·스위치를 골라 나만의 키보드를 조립하고, 3D 뷰어로 확인한 뒤 그대로 구매까지 이어지는 웹앱입니다. 프론트엔드를 맡아 조립 로직, 3D 뷰어, 쇼핑 흐름을 구현했습니다. 회사 일과 병행한 사이드 프로젝트라 6개월에 걸쳐 천천히 붙였고, 3D를 실무(관제)가 아닌 커머스 맥락에서 다뤄 본 경험이 됐습니다.",
     techs: ["react", "typescript", "redux", "threejs", "axios", "pwa", "springboot", "mariadb", "docker", "nginx", "aws", "figma"],
     links: [
       { label: "배포", url: "https://kikihi.netlify.app" },
@@ -926,7 +926,7 @@ export const PROJECTS: Project[] = [
       { label: "Swagger", url: "https://kikihi.store/swagger-ui/index.html" },
     ],
     highlights: [
-      "프론트엔드 단독 개발 — 프론트 레포 커밋 44건을 전부 담당",
+      "프론트엔드 구현 — 프론트 레포 커밋 44건",
       "부품 간 호환성 자동 검사 — 하우징·키캡·스위치 조합이 성립하는지 고르는 즉시 판정",
       "3D 커스터마이징 뷰어 — 확대·축소·회전, 부품을 고르면 그 자리에서 다시 렌더링",
       "합계 금액 실시간 계산과 완성본 다운로드·공유·장바구니 담기",
@@ -975,7 +975,7 @@ export const PROJECTS: Project[] = [
     description:
       "인수인계받아 본업과 병행하며 8개월간 혼자 맡은 레거시 — 카카오·네이버 인앱브라우저에서 이미지 저장이 안 되던 문제를 재현부터 문서화까지 끝냄",
     overview:
-      "스크린골프 라운드 결과를 개인·팀·단체(시상 포함) 스코어카드로 보여주고, 카카오·네이버 같은 인앱브라우저에서 이미지로 저장·공유하는 모바일 웹입니다. 원 개발자에게서 인수인계받아 F&B·앱 개발과 병행하며 8개월간 단독으로 맡았습니다(전체 111커밋 중 본인 47건). 새로 설계한 제품이 아니라 남이 짜 둔 코드를 이해하고 안전하게 바꿔 나가는 일이었고, 그중 웹뷰 파편화로 생기는 저장 문제를 끝까지 파고들어 문서로 남긴 것이 가장 값어치 있는 부분입니다.",
+      "스크린골프 라운드 결과를 개인·팀·단체(시상 포함) 스코어카드로 보여주고, 카카오·네이버 같은 인앱브라우저에서 이미지로 저장·공유하는 모바일 웹입니다. 원 개발자에게서 인수인계받아 F&B·앱 개발과 병행하며 8개월간 맡았습니다(전체 111커밋 중 본인 47건). 새로 설계한 제품이 아니라 남이 짜 둔 코드를 이해하고 안전하게 바꿔 나가는 일이었고, 그중 웹뷰 파편화로 생기는 저장 문제를 끝까지 파고들어 문서로 남긴 것이 가장 값어치 있는 부분입니다.",
     techs: ["react", "typescript", "vite", "recoil", "reactrouter", "scss", "i18n", "html2canvas", "axios", "gitea"],
     links: [
       {
@@ -984,7 +984,7 @@ export const PROJECTS: Project[] = [
       },
     ],
     highlights: [
-      "레거시 인수인계 후 8개월 단독 유지보수·고도화 — 전체 111커밋 중 본인 47건, 본업과 병행",
+      "레거시 인수인계 후 8개월 유지보수·고도화 — 전체 111커밋 중 본인 47건, 본업과 병행",
       "인앱브라우저 이미지 저장 문제 해결 — 카카오·네이버 웹뷰에서 저장이 동작하지 않던 것을 재현·분석·해결하고 360줄 트러블슈팅 문서로 남김",
       "저장 이미지가 뿌옇게 나오던 문제 — devicePixelRatio 기반 스케일 처리로 선명도 확보",
       "캡처 로직을 util + 커스텀 훅(useSaveCardImage)으로 추출해 팀·단체 페이지가 공통으로 사용",
@@ -994,7 +994,7 @@ export const PROJECTS: Project[] = [
     ],
     sections: [
       {
-        title: "대표 성과 — 인앱브라우저에서 이미지가 저장되지 않던 문제",
+        title: "인앱브라우저에서 이미지가 저장되지 않던 문제",
         items: [
           "증상은 두 가지였습니다. 카카오·네이버 인앱브라우저에서 스코어카드 저장 버튼이 아무 반응이 없었고, 저장이 되더라도 이미지가 뿌옇게 나왔습니다.",
           "일반 브라우저에서는 재현되지 않아, 웹뷰가 다운로드를 어떻게 다루는지부터 파고들었습니다. 환경마다 동작이 갈리는 지점을 하나씩 좁혀 원인을 특정했습니다.",
@@ -1041,7 +1041,7 @@ export const PROJECTS: Project[] = [
     period: "2023.11 — 2024.02",
     role: "웹디자이너 · 퍼블리셔 (디자인 · 마크업 · PHP 연동)",
     description:
-      "이민재단·싸템·양구수목원 등 공공기관 사이트 약 200개 페이지를 디자인부터 반응형 마크업까지 단독으로 담당",
+      "이민재단·싸템·양구수목원 등 공공기관 사이트 약 200개 페이지를 디자인부터 반응형 마크업까지 담당",
     overview:
       "공공기관 웹사이트를 디자인 시안부터 반응형 퍼블리싱까지 한 사람이 끌고 가는 일이었습니다. 기관마다 정보 구조와 접근성 요구가 달라 페이지 수가 많고 반복이 잦은데, 그만큼 공통 컴포넌트를 어디까지 묶을지 판단하는 기준이 생겼습니다. 산출물은 기관별 마크업 리스트로 관리했고, 각 페이지의 PC·모바일 시안과 퍼블리싱 결과를 함께 추적했습니다. 웹 접근성(A11Y)과 크로스 브라우징 대응이 상시 요건이었습니다.",
     techs: ["html", "css", "javascript", "php", "jquery", "figma"],
@@ -1049,7 +1049,7 @@ export const PROJECTS: Project[] = [
       "6개 기관 사이트 · 약 200개 페이지를 단독 퍼블리싱 — 이민재단(60) · 싸템(69) · 양구수목원(43) · 사회보장정보원(18) · 환경책임투자 플랫폼 · 코네틱",
       "PC·모바일 시안과 퍼블리싱 산출물을 페이지 단위 마크업 리스트로 추적 — 진행 상태·갱신일·메뉴 경로까지 한 표에서 관리",
       "웹 접근성(A11Y) 개선과 크로스 브라우징 대응을 상시 요건으로 처리",
-      "디자인 시안 · 반응형 마크업 · PHP 템플릿 연동 · 유지보수를 한 사람이 연결해 수행 — 마크업은 전량 단독 작업",
+      "디자인 시안 · 반응형 마크업 · PHP 템플릿 연동 · 유지보수를 한 사람이 연결해 수행",
     ],
     links: [
       { label: "이민재단 마크업 리스트", url: "http://121.167.147.150:8087/kiiptest/html_list.html" },
@@ -1199,7 +1199,7 @@ export const PROJECTS: Project[] = [
     period: "2024.07 — 2024.08",
     role: "Backend · Frontend(Vue) · DevOps (팀 5인, 단계별 역할 전환)",
     description:
-      "같은 서비스를 백엔드 → 프론트 → 배포까지 세 번에 나눠 만든 캠프 프로젝트 — 프론트 단계에서는 팀 내 최다 기여, DevOps 단계는 단독 수행",
+      "같은 서비스를 백엔드 → 프론트 → 배포까지 세 번에 나눠 만든 캠프 프로젝트 — 프론트 단계에서는 커밋 54건, DevOps 단계는 혼자 맡음",
     overview:
       "한화시스템 BEYOND SW캠프 수강생 전용 커뮤니티 플랫폼입니다. 캠프가 디스코드만 쓰고 있어 기수 간·수료자 간 소통이 끊긴다는 문제에서 출발해, 커뮤니티·공지사항·출결 알림·스터디룸 예약을 하나로 묶었습니다. 특별한 점은 같은 서비스를 단계별로 다시 만들었다는 것입니다 — 2차에서 Spring 백엔드를, 3차에서 Vue 프론트를, 마지막에 Docker·GitHub Actions 배포를 붙였습니다. 덕분에 하나의 도메인을 서버·화면·배포 세 시점에서 보게 됐고, 이후 프로젝트에서 백엔드와 이야기할 때의 기준이 여기서 생겼습니다.",
     techs: ["java", "springboot", "querydsl", "gradle", "vue", "javascript", "websocket", "mysql", "docker", "github"],
@@ -1213,10 +1213,10 @@ export const PROJECTS: Project[] = [
     ],
     highlights: [
       "같은 서비스를 3단계로 — 2차 Spring 백엔드 → 3차 Vue 프론트 → DevOps 배포까지 역할을 바꿔가며 수행",
-      "프론트 단계 팀 내 최다 기여(54커밋) — 통합검색, 마켓 찜·검색, 댓글·대댓글, 게시글 상세, 공지사항, 메인",
+      "프론트 단계 커밋 54건 — 통합검색, 마켓 찜·검색, 댓글·대댓글, 게시글 상세, 공지사항, 메인",
       "백엔드에서 QueryDSL 동적 쿼리와 검색 기능 구현",
       "전역 예외처리와 BaseResponse 성공·에러 코드 체계를 세워 응답 형태를 팀 전체가 공유",
-      "DevOps 단계는 단독 수행 — GitHub Actions(JDK 17 + Gradle) → Docker 이미지 빌드 → docker-compose로 백엔드·프론트 동시 기동",
+      "DevOps 단계 — GitHub Actions(JDK 17 + Gradle) → Docker 이미지 빌드 → docker-compose로 백엔드·프론트 동시 기동",
       "PR·이슈 템플릿과 코드 컨벤션을 정해 5인 팀의 PR 기반 협업 규칙을 문서화",
     ],
     sections: [
@@ -1231,7 +1231,7 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
-        title: "3차 — Vue 프론트엔드 (팀 내 최다 기여)",
+        title: "3차 — Vue 프론트엔드 (커밋 54건)",
         items: [
           "커뮤니티 게시판 전반 — 목록·상세·작성·수정, 댓글과 대댓글 조회를 화면에 연결",
           "통합검색 구현 — 게시판·마켓·공지사항을 가로지르는 검색 화면 구성",
@@ -1269,12 +1269,12 @@ export const PROJECTS: Project[] = [
     period: "2024.08 — 2024.10",
     role: "프로젝트 팀장 · Frontend 단독 개발 (FE 1 / BE 4)",
     description:
-      "프론트 단독으로 100+ API 연동, Kafka 채팅·Jenkins CI/CD·Prometheus 모니터링까지 풀스택 기여",
+      "프론트를 맡아 100+ API 연동, Kafka 채팅·Jenkins CI/CD·Prometheus 모니터링까지 풀스택 기여",
     overview:
-      "한화시스템 Beyond SW 풀스택 부트캠프 최종 프로젝트입니다. Vue 기반의 대시보드로 스크럼 관리, 실시간 알림, 채팅 기능을 통합했습니다. 프론트엔드를 단독으로 개발하며 100개 이상의 API를 연동하고, 렌더링 최소화 전략과 Pinia 상태 관리를 적용해 대규모 코드베이스를 안정적으로 유지했습니다. Jenkins CI/CD 파이프라인 구축, Kafka 기반 채팅 시스템 구현, Prometheus + Grafana 모니터링 등 백엔드 협업에도 적극 기여했습니다.",
+      "한화시스템 Beyond SW 풀스택 부트캠프 최종 프로젝트입니다. Vue 기반의 대시보드로 스크럼 관리, 실시간 알림, 채팅 기능을 통합했습니다. 프론트엔드를 맡아 개발하며 100개 이상의 API를 연동하고, 렌더링 최소화 전략과 Pinia 상태 관리를 적용해 대규모 코드베이스를 안정적으로 유지했습니다. Jenkins CI/CD 파이프라인 구축, Kafka 기반 채팅 시스템 구현, Prometheus + Grafana 모니터링 등 백엔드 협업에도 적극 기여했습니다.",
     techs: ["vue", "javascript", "pinia", "springboot", "kafka", "redis", "mariadb", "jenkins", "kubernetes", "prometheus", "grafana"],
     highlights: [
-      "프론트엔드 단독 개발 — 100개 이상 API 연동 및 비동기 처리 최적화",
+      "프론트엔드 구현 — 100개 이상 API 연동 및 비동기 처리",
       "Pinia 상태 관리로 전역 상태 효율화, 불필요한 리렌더링 방지",
       "Kafka 기반 실시간 채팅 시스템 구현 지원",
       "Jenkins CI/CD 파이프라인 구축 지원",
@@ -1415,10 +1415,10 @@ export const PROJECTS: Project[] = [
     ],
     sections: [
       {
-        title: "프로젝트 기획 & 개발 주도",
+        title: "프로젝트 기획 & 개발",
         items: [
           "20시간 집중 개발을 통해 MVP를 완성하여 해커톤 기간 내 배포",
-          "스프링 백엔드 구조 기반으로 API 설계 & 팀원 간 협업 주도",
+          "스프링 백엔드 구조를 기반으로 API 설계, 팀원 간 협업 조율",
           "디자이너와 원활한 협업을 위해 Storybook 도입 → UI 컴포넌트 문서화 및 재사용성 강화",
         ],
       },
