@@ -235,6 +235,12 @@ export default function ProjectsIndex() {
     return out;
   }, [major, sort]);
 
+  // 자주 쓰는 두 축만 펼쳐 두고 나머지는 눌러서 연다
+  const [moreFilters, setMoreFilters] = useState(false);
+  const extraAxes = axes.slice(2);
+  const hasExtraActive = extraAxes.some((a) => selected[a.axis]);
+  const shownAxes = moreFilters || hasExtraActive ? axes : axes.slice(0, 2);
+
   const toggle = (axis: Axis, value: string) =>
     setSelected((prev) => {
       const next = { ...prev };
@@ -255,7 +261,7 @@ export default function ProjectsIndex() {
           className="mb-10 rounded-2xl border border-slate-800/60 bg-slate-900/20 p-5"
         >
           <div className="flex flex-col gap-3">
-            {axes.map((a) => (
+            {shownAxes.map((a) => (
               <div key={a.axis} className="flex flex-wrap items-center gap-2">
                 <span className="w-20 shrink-0 font-mono text-[10px] tracking-wider uppercase text-slate-500">
                   {a.label}
@@ -281,6 +287,27 @@ export default function ProjectsIndex() {
               </div>
             ))}
           </div>
+
+          {/* 축 다섯 줄을 한 번에 펼쳐 두면 목록보다 필터가 더 커 보인다 */}
+          {extraAxes.length > 0 && (
+            <button
+              onClick={() => setMoreFilters((v) => !v)}
+              className="mt-3 inline-flex items-center gap-1.5 text-xs text-slate-400 transition-colors hover:text-ice-400"
+            >
+              {moreFilters ? "필터 접기" : `${extraAxes.map((a) => a.label).join(" · ")} 필터`}
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className={`transition-transform ${moreFilters ? "rotate-180" : ""}`}
+              >
+                <path d="M4 6l4 4 4-4" />
+              </svg>
+            </button>
+          )}
 
           <div className="mt-4 pt-4 border-t border-slate-800/60 flex flex-wrap items-center gap-3">
             <span className="text-xs text-slate-400">

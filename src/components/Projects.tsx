@@ -6,7 +6,6 @@ import Link from "next/link";
 import { PROJECTS } from "@/lib/constants";
 import type { Project } from "@/lib/constants";
 import TechBadge from "./TechBadge";
-import ViewCounter from "./ViewCounter";
 
 const CATEGORY_STYLE = {
   company: { label: "Company", color: "bg-ice-100 text-ice-400 border-ice-500/20" },
@@ -52,7 +51,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               </h3>
               <p className="text-sm text-ice-400 font-medium mt-1">{project.subtitle}</p>
             </div>
-            <ViewCounter slug={project.slug} />
           </div>
 
           <p className="text-xs font-mono text-slate-400 mb-3">Role: {project.role}</p>

@@ -6,7 +6,6 @@ import Link from "next/link";
 import { SITE } from "@/lib/constants";
 import type { Project, Career } from "@/lib/constants";
 import TechBadge from "@/components/TechBadge";
-import ViewCounter from "@/components/ViewCounter";
 
 const CATEGORY_LABEL = { company: "Company Project", personal: "Personal Project" } as const;
 const CATEGORY_STYLE = {
@@ -58,7 +57,13 @@ export default function ProjectDetail({
             </svg>
             프로젝트 목록
           </Link>
-          <ViewCounter slug={project.slug} />
+          {/* 상세에 들어오면 나갈 길이 뒤로가기뿐이라 홈으로 가는 문을 둔다 */}
+          <Link
+            href="/"
+            className="text-sm font-semibold tracking-tight text-slate-400 transition-colors hover:text-ice-400"
+          >
+            {SITE.name}
+          </Link>
         </div>
       </nav>
 

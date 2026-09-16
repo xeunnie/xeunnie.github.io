@@ -7,8 +7,8 @@
 .rz-root {
   --rz-ink: #16181d;
   --rz-body: #33373f;
-  --rz-muted: #6b7280;
-  --rz-faint: #9aa1ab;
+  --rz-muted: #5a616b;   /* 흰 종이 6.26 */
+  --rz-faint: #6d747d;   /* 흰 종이 4.72 — 이전 #9aa1ab 은 2.61 로 AA 미달이었다 */
   --rz-line: #dfe2e7;
   --rz-line-soft: #eceef1;
   --rz-accent: #1e5f8c;
