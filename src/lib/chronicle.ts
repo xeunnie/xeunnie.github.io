@@ -153,9 +153,9 @@ export const CHRONICLE: ChronicleYear[] = [
       "이때부터 막혔던 문제를 Tistory에 정리하기 시작했습니다. 무인 단말에서 CDN을 쓸 수 없는 문제, 인앱브라우저에서 blob URL 다운로드가 안 되는 문제처럼 검색해도 답이 잘 안 나오던 것들입니다.",
     ],
     moments: [
-      { when: "2025.12 — 2026.08", what: "VGOLF F&B — ESC/POS 주방 프린팅, 오프라인 부팅 사이니지, WYSIWYG 편집기까지 단독 개발 (460+커밋)" },
+      { when: "2025.12 — 2026.09", what: "VGOLF F&B — ESC/POS 주방 프린팅, 오프라인 부팅 사이니지, WYSIWYG 편집기까지 단독 개발 (520커밋)" },
       { when: "2026.04", what: "제1회 코리아IT아카데미 바이브코딩 공모전 500팀 중 3위(장려상) — Argos 프론트엔드 전담" },
-      { when: "2026.06 — 08", what: "VGOLF 앱 — React Native 개발부터 Play Console 제출까지 (2개월 487커밋)" },
+      { when: "2026.06 — 09", what: "VGOLF 앱 — React Native 개발부터 Play Console 제출까지 (555커밋)" },
       { when: "2026.04 —", what: "Tistory에 기술 정리와 실무 트러블슈팅 연재 시작" },
       { when: "2026.09 —", what: "VGOLF 경기관제 PM30 — 모바일 저장소 분리, Recoil → zustand, 테스트 0 → 162개, 태블릿 기능 이관" },
     ],

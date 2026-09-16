@@ -439,7 +439,7 @@ export const PROJECTS: Project[] = [
     description:
       "태블릿·모바일 통합 앱에서 모바일만 떼어내 PM30 전용으로 재정비 — 상태 저장 1회 7.89ms → 0.058ms, 진입 번들 −56%, 테스트 0 → 162개",
     overview:
-      "골프장 경기관제 앱은 캐디용 태블릿과 모바일 코드가 한 저장소에 섞여 있었습니다. 현장 단말이 세로로 고정된 소형 기기(PM30)로 바뀌면서, 모바일만 떼어낸 저장소를 만들고 태블릿에만 있던 기능을 옮기는 일을 맡았습니다. 분리 이후 커밋 67건 중 65건이 제 작업입니다(나머지 2건은 배포 설정). 기능을 옮기기 전에 구조부터 손봤습니다. 유지보수가 끝난 Recoil을 zustand로 바꾸면서 0.5초마다 849KB를 다시 쓰던 저장 방식을 고쳤고, 운영 번들에 섞여 있던 개발용 데이터를 찾아 분리했고, 테스트가 하나도 없던 코드에 162개의 테스트를 붙였습니다. 다음 사람이 이어받을 수 있도록 구조·데이터 흐름·GPS 판정 원리·이관 목록을 문서 13개로 남겼습니다.",
+      "골프장 경기관제 앱은 캐디용 태블릿과 모바일 코드가 한 저장소에 섞여 있었습니다. 현장 단말이 세로로 고정된 소형 기기(PM30)로 바뀌면서, 모바일만 떼어낸 저장소를 만들고 태블릿에만 있던 기능을 옮기는 일을 맡았습니다. 분리 이후 커밋 68건 중 66건이 제 작업입니다(나머지 2건은 배포 설정). 기능을 옮기기 전에 구조부터 손봤습니다. 유지보수가 끝난 Recoil을 zustand로 바꾸면서 0.5초마다 849KB를 다시 쓰던 저장 방식을 고쳤고, 운영 번들에 섞여 있던 개발용 데이터를 찾아 분리했고, 테스트가 하나도 없던 코드에 162개의 테스트를 붙였습니다. 다음 사람이 이어받을 수 있도록 구조·데이터 흐름·GPS 판정 원리·이관 목록을 문서 13개로 남겼습니다.",
     techs: ["react", "typescript", "vite", "zustand", "reactquery", "vitest", "rtl", "reactrouter", "i18n", "proj4", "webview", "scss", "axios", "gitea"],
     highlights: [
       "저장소 분리 — 태블릿 코드 328파일·34,827줄을 걷어내되 '분리 때문에 새로 죽은 파일'만 골라 지움. JS 번들 1,991 → 1,557KB",
@@ -626,15 +626,15 @@ export const PROJECTS: Project[] = [
     category: "company",
     featured: true,
     company: "플럭시티",
-    period: "2026.06 — 2026.08",
+    period: "2026.06 — 2026.09",
     role: "Frontend Developer · React Native 앱 단독 개발",
     description:
-      "React Native 앱을 개발부터 스토어 제출까지 — 2개월 487커밋, zod 2층 계약 테스트로 무증상 데이터 오류를 화면 반영 전에 검출",
+      "React Native 앱을 개발부터 스토어 제출까지 — 555커밋, zod 2층 계약 테스트로 무증상 데이터 오류를 화면 반영 전에 검출",
     overview:
-      "골프 라운드 기록을 관리하는 React Native 앱입니다. 화면 구현부터 네이티브 설정, 릴리스 서명, Play Console 제출까지 앱 전체를 맡아 개발했습니다. 2개월간 487커밋 · 화면 21개 · 소스 15.5k LOC · 문서 52편 규모로, FSD 5레이어 아키텍처와 3겹 에러 안전망을 세우고, zod 2층 스키마 기반 실서버 계약 테스트로 백엔드 응답 계약을 프론트가 주도해 정리했습니다. Expo 없이 ios/ · android/ 프로젝트를 직접 소유하며 소셜 로그인 4종, 2겹 스플래시, 릴리스 서명·환경 분리까지 네이티브 영역을 직접 다뤘습니다.",
+      "골프 라운드 기록을 관리하는 React Native 앱입니다. 화면 구현부터 네이티브 설정, 릴리스 서명, Play Console 제출까지 앱 전체를 맡아 개발했습니다. 555커밋 · 화면 21개 · 소스 16.5k LOC · 문서 55편 규모로, FSD 5레이어 아키텍처와 3겹 에러 안전망을 세우고, zod 2층 스키마 기반 실서버 계약 테스트로 백엔드 응답 계약을 프론트가 주도해 정리했습니다. Expo 없이 ios/ · android/ 프로젝트를 직접 소유하며 소셜 로그인 4종, 2겹 스플래시, 릴리스 서명·환경 분리까지 네이티브 영역을 직접 다뤘습니다.",
     techs: ["reactnative", "typescript", "zustand", "reactquery", "zod", "hookform", "nativewind", "reanimated", "mmkv", "axios", "sentry", "jest", "ios", "android", "figma", "storybook"],
     highlights: [
-      "React Native 앱 — 2개월, 487커밋, 화면 21개, 15.5k LOC, iOS·Android 동시 대응",
+      "React Native 앱 — 555커밋, 화면 21개, 16.5k LOC, iOS·Android 동시 대응",
       "FSD 5레이어 + 세그먼트 구조 — 슬라이스 공개 API 규칙으로 '기능 삭제 = 폴더 삭제'가 성립하는 코드베이스",
       "zod 2층 스키마(런타임·엄격) 실서버 계약 테스트 — 서버 par: null로 모든 홀이 더블보기로 표시되던 무증상 오류를 사전 검출",
       "API 응답 불일치 12건을 영향·우선순위(P0/P1) 표로 문서화해 백엔드에 전달 — 하위 호환을 지키는 형태로 제안",
@@ -717,7 +717,7 @@ export const PROJECTS: Project[] = [
           "토큰 재발급 single-flight — 공유 프로미스로 1회만 수행하고 재발급 호출은 인터셉터 없는 별도 axios로 보내 401 재시도 루프 차단",
           "빌드 타입 분리 — 키스토어 자격을 레포 밖 gradle.properties에서 로드(없으면 debug 폴백), manifestPlaceholders로 cleartext를 debug=true/release=false 분기, version:set|build로 iOS·Android 버전 동시 상향",
           "Play Console 제출 — 수집 항목을 Play 데이터 타입에 매핑(Sentry는 위탁 처리자), 약관·개인정보처리방침·회원 탈퇴를 로그인 없이 접근 가능한 공개 페이지로 제공",
-          "문서 52편 — setup/app/features/api/release/troubleshooting으로 나눠 대안·비용·되돌린 이력까지 남겨 사실상 ADR 역할, pre-commit은 타입체크·린트만 실행",
+          "문서 55편 — setup/app/features/api/release/troubleshooting으로 나눠 대안·비용·되돌린 이력까지 남겨 사실상 ADR 역할, pre-commit은 타입체크·린트만 실행",
         ],
       },
       {
@@ -741,10 +741,10 @@ export const PROJECTS: Project[] = [
     category: "company",
     featured: true,
     company: "플럭시티",
-    period: "2025.12 — 2026.08",
+    period: "2025.12 — 2026.09",
     role: "Frontend Developer · F&B 제품 전반 단독 개발",
     description:
-      "9개월 460+커밋 — 클라우드 웹앱을 매장 사설망 프린터와 잇고, 무네트워크 부팅 사이니지까지 붙인 매장 운영 시스템",
+      "10개월 520커밋 — 클라우드 웹앱을 매장 사설망 프린터와 잇고, 무네트워크 부팅 사이니지까지 붙인 매장 운영 시스템",
     overview:
       "골프장 F&B 플랫폼의 주문·관리자·주방 영수증 출력·매장 사이니지 서브시스템을 초기 보일러플레이트 위에서 설계·구현했습니다. 앱 로직을 넘어 매장 하드웨어 연동, 오프라인·실시간 견고성, 상태별 조건 렌더링처럼 실제 배포 현장에서 깨지는 지점들을 붙잡아 해결한 것이 핵심입니다. 초기 인프라(axios·recoil·SSE 훅·login shell)와 일부 모듈은 선행 팀원 기반이며, 2025년 12월 합류 이후 F&B 제품 전반을 맡아 개발했습니다.",
     techs: ["nextjs", "react", "typescript", "reactquery", "recoil", "pwa", "workbox", "sse", "dndkit", "pdfjs", "exceljs", "escpos", "indexeddb", "scss"],
@@ -821,7 +821,7 @@ export const PROJECTS: Project[] = [
       },
     ],
     highlights: [
-      "9개월 · 460+ 커밋 — Next.js App Router 정적 export, TypeScript strict",
+      "10개월 · 520커밋 — Next.js App Router 정적 export, TypeScript strict",
       "ESC/POS 열전사 프린팅 직접 구현 — 80mm 주방 영수증 바이트열 생성 + EUC-KR 인코딩, CJK를 폭 2로 계산하는 고정폭 레이아웃 엔진",
       "클라우드→LAN 브릿지 설계 — 정적 배포 앱과 매장 사설망 프린터가 서로 닿지 못하는 구조를, 로컬 프린트 에이전트를 경유해 raw TCP로 해결",
       "오프라인 부팅 사이니지(DID) — 망분리 미니 PC가 네트워크 없이 부팅해도 화면이 뜨도록 서비스워커 문서 프리캐시 설계",
@@ -970,12 +970,12 @@ export const PROJECTS: Project[] = [
     title: "VGOLF 스코어카드",
     subtitle: "라운드 결과 공유 웹 — 인앱브라우저 이미지 저장",
     category: "company",
-    period: "2026.01 — 2026.08",
+    period: "2026.01 — 2026.09",
     role: "Frontend 단독 유지보수·고도화 (인수인계 후, 본업과 병행)",
     description:
-      "인수인계받아 본업과 병행하며 8개월간 혼자 맡은 레거시 — 카카오·네이버 인앱브라우저에서 이미지 저장이 안 되던 문제를 재현부터 문서화까지 끝냄",
+      "인수인계받아 본업과 병행하며 9개월간 혼자 맡은 레거시 — 카카오·네이버 인앱브라우저에서 이미지 저장이 안 되던 문제를 재현부터 문서화까지 끝냄",
     overview:
-      "스크린골프 라운드 결과를 개인·팀·단체(시상 포함) 스코어카드로 보여주고, 카카오·네이버 같은 인앱브라우저에서 이미지로 저장·공유하는 모바일 웹입니다. 원 개발자에게서 인수인계받아 F&B·앱 개발과 병행하며 8개월간 맡았습니다(전체 111커밋 중 본인 47건). 새로 설계한 제품이 아니라 남이 짜 둔 코드를 이해하고 안전하게 바꿔 나가는 일이었고, 그중 웹뷰 파편화로 생기는 저장 문제를 끝까지 파고들어 문서로 남긴 것이 가장 값어치 있는 부분입니다.",
+      "스크린골프 라운드 결과를 개인·팀·단체(시상 포함) 스코어카드로 보여주고, 카카오·네이버 같은 인앱브라우저에서 이미지로 저장·공유하는 모바일 웹입니다. 원 개발자에게서 인수인계받아 F&B·앱 개발과 병행하며 9개월간 맡았습니다(전체 103커밋 중 본인 46건). 새로 설계한 제품이 아니라 남이 짜 둔 코드를 이해하고 안전하게 바꿔 나가는 일이었고, 그중 웹뷰 파편화로 생기는 저장 문제를 끝까지 파고들어 문서로 남긴 것이 가장 값어치 있는 부분입니다.",
     techs: ["react", "typescript", "vite", "recoil", "reactrouter", "scss", "i18n", "html2canvas", "axios", "gitea"],
     links: [
       {
@@ -984,7 +984,7 @@ export const PROJECTS: Project[] = [
       },
     ],
     highlights: [
-      "레거시 인수인계 후 8개월 유지보수·고도화 — 전체 111커밋 중 본인 47건, 본업과 병행",
+      "레거시 인수인계 후 9개월 유지보수·고도화 — 전체 103커밋 중 본인 46건, 본업과 병행",
       "인앱브라우저 이미지 저장 문제 해결 — 카카오·네이버 웹뷰에서 저장이 동작하지 않던 것을 재현·분석·해결하고 360줄 트러블슈팅 문서로 남김",
       "저장 이미지가 뿌옇게 나오던 문제 — devicePixelRatio 기반 스케일 처리로 선명도 확보",
       "캡처 로직을 util + 커스텀 훅(useSaveCardImage)으로 추출해 팀·단체 페이지가 공통으로 사용",
