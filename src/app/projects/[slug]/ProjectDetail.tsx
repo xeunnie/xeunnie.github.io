@@ -155,7 +155,9 @@ export default function ProjectDetail({
                 className={
                   project.shotsLayout === "phone"
                     ? "grid grid-cols-2 sm:grid-cols-3 gap-x-5 gap-y-8"
-                    : "flex flex-col gap-10"
+                    : project.shotsLayout === "grid"
+                      ? "grid gap-x-5 gap-y-8 sm:grid-cols-2"
+                      : "flex flex-col gap-10"
                 }
               >
                 {project.shots.map((shot) => (
@@ -168,10 +170,10 @@ export default function ProjectDetail({
                       decoding="async"
                       className={`w-full border border-slate-800 bg-slate-900 ${
                         project.shotsLayout === "phone" ? "rounded-2xl" : "rounded-xl"
-                      }`}
+                      } ${project.shotsLayout === "grid" ? "object-top" : ""}`}
                     />
                     <figcaption
-                      className={`mt-3 text-slate-400 leading-relaxed ${
+                      className={`mt-3 leading-relaxed text-slate-400 ${
                         project.shotsLayout === "phone" ? "text-xs" : "text-sm"
                       }`}
                     >
