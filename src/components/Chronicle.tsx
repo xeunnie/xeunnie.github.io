@@ -15,11 +15,16 @@ const SOURCE_STYLE: Record<string, string> = {
 function PostList({ posts }: { posts: BlogPost[] }) {
   if (posts.length === 0) return null;
   return (
-    <div className="mt-7 rounded-xl border border-slate-800/70 bg-slate-900/60 p-5">
-      <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-slate-500 mb-3">
-        그 해에 쓴 글 · {posts.length}편
-      </p>
-      <ul className="flex flex-col gap-2">
+    /* 글 목록은 접어 둔다 — 연차 이야기를 읽는 흐름을 끊지 않도록 */
+    <details className="group mt-7 rounded-xl border border-slate-800/70 bg-slate-900/60 p-5">
+      <summary className="flex cursor-pointer select-none items-center justify-between gap-3 font-mono text-[10px] tracking-[0.16em] uppercase text-slate-500 [&::-webkit-details-marker]:hidden">
+        <span>그 해에 쓴 글 · {posts.length}편</span>
+        <span className="text-ice-500 normal-case tracking-normal">
+          <span className="group-open:hidden">펼치기</span>
+          <span className="hidden group-open:inline">접기</span>
+        </span>
+      </summary>
+      <ul className="mt-3 flex flex-col gap-2">
         {posts.map((p) => (
           <li key={p.link}>
             <a
@@ -41,7 +46,7 @@ function PostList({ posts }: { posts: BlogPost[] }) {
           </li>
         ))}
       </ul>
-    </div>
+    </details>
   );
 }
 

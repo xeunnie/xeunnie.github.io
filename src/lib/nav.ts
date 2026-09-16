@@ -21,16 +21,16 @@ export const NAV_ITEMS: NavItem[] = [
     desc: "만든 것과 그 안에서 내린 판단. 프로젝트마다 문제, 대응, 근거를 정리했습니다.",
   },
   {
-    label: "Growth",
-    ko: "타임라인",
-    href: "/growth",
-    desc: "2021년부터 지금까지 해마다 한 일과 할 수 있게 된 것. 블로그 글과 함께 봅니다.",
-  },
-  {
     label: "About",
     ko: "일하는 방식",
     href: "/about",
     desc: "협업 기록과 커리어, 함께 일한 동료들의 평가.",
+  },
+  {
+    label: "Growth",
+    ko: "타임라인",
+    href: "/growth",
+    desc: "2021년부터 지금까지 해마다 한 일과 할 수 있게 된 것. 블로그 글과 함께 봅니다.",
   },
   {
     label: "Resume",

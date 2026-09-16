@@ -6,6 +6,14 @@ import Link from "next/link";
 import { NAV_ITEMS, PROJECTS, CAREERS, COLLABORATIONS, CHRONICLE } from "@/lib/constants";
 
 /** 각 영역이 지금 몇 개의 항목을 담고 있는지 — 데이터에서 직접 센다 */
+/** 읽는 순서와 대략 걸리는 시간 — 처음 온 사람이 길을 잃지 않게 */
+const GUIDE: Record<string, { step: string; time: string }> = {
+  "/projects": { step: "①", time: "5분" },
+  "/about": { step: "②", time: "3분" },
+  "/growth": { step: "③", time: "5분" },
+  "/resume": { step: "④", time: "1분" },
+};
+
 const COUNTS: Record<string, string> = {
   "/projects": `${PROJECTS.length}개 프로젝트`,
   "/growth": `${CHRONICLE[0].year} — ${CHRONICLE[CHRONICLE.length - 1].year} · 블로그 연결`,
@@ -27,9 +35,13 @@ export default function AreaHub() {
           className="mb-12"
         >
           <h2 className="text-3xl font-bold tracking-tight text-slate-50 mb-4">
-            보고 싶은 것부터
+            이 사이트 보는 순서
           </h2>
-          <div className="h-px w-16 bg-ice-500" />
+          <p className="max-w-xl text-base text-slate-400 leading-relaxed">
+            위에서부터 순서대로 읽으면 무엇을 만들었고, 어떻게 일하고, 어떻게 여기까지
+            왔는지가 이어집니다. 시간이 없으면 <strong className="font-semibold text-slate-200">①번의 대표 프로젝트 셋</strong>만 보셔도 됩니다.
+          </p>
+          <div className="mt-6 h-px w-16 bg-ice-500" />
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -46,11 +58,15 @@ export default function AreaHub() {
               >
                 <div>
                   <div className="flex items-baseline gap-2.5 mb-4">
+                    <span className="font-mono text-base text-ice-500">{GUIDE[item.href]?.step}</span>
                     <span className="text-xl font-bold text-slate-50 group-hover:text-ice-300 transition-colors">
                       {item.ko}
                     </span>
                     <span className="font-mono text-[11px] tracking-widest uppercase text-ice-500">
                       {item.label}
+                    </span>
+                    <span className="ml-auto font-mono text-[11px] text-slate-500">
+                      {GUIDE[item.href]?.time}
                     </span>
                   </div>
                   <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>

@@ -73,7 +73,6 @@ export const PROJECTS: Project[] = [
     title: "OnMeet",
     subtitle: "AI 회의록 자동 생성 B2B 화상회의 SaaS 플랫폼",
     category: "personal",
-    featured: true,
     period: "2024 — 2026",
     role: "팀장 · Frontend 단독 개발 + Backend MSA 설계·구현",
     description:
@@ -565,7 +564,6 @@ export const PROJECTS: Project[] = [
     title: "Vgolf",
     subtitle: "골프장 경기관제 — GPS 카트 추적 & 실시간 라운드 관리",
     category: "company",
-    featured: true,
     company: "플럭시티",
     period: "2025 — 2026",
     role: "Frontend Developer (경기관제 태블릿·모바일)",
@@ -718,6 +716,15 @@ export const PROJECTS: Project[] = [
           "빌드 타입 분리 — 키스토어 자격을 레포 밖 gradle.properties에서 로드(없으면 debug 폴백), manifestPlaceholders로 cleartext를 debug=true/release=false 분기, version:set|build로 iOS·Android 버전 동시 상향",
           "Play Console 제출 — 수집 항목을 Play 데이터 타입에 매핑(Sentry는 위탁 처리자), 약관·개인정보처리방침·회원 탈퇴를 로그인 없이 접근 가능한 공개 페이지로 제공",
           "문서 55편 — setup/app/features/api/release/troubleshooting으로 나눠 대안·비용·되돌린 이력까지 남겨 사실상 ADR 역할, pre-commit은 타입체크·린트만 실행",
+        ],
+      },
+      {
+        title: "백오피스 — 앱 옆에 같이 만든 관리자 웹",
+        items: [
+          "스토어 심사에 필요한 공개 페이지(개인정보처리방침·약관·회원 탈퇴 안내)를 인증 밖 경로에 두고, 관리자 화면은 로그인 뒤에 두었다 — 앱 제출에 쓴 공개 URL이 여기서 나온다",
+          "Vite + React 19 + TypeScript + Tailwind v4 — 커밋 32건, 66파일 3,845줄",
+          "앱에서 쓰던 방식을 그대로 옮김 — queryClient·ApiError 정규화 패턴 이식, shared/ 레이어 미러링, react-query·zustand·react-hook-form+zod로 앱과 같은 컨벤션",
+          "화면은 로그인 · 대시보드 · 회원 관리 · 약관 · 회원 탈퇴. 탈퇴 화면은 심사자와 실제 이용자가 함께 보는 창구라, 목적(계정·데이터 삭제) 안내를 먼저 읽히도록 다시 짰다",
         ],
       },
       {
@@ -1132,7 +1139,6 @@ export const PROJECTS: Project[] = [
     title: "Argos",
     subtitle: "AI 실시간 수업 분석 플랫폼",
     category: "personal",
-    featured: true,
     org: "코리아IT 바이브코딩 공모전",
     period: "2026.04",
     award: "제1회 코리아IT아카데미 바이브코딩 공모전(KIT 해커톤) 장려상 — 500팀 중 3위",

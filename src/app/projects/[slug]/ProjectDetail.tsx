@@ -107,6 +107,39 @@ export default function ProjectDetail({
 
       <section className="py-16">
         <div className="mx-auto max-w-4xl px-6 space-y-20">
+          {/* 맥락 먼저 — 무엇을 왜 만들었는지 */}
+          <ScrollSection>
+            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Overview</h2>
+            <p className="text-base text-slate-300 leading-relaxed">{project.overview}</p>
+          </ScrollSection>
+
+          {/* 요약은 앞의 넷만 펼쳐 두고 나머지는 접는다 — 전부 같은 무게로 쌓이면 안 읽힌다 */}
+          <ScrollSection>
+            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-8">
+              이 프로젝트의 핵심
+            </h2>
+            <div className="space-y-5">
+              {project.highlights.slice(0, 4).map((h) => (
+                <Bullet key={h} text={h} lead />
+              ))}
+            </div>
+            {project.highlights.length > 4 && (
+              <details className="group mt-6">
+                <summary className="inline-flex cursor-pointer select-none items-center gap-1.5 text-sm text-slate-400 hover:text-ice-400 transition-colors [&::-webkit-details-marker]:hidden">
+                  <span className="group-open:hidden">
+                    나머지 {project.highlights.length - 4}개 더 보기
+                  </span>
+                  <span className="hidden group-open:inline">접기</span>
+                </summary>
+                <div className="mt-5 space-y-5">
+                  {project.highlights.slice(4).map((h) => (
+                    <Bullet key={h} text={h} lead />
+                  ))}
+                </div>
+              </details>
+            )}
+          </ScrollSection>
+
           {project.shots && project.shots.length > 0 && (
             <ScrollSection>
               <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">
@@ -149,89 +182,44 @@ export default function ProjectDetail({
             </ScrollSection>
           )}
 
-          <ScrollSection>
-            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Overview</h2>
-            <p className="text-base text-slate-300 leading-relaxed">{project.overview}</p>
-          </ScrollSection>
+          {/* 상세는 접어 둔다. 앞의 둘만 펼쳐 두고, 필요한 사람이 나머지를 연다 */}
+          {project.sections && project.sections.length > 0 && (
+            <ScrollSection>
+              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">
+                자세히
+              </h2>
+              <div className="space-y-3">
+                {project.sections.map((section, i) => (
+                  <details
+                    key={section.title}
+                    open={i < 2}
+                    className="group rounded-xl border border-slate-800/60 bg-slate-900/25"
+                  >
+                    <summary className="flex cursor-pointer select-none items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+                      <span className="text-sm font-semibold text-slate-200">{section.title}</span>
+                      <span className="shrink-0 text-xs font-mono text-slate-500 group-open:text-ice-400">
+                        {section.items.length}
+                      </span>
+                    </summary>
+                    <div className="space-y-4 px-5 pb-5">
+                      {section.items.map((item) => (
+                        <Bullet key={item} text={item} />
+                      ))}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </ScrollSection>
+          )}
 
           <ScrollSection>
             <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Tech Stack</h2>
             <div className="flex flex-wrap gap-2">
-              {project.techs.map((tech, i) => (
-                <motion.div
-                  key={tech}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: i * 0.03 }}
-                >
-                  <TechBadge name={tech} />
-                </motion.div>
+              {project.techs.map((tech) => (
+                <TechBadge key={tech} name={tech} />
               ))}
             </div>
           </ScrollSection>
-
-          <ScrollSection>
-            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-8">Key Highlights</h2>
-            <div className="space-y-5">
-              {project.highlights.map((h, i) => {
-                const [title, ...rest] = h.split(" — ");
-                const desc = rest.join(" — ");
-                return (
-                  <motion.div
-                    key={h}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-30px" }}
-                    transition={{ duration: 0.5, delay: i * 0.06 }}
-                    className="relative pl-6 border-l-2 border-ice-500/20 hover:border-ice-500/50 transition-colors"
-                  >
-                    <span className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-ice-500" />
-                    {desc ? (
-                      <>
-                        <p className="text-sm font-semibold text-slate-200 mb-1">{title}</p>
-                        <p className="text-sm text-slate-400 leading-relaxed">{desc}</p>
-                      </>
-                    ) : (
-                      <p className="text-sm text-slate-300 leading-relaxed">{title}</p>
-                    )}
-                  </motion.div>
-                );
-              })}
-            </div>
-          </ScrollSection>
-
-          {project.sections && project.sections.length > 0 && project.sections.map((section) => (
-            <ScrollSection key={section.title}>
-              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-8">{section.title}</h2>
-              <div className="space-y-4">
-                {section.items.map((item, i) => {
-                  const [title, ...rest] = item.split(" — ");
-                  const desc = rest.join(" — ");
-                  return (
-                    <motion.div
-                      key={item}
-                      initial={{ opacity: 0, x: -16 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, margin: "-30px" }}
-                      transition={{ duration: 0.4, delay: i * 0.05 }}
-                      className="relative pl-6 border-l-2 border-slate-800/60 hover:border-ice-500/40 transition-colors"
-                    >
-                      <span className="absolute left-[-4px] top-1.5 w-1.5 h-1.5 rounded-full bg-ice-500/60" />
-                      {desc ? (
-                        <>
-                          <p className="text-sm font-medium text-slate-200 mb-0.5">{title}</p>
-                          <p className="text-sm text-slate-400 leading-relaxed">{desc}</p>
-                        </>
-                      ) : (
-                        <p className="text-sm text-slate-300 leading-relaxed">{title}</p>
-                      )}
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </ScrollSection>
-          ))}
 
           {project.links && project.links.length > 0 && (
             <ScrollSection>
@@ -349,5 +337,37 @@ export default function ProjectDetail({
         <p className="text-sm text-slate-500">&copy; {new Date().getFullYear()} {SITE.name}</p>
       </footer>
     </main>
+  );
+}
+
+/**
+ * "제목 — 설명" 형태의 한 줄을 점 찍힌 항목으로 그린다.
+ * lead 는 상단 요약용(조금 더 진하게), 그 외는 상세 항목용.
+ */
+function Bullet({ text, lead = false }: { text: string; lead?: boolean }) {
+  const [title, ...rest] = text.split(" — ");
+  const desc = rest.join(" — ");
+  return (
+    <div
+      className={`relative pl-6 border-l-2 transition-colors ${
+        lead ? "border-ice-500/20 hover:border-ice-500/50" : "border-slate-800/60 hover:border-ice-500/40"
+      }`}
+    >
+      <span
+        className={`absolute top-1.5 rounded-full ${
+          lead ? "left-[-5px] h-2 w-2 bg-ice-500" : "left-[-4px] h-1.5 w-1.5 bg-ice-500/60"
+        }`}
+      />
+      {desc ? (
+        <>
+          <p className={`mb-0.5 text-sm text-slate-200 ${lead ? "font-semibold" : "font-medium"}`}>
+            {title}
+          </p>
+          <p className="text-sm text-slate-400 leading-relaxed">{desc}</p>
+        </>
+      ) : (
+        <p className="text-sm text-slate-300 leading-relaxed">{title}</p>
+      )}
+    </div>
   );
 }
