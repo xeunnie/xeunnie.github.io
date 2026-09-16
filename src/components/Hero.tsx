@@ -51,7 +51,7 @@ export default function Hero() {
         >
           만든 것이 현장에서
           <br />
-          돌아갈 때까지 갑니다
+          돌아가는 것까지 봅니다
         </motion.h1>
 
         <motion.p
@@ -60,7 +60,7 @@ export default function Hero() {
         >
           3D 관제, 실시간 미디어, 모바일 앱.
           <br className="hidden sm:block" />
-          브라우저 밖의 제약까지 설계에 넣는 프론트엔드 개발자입니다.
+          브라우저 밖에서 생기는 제약까지 함께 보는 편입니다.
         </motion.p>
 
         {/* 분야 나열 대신 실제로 푼 문제를 먼저 보여준다 */}
