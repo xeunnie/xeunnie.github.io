@@ -4,10 +4,8 @@ import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import About from "@/components/About";
 import CollaborationSection from "@/components/Collaboration";
-import Experience from "@/components/Experience";
 import PeerReview from "@/components/PeerReview";
-import Activities from "@/components/Activities";
-import Education from "@/components/Education";
+import CareerLinks from "@/components/CareerLinks";
 import Contact from "@/components/Contact";
 
 export const metadata: Metadata = {
@@ -28,10 +26,8 @@ export default function AboutPage() {
         />
         <About />
         <CollaborationSection />
-        <Experience />
         <PeerReview />
-        <Activities />
-        <Education />
+        <CareerLinks />
         <Contact />
       </main>
       <Footer />

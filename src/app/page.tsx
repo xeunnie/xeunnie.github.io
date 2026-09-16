@@ -17,8 +17,8 @@ export default function Home() {
       <Nav />
       <Hero />
       <AreaHub />
-      <Skills />
       <Projects />
+      <Skills />
       <Contact />
       <Footer />
     </>

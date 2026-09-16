@@ -1,0 +1,807 @@
+<title>VGOLF 포트폴리오 자산</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    --ground: #FAF9FC;
+    --surface: #FFFFFF;
+    --ink: #17131F;
+    --muted: #6A6479;
+    --faint: #918BA0;
+    --line: #E5E1EC;
+    --line-strong: #CFC8DD;
+    --accent: #5C31FE;
+    --accent-soft: #EFE9FF;
+    --fairway: #1B6B4C;
+
+    --serif: 'Noto Serif KR', 'Apple SD Gothic Neo', serif;
+    --sans: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', ui-monospace, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #121019;
+      --surface: #1A1724;
+      --ink: #EBE8F2;
+      --muted: #9F99AD;
+      --faint: #7D7689;
+      --line: #2A2536;
+      --line-strong: #3B3550;
+      --accent: #A88CFF;
+      --accent-soft: #251D3E;
+      --fairway: #6FCFA4;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #121019;
+    --surface: #1A1724;
+    --ink: #EBE8F2;
+    --muted: #9F99AD;
+    --faint: #7D7689;
+    --line: #2A2536;
+    --line-strong: #3B3550;
+    --accent: #A88CFF;
+    --accent-soft: #251D3E;
+    --fairway: #6FCFA4;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 72px 24px 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+  }
+
+  /* ── 헤더 ─────────────────────────────── */
+
+  .masthead { display: flex; flex-direction: column; gap: 20px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(34px, 6vw, 50px);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .lede {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  /* ── 스코어카드형 지표 ─────────────────── */
+
+  .scorecard {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--surface);
+    overflow-x: auto;
+  }
+
+  .scorecard-row {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(104px, 1fr));
+    min-width: 624px;
+  }
+
+  .cell {
+    padding: 16px 14px;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cell:last-child { border-right: none; }
+
+  .cell-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+    text-transform: uppercase;
+  }
+
+  .cell-value {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cell-value small {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--muted);
+    margin-left: 2px;
+  }
+
+  /* ── 섹션 ─────────────────────────────── */
+
+  section { display: flex; flex-direction: column; gap: 28px; }
+
+  .section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-top: 2px solid var(--ink);
+    padding-top: 18px;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(23px, 3.4vw, 29px);
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .section-deck {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 64ch;
+  }
+
+  .items { display: flex; flex-direction: column; gap: 20px; }
+
+  article.item {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.5;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+
+  dl { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+
+  dl > div {
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    gap: 14px;
+    align-items: baseline;
+  }
+
+  dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+    text-transform: uppercase;
+    padding-top: 3px;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+    max-width: 66ch;
+  }
+
+  dd.evidence { color: var(--muted); font-size: 14px; }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 1px 5px;
+    border-radius: 3px;
+    word-break: break-all;
+  }
+
+  dd.evidence code { background: none; color: var(--fairway); padding: 0; }
+
+  strong { font-weight: 600; }
+
+  /* ── 되돌린 결정 ──────────────────────── */
+
+  .reversal {
+    border-left: 3px solid var(--accent);
+    background: var(--surface);
+    border-radius: 0 4px 4px 0;
+    padding: 18px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .reversal h3 { font-size: 16px; }
+  .reversal p { margin: 0; font-size: 15px; color: var(--muted); max-width: 66ch; }
+  .reversal p .verdict { color: var(--ink); font-weight: 500; }
+
+  /* ── 붙여넣기용 문장 ──────────────────── */
+
+  ul.lines { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+  ul.lines li {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 14px 18px;
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 72ch;
+  }
+
+  ul.lines li::before {
+    content: "—";
+    color: var(--accent);
+    margin-right: 10px;
+    font-family: var(--mono);
+  }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+    color: var(--faint);
+    font-size: 13px;
+    font-family: var(--mono);
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 48px 18px 80px; gap: 56px; }
+    dl > div { grid-template-columns: 1fr; gap: 2px; }
+    dt { padding-top: 0; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">VGOLF · React Native · 2026.06 – 08</div>
+    <h1>혼자 만든 앱에서 남에게 보여줄 것</h1>
+    <p class="lede">
+      골프 라운드 기록 앱 VGOLF를 기획 반영부터 스토어 제출까지 단독으로 구현했다.
+      코드베이스와 문서, 커밋 이력에서 실제로 근거를 댈 수 있는 항목만 골라 정리한다.
+      각 항목은 <strong>무엇이 문제였고, 어떻게 판단했고, 어디에 남아 있는지</strong>로 적었다.
+    </p>
+  </header>
+
+  <div class="scorecard">
+    <div class="scorecard-row">
+      <div class="cell"><span class="cell-label">기간</span><span class="cell-value">2<small>개월</small></span></div>
+      <div class="cell"><span class="cell-label">커밋</span><span class="cell-value">487</span></div>
+      <div class="cell"><span class="cell-label">화면</span><span class="cell-value">21</span></div>
+      <div class="cell"><span class="cell-label">소스</span><span class="cell-value">15.5<small>k LOC</small></span></div>
+      <div class="cell"><span class="cell-label">문서</span><span class="cell-value">52<small>편</small></span></div>
+      <div class="cell"><span class="cell-label">단위 테스트</span><span class="cell-value">18<small>파일</small></span></div>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">아키텍처</div>
+      <h2>레이어를 정하고 끝까지 지킨 구조</h2>
+      <p class="section-deck">
+        규모가 커져도 파일을 어디에 둘지 고민하지 않도록 FSD를 얕게 흉내 내지 않고 세그먼트까지 적용했다.
+      </p>
+    </div>
+    <div class="items">
+
+      <article class="item">
+        <h3>FSD 5레이어 + 세그먼트 + 슬라이스 공개 API</h3>
+        <dl>
+          <div><dt>문제</dt><dd>기능이 늘수록 공용 코드가 특정 화면에 묶이고, 삭제할 때 무엇을 지워야 하는지 알 수 없어진다.</dd></div>
+          <div><dt>대응</dt><dd><code>shared → entities → features → pages → app</code> 단방향 의존만 허용하고, 각 슬라이스를 <code>api / model / ui / lib</code> 세그먼트로 나눴다. 슬라이스 밖에서는 <code>index.ts</code>로만 import한다. 기능 삭제 = 폴더 삭제가 성립한다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/app/03-architecture.md</code> · <code>docs/app/12-project-structure.md</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>상태를 역할로 3분할</h3>
+        <dl>
+          <div><dt>문제</dt><dd>서버 데이터·전역 UI 상태·폼 입력을 한 저장소에 섞으면 캐시 무효화와 리렌더 범위를 통제할 수 없다.</dd></div>
+          <div><dt>대응</dt><dd>서버 데이터는 react-query, 사용자가 고른 값은 zustand + MMKV 영속, 폼은 react-hook-form + zod로 고정했다. 서로 겹치지 않게 쓰는 것을 규칙으로 문서화했다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>entities/session/model/store.ts</code> · <code>features/period-filter</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>버전을 최신이 아니라 호환으로 고른 판단</h3>
+        <dl>
+          <div><dt>문제</dt><dd>MMKV v4는 Nitro 모듈 기반이라 네이티브 의존이 늘고, zod v4의 ESM 구문은 RN Babel 변환과 충돌한다.</dd></div>
+          <div><dt>대응</dt><dd>둘 다 v3에 고정하고 <strong>왜 올리지 않았는지</strong>를 아키텍처 문서에 남겼다. 다음 사람이 무심코 올려 빌드를 깨뜨리지 않게 하는 것이 목적이다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/app/03-architecture.md</code> — 버전 주의</dd></div>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">안정성</div>
+      <h2>앱이 사용자 폰에서 조용히 죽지 않게</h2>
+      <p class="section-deck">
+        웹은 콘솔로 바로 보이지만 앱은 사용자 기기에서 말없이 크래시한다. 에러가 발생할 수 있는 층마다 그물을 나눠 깔았다.
+      </p>
+    </div>
+    <div class="items">
+
+      <article class="item">
+        <h3>3겹 안전망 — 렌더링 · 렌더링 밖 · 데이터 실패</h3>
+        <dl>
+          <div><dt>문제</dt><dd>ErrorBoundary는 렌더링 중 에러만 잡는다. 이벤트 핸들러와 async 에러, 그리고 "에러는 아니지만 데이터를 못 받은 상태"는 각각 다른 처리가 필요하다.</dd></div>
+          <div><dt>대응</dt><dd>ErrorBoundary(렌더) + <code>ErrorUtils.setGlobalHandler</code>(렌더 밖, 기본 핸들러를 덮지 않고 이어 호출) + <code>QueryState</code>(로딩·에러·빈 상태를 render-prop 한 곳에서 분기)로 나눴다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/app/07-error-handling.md</code> · <code>shared/ui/feedback/QueryState.tsx</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>모든 실패를 ApiError 하나로 정규화</h3>
+        <dl>
+          <div><dt>문제</dt><dd>화면이 AxiosError를 직접 받으면 형태가 제각각이라 분기가 화면마다 복제된다.</dd></div>
+          <div><dt>대응</dt><dd>axios 응답 인터셉터에서 <code>timeout / network / client / server / invalid / unknown</code> 6종으로 분류하고 상태코드별 한국어 문구 테이블을 붙였다. <code>QueryState</code>가 이 메시지를 자동으로 표시해 화면은 문구를 쓰지 않는다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>shared/lib/http/apiError.ts</code> + 단위 테스트</dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>재시도를 조건부로 — 낭비와 발열을 줄인 정책</h3>
+        <dl>
+          <div><dt>문제</dt><dd>react-query 기본 재시도는 401·404처럼 다시 요청해도 결과가 같은 실패까지 반복한다.</dd></div>
+          <div><dt>대응</dt><dd>network·timeout·5xx만 1회 재시도, 4xx는 제외하되 408·429는 예외로 허용. <code>staleTime 60s</code>로 불필요한 재요청을 끊었다. 스키마 불일치(<code>invalid</code>)는 재시도 대상에서 빼는 것이 핵심이다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>shared/lib/queryClient.ts</code> · <code>isRetryableError</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>Sentry 크래시 — 짝 없는 서로게이트 제거</h3>
+        <dl>
+          <div><dt>문제</dt><dd>JS 문자열(UTF-16)에 짝 없는 서로게이트가 섞이면 Sentry 네이티브가 이벤트를 UTF-8로 직렬화하다 <em>앱 자체를 죽인다</em>. 크래시 리포터가 크래시를 만드는 상황이다.</dd></div>
+          <div><dt>대응</dt><dd>이벤트 전송 전 잘못된 서로게이트만 걸러내는 정제 단계를 넣었다. 원인과 재현 조건을 코드 주석으로 남겼다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>shared/lib/sentry.ts</code> — <code>stripLoneSurrogates</code></dd></div>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">백엔드 협업</div>
+      <h2>프론트가 API 계약을 주도한 기록</h2>
+      <p class="section-deck">
+        가장 내세울 만한 축이다. "서버가 이상해요"가 아니라 <strong>필드 단위 근거·영향·우선순위</strong>를 붙인 문서로 요청했다.
+      </p>
+    </div>
+    <div class="items">
+
+      <article class="item">
+        <h3>두 층 스키마로 하는 계약 테스트</h3>
+        <dl>
+          <div><dt>문제</dt><dd>런타임 스키마는 일부러 관대하게(<code>nullish</code>) 뒀다. 항목 하나가 비었다고 목록 전체를 에러로 만들 수 없기 때문이다. 그런데 그 관대함이 백엔드의 변화를 삼켜버린다.</dd></div>
+          <div><dt>대응</dt><dd>같은 응답을 <strong>런타임 스키마</strong>(앱이 실제로 깨지는가)와 <strong>엄격 스키마</strong>(서버가 문서대로 주는가)로 두 번 파싱한다. 실서버를 호출하는 계약 테스트를 만들되, 자격증명이 없으면 전부 skip하고 기본 <code>npm test</code>와 pre-commit에서는 제외해 서버 장애가 커밋을 막지 않게 했다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>npm run test:api</code> · <code>shared/test/contract/strict.ts</code> · <code>docs/app/17-testing.md</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>화면은 멀쩡한데 값만 틀리는 버그를 잡아낸 사례</h3>
+        <dl>
+          <div><dt>문제</dt><dd>서버가 홀별 <code>par</code>에 null을 내려줬다. 앱은 방어적으로 0으로 보정했고, 그 결과 <strong>파 대비 계산이 전부 틀어져 모든 홀이 더블보기로 색칠</strong>됐다. 크래시도 에러도 없이 값만 틀린, 가장 잡기 어려운 종류다.</dd></div>
+          <div><dt>대응</dt><dd>엄격 스키마가 이 필드를 필수 number로 조여 실응답에서 검출했다. "null=0 보정은 앱의 임시 조치일 뿐 정답이 아니다"까지 적어 백엔드에 전달했다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/api/backend-error-handling-request.md</code> — B-1 (P0)</dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>에러 응답 계약 요청서 — 12건을 우선순위로 정렬</h3>
+        <dl>
+          <div><dt>문제</dt><dd>인증 실패가 <code>BAD_VERIFY_CODE</code> 하나로 불일치·만료·시도초과를 뭉쳐서 내려와, 앱이 "재입력"과 "재발송" 중 무엇을 안내할지 판단할 수 없었다.</dd></div>
+          <div><dt>대응</dt><dd>코드 3분리와 <code>retryAfterSeconds</code> 추가를 요청하고, 응답 형태 불일치 12건을 <strong>엔드포인트·필드·서버가 주는 값·기대값·앱 영향·P0/P1</strong> 표로 정리했다. 모두 하위 호환을 깨지 않는 형태로 설계해 수용 부담을 낮췄다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/api/verify-error-contract.md</code> · <code>docs/api/backend-error-handling-request.md</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>결정하지 않는 것도 결정으로 남긴다</h3>
+        <dl>
+          <div><dt>문제</dt><dd>목록과 상세가 동반자 수를 다르게 계산한다. 서버 <code>players</code>에 본인이 포함되는지 문서에 명시가 없어 단정할 수 없었다.</dd></div>
+          <div><dt>대응</dt><dd>추측으로 고치는 대신 선택지 3안과 각 비용, <strong>결론을 내리는 데 필요한 최소 정보</strong>(실응답 한 건)를 문서로 남기고 코드는 그대로 뒀다. 계약 테스트에는 실패시키지 않는 <code>[확인]</code> 항목으로 심어 두고 관찰한다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/features/12-players-display.md</code></dd></div>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">디자이너 협업</div>
+      <h2>시안을 옮긴 게 아니라 시스템으로 받았다</h2>
+      <p class="section-deck">
+        디자인 관련 커밋만 65건(<code>style</code>). 픽셀 정합에서 끝내지 않고, 디자이너가 건드릴 지점과 개발이 지킬 토큰을 나눴다.
+      </p>
+    </div>
+    <div class="items">
+
+      <article class="item">
+        <h3>타입 스케일 — 375 시안을 393 실기기로 옮기며 내린 결정</h3>
+        <dl>
+          <div><dt>문제</dt><dd>디자인 기준폭은 375, 실기기는 아이폰 프로 393이다. 고정 px를 그대로 옮기면 화면 폭 대비 글자가 작아 보인다.</dd></div>
+          <div><dt>대응</dt><dd>폭 보정(393/375 ≈ 1.05)에 <strong>"실기기에서 한 단계 더 키우자"는 디자이너 판단</strong>을 더해, Tailwind 기본 램프를 한 스텝 위로 재정의했다. 런타임 폭 스케일은 채택하지 않았다 — 대상 기기 폭 편차가 좁아 실익이 작고, NativeWind className은 빌드 타임에 고정되기 때문이다. 정밀 정합이 필요한 히어로 카드는 리터럴 px로 스케일에서 opt-out시켰다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/app/16-typography.md</code> · <code>tailwind.config.js</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>디자이너가 고칠 파일을 3개로 좁혔다</h3>
+        <dl>
+          <div><dt>문제</dt><dd>로딩·에러·빈 상태 시안이 나올 때마다 화면 수만큼 고쳐야 하면 반영이 늦어지고 화면끼리 어긋난다.</dd></div>
+          <div><dt>대응</dt><dd>모든 화면을 <code>QueryState</code>로 감싸고 실제 모양은 <code>LoadingState</code>·<code>ErrorState</code>·<code>EmptyState</code> 세 파일에만 두었다. 시안이 오면 이 3개만 고치면 전 화면에 반영된다. 이 교체 지점을 문서에 명시해 디자이너와 합의했다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/app/07-error-handling.md</code> — 디자이너 교체 지점</dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>Figma 실측값 정합과 색 토큰화</h3>
+        <dl>
+          <div><dt>문제</dt><dd>className에 임의 hex(<code>bg-[#6600FF]</code>)가 흩어져 브랜드 색을 한 번에 바꿀 수 없었다.</dd></div>
+          <div><dt>대응</dt><dd>단일 팔레트(<code>theme/palette.js</code>)에서 Tailwind 설정과 JS 색상값(내비게이션 틴트·아이콘·StatusBar처럼 className으로 못 넘기는 네이티브 prop용)이 함께 파생되도록 통합하고 arbitrary hex를 제거했다. 스코어 상세·홈 히어로는 행 높이·열 폭·간격을 Figma 실측값으로 맞췄다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence">커밋 <code>refactor(theme): 디자인 색상 토큰화</code> 외 style 65건</dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>디자이너에게 역으로 스펙을 제공</h3>
+        <dl>
+          <div><dt>문제</dt><dd>앱 아이콘은 플랫폼마다 규칙이 다르다. iOS는 투명 배경이면 심사에서 거부되고, Android 적응형 아이콘은 전경·배경 레이어 분리와 중앙 66% 세이프존을 지켜야 한다.</dd></div>
+          <div><dt>대응</dt><dd>필요한 산출물·크기·금지사항을 체크리스트로 정리해 전달했다. 재작업 없이 한 번에 받는 것이 목적이다. 스토어 등록용 피처 그래픽·스크린샷도 같은 방식으로 요청 목록을 만들었다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/app/06-app-icon.md</code> — 디자이너 전달용 체크리스트</dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>iOS와 Android에서 같은 글자로 보이게</h3>
+        <dl>
+          <div><dt>문제</dt><dd><code>fontWeight</code>를 그대로 두면 iOS는 가짜 볼드를 그리고, Android는 Pretendard를 버리고 Noto Sans CJK로 떨어진다. RN <code>TextInput</code>은 <code>Text</code>와 달리 이 매핑이 없어 입력창만 시스템 폰트로 렌더됐다.</dd></div>
+          <div><dt>대응</dt><dd>웨이트를 패밀리명으로 매핑하는 함수를 두고 공용 <code>Text</code>·<code>TextInput</code>이 같은 함수를 쓰게 했다. <code>includeFontPadding: false</code>로 세로 간격까지 양 플랫폼을 맞췄다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>shared/theme/fonts.ts</code> · <code>docs/app/16-typography.md</code></dd></div>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">인터랙션</div>
+      <h2>손맛을 토큰으로 관리하기</h2>
+      <p class="section-deck">
+        애니메이션을 화면마다 즉흥으로 넣지 않고 어휘를 작게 고정했다 — 스프링 2종, 타이밍 3종.
+      </p>
+    </div>
+    <div class="items">
+
+      <article class="item">
+        <h3>공통 모션 토큰과 PressableScale</h3>
+        <dl>
+          <div><dt>문제</dt><dd>눌림·등장·전환의 속도와 곡선이 화면마다 달라지면 앱이 여러 사람이 만든 것처럼 보인다.</dd></div>
+          <div><dt>대응</dt><dd><code>motion.ts</code>에 duration·easing·spring 프리셋을 정의하고 모든 애니메이션이 이를 참조하게 했다. 눌림 축소는 Reanimated worklet으로 <strong>UI 스레드</strong>에서 돌려 JS가 바빠도 끊기지 않는다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>shared/theme/motion.ts</code> · <code>shared/ui/controls/PressableScale.tsx</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>Android 리플을 의도적으로 걷어낸 판단</h3>
+        <dl>
+          <div><dt>문제</dt><dd>Material 관례는 리플이지만, 축소 애니메이션과 겹치면 두 움직임이 따로 놀고 iOS와 손맛이 갈린다.</dd></div>
+          <div><dt>대응</dt><dd>양 플랫폼 모두 <code>opacity 0.6</code> + 햅틱으로 통일하고 <code>rippleColor</code> prop 자체를 제거했다. <strong>라이브러리 기본값도 꺼야 한다</strong>는 점이 함정이었다 — bottom-tabs의 <code>PlatformPressable</code>이 리플을 깔아, 탭을 누를 때만 물결이 퍼졌다. <code>tabBarButton</code>을 직접 그려 껐다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/app/09-touch-feedback.md</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>햅틱을 어디에 붙일지의 기준</h3>
+        <dl>
+          <div><dt>문제</dt><dd>전부 붙이면 스크롤 중 남발되고, 안 붙이면 확정 동작의 무게가 없다.</dd></div>
+          <div><dt>대응</dt><dd>화면을 넘기는 CTA·되돌리기 어려운 확정은 <code>light</code>, 값 선택은 iOS 피커와 같은 결의 <code>selection</code>, 목록 카드는 없음으로 규칙을 표로 고정했다. 네이티브 모듈이 없는 기기에서는 조용히 무시한다 — 햅틱 실패가 앱 흐름을 막으면 안 된다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>shared/lib/haptics.ts</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>접근성 — 동작 줄이기 존중</h3>
+        <dl>
+          <div><dt>문제</dt><dd>골프 앱은 사용 연령대가 있는 편이고, OS 접근성 "동작 줄이기" 사용자는 화면 움직임에 불편을 느낀다.</dd></div>
+          <div><dt>대응</dt><dd><code>useReducedMotion()</code>으로 눌림 축소를 생략하고, 공용 <code>Touchable</code>에 <code>accessibilityRole</code>, <code>TextField</code>에 라벨 연결을 기본값으로 넣어 컴포넌트 한 곳에서 앱 전반을 커버했다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/app/14-accessibility.md</code></dd></div>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">네이티브</div>
+      <h2>Expo 없이 ios/ · android/를 직접 소유</h2>
+      <p class="section-deck">
+        네이티브 초심자로 시작해 서명·스킴·테마·폰트·스플래시를 직접 다뤘다. 이 축은 "왜 bare RN인가"에 답할 수 있다는 게 핵심이다.
+      </p>
+    </div>
+    <div class="items">
+
+      <article class="item">
+        <h3>bare RN 선택 근거를 이념이 아니라 작업량으로 설명</h3>
+        <dl>
+          <div><dt>문제</dt><dd>"Expo를 왜 안 썼나"에 취향으로 답하면 설득되지 않는다.</dd></div>
+          <div><dt>대응</dt><dd>한국 소셜 SDK 3종이 URL 스킴·<code>Info.plist</code> 예외·인텐트 필터·<code>modular_headers</code>·SHA-1 등록을 요구하고, 다이얼로그 테마 색·cleartext 예외·스플래시를 네이티브 파일에서 조정한다는 실제 작업 목록으로 답했다. <strong>"Expo로 불가능해서가 아니라 네이티브 직접 제어가 잦아 더 예측 가능해서"</strong>라고 정확히 적었다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/app/15-native-and-no-expo.md</code> — 네이티브 설정 파일 지도</dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>스플래시 2겹 — 흰 화면 깜빡임 제거</h3>
+        <dl>
+          <div><dt>문제</dt><dd>JS 번들 로드 전 OS가 그리는 첫 프레임과 RN 스플래시 사이에 흰 화면이 번쩍인다. Android 12+는 시스템이 "배경색 + 중앙 아이콘"만 그리도록 강제한다.</dd></div>
+          <div><dt>대응</dt><dd>네이티브 런치 화면과 JS 스플래시의 배경을 같은 보라(<code>#5C31FE</code>)로 맞춰 전환에서 색이 바뀌지 않게 했다. 라이브러리 없이 스토리보드·<code>values-v31/styles.xml</code>로 직접 처리했고, 정적 이미지를 Lottie로 교체했다. 부팅 대기 시간(Keychain에서 키를 읽어 MMKV를 여는 구간)에 홈 데이터를 prefetch해 스플래시 뒤 흰 로딩 화면도 없앴다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/app/11-splash.md</code> · 커밋 <code>perf(splash)</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>키보드 — OS 기본값이 부족한 지점을 좌표로 해결</h3>
+        <dl>
+          <div><dt>문제</dt><dd>iOS의 <code>automaticallyAdjustKeyboardInsets</code>와 Android의 <code>adjustResize</code>는 <strong>가려질 공간을 비워줄 뿐 입력을 올려주지 않는다.</strong> 라운드 등록의 동반인 칸이 여전히 가려졌다.</dd></div>
+          <div><dt>대응</dt><dd>키보드 윗변과 포커스된 입력의 아랫변을 <code>measureInWindow</code>로 비교해 <strong>겹치는 만큼만</strong> 스크롤하는 래퍼를 만들었다. 이미 보이면 아무것도 하지 않는다. 계산부는 순수 함수로 분리해 테스트했다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>shared/ui/layout/keyboardAware.ts</code> + 테스트 · <code>docs/app/10-keyboard.md</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>소셜 로그인 4종과 애플만의 분기</h3>
+        <dl>
+          <div><dt>문제</dt><dd>애플은 이름·이메일을 <strong>최초 1회만</strong> 내려주고, 이메일 가리기를 쓰면 릴레이 주소가 오며, 안드로이드용 네이티브 SDK가 없다.</dd></div>
+          <div><dt>대응</dt><dd>카카오·네이버·구글은 email 기준으로 기존/신규를 판별하지만 애플만 <code>socialId</code> 기준으로 분기하도록 통합 훅(<code>useSocialLogin</code>) 안에서 갈랐다. iOS는 네이티브 시트, Android는 웹 OAuth가 필요하다는 차이를 문서로 정리하고 버튼 노출을 플랫폼 조건부로 뒀다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/features/05-social-login.md</code> ~ <code>10-apple-login.md</code></dd></div>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">도메인</div>
+      <h2>골프 스코어라는 도메인에서 나온 문제들</h2>
+      <p class="section-deck">
+        CRUD로 환원되지 않는 규칙이 있는 영역이다. 면접에서 설명하기 좋은 구체성이 여기 있다.
+      </p>
+    </div>
+    <div class="items">
+
+      <article class="item">
+        <h3>서로 다른 시퀀스가 충돌하는 리스트 키</h3>
+        <dl>
+          <div><dt>문제</dt><dd>자동연동 라운드는 <code>bookingId</code>, 직접입력은 <code>roundedNo</code>로 식별하는데 <strong>두 번호는 별개 시퀀스라 값이 겹친다.</strong> 번호만으로 key를 만들면 목록에서 충돌한다.</dd></div>
+          <div><dt>대응</dt><dd><code>booking-5</code> / <code>rounded-5</code>로 이름공간을 나누는 함수를 만들고 테스트를 붙였다. <code>manual</code> 플래그 하나가 배지·식별자·상세 엔드포인트를 모두 결정하도록 분기를 한 곳에 모았다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>entities/record/lib/recordKey.ts</code> · <code>docs/features/03-score.md</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>서버 total을 믿지 않는 무한 스크롤</h3>
+        <dl>
+          <div><dt>문제</dt><dd>집계 지연 등으로 <code>total</code>이 실제 목록보다 크게 오면 마지막 페이지에서 끝없이 요청한다.</dd></div>
+          <div><dt>대응</dt><dd>다음 페이지 판단을 순수 함수로 분리하고, 누적 개수가 <code>total</code>에 못 미쳐도 <strong>빈 페이지가 오면 멈추게</strong> 했다. 화면은 페이지 구조를 모르고 합쳐진 배열만 받는다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>entities/record/lib/recordPaging.ts</code> + 테스트</dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>입력 속도를 위한 도메인 기본값</h3>
+        <dl>
+          <div><dt>문제</dt><dd>18홀 파를 매번 입력하게 하면 등록을 끝까지 마치지 않는다.</dd></div>
+          <div><dt>대응</dt><dd>한국 코스 대부분이 파 72 표준이라는 점을 이용해 프리셋 + 수정 방식으로 바꿨다. 파 선택 칩은 <strong>직접입력 칸이 열린 이유</strong>에 따라 키보드를 띄울지 갈랐다 — 사용자가 칩을 탭했으면 띄우고, 파 7인 홀로 이동해 열렸으면 띄우지 않는다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>pages/score/components/score-entry/</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>스코어카드 캡처 공유</h3>
+        <dl>
+          <div><dt>문제</dt><dd>공유 직후 앱이 멈췄고, 저장한 이미지의 URI 스킴이 공유 경로와 달라 실패했다.</dd></div>
+          <div><dt>대응</dt><dd><code>view-shot</code>으로 스코어카드를 캡처해 공유·사진 저장에 연결하고, 캡처 직후 상태를 즉시 해제해 멈춤을 잡았다. 저장 URI에 <code>file://</code> 스킴을 보장해 두 경로를 통일했다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>pages/score/model/useScorecardCapture.ts</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>골프장은 신호가 약하다 — 오프라인 대응</h3>
+        <dl>
+          <div><dt>문제</dt><dd>실제 사용 장소가 통신이 불안정한 곳이다. 오프라인에서 요청이 무의미하게 실패·재시도하면 배터리만 쓴다.</dd></div>
+          <div><dt>대응</dt><dd>NetInfo를 react-query <code>onlineManager</code>·<code>focusManager</code>에 연결해 끊기면 요청을 멈추고 복귀 시 자동 재개하게 했다. "연결됐지만 인터넷이 안 되는" 경우를 <code>isInternetReachable</code>로 배제하고, 배너는 절대위치라 레이아웃을 밀지 않는다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/app/13-offline.md</code> · <code>shared/lib/network/</code></dd></div>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">보안 · 세션</div>
+      <h2>토큰을 어디에 두고 어떻게 갱신하는가</h2>
+    </div>
+    <div class="items">
+
+      <article class="item">
+        <h3>MMKV 암호화 키를 OS 보안 저장소에</h3>
+        <dl>
+          <div><dt>문제</dt><dd>로컬 저장소를 그냥 쓰면 백업 추출이나 리버싱으로 토큰이 빠져나간다.</dd></div>
+          <div><dt>대응</dt><dd>256비트 키를 <code>crypto.getRandomValues</code>로 생성해 iOS Keychain / Android Keystore에 보관하고, 그 키로 MMKV를 연다. 앱 부팅 시퀀스(<code>bootstrapStorage</code>)에서 키 조회 → 저장소 오픈 → 토큰·persist 복원 순서를 고정했다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>shared/lib/session/secureKey.ts</code> · <code>app/bootstrapStorage</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>토큰 재발급 single-flight</h3>
+        <dl>
+          <div><dt>문제</dt><dd>여러 요청이 동시에 401을 받으면 재발급이 그 수만큼 발생하고, 재발급 요청 자체가 401 재시도 루프에 빨려 들어간다.</dd></div>
+          <div><dt>대응</dt><dd>공유 프로미스로 재발급을 한 번만 수행하고, 재발급 호출은 <strong>인터셉터가 없는 별도 axios</strong>로 보내 루프를 끊었다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>shared/lib/http/tokenRefresh.ts</code></dd></div>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">릴리스</div>
+      <h2>코드 밖의 일까지 끝냈다</h2>
+      <p class="section-deck">
+        개발자 포트폴리오에서 잘 안 보이는 영역이라 오히려 차별점이 된다.
+      </p>
+    </div>
+    <div class="items">
+
+      <article class="item">
+        <h3>서명·평문통신·버전을 빌드 타입으로 분리</h3>
+        <dl>
+          <div><dt>문제</dt><dd>release가 debug 키로 서명되면 스토어 제출이 불가하고, cleartext 플레이스홀더가 정의되지 않아 릴리스 매니페스트 병합이 깨져 있었다.</dd></div>
+          <div><dt>대응</dt><dd>키스토어 자격을 레포 밖 <code>~/.gradle/gradle.properties</code>에서 읽도록 배선하고(없으면 debug 폴백), <code>manifestPlaceholders</code>로 cleartext를 debug=true / release=false로 갈랐다. 버전은 <code>npm run version:set|build</code> 스크립트로 iOS·Android를 함께 올린다. 서버 주소는 <code>__DEV__</code> 하나로 분기해 <strong>별도 라이브러리 없이</strong> 개발망·운영망을 나눴다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/release/03-production-readiness.md</code> · <code>docs/app/08-environments.md</code> · <code>scripts/version.mjs</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>Play Console 제출 실무</h3>
+        <dl>
+          <div><dt>문제</dt><dd>스토어는 코드 외에 개인정보처리방침 URL·데이터 보안 신고·콘텐츠 등급·심사용 계정을 요구한다. 전체 로그인이 필요한 앱이라 심사자가 진입조차 못 한다.</dd></div>
+          <div><dt>대응</dt><dd>실제 수집 항목을 Play 데이터 타입에 매핑하고(공유 없음, Sentry는 위탁 처리자로 구분), 약관·개인정보처리방침·회원 탈퇴를 관리자 콘솔의 <strong>로그인 없이 접근 가능한 공개 페이지</strong>로 제공했다. 탈퇴 API가 인증을 요구하므로 웹에서 로그인 후 진행하되 토큰은 저장하지 않고 화면 상태로만 보유하게 설계했다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/release/05-play-console-submission.md</code></dd></div>
+        </dl>
+      </article>
+
+      <article class="item">
+        <h3>문서 52편 — 결정의 이유를 남기는 방식</h3>
+        <dl>
+          <div><dt>문제</dt><dd>혼자 만든 코드는 6개월 뒤의 나에게도 남이 쓴 코드다.</dd></div>
+          <div><dt>대응</dt><dd>setup · app · features · api · release · troubleshooting으로 나눠 <strong>"왜 이렇게 했는지"</strong> 중심의 문서를 유지했다. 대안과 그 비용, 되돌린 이력, 다음 단계까지 적어 사실상 ADR 역할을 한다. pre-commit 훅은 타입체크·린트만 돌려 커밋을 막지 않는 선을 지켰다.</dd></div>
+          <div><dt>근거</dt><dd class="evidence"><code>docs/</code> 52편 · <code>.githooks/pre-commit</code> · Storybook</dd></div>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">되돌린 결정</div>
+      <h2>붙였다가 뺀 것들</h2>
+      <p class="section-deck">
+        성공만 나열한 포트폴리오는 신뢰가 낮다. 원인을 규명하고 되돌린 이력이 오히려 판단력을 보여준다.
+      </p>
+    </div>
+    <div class="items">
+
+      <div class="reversal">
+        <h3>PressableScale — 붙였더니 화면이 통째로 사라졌다</h3>
+        <p><code>cssInterop</code>을 <code>AnimatedPressable</code>에 걸고 <code>style</code>을 따로 넘겼더니, className이 만든 스타일과 애니메이션 스타일이 같은 자리를 두고 충돌해 하단 CTA·FAB·목록 카드가 보이지 않았다. <span class="verdict">공용 <code>Text</code>가 되는 이유(className이 만든 style을 받아서 변형해 다시 내보낸다)와 비교해 원인을 규명하고, 같은 방식으로 고쳐 재도입했다.</span></p>
+      </div>
+
+      <div class="reversal">
+        <h3>탭 전환 페이드 — 넣었다가 되돌림</h3>
+        <p>부드러워 보이려고 넣은 페이드가 첫 탭을 씹고 빈 화면을 노출했다. <span class="verdict">하단 탭은 즉시 전환으로 되돌리고, 스택 전환에만 모션을 남겼다. "레이아웃을 흔들지 않는다 · 입력 중에는 넣지 않는다"를 모션 원칙으로 문서화했다.</span></p>
+      </div>
+
+      <div class="reversal">
+        <h3>인증 카운트다운 — 클라이언트 계산을 포기</h3>
+        <p>남은 시간을 앱에서 세다가 제거했다. 쿨다운은 번호 기준으로 서버가 관리하므로 앱을 껐다 켜면 앱이 가진 시각이 의미가 없다. <span class="verdict">만료돼도 입력·제출은 가능하게 열어 두고, 판단을 서버로 넘긴 뒤 그 전제에 맞는 응답 필드를 백엔드에 요청했다 — 제거와 요청서가 한 세트다.</span></p>
+      </div>
+
+      <div class="reversal">
+        <h3>목록 항목별 진입 애니메이션 — 제거</h3>
+        <p>카드마다 등장 애니메이션을 주니 목록이 겹쳐 보였다. <span class="verdict">첫 로딩에만 스태거 진입을 남기고 항목별 애니메이션은 걷어냈다. 스켈레톤으로 로딩을 대체한 것도 같은 맥락이다.</span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">정리</div>
+      <h2>이력서에 그대로 옮길 문장</h2>
+      <p class="section-deck">
+        위 항목을 한 줄로 압축한 것. 숫자와 구체적 결과가 들어간 형태만 남겼다.
+      </p>
+    </div>
+    <ul class="lines">
+      <li>React Native 골프 기록 앱을 <strong>기획 반영부터 스토어 제출까지 단독 개발</strong> — 2개월, 487커밋, 화면 21개, iOS·Android 동시 대응.</li>
+      <li>FSD 5레이어 + 세그먼트 구조와 슬라이스 공개 API 규칙을 정의해, <strong>기능 삭제가 폴더 삭제로 성립</strong>하는 코드베이스를 유지.</li>
+      <li>zod <strong>2층 스키마(런타임·엄격)</strong> 기반 실서버 계약 테스트를 도입해, 서버가 <code>par: null</code>을 주며 <strong>모든 홀이 더블보기로 표시되던 무증상 오류</strong>를 화면 반영 전에 검출.</li>
+      <li>API 응답 불일치 12건을 <strong>영향·우선순위(P0/P1)와 함께 문서화</strong>해 백엔드에 전달, 인증 에러 코드 세분화와 <code>retryAfterSeconds</code> 추가를 하위 호환 형태로 제안.</li>
+      <li>ErrorBoundary·전역 핸들러·<code>QueryState</code> 3겹 안전망과 axios 에러 정규화(6종 분류)로 <strong>모든 화면의 로딩·에러·빈 상태를 컴포넌트 3개로 수렴</strong> — 디자이너 시안 반영 지점을 3파일로 축소.</li>
+      <li>디자인 기준폭 375 → 실기기 393 차이를 <strong>타입 스케일 재정의로 흡수</strong>하고, 임의 hex를 제거해 단일 팔레트에서 Tailwind와 네이티브 색상값이 함께 파생되도록 통합.</li>
+      <li>공통 모션 토큰(스프링 2·타이밍 3)과 UI 스레드 눌림 애니메이션, 햅틱 적용 기준을 정의해 <strong>iOS·Android 인터랙션을 동일하게</strong> 맞춤. 접근성 "동작 줄이기" 대응 포함.</li>
+      <li>Expo 없이 네이티브 프로젝트를 직접 관리 — 카카오·네이버·구글·애플 <strong>소셜 로그인 4종</strong>, 폰트 링크, 2겹 스플래시, 적응형 아이콘, 릴리스 서명·cleartext 분리.</li>
+      <li>MMKV 암호화 키를 Keychain/Keystore에 보관하고, 토큰 재발급을 <strong>single-flight</strong>로 처리해 동시 401 상황의 중복 재발급과 재시도 루프를 제거.</li>
+      <li>Play Console 제출 실무 수행 — 데이터 보안 매핑, 공개 약관·개인정보처리방침·회원 탈퇴 페이지 제공, 내부 테스트 트랙 배포 준비.</li>
+    </ul>
+  </section>
+
+  <footer>
+    근거: 코드베이스 실측(2026-08-31) · docs/ 52편 · git log 487건
+  </footer>
+
+</div>
