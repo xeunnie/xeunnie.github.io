@@ -57,8 +57,8 @@ export interface Project {
   links?: ProjectLink[];
   /** 화면 캡처. 첫 장이 목록 카드의 썸네일로도 쓰인다. */
   shots?: ProjectShot[];
-  /** 세로로 긴 휴대기기 캡처면 "phone" — 상세에서 격자로, 목록 카드에서 나란히 보여준다 */
-  shotsLayout?: "phone";
+  /** 캡처 배치 — "phone": 세로 캡처 3열, "grid": 가로 캡처 2열. 없으면 한 장씩 전폭 */
+  shotsLayout?: "phone" | "grid";
   /** 캡처 아래 안내문. 없으면 운영 화면 기본 문구를 쓴다. */
   shotsNote?: string;
   sections?: ProjectSection[];
@@ -572,6 +572,59 @@ export const PROJECTS: Project[] = [
     overview:
       "골프장 실시간 라운드 관리 플랫폼의 경기관제 앱입니다. 태블릿/모바일 듀얼 디바이스(Vgolf App, v1.1.24, 26K+ LOC)로 GPS 기반 카트 추적, Proj4 좌표 변환, 지오펜싱 자동 홀 전환, 움직이는 카트 환경에서의 터치 UX 최적화 등 골프장 특수 환경에 최적화된 기술을 구현했습니다. 현재 운영 중인 프로덕션 서비스로, 실사용 환경에서의 안정성과 마감 품질에 특히 주력했습니다. 같은 플랫폼의 F&B 주문·사이니지 서브시스템은 별도 프로젝트(VGOLF F&B)로 정리했습니다.",
     techs: ["react", "typescript", "vite", "recoil", "reactquery", "scss", "mui", "i18n", "proj4", "webview", "docker", "nginx"],
+    shotsLayout: "grid",
+    shotsNote:
+      "실제 운영 화면입니다. 내장객·캐디 이름은 알아볼 수 없게 처리했습니다.",
+    shots: [
+      {
+        src: "/shot/tab-hole.jpg",
+        caption:
+          "현재 홀. GPS로 잡은 카트 위치에서 홀컵까지 남은 거리와 고저차를 코스 맵 위에 올린다. 오른쪽은 티샷 순서를 정하는 패널.",
+      },
+      {
+        src: "/shot/tab-hole-detail.jpg",
+        caption:
+          "홀 상세 — 그린 경사를 색으로 보여주고, 코스에서 주의할 점을 안내한다. 오른쪽에서 홀을 바로 골라 넘어갈 수 있다.",
+      },
+      {
+        src: "/shot/tab-scorecard.jpg",
+        caption:
+          "스코어 카드. 전반·후반을 나눠 홀별 타수와 합계를 보여주고, 버디 이하는 하트로 표시한다.",
+      },
+      {
+        src: "/shot/tab-progress.jpg",
+        caption:
+          "전체 홀 경기 현황. 18홀에 흩어진 팀의 위치와 대기 팀을 한 화면에서 본다. 관제실에서 종일 띄워 두는 화면이다.",
+      },
+      {
+        src: "/shot/tab-bookings.jpg",
+        caption: "그날 예약 목록. 팀마다 카트 번호와 전·후반 코스를 지정하고 라운드를 시작한다.",
+      },
+      {
+        src: "/shot/tab-round-setup.jpg",
+        caption:
+          "라운드 시작 설정 — 캐디 유무, 부(部), 전·후반 코스, 티오프 시각을 고르고 플레이어를 채운다. 빠진 값이 있으면 시작 버튼이 잠긴다.",
+      },
+      {
+        src: "/shot/tab-caddie-note.jpg",
+        caption:
+          "캐디노트. 고객별 라운드 안내 동의와 클럽 장비 확인 상태를 체크하고, 관제·식음에서 온 메시지와 메모를 같이 본다.",
+      },
+      {
+        src: "/shot/tab-fnb-order.jpg",
+        caption:
+          "식음 주문 — 그늘집·레스토랑·스타트하우스를 골라 담는다. 품절은 주문할 수 없게 막고, 포장 여부를 항목마다 고른다.",
+      },
+      {
+        src: "/shot/tab-fnb-history.jpg",
+        caption:
+          "주문 내역. 요청·취소·조리중 같은 상태가 매장에서 바뀌는 대로 따라 움직인다.",
+      },
+      {
+        src: "/shot/tab-promotion.jpg",
+        caption: "라운드 중 특정 지점에 도달하면 뜨는 프로모션 안내.",
+      },
+    ],
     highlights: [
       "프로덕션 운영 서비스 — 실사용 환경에서의 안정성·마감 품질에 주력",
       "GPS 카트 추적 — 500ms 주기 GPS 읽기, Proj4 좌표 변환(위경도→코스맵 픽셀), 지오펜싱 자동 홀 전환",
@@ -984,6 +1037,21 @@ export const PROJECTS: Project[] = [
     overview:
       "스크린골프 라운드 결과를 개인·팀·단체(시상 포함) 스코어카드로 보여주고, 카카오·네이버 같은 인앱브라우저에서 이미지로 저장·공유하는 모바일 웹입니다. 원 개발자에게서 인수인계받아 F&B·앱 개발과 병행하며 9개월간 맡았습니다(전체 103커밋 중 본인 46건). 새로 설계한 제품이 아니라 남이 짜 둔 코드를 이해하고 안전하게 바꿔 나가는 일이었고, 그중 웹뷰 파편화로 생기는 저장 문제를 끝까지 파고들어 문서로 남긴 것이 가장 값어치 있는 부분입니다.",
     techs: ["react", "typescript", "vite", "recoil", "reactrouter", "scss", "i18n", "html2canvas", "axios", "gitea"],
+    shotsLayout: "grid",
+    shotsNote:
+      "실제 발송된 결과 페이지입니다. 참가자 이름과 골프장 상호·로고는 알아볼 수 없게 처리했습니다.",
+    shots: [
+      {
+        src: "/shot/card-team.jpg",
+        caption:
+          "라운드가 끝나면 이 페이지 링크가 발송된다. 요약(이글·버디·파·보기)과 팀 스코어를 먼저 보여주고, 아래에 전·후반 홀별 표가 이어진다. 참가자 이름은 서비스가 자체적으로 가운데를 가린다.",
+      },
+      {
+        src: "/shot/card-round.jpg",
+        caption:
+          "2인 라운드 결과. 같은 틀이 인원수에 따라 열 수만 달라진다. 치지 않은 홀은 '-'로 비워 두고 합계에서 뺀다.",
+      },
+    ],
     links: [
       {
         label: "관련 글 — 인앱브라우저 이미지 저장",
