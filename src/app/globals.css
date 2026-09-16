@@ -226,3 +226,11 @@ h1, h2, h3, h4 {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* 기술 배지의 점 — 브랜드 색을 테마별로 보정해 인라인 변수로 받는다 */
+.tech-dot {
+  background: var(--dot, var(--g-line));
+}
+[data-theme="dark"] .tech-dot {
+  background: var(--dot-dark, var(--g-line));
+}
