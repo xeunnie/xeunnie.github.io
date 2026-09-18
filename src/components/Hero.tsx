@@ -49,9 +49,9 @@ export default function Hero() {
           {...rise(0.12)}
           className="text-[clamp(2.3rem,7vw,4.4rem)] font-bold leading-[1.12] text-slate-50"
         >
-          만든 게 현장에서 도는 것까지
+          돌아가게 만들고,
           <br />
-          봐야 직성이 풀립니다
+          더 잘 돌아가게 만듭니다
         </motion.h1>
 
         <motion.p

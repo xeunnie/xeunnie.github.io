@@ -185,6 +185,11 @@ export const PROJECTS: Project[] = [
     links: [{ label: "GitHub", url: "https://github.com/seung-choi/busan-sasang" }],
     shots: [
       {
+        src: "/shot/busan-3d-asset.jpg",
+        caption:
+          "역사 전체를 3D로 띄우고 층을 바꿔 가며 봅니다. 왼쪽에서 설비 종류를 고르면 해당 장비만 도면 위에 남습니다. 상단에는 대합실·승강장·외부 온도와 미세먼지가 실시간으로 붙습니다.",
+      },
+      {
         src: "/shot/busan-cctv.jpg",
         caption:
           "3D 역사 도면 위에서 CCTV를 고르면 WebRTC 스트림이 모달로 열린다. 좌측은 역사 내 CCTV 68대 목록, 상단은 대합실·승강장·외부 환경값, 우측은 층 전환.",
@@ -301,6 +306,19 @@ export const PROJECTS: Project[] = [
     overview:
       "여러 관제 SI 프로젝트가 각자 비슷한 컴포넌트와 API 호출을 복사해 쓰던 상황을 정리하기 위한 pnpm 워크스페이스 모노레포입니다. UI 디자인 시스템(@plug/ui), 공통 API 훅 계층(@plug/api-hooks), 도메인 서비스(@plug/common-services)를 패키지로 분리하고, 부산 사상하단선을 포함한 실제 프로젝트 앱이 이 패키지들을 가져다 쓰도록 구성했습니다. 2025년 4월부터 9월까지 PR 19건(머지 17건)을 올렸고, 컴포넌트 신규 구현부터 아토믹 구조 재편, HTTP 클라이언트 교체, 도메인 서비스 이관까지 담당했습니다.",
     techs: ["react", "typescript", "vite", "tailwind", "storybook", "shadcn", "radix", "ky", "swr", "pnpm", "github"],
+    shotsLayout: "grid",
+    shots: [
+      {
+        src: "/shot/plug-indoor-editor.jpg",
+        caption:
+          "실내지도 편집 — 왼쪽 Asset 목록에서 센서·FAN·CCTV 같은 장비를 골라 3D 도면 위에 배치합니다. 층을 바꿔 가며 편집하고 배치한 장비에는 이름표가 붙습니다.",
+      },
+      {
+        src: "/shot/plug-facility.jpg",
+        caption:
+          "관제 센터의 시설 관리 — 건물·역사·공장을 탭으로 나누고 카드로 봅니다. 이런 관리 화면을 프로젝트마다 다시 만들지 않도록 공통 패키지로 뽑아냈습니다.",
+      },
+    ],
     links: [{ label: "GitHub", url: "https://github.com/pluxity/plug-platform" }],
     highlights: [
       "머지된 PR 17건 · +13,391 / −9,701줄 · 450개 파일 (2025.04 — 2025.09)",
@@ -367,6 +385,11 @@ export const PROJECTS: Project[] = [
     techs: ["react", "typescript", "vite", "cesium", "zustand", "recharts", "hookform", "tailwind", "pnpm"],
     links: [{ label: "GitHub", url: "https://github.com/pluxity/plug-platform-atlas" }],
     shots: [
+      {
+        src: "/shot/atlas-alarm.jpg",
+        caption:
+          "대시보드 — 위성 지도 위에 공원을 얹고, 왼쪽으로 화재·온습도·변위 경고가 발생 순으로 쌓입니다. 각 알람에서 바로 조치로 넘어갈 수 있습니다.",
+      },
       {
         src: "/shot/atlas-dashboard-all.jpg",
         caption:
@@ -1246,6 +1269,13 @@ export const PROJECTS: Project[] = [
     overview:
       "학원의 수업 품질을 데이터로 보는 플랫폼입니다. 수강 신청 단계에서 AI가 지원자 역량을 사전 진단하고, 수업 중에는 실시간 이해도를 히트맵으로 보여주며, 수업 후에는 개인별 리포트를 만들고, 운영 차원에서는 이탈 위험을 조기에 감지합니다. 강사·수강생·원장·멘토 네 역할이 각각 다른 화면을 쓰기 때문에 같은 데이터를 네 가지 관점으로 다시 그려야 했고, 저는 이 프론트엔드 전체를 맡았습니다. 코리아IT아카데미가 주최한 제1회 바이브코딩 공모전(KIT 해커톤)에 출품해 500팀 중 3위(장려상)로 수상했습니다.",
     techs: ["nextjs", "react", "typescript", "supabase", "postgresql", "gemini", "zod", "tailwind", "radix", "recharts", "vitest", "playwright", "vercel"],
+    shots: [
+      {
+        src: "/shot/argos-landing.jpg",
+        caption:
+          "서비스 소개 화면. 제1회 코리아IT아카데미 바이브코딩 공모전에서 500팀 중 3위(장려상)를 받은 작업입니다.",
+      },
+    ],
     links: [
       { label: "배포", url: "https://argo-project.vercel.app" },
       { label: "GitHub", url: "https://github.com/xeunnie/argo-project" },
@@ -1377,6 +1407,13 @@ export const PROJECTS: Project[] = [
     overview:
       "한화시스템 Beyond SW 풀스택 부트캠프 최종 프로젝트입니다. Vue 기반의 대시보드로 스크럼 관리, 실시간 알림, 채팅 기능을 통합했습니다. 프론트엔드를 맡아 개발하며 100개 이상의 API를 연동하고, 렌더링 최소화 전략과 Pinia 상태 관리를 적용해 대규모 코드베이스를 안정적으로 유지했습니다. Jenkins CI/CD 파이프라인 구축, Kafka 기반 채팅 시스템 구현, Prometheus + Grafana 모니터링 등 백엔드 협업에도 적극 기여했습니다.",
     techs: ["vue", "javascript", "pinia", "springboot", "kafka", "redis", "mariadb", "jenkins", "kubernetes", "prometheus", "grafana"],
+    shots: [
+      {
+        src: "/shot/calit-kanban.jpg",
+        caption:
+          "칸반 보드 — 할 일·진행 중·완료로 카드를 옮기고, 같은 데이터를 리스트와 타임라인으로도 봅니다. 담당자와 마감일이 카드에 함께 붙습니다.",
+      },
+    ],
     highlights: [
       "프론트엔드 구현 — 100개 이상 API 연동 및 비동기 처리",
       "Pinia 상태 관리로 전역 상태 효율화, 불필요한 리렌더링 방지",

@@ -54,7 +54,7 @@ export const ABOUT_TRAITS: AboutTrait[] = [
  */
 export const HERO_PROOF = [
   {
-    text: "폐쇄망에서 WebRTC CCTV를 붙여 지하철 현장 운영까지",
+    text: "폐쇄망에 WebRTC CCTV를 붙이고, 현장에서 고쳐 가며 운영을 이어 갔습니다",
     href: "/projects/busan-metro",
   },
   {
@@ -62,7 +62,7 @@ export const HERO_PROOF = [
     href: "/projects/vgolf-fnb",
   },
   {
-    text: "zod 계약 테스트로 증상 없는 서버 데이터 오류를 화면 반영 전에 검출",
+    text: "zod 계약 테스트로 증상 없는 서버 데이터 오류를 화면에 닿기 전에 잡습니다",
     href: "/projects/vgolf-app",
   },
 ] as const;
@@ -88,9 +88,16 @@ export const NICKNAMES: Nickname[] = [
   {
     name: "뚝딱이",
     story:
-      "맡기면 나옵니다. React Native 앱은 처음이었지만 화면 구현부터 네이티브 설정, 릴리스 서명, Play Console 제출까지 혼자 끌고 가 555커밋으로 스토어에 올렸습니다. 경기관제 앱을 소형 단말로 옮길 때도 저장소 분리와 상태 관리 이행, 테스트 162개까지 여드레 만에 마쳤습니다.",
+      "맡기면 나옵니다. React Native 앱은 처음이었지만 화면 구현부터 네이티브 설정, 릴리스 서명, Play Console 제출까지 혼자 끌고 가 555커밋으로 스토어에 올렸습니다. 올린 뒤에도 심사 대응과 버그 수정을 이어 가며 버전을 올렸습니다.",
     href: "/projects/vgolf-app",
     hrefLabel: "VGOLF 앱",
+  },
+  {
+    name: "프로 개선러",
+    story:
+      "이미 돌아가는 코드를 더 잘 돌게 만드는 일을 좋아합니다. 인수인계받은 앱에 화면 버벅임이 있어 로그를 남기는 구간을 두고 확인했더니, 0.5초마다 849KB를 통째로 다시 쓰고 있었습니다. Recoil에서 zustand로 갈아타면서 저장 구조를 카테고리로 나눠 필요한 것만 꺼내 쓰도록 바꿨고, 한 번 저장에 7.89ms 걸리던 것이 0.058ms가 됐습니다. 기기 발열이 줄어 운영처에서도 좋은 반응을 받았습니다.",
+    href: "/projects/vgolf-pm30",
+    hrefLabel: "VGOLF 경기관제 PM30",
   },
   {
     name: "양손잡이",
@@ -102,7 +109,7 @@ export const NICKNAMES: Nickname[] = [
   {
     name: "해결사",
     story:
-      "협업처에서 CCTV 연동 코드도 문서도 받지 못한 채로 현장 일정이 잡혔습니다. WebRTC를 먼저 파고들어 RTSP를 브라우저로 가져오는 경로를 정리하고, 상대가 구현했을 법한 방식을 모두 나열해 각각에 맞는 연결 코드를 준비해 갔습니다. 현장에서 하나씩 맞춰 본 끝에 맞는 방식을 찾아 지하철 폐쇄망에 영상을 띄웠고, 이후 운영까지 올렸습니다.",
+      "협업처에서 CCTV 연동 코드도 문서도 받지 못한 채로 현장 일정이 잡혔습니다. WebRTC를 먼저 파고들어 RTSP를 브라우저로 가져오는 경로를 정리하고, 상대가 구현했을 법한 방식을 모두 나열해 각각에 맞는 연결 코드를 준비해 갔습니다. 현장에서 하나씩 맞춰 본 끝에 맞는 방식을 찾아 영상을 띄웠고, 이후로도 현장에서 나오는 문제를 고치며 운영을 이어 갔습니다.",
     href: "/projects/busan-metro",
     hrefLabel: "부산 도시철도 통합 관제",
   },
