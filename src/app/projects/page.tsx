@@ -19,7 +19,6 @@ export default function ProjectsPage() {
       <Nav />
       <main className="min-h-screen">
         <PageHeader
-          eyebrow="Projects"
           title="프로젝트"
           lede="회사·학업·팀·제품군으로 걸러 볼 수 있습니다. 상세 페이지에는 무엇이 문제였고 그때 어떻게 판단했는지를 적어 두었습니다. 궁금한 것부터 골라 보셔도 됩니다."
           aside={

@@ -19,7 +19,7 @@ export default function Skills() {
           transition={{ duration: 0.6 }}
           className="text-3xl font-bold tracking-tight text-slate-50 mb-4"
         >
-          Skills
+          쓰는 기술
         </motion.h2>
         <motion.div
           initial={{ scaleX: 0 }}
@@ -36,7 +36,7 @@ export default function Skills() {
           주로 쓰는 기술과, 프로젝트에서 필요할 때 써 온 기술
         </motion.p>
 
-        <h3 className="text-xs font-mono tracking-widest text-ice-400 uppercase mb-5">Core</h3>
+        <h3 className="text-sm font-semibold tracking-tight text-ice-500 mb-5">자주 쓰는 것</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {CORE_SKILLS.map((group, i) => (
             <motion.div
@@ -46,7 +46,7 @@ export default function Skills() {
               transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
               className="group p-5 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 hover:bg-slate-900/50 transition-all duration-300"
             >
-              <h4 className="text-sm font-mono tracking-widest text-slate-200 uppercase mb-4">
+              <h4 className="text-sm font-semibold tracking-tight text-slate-200 mb-4">
                 {group.title}
               </h4>
               <div className="flex flex-wrap gap-1.5">
@@ -86,7 +86,7 @@ export default function Skills() {
               transition={{ duration: 0.3 }}
               className="overflow-hidden"
             >
-              <h3 className="text-xs font-mono tracking-widest text-slate-500 uppercase mt-8 mb-5">Extended</h3>
+              <h3 className="text-sm font-semibold tracking-tight text-slate-500 mt-8 mb-5">그 밖에 다뤄 본 것</h3>
               <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
                 {MORE_SKILLS.map((group, i) => (
                   <motion.div
@@ -96,7 +96,7 @@ export default function Skills() {
                     transition={{ duration: 0.4, delay: i * 0.05 }}
                     className="group p-5 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 hover:bg-slate-900/50 transition-all duration-300"
                   >
-                    <h4 className="text-sm font-mono tracking-widest text-slate-300 uppercase mb-4">
+                    <h4 className="text-sm font-semibold tracking-tight text-slate-300 mb-4">
                       {group.title}
                     </h4>
                     <div className="flex flex-wrap gap-1.5">

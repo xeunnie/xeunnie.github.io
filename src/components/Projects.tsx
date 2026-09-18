@@ -96,7 +96,7 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="flex flex-wrap items-end justify-between gap-4 mb-4"
         >
-          <h2 className="text-3xl font-bold tracking-tight text-slate-50">Featured Work</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-50">대표 작업 셋</h2>
           <Link
             href="/projects"
             className="inline-flex items-center gap-2 text-sm font-medium text-ice-400 hover:gap-3 transition-all"
