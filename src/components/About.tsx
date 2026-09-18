@@ -39,14 +39,7 @@ export default function About() {
               <h3 className="text-base font-semibold text-slate-100 mb-2 group-hover:text-ice-400 transition-colors">
                 {trait.title}
               </h3>
-              <ul className="space-y-1.5">
-                {trait.lines.map((line) => (
-                  <li key={line} className="flex gap-2 text-sm leading-relaxed text-slate-300">
-                    <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-ice-500/60" />
-                    <span>{line}</span>
-                  </li>
-                ))}
-              </ul>
+              <p className="text-sm text-slate-300 leading-relaxed">{trait.desc}</p>
               {trait.evidence && (
                 <p className="mt-4 pt-4 border-t border-slate-800/60 text-sm text-slate-400 leading-relaxed">
                   <span className="font-mono text-[10px] tracking-widest uppercase text-ice-500 mr-2">
