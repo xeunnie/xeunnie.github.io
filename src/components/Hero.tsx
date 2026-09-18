@@ -51,7 +51,7 @@ export default function Hero() {
         >
           만든 것이 현장에서
           <br />
-          돌아가는 것까지 봅니다
+          잘 돌아가는지까지 살핍니다
         </motion.h1>
 
         <motion.p

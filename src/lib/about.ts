@@ -6,7 +6,7 @@ export interface AboutTrait {
 }
 
 export const ABOUT_INTRO = [
-  "화면이 왜 그렇게 동작해야 하는지를 정하는 데 시간을 많이 쓰고, 다음 사람이 이해할 수 있도록 결정의 이유를 남기는 편입니다. 아래는 그렇게 일한 구체적인 사례입니다.",
+  "화면이 왜 그렇게 동작해야 하는지를 정하는 데 시간을 많이 쓰고, 다음 사람이 이해할 수 있도록 결정의 이유를 남기는 편입니다. 아래는 그렇게 일했던 사례들을 모은 것입니다.",
 ];
 
 export const ABOUT_TRAITS: AboutTrait[] = [

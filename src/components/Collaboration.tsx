@@ -104,8 +104,8 @@ export default function CollaborationSection() {
           <h2 className="text-3xl font-bold tracking-tight text-slate-50 mb-4">협업 기록</h2>
           <div className="h-px w-16 bg-ice-500 mb-6" />
           <p className="text-slate-400 max-w-2xl leading-relaxed">
-            백엔드, 디자이너, 협업처와 일하면서 실제로 있었던 일입니다. 근거 문서가 남아 있는
-            것만 적었습니다.
+            함께 일한 분들과 있었던 일을 적었습니다. 기억에 기대지 않으려고, 문서나 기록이
+            남아 있는 것만 골랐습니다.
           </p>
         </motion.div>
 
