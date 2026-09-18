@@ -26,13 +26,13 @@ export default function ProjectsPage() {
               <div>
                 <p className="text-3xl font-bold text-slate-50 font-mono">{PROJECTS.length}</p>
                 <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mt-1">
-                  Total
+                  전체
                 </p>
               </div>
               <div>
                 <p className="text-3xl font-bold text-slate-50 font-mono">{company}</p>
                 <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mt-1">
-                  Company
+                  회사
                 </p>
               </div>
             </div>

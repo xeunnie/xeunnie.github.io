@@ -48,7 +48,7 @@ export default function CareerDetail({ career, prev, next }: Props) {
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M11 3L5 9l6 6" />
             </svg>
-            About
+            한 줄 소개
           </Link>
         </div>
       </nav>

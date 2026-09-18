@@ -91,7 +91,7 @@ export default function ProjectDetail({
                 </svg>
                 <div>
                   <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-amber-300/80 mb-1">
-                    Award
+                    수상
                   </p>
                   <p className="text-base font-semibold text-amber-400">{project.award}</p>
                   {project.awardImage && (
@@ -150,7 +150,7 @@ export default function ProjectDetail({
           {project.shots && project.shots.length > 0 && (
             <ScrollSection>
               <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">
-                Screens
+                화면
               </h2>
               {/* 세로 캡처는 한 장씩 전폭으로 두면 화면 몇 개 분량이 되므로 격자로 */}
               <div

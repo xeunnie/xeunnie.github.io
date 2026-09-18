@@ -30,13 +30,13 @@ export default async function GrowthPage() {
               <div>
                 <p className="text-3xl font-bold text-slate-50 font-mono">{CHRONICLE.length}</p>
                 <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mt-1">
-                  Years
+                  연차
                 </p>
               </div>
               <div>
                 <p className="text-3xl font-bold text-slate-50 font-mono">{posts.length}</p>
                 <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mt-1">
-                  Posts
+                  블로그 글
                 </p>
               </div>
             </div>

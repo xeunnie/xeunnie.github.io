@@ -94,7 +94,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </span>
           {project.featured && (
             <span className="text-[10px] font-medium tracking-wider uppercase px-2 py-0.5 rounded-full border border-amber-500/25 bg-amber-500/10 text-amber-400">
-              Featured
+              대표
             </span>
           )}
           {project.award && (
