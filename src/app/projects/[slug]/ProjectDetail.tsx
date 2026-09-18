@@ -115,7 +115,9 @@ export default function ProjectDetail({
           {/* 맥락 먼저 — 무엇을 왜 만들었는지 */}
           <ScrollSection>
             <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">무엇을 만들었나</h2>
-            <p className="text-base text-slate-300 leading-relaxed">{project.overview}</p>
+            <p className="text-base leading-relaxed text-slate-300">
+              <Marked text={project.overview} subtle />
+            </p>
           </ScrollSection>
 
           {/* 요약은 앞의 넷만 펼쳐 두고 나머지는 접는다 — 전부 같은 무게로 쌓이면 안 읽힌다 */}
@@ -192,29 +194,53 @@ export default function ProjectDetail({
           {/* 상세는 접어 둔다. 앞의 둘만 펼쳐 두고, 필요한 사람이 나머지를 연다 */}
           {project.sections && project.sections.length > 0 && (
             <ScrollSection>
-              <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">
-                자세히
-              </h2>
+              <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
+                <h2 className="text-sm font-semibold tracking-tight text-ice-500">자세히</h2>
+                <p className="text-xs text-slate-500">궁금한 것만 펼쳐 보셔도 됩니다</p>
+              </div>
               <div className="space-y-3">
-                {project.sections.map((section, i) => (
-                  <details
-                    key={section.title}
-                    open={i < 2}
-                    className="group rounded-xl border border-slate-800/60 bg-slate-900/25"
-                  >
-                    <summary className="flex cursor-pointer select-none items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
-                      <span className="text-sm font-semibold text-slate-200">{section.title}</span>
-                      <span className="shrink-0 text-xs font-mono text-slate-500 group-open:text-ice-400">
-                        {section.items.length}
-                      </span>
-                    </summary>
-                    <div className="space-y-4 px-5 pb-5">
-                      {section.items.map((item) => (
-                        <Bullet key={item} text={item} />
-                      ))}
-                    </div>
-                  </details>
-                ))}
+                {project.sections.map((section, i) => {
+                  // 접혀 있을 때 제목만 보이면 무엇이 들었는지 알 수 없다.
+                  // 첫 항목의 앞머리를 미리 보여 준다.
+                  const peek = section.items[0].split(" — ")[0];
+                  return (
+                    <details
+                      key={section.title}
+                      open={i < 2}
+                      className="group rounded-xl border border-slate-800/60 bg-slate-900/25 transition-colors hover:border-slate-800"
+                    >
+                      <summary className="flex cursor-pointer select-none items-start gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+                        <div className="min-w-0 flex-1">
+                          <span className="text-sm font-semibold text-slate-200">
+                            {section.title}
+                          </span>
+                          <span className="mt-1 block truncate text-xs text-slate-500 group-open:hidden">
+                            {peek}
+                          </span>
+                        </div>
+                        <span className="mt-0.5 flex shrink-0 items-center gap-2">
+                          <span className="text-xs text-slate-500">{section.items.length}</span>
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            className="text-slate-500 transition-transform duration-200 group-open:rotate-180 group-open:text-ice-500"
+                          >
+                            <path d="M4 6l4 4 4-4" />
+                          </svg>
+                        </span>
+                      </summary>
+                      <div className="space-y-4 px-5 pb-5">
+                        {section.items.map((item) => (
+                          <Bullet key={item} text={item} />
+                        ))}
+                      </div>
+                    </details>
+                  );
+                })}
               </div>
             </ScrollSection>
           )}
@@ -370,11 +396,50 @@ function Bullet({ text, lead = false }: { text: string; lead?: boolean }) {
           <p className={`mb-0.5 text-sm text-slate-200 ${lead ? "font-semibold" : "font-medium"}`}>
             {title}
           </p>
-          <p className="text-sm text-slate-400 leading-relaxed">{desc}</p>
+          <p className="text-sm leading-relaxed text-slate-400">
+            <Marked text={desc} />
+          </p>
         </>
       ) : (
-        <p className="text-sm text-slate-300 leading-relaxed">{title}</p>
+        <p className="text-sm leading-relaxed text-slate-300">
+          <Marked text={title} />
+        </p>
       )}
     </div>
+  );
+}
+
+/**
+ * 문장에서 "재어 본 값"만 형광펜으로 집는다.
+ * 단위가 붙은 수치만 고른다 — 아무 숫자나 칠하면 형광펜이 배경색이 된다.
+ */
+const MEASURE =
+  /(\d[\d,.]*\s?(?:커밋|개월|개|건|명|줄|파일|편|배|ms|초|분|시간|일|주|년|KB|MB|GB|LOC|%|px))/g;
+
+function Marked({ text, subtle = false }: { text: string; subtle?: boolean }) {
+  const parts = text.split(MEASURE);
+  return (
+    <>
+      {parts.map((part, i) =>
+        i % 2 === 1 ? (
+          // 긴 문단에서 형광펜을 여러 번 치면 얼룩처럼 보인다.
+          // 문단은 굵게만, 짧은 항목에서만 형광펜을 쓴다.
+          subtle ? (
+            <strong key={i} className="font-semibold text-slate-100">
+              {part}
+            </strong>
+          ) : (
+            <mark
+              key={i}
+              className="rounded bg-ice-100 px-1 py-0.5 font-semibold text-ice-500 [box-decoration-break:clone]"
+            >
+              {part}
+            </mark>
+          )
+        ) : (
+          part
+        )
+      )}
+    </>
   );
 }

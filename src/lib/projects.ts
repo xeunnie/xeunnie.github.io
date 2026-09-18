@@ -684,6 +684,36 @@ export const PROJECTS: Project[] = [
     overview:
       "골프 라운드 기록을 관리하는 React Native 앱입니다. 화면 구현부터 네이티브 설정, 릴리스 서명, Play Console 제출까지 앱 전체를 맡아 개발했습니다. 555커밋 · 화면 21개 · 소스 16.5k LOC · 문서 55편 규모로, FSD 5레이어 아키텍처와 3겹 에러 안전망을 세우고, zod 2층 스키마 기반 실서버 계약 테스트로 백엔드 응답 계약을 프론트가 주도해 정리했습니다. Expo 없이 ios/ · android/ 프로젝트를 직접 소유하며 소셜 로그인 4종, 2겹 스플래시, 릴리스 서명·환경 분리까지 네이티브 영역을 직접 다뤘습니다.",
     techs: ["reactnative", "typescript", "zustand", "reactquery", "zod", "hookform", "nativewind", "reanimated", "mmkv", "axios", "sentry", "jest", "ios", "android", "figma", "storybook"],
+    shotsLayout: "phone",
+    shotsNote:
+      "데모 계정으로 찍은 화면입니다. 이용객 이름과 골프장 상호는 알아볼 수 없게 처리했습니다.",
+    shots: [
+      {
+        src: "/shot/app-login.jpg",
+        caption:
+          "로그인 — 카카오·네이버·구글·애플 네 가지 소셜 로그인과 이메일 가입을 함께 둡니다. 스토어 심사 요건이라 애플 로그인을 빼놓을 수 없었습니다.",
+      },
+      {
+        src: "/shot/app-home.jpg",
+        caption:
+          "메인 — 누적 라운드 수와 평균 스코어·베스트·핸디를 위에 두고, 아래로 최근 라운드가 이어집니다. 자동연동과 직접입력을 배지로 구분합니다.",
+      },
+      {
+        src: "/shot/app-scores.jpg",
+        caption:
+          "스코어 목록 — 라운드마다 골프장·코스·동반자·타수를 카드로 봅니다. 저장이 끝나면 토스트로 알리고 목록을 새로 고칩니다.",
+      },
+      {
+        src: "/shot/app-score-input.jpg",
+        caption:
+          "스코어 입력 — 라운드 정보와 홀별 입력을 두 단계로 나눴습니다. 파를 고르지 않아도 타수만으로 넣을 수 있고, 홀은 번호나 이동 버튼으로 오갑니다.",
+      },
+      {
+        src: "/shot/app-score-detail.jpg",
+        caption:
+          "스코어 상세 — 이글·버디·파·보기·더블보기 요약을 먼저 보여주고 전·후반 홀별 표가 이어집니다. 우측 상단에서 공유할 수 있습니다.",
+      },
+    ],
     highlights: [
       "React Native 앱 — 555커밋, 화면 21개, 16.5k LOC, iOS·Android 동시 대응",
       "FSD 5레이어 + 세그먼트 구조 — 슬라이스 공개 API 규칙으로 '기능 삭제 = 폴더 삭제'가 성립하는 코드베이스",
