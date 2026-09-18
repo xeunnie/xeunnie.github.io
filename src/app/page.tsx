@@ -1,5 +1,6 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
+import Nicknames from "@/components/Nicknames";
 import AreaHub from "@/components/AreaHub";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
@@ -18,6 +19,7 @@ export default function Home() {
     <>
       <Nav />
       <Hero />
+      <Nicknames />
       <Projects />
       <AreaHub />
       <Skills />
