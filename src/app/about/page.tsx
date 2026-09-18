@@ -20,7 +20,6 @@ export default function AboutPage() {
       <Nav />
       <main className="min-h-screen">
         <PageHeader
-          eyebrow="About"
           title="일하는 방식"
           lede="실제로 어떻게 일해 왔는지를 협업 기록과 함께 일한 분들의 평가로 정리했습니다."
         />

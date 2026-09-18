@@ -14,7 +14,7 @@ export default function CareerLinks() {
   return (
     <section className="py-20">
       <div className="mx-auto max-w-4xl px-6">
-        <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Career</h2>
+        <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">경력</h2>
 
         <ul className="divide-y divide-slate-800/60 border-y border-slate-800/60">
           {rows.map((c) => (

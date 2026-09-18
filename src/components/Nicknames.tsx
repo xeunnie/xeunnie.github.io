@@ -24,10 +24,29 @@ export default function Nicknames() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl font-bold tracking-tight text-slate-50">
-            개발자가 되고 나서 별명이 늘었습니다
+          {/* 고른 별명이 제목을 완성한다 — 문장이 살아 움직이는 게 이 구간의 인상이다 */}
+          <h2 className="text-3xl font-bold leading-snug tracking-tight text-slate-50 sm:text-4xl">
+            명함에는 프론트엔드 개발자,
+            <br />
+            현장에서는{" "}
+            <span className="relative inline-block">
+              <motion.span
+                key={current.name}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="inline-block text-ice-500"
+              >
+                {current.name}
+              </motion.span>
+              <motion.span
+                layoutId="nickname-underline"
+                className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-ice-500/35"
+                transition={{ type: "spring", stiffness: 340, damping: 30 }}
+              />
+            </span>
           </h2>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-400">
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-400">
             일하는 방식을 길게 설명하는 것보다, 그동안 불린 이름을 보여 드리는 편이 빠를 것
             같았습니다.
           </p>

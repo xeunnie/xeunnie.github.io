@@ -114,13 +114,13 @@ export default function ProjectDetail({
         <div className="mx-auto max-w-4xl px-6 space-y-20">
           {/* 맥락 먼저 — 무엇을 왜 만들었는지 */}
           <ScrollSection>
-            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Overview</h2>
+            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">무엇을 만들었나</h2>
             <p className="text-base text-slate-300 leading-relaxed">{project.overview}</p>
           </ScrollSection>
 
           {/* 요약은 앞의 넷만 펼쳐 두고 나머지는 접는다 — 전부 같은 무게로 쌓이면 안 읽힌다 */}
           <ScrollSection>
-            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-8">
+            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-8">
               이 프로젝트의 핵심
             </h2>
             <div className="space-y-5">
@@ -147,7 +147,7 @@ export default function ProjectDetail({
 
           {project.shots && project.shots.length > 0 && (
             <ScrollSection>
-              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">
+              <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">
                 Screens
               </h2>
               {/* 세로 캡처는 한 장씩 전폭으로 두면 화면 몇 개 분량이 되므로 격자로 */}
@@ -192,7 +192,7 @@ export default function ProjectDetail({
           {/* 상세는 접어 둔다. 앞의 둘만 펼쳐 두고, 필요한 사람이 나머지를 연다 */}
           {project.sections && project.sections.length > 0 && (
             <ScrollSection>
-              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">
+              <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">
                 자세히
               </h2>
               <div className="space-y-3">
@@ -220,7 +220,7 @@ export default function ProjectDetail({
           )}
 
           <ScrollSection>
-            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Tech Stack</h2>
+            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">쓴 기술</h2>
             <div className="flex flex-wrap gap-2">
               {project.techs.map((tech) => (
                 <TechBadge key={tech} name={tech} />
@@ -230,7 +230,7 @@ export default function ProjectDetail({
 
           {project.links && project.links.length > 0 && (
             <ScrollSection>
-              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Links</h2>
+              <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">링크</h2>
               <div className="flex flex-wrap gap-3">
                 {project.links.map((link) => (
                   <a
@@ -257,7 +257,7 @@ export default function ProjectDetail({
       {(related.length > 0 || career) && (
         <section className="border-t border-slate-800/60 py-12">
           <div className="mx-auto max-w-4xl px-6">
-            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">
+            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">
               이어서 볼 것
             </h2>
 
@@ -323,7 +323,7 @@ export default function ProjectDetail({
             <Link href={`/projects/${prevProject.slug}`} className="group flex items-center gap-3 text-sm text-slate-400 hover:text-ice-400 transition-colors">
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 3L5 9l6 6" /></svg>
               <div>
-                <p className="text-xs text-slate-600 mb-0.5">Prev</p>
+                <p className="text-xs text-slate-600 mb-0.5">이전</p>
                 <p className="group-hover:text-ice-400">{prevProject.title}</p>
               </div>
             </Link>
@@ -331,7 +331,7 @@ export default function ProjectDetail({
           {nextProject ? (
             <Link href={`/projects/${nextProject.slug}`} className="group flex items-center gap-3 text-sm text-slate-400 hover:text-ice-400 transition-colors text-right">
               <div>
-                <p className="text-xs text-slate-600 mb-0.5">Next</p>
+                <p className="text-xs text-slate-600 mb-0.5">다음</p>
                 <p className="group-hover:text-ice-400">{nextProject.title}</p>
               </div>
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 3l6 6-6 6" /></svg>

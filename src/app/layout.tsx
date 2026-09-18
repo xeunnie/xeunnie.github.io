@@ -16,6 +16,16 @@ export const metadata: Metadata = {
     "Seungeun Choi", "최승은",
   ],
   metadataBase: new URL(SITE.url),
+  alternates: { canonical: "/" },
+  manifest: "/site.webmanifest",
+  // SVG 를 먼저 두고 .ico 는 구형 브라우저용으로 남긴다
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "48x48" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: `${SITE.name} — ${SITE.title}`,
     description: SITE.description,
@@ -23,11 +33,20 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     locale: "ko_KR",
     type: "website",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: `${SITE.name} — ${SITE.title}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE.name} — ${SITE.title}`,
     description: SITE.description,
+    images: ["/og.png"],
   },
   robots: {
     index: true,

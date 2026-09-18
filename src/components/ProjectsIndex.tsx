@@ -358,7 +358,7 @@ export default function ProjectsIndex() {
                   className="md:col-span-2 rounded-2xl border border-ice-500/15 bg-ice-100/45 p-5"
                 >
                   <div className="flex items-baseline gap-3 mb-4 px-1">
-                    <h2 className="text-sm font-mono tracking-[0.18em] uppercase text-ice-400">
+                    <h2 className="text-sm font-semibold tracking-tight text-ice-500">
                       {b.group}
                     </h2>
                     <span className="text-xs text-slate-400">{b.items.length}개 프로젝트</span>

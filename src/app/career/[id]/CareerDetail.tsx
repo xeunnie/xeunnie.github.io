@@ -83,12 +83,12 @@ export default function CareerDetail({ career, prev, next }: Props) {
       <section className="py-16">
         <div className="mx-auto max-w-4xl px-6 space-y-20">
           <ScrollSection>
-            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Overview</h2>
+            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">무엇을 만들었나</h2>
             <p className="text-base text-slate-300 leading-relaxed">{career.summary}</p>
           </ScrollSection>
 
           <ScrollSection>
-            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-8">What I Did</h2>
+            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-8">한 일</h2>
             <div className="space-y-6">
               {career.details.map((d, i) => {
                 const [title, ...rest] = d.split(" — ");
@@ -119,7 +119,7 @@ export default function CareerDetail({ career, prev, next }: Props) {
 
           {career.projects && career.projects.length > 0 && (
             <ScrollSection>
-              <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Projects</h2>
+              <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">맡은 프로젝트</h2>
               <div className="flex flex-wrap gap-2">
                 {career.projects.map((name, i) => {
                   // 상세 페이지가 있는 프로젝트면 링크로, 아니면 그대로 칩
@@ -157,7 +157,7 @@ export default function CareerDetail({ career, prev, next }: Props) {
           )}
 
           <ScrollSection>
-            <h2 className="text-sm font-mono tracking-widest text-ice-400 uppercase mb-6">Tech Stack</h2>
+            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">쓴 기술</h2>
             <div className="flex flex-wrap gap-2">
               {career.techs.map((tech, i) => (
                 <motion.div
@@ -186,7 +186,7 @@ export default function CareerDetail({ career, prev, next }: Props) {
                 <path d="M11 3L5 9l6 6" />
               </svg>
               <div>
-                <p className="text-xs text-slate-600 mb-0.5">Prev</p>
+                <p className="text-xs text-slate-600 mb-0.5">이전</p>
                 <p className="group-hover:text-ice-400">{prev.name}</p>
               </div>
             </Link>
@@ -197,7 +197,7 @@ export default function CareerDetail({ career, prev, next }: Props) {
               className="group flex items-center gap-3 text-sm text-slate-400 hover:text-ice-400 transition-colors text-right"
             >
               <div>
-                <p className="text-xs text-slate-600 mb-0.5">Next</p>
+                <p className="text-xs text-slate-600 mb-0.5">다음</p>
                 <p className="group-hover:text-ice-400">{next.name}</p>
               </div>
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
