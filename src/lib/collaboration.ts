@@ -24,7 +24,7 @@ export const PARTNER_ORDER: Partner[] = ["백엔드", "디자이너", "협업처
 export const COLLABORATIONS: Collaboration[] = [
   {
     partner: "백엔드",
-    title: "응답 불일치를 필드 단위 표로 정리해 전달했다",
+    title: "응답 불일치를 필드 단위 표로 정리해 전달했습니다",
     situation:
       "인증 실패가 BAD_VERIFY_CODE 하나로 내려와, 앱이 '재입력'과 '재발송' 중 무엇을 안내할지 판단할 수 없었습니다. 비슷한 응답 형태 불일치가 여기저기 흩어져 있었습니다.",
     action:
@@ -36,7 +36,7 @@ export const COLLABORATIONS: Collaboration[] = [
   },
   {
     partner: "백엔드",
-    title: "화면은 멀쩡한데 값만 틀린 버그를 화면 반영 전에 잡았다",
+    title: "화면은 멀쩡한데 값만 틀린 버그를 화면 반영 전에 잡았습니다",
     situation:
       "서버가 홀별 par에 null을 내려줬고, 앱은 방어적으로 0으로 보정했습니다. 크래시도 에러도 없이 모든 홀이 더블보기로 색칠되는, 가장 잡기 어려운 종류의 오류였습니다.",
     action:
@@ -48,7 +48,7 @@ export const COLLABORATIONS: Collaboration[] = [
   },
   {
     partner: "백엔드",
-    title: "확정할 수 없는 건 추측으로 고치지 않고 선택지로 남겼다",
+    title: "확정할 수 없는 건 추측으로 고치지 않고 선택지로 남겼습니다",
     situation:
       "목록과 상세가 동반자 수를 다르게 계산했습니다. 서버 players에 본인이 포함되는지 문서에 명시가 없어 어느 쪽이 맞다고 단정할 수 없었습니다.",
     action:
@@ -60,7 +60,7 @@ export const COLLABORATIONS: Collaboration[] = [
   },
   {
     partner: "디자이너",
-    title: "디자이너가 고칠 파일을 3개로 좁혔다",
+    title: "디자이너가 고칠 파일을 3개로 좁혔습니다",
     situation:
       "로딩·에러·빈 상태 시안이 나올 때마다 화면 수만큼 고쳐야 하는 구조였습니다. 반영이 늦어지고 화면끼리 어긋났습니다.",
     action:
@@ -72,7 +72,7 @@ export const COLLABORATIONS: Collaboration[] = [
   },
   {
     partner: "디자이너",
-    title: "필요한 산출물을 체크리스트로 먼저 정리해 건넸다",
+    title: "필요한 산출물을 체크리스트로 먼저 정리해 건넸습니다",
     situation:
       "앱 아이콘은 플랫폼마다 규칙이 다릅니다. iOS는 투명 배경이면 심사에서 거부되고, Android 적응형 아이콘은 전경·배경 레이어 분리와 중앙 66% 세이프존을 지켜야 합니다.",
     action:
@@ -83,7 +83,7 @@ export const COLLABORATIONS: Collaboration[] = [
   },
   {
     partner: "디자이너",
-    title: "시안의 고정 px를 그대로 옮기지 않고 근거를 맞췄다",
+    title: "시안의 고정 px를 그대로 옮기지 않고 근거를 맞췄습니다",
     situation:
       "디자인 기준폭은 375, 실기기는 아이폰 프로 393이었습니다. 고정 px를 그대로 옮기면 화면 폭 대비 글자가 작아 보입니다.",
     action:
@@ -95,7 +95,7 @@ export const COLLABORATIONS: Collaboration[] = [
   },
   {
     partner: "협업처",
-    title: "코드도 문서도 받지 못한 채로, 경우의 수를 준비해 갔다",
+    title: "코드도 문서도 받지 못한 채로, 경우의 수를 준비해 갔습니다",
     situation:
       "부산 도시철도 관제에서 협업처에서 CCTV 연동 코드도 문서도 받지 못했습니다. 카메라 주소만 넘어왔고, 저쪽 서버가 어떤 방식으로 서 있는지는 붙여 보기 전에는 알 수 없었습니다.",
     action:
@@ -106,7 +106,7 @@ export const COLLABORATIONS: Collaboration[] = [
   },
   {
     partner: "팀",
-    title: "프로젝트마다 다시 만들던 공통 컴포넌트를 모노레포로 걷어냈다",
+    title: "프로젝트마다 다시 만들던 공통 컴포넌트를 모노레포로 걷어냈습니다",
     situation:
       "다수의 관제 SI 프로젝트가 비슷한 컴포넌트를 각자 복사해 쓰고 있었습니다.",
     action: "공통 컴포넌트를 추출해 모노레포 구조의 디자인 시스템으로 재설계했습니다.",
@@ -115,7 +115,7 @@ export const COLLABORATIONS: Collaboration[] = [
   },
   {
     partner: "팀",
-    title: "배운 것을 팀에 남겼다",
+    title: "배운 것을 팀에 남겼습니다",
     situation:
       "인턴 시절, 배운 것이 개인 노트에만 쌓이고 팀에 남지 않는 게 아깝다고 느꼈습니다.",
     action:
@@ -126,7 +126,7 @@ export const COLLABORATIONS: Collaboration[] = [
   },
   {
     partner: "현장",
-    title: "현장에서 고치고 그 자리에서 다시 올렸다",
+    title: "현장에서 고치고 그 자리에서 다시 올렸습니다",
     situation:
       "지하철 폐쇄망 현장은 배포 직후에야 드러나는 실시간 버그와 데이터 오류가 있었습니다. 사무실에서는 재현되지 않았습니다.",
     action: "현장에 나가 직접 디버깅하고, 수정하고, 그 자리에서 재배포하는 사이클을 반복했습니다.",
