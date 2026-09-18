@@ -49,18 +49,18 @@ export default function Hero() {
           {...rise(0.12)}
           className="text-[clamp(2.3rem,7vw,4.4rem)] font-bold leading-[1.12] text-slate-50"
         >
-          만든 것이 현장에서
+          만든 게 현장에서 도는 것까지
           <br />
-          잘 돌아가는지까지 살핍니다
+          봐야 직성이 풀립니다
         </motion.h1>
 
         <motion.p
           {...rise(0.2)}
           className="mt-7 text-lg text-slate-400 leading-relaxed max-w-xl mx-auto"
         >
-          3D 관제, 실시간 미디어, 모바일 앱.
+          3D 관제, 실시간 미디어, 모바일 앱까지.
           <br className="hidden sm:block" />
-          브라우저 밖에서 생기는 제약까지 함께 보는 편입니다.
+          브라우저 밖에서 생기는 문제도 제 몫이라고 생각합니다.
         </motion.p>
 
         {/* 분야 나열 대신 실제로 푼 문제를 먼저 보여준다 */}
