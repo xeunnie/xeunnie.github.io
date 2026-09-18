@@ -27,14 +27,14 @@ export const NAV_ITEMS: NavItem[] = [
     label: "About",
     ko: "일하는 방식",
     href: "/about",
-    question: "같이 일하면 어떤 사람인가",
+    question: "같이 일하면 어떤 사람인지",
     desc: "협업 기록과 커리어, 함께 일한 동료들의 평가.",
   },
   {
     label: "Growth",
     ko: "타임라인",
     href: "/growth",
-    question: "어떻게 여기까지 왔나",
+    question: "어떻게 여기까지 왔는지",
     desc: "2021년부터 지금까지 해마다 한 일과 할 수 있게 된 것. 블로그 글과 함께 봅니다.",
   },
   {
