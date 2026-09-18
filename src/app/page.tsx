@@ -16,7 +16,7 @@ import Footer from "@/components/Footer";
  */
 export default function Home() {
   return (
-    <>
+    <div className="landing">
       <Nav />
       <Hero />
       <Nicknames />
@@ -25,6 +25,6 @@ export default function Home() {
       <Skills />
       <Contact />
       <Footer />
-    </>
+    </div>
   );
 }

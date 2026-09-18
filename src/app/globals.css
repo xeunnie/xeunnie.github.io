@@ -244,3 +244,18 @@ h1, h2, h3, h4 {
   background: var(--g-sunken);
   box-shadow: none;
 }
+
+/*
+  홈만 랜딩처럼 — 구간마다 화면이 딱 맞아떨어지게.
+  mandatory 대신 proximity 를 쓴다. 화면보다 긴 구간(기술 목록 등)에서
+  mandatory 는 스크롤을 잡아채 읽기를 방해한다.
+  좁은 화면에서는 끄는 게 낫다 — 주소창이 접히고 펴지며 높이가 흔들린다.
+*/
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  html:has(.landing) {
+    scroll-snap-type: y proximity;
+  }
+  .landing > section {
+    scroll-snap-align: start;
+  }
+}

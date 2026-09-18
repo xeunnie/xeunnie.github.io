@@ -27,9 +27,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     >
       <Link
         href={`/projects/${project.slug}`}
-        className="group block relative rounded-2xl border border-slate-800/60 bg-slate-900/20 hover:border-ice-500/20 hover:bg-slate-900/40 card-hover transition-all duration-500 overflow-hidden"
+        className="group block relative rounded-2xl border border-slate-800/60 bg-slate-950 transition-all duration-300 hover:border-ice-500/25 hover:shadow-[0_10px_30px_rgb(15_23_42_/_0.08)] card-hover transition-all duration-500 overflow-hidden"
       >
-        <div className="absolute inset-0 bg-ice-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
         <div className="relative p-8">
           <div className="flex items-start justify-between mb-4">
@@ -88,7 +87,7 @@ export default function Projects() {
   const rest = PROJECTS.length - featured.length;
 
   return (
-    <section id="projects" className="relative py-28" ref={ref}>
+    <section id="projects" className="relative flex min-h-screen items-center py-28" ref={ref}>
       <div className="mx-auto max-w-6xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

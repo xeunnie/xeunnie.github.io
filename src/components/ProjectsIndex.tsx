@@ -355,7 +355,7 @@ export default function ProjectsIndex() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.4, delay: Math.min(i * 0.05, 0.3) }}
-                  className="md:col-span-2 rounded-2xl border border-ice-500/15 bg-ice-100/45 p-5"
+                  className="md:col-span-2 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-5"
                 >
                   <div className="flex items-baseline gap-3 mb-4 px-1">
                     <h2 className="text-sm font-semibold tracking-tight text-ice-500">
@@ -388,18 +388,17 @@ export default function ProjectsIndex() {
             </p>
             <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-1">
               {minor.map((p) => (
-                <li key={p.slug}>
+                // 그리드 항목은 기본 min-width:auto 라, 내용이 길면 칸을 밀어낸다
+                <li key={p.slug} className="min-w-0">
                   <Link
                     href={`/projects/${p.slug}`}
-                    className="group flex items-baseline gap-2.5 py-2 border-b border-slate-800/50 text-sm"
+                    className="group flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5 border-b border-slate-800/50 py-2 text-sm"
                   >
-                    <span className="font-medium text-slate-200 group-hover:text-ice-400 transition-colors">
+                    <span className="font-medium text-slate-200 transition-colors group-hover:text-ice-400">
                       {p.title}
                     </span>
-                    <span className="flex-1 truncate text-xs text-slate-500">{p.subtitle}</span>
-                    <span className="shrink-0 font-mono text-[11px] text-slate-500">
-                      {p.org ?? p.period}
-                    </span>
+                    <span className="min-w-0 flex-1 truncate text-xs text-slate-500">{p.subtitle}</span>
+                    <span className="font-mono text-[11px] text-slate-500">{p.org ?? p.period}</span>
                   </Link>
                 </li>
               ))}

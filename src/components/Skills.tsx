@@ -11,7 +11,7 @@ export default function Skills() {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <section id="skills" className="relative py-32" ref={ref}>
+    <section id="skills" className="relative flex min-h-screen items-center py-32" ref={ref}>
       <div className="mx-auto max-w-6xl px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
