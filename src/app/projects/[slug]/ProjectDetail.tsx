@@ -7,9 +7,9 @@ import { SITE } from "@/lib/constants";
 import type { Project, Career } from "@/lib/constants";
 import TechBadge from "@/components/TechBadge";
 
-const CATEGORY_LABEL = { company: "Company Project", personal: "Personal Project" } as const;
+const CATEGORY_LABEL = { company: "회사 프로젝트", personal: "개인 프로젝트" } as const;
 const CATEGORY_STYLE = {
-  company: "bg-ice-100 text-ice-400 border border-ice-500/20",
+  company: "border border-slate-800 bg-slate-900 text-slate-400",
   personal: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
 } as const;
 

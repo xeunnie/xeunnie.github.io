@@ -9,8 +9,8 @@ import type { Project } from "@/lib/constants";
 import TechBadge from "./TechBadge";
 
 const CATEGORY_STYLE = {
-  company: { label: "Company", color: "bg-ice-100 text-ice-400 border-ice-500/20" },
-  personal: { label: "Personal", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
+  company: { label: "회사", color: "border-slate-800 bg-slate-900 text-slate-400" },
+  personal: { label: "개인", color: "border-emerald-500/20 bg-emerald-500/10 text-emerald-400" },
 } as const;
 
 type Axis = "kind" | "company" | "school" | "team" | "group";
