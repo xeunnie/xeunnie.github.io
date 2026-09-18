@@ -70,6 +70,7 @@ export const PROJECTS: Project[] = [
     rank: 6,
     org: "코리아IT 풀스택 과정",
     award: "코리아IT 풀스택 과정 수강생 우수상",
+    awardImage: "/shot/award-onmeet.jpg",
     title: "OnMeet",
     subtitle: "AI 회의록 자동 생성 B2B 화상회의 SaaS 플랫폼",
     category: "personal",
@@ -1263,6 +1264,7 @@ export const PROJECTS: Project[] = [
     org: "코리아IT 바이브코딩 공모전",
     period: "2026.04",
     award: "제1회 코리아IT아카데미 바이브코딩 공모전(KIT 해커톤) 장려상 — 500팀 중 3위",
+    awardImage: "/shot/award-argos.jpg",
     role: "Frontend 전담 (4개 역할 뷰 전체 구축)",
     description:
       "수강 전·수업 중·수업 후·운영까지 전 주기를 AI로 분석하는 플랫폼 — 프론트엔드를 전담해 약 16,000줄 기여, 500팀 중 3위(장려상)",
