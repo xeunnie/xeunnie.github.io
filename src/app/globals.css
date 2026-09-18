@@ -234,3 +234,13 @@ h1, h2, h3, h4 {
 [data-theme="dark"] .tech-dot {
   background: var(--dot-dark, var(--g-line));
 }
+
+/* 선택된 칩 — 연한 틴트보다 흰 면이 깔끔해서 면 + 그림자로 띄운다 */
+.chip-on {
+  background: var(--g-page);
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.06), 0 6px 16px rgb(15 23 42 / 0.07);
+}
+[data-theme="dark"] .chip-on {
+  background: var(--g-sunken);
+  box-shadow: none;
+}

@@ -27,9 +27,9 @@ export default function Nicknames() {
           <h2 className="text-3xl font-bold tracking-tight text-slate-50">
             개발자가 되고 나서 별명이 늘었습니다
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-slate-400">
-            같이 일한 분들이 붙여 준 것도 있고, 제가 그렇게 굴어서 생긴 것도 있어요. 눌러 보시면
-            그 별명이 어쩌다 붙었는지 나옵니다.
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-400">
+            일하는 방식을 길게 설명하는 것보다, 그동안 불린 이름을 보여 드리는 편이 빠를 것
+            같았습니다.
           </p>
         </motion.div>
 
@@ -48,7 +48,7 @@ export default function Nicknames() {
                 aria-pressed={on}
                 className={`relative rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                   on
-                    ? "border-ice-500/40 text-ice-300"
+                    ? "border-ice-500/40 text-ice-500"
                     : "border-slate-800/60 text-slate-400 hover:border-ice-500/25 hover:text-ice-400"
                 }`}
               >
@@ -56,7 +56,7 @@ export default function Nicknames() {
                   // 선택 표시가 칩 사이를 미끄러지듯 따라간다
                   <motion.span
                     layoutId="nickname-pill"
-                    className="absolute inset-0 -z-10 rounded-full bg-ice-100"
+                    className="chip-on absolute inset-0 -z-10 rounded-full"
                     transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 )}
