@@ -17,7 +17,7 @@ export default function Nicknames() {
   const current = NICKNAMES[picked];
 
   return (
-    <section className="py-24" ref={ref}>
+    <section className="flex min-h-screen items-center py-24" ref={ref}>
       <div className="mx-auto max-w-4xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

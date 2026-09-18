@@ -25,7 +25,7 @@ export default function AreaHub() {
   const items = NAV_ITEMS.filter((i) => i.href !== "/projects");
 
   return (
-    <section className="relative py-24" ref={ref}>
+    <section className="relative flex min-h-screen items-center py-24" ref={ref}>
       <div className="mx-auto max-w-4xl px-6">
         <ul className="divide-y divide-slate-800/60 border-y border-slate-800/60">
           {items.map((item, i) => (
