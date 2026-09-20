@@ -83,6 +83,7 @@ export const PROJECTS: Project[] = [
     techs: ["react", "typescript", "zustand", "reactquery", "vite", "tailwind", "radix", "framer", "zod", "sentry", "firebase", "kotlin", "java", "go", "springboot", "livekit", "webrtc", "kafka", "redis", "s3", "docker", "mysql", "postgresql", "nginx", "gcp", "openai"],
     links: [
       { label: "배포", url: "https://onmeet.cloud" },
+      { label: "기술 발표 자료", url: "https://presentation.onmeet.cloud/slide/1/" },
       { label: "GitHub", url: "https://github.com/evencoding/onmeet-frontend" },
       { label: "조직 전체", url: "https://github.com/evencoding" },
     ],
@@ -153,6 +154,14 @@ export const PROJECTS: Project[] = [
           "TrackEgress — 전체 믹스 대신 개별 트랙으로 화자 분리 정확도 확보",
           "Zustand + TanStack Query 분리 — UI 상태와 서버 상태 경계 명확화로 리렌더링 최소화",
           "Zod fetcher 패턴 — 런타임 타입 검증으로 백엔드 스키마 변경에도 프론트 안정성 유지",
+        ],
+      },
+      {
+        title: "이 프로젝트에서 배운 것",
+        items: [
+          "보안 개발 8년차 팀원과 함께 일하며 백엔드 안정성을 보는 눈을 얻었습니다. 기능이 도는 것과 서비스가 버티는 것은 다른 문제라는 걸 이때 알았습니다.",
+          "AWS 운영도 곁에서 배웠습니다. 올리고 끝이 아니라 올린 뒤에 무엇을 지켜보고 어디를 조여야 하는지를 이 과정에서 익혔습니다.",
+          "LiveKit 연동을 맡으면서 WebRTC를 깊게 들여다봤습니다. SFU가 왜 필요한지, 인원이 늘 때 대역폭이 어떻게 달라지는지를 직접 붙여 보며 이해했고, 이 경험이 이후 지하철 폐쇄망 CCTV 작업의 바탕이 됐습니다.",
         ],
       },
       {
