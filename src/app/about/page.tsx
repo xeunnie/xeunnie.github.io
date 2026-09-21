@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Future from "@/components/Future";
+import NextUp from "@/components/NextUp";
 import Contact from "@/components/Contact";
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function AboutPage() {
         <About />
         <Skills />
         <Future />
+        <NextUp />
         <Contact />
       </main>
       <Footer />
