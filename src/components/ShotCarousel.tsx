@@ -54,27 +54,41 @@ export default function ShotCarousel({ shots, phone = false }: Props) {
     return () => track.removeEventListener("scroll", onScroll);
   }, []);
 
-  const width = phone ? "w-[62%] sm:w-[32%]" : "w-[88%] sm:w-[68%]";
+  // 비율을 고정해 카드 높이를 맞춘다. 지연 로딩 중에도 자리가 잡혀 있어야
+  // 이미지가 들어올 때 레이아웃이 밀리지 않는다.
+  // 세로 캡처는 기기마다 길이가 달라 잘라내지 않고 contain 으로 담는다.
+  const width = phone ? "w-[62%] sm:w-[34%]" : "w-[88%] sm:w-[62%]";
+  const media = phone
+    ? "aspect-[9/16] w-full bg-slate-950 object-contain"
+    : "aspect-[16/10] w-full object-cover object-left-top";
 
   return (
     <div>
       <div
         ref={trackRef}
-        className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory items-stretch gap-5 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {shots.map((shot) => (
+        {shots.map((shot, i) => (
           <figure key={shot.src} className={`${width} shrink-0 snap-center`}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={shot.src}
-              alt={shot.caption}
-              loading="lazy"
-              decoding="async"
-              className="w-full rounded-xl border border-slate-800 bg-slate-900"
-            />
-            <figcaption className="mt-3 text-sm leading-relaxed text-slate-400">
-              {shot.caption}
-            </figcaption>
+            <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-900">
+              <div className="relative">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={shot.src}
+                  alt={shot.caption}
+                  loading="lazy"
+                  decoding="async"
+                  className={media}
+                />
+                <span className="absolute left-3 top-3 rounded-full bg-slate-950/85 px-2.5 py-1 font-mono text-[11px] font-medium text-slate-300 backdrop-blur">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+              {/* 설명은 옅은 형광 바탕에 올려 이미지와 한 덩어리로 보이게 */}
+              <figcaption className="flex-1 border-t border-slate-800 bg-ice-50 px-5 py-4 text-sm leading-relaxed text-slate-300">
+                {shot.caption}
+              </figcaption>
+            </div>
           </figure>
         ))}
       </div>
