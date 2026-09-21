@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ABOUT_TRAITS, ABOUT_INTRO, MOTTO, ABOUT_STANCE } from "@/lib/constants";
+import Pipeline from "./Pipeline";
 
 export default function About() {
   const ref = useRef(null);
@@ -40,7 +41,7 @@ export default function About() {
         </motion.div>
 
         {/* 기준을 늘어놓기 전에, 스스로를 어떻게 보는지부터 */}
-        <div className="mb-14 grid gap-10 md:grid-cols-2">
+        <div className="mb-14 grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)]">
           {ABOUT_STANCE.map((block, i) => (
             <motion.div
               key={block.heading}
@@ -52,10 +53,12 @@ export default function About() {
                 {block.heading}
               </h3>
               <div className="space-y-3">
-                {block.paragraphs.map((t) => (
-                  <p key={t} className="text-sm leading-relaxed text-slate-300">
-                    {t}
-                  </p>
+                {block.paragraphs.map((t, j) => (
+                  <div key={t}>
+                    <p className="text-sm leading-relaxed text-slate-300">{t}</p>
+                    {/* "한 과정씩 밟았다" 바로 뒤에 그 과정을 펼쳐 둔다 */}
+                    {block.heading === "어떤 개발자인가" && j === 1 && <Pipeline />}
+                  </div>
                 ))}
               </div>
             </motion.div>

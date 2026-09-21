@@ -1,8 +1,8 @@
 export { SITE } from "./site";
 export { BADGES, CORE_SKILLS, MORE_SKILLS } from "./badges";
 export type { Badge, BadgeKey } from "./badges";
-export { ABOUT_TRAITS, ABOUT_INTRO, MOTTO, ABOUT_STANCE, FUTURE, HERO_PROOF, DEV_SINCE, NICKNAMES } from "./about";
-export type { AboutTrait, Nickname, Stance, FutureStep } from "./about";
+export { ABOUT_TRAITS, ABOUT_INTRO, MOTTO, ABOUT_STANCE, FUTURE, PIPELINE, HERO_PROOF, DEV_SINCE, NICKNAMES } from "./about";
+export type { AboutTrait, Nickname, Stance, FutureStep, PipelineStep } from "./about";
 export { COLLABORATIONS, PARTNER_ORDER } from "./collaboration";
 export type { Collaboration, Partner } from "./collaboration";
 export { PROJECTS } from "./projects";
