@@ -10,6 +10,7 @@ import DetailSections from "@/components/DetailSections";
 import Lightbox from "@/components/Lightbox";
 import type { Project, Career } from "@/lib/constants";
 import TechBadge from "@/components/TechBadge";
+import SiteSheet from "@/components/SiteSheet";
 
 const CATEGORY_LABEL = { company: "회사 프로젝트", personal: "개인 프로젝트" } as const;
 const CATEGORY_DOT = { company: "bg-ice-500", personal: "bg-emerald-400" } as const;
@@ -68,12 +69,15 @@ export default function ProjectDetail({
             프로젝트 목록
           </Link>
           {/* 상세에 들어오면 나갈 길이 뒤로가기뿐이라 홈으로 가는 문을 둔다 */}
-          <Link
-            href="/"
-            className="text-sm font-semibold tracking-tight text-slate-400 transition-colors hover:text-ice-400"
-          >
-            {SITE.name}
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/"
+              className="text-sm font-semibold tracking-tight text-slate-400 transition-colors hover:text-ice-400"
+            >
+              {SITE.name}
+            </Link>
+            <SiteSheet />
+          </div>
         </div>
       </nav>
 

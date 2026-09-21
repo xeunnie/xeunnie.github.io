@@ -133,32 +133,36 @@ export default function About() {
           </Reveal>
 
           {/*
-            설명과 사례가 같은 크기·같은 색이라 한 덩어리로 보였다.
-            사례는 "실제로 있었던 일" 이니 따로 면을 깔아 눈에 띄게 분리한다.
-            카드마다 길이가 달라도 사례 칸은 아래에서 줄이 맞게 붙인다.
+            카드 여섯 장으로 두니 이 구간만 페이지에서 튀었다.
+            다른 구간이 전부 가로줄로 칸을 나누는데 여기만 상자였기 때문이다.
+            같은 문법으로 맞춘다 — 번호와 제목은 왼쪽, 내용은 오른쪽, 사이는 가로줄.
           */}
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="divide-y divide-slate-800/60 border-y border-slate-800/60">
             {ABOUT_TRAITS.map((trait, i) => (
-              <Reveal key={trait.title} className="h-full">
-                <article className="group flex h-full flex-col rounded-2xl border border-slate-800/60 bg-slate-900/20 p-7 transition-colors duration-300 hover:border-ice-500/30">
-                  <p className="mb-3 font-mono text-xs font-semibold tabular-nums text-ice-500">
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="text-[19px] font-bold tracking-tight text-slate-50">
-                    {trait.title}
+              <Reveal key={trait.title}>
+                <article className="grid gap-x-10 gap-y-3 py-8 lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)]">
+                  <h3 className="flex items-baseline gap-3 lg:sticky lg:top-28 lg:self-start">
+                    <span className="font-mono text-xs font-semibold tabular-nums text-ice-500">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-lg font-bold tracking-tight text-slate-50">
+                      {trait.title}
+                    </span>
                   </h3>
-                  <p className="mt-3 text-[16px] leading-[1.85] text-slate-300">{trait.desc}</p>
 
-                  {trait.evidence && (
-                    <div className="mt-auto pt-6">
-                      <div className="rounded-xl border-l-2 border-ice-500/50 bg-ice-50 px-5 py-4">
-                        <p className="mb-1.5 text-[11px] font-semibold tracking-[0.06em] text-ice-500">
+                  <div className="min-w-0">
+                    <p className="max-w-[42rem] text-[17px] leading-[1.9] text-slate-300">
+                      {trait.desc}
+                    </p>
+                    {trait.evidence && (
+                      <p className="mt-5 max-w-[42rem] border-l-2 border-ice-500/50 bg-ice-50 py-3 pl-5 pr-4 text-[15px] leading-[1.8] text-slate-400">
+                        <span className="mb-1 block text-[11px] font-semibold tracking-[0.06em] text-ice-500">
                           그래서 이렇게 했습니다
-                        </p>
-                        <p className="text-[15px] leading-[1.8] text-slate-400">{trait.evidence}</p>
-                      </div>
-                    </div>
-                  )}
+                        </span>
+                        {trait.evidence}
+                      </p>
+                    )}
+                  </div>
                 </article>
               </Reveal>
             ))}

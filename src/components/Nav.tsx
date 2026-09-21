@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_ITEMS, SITE } from "@/lib/constants";
+import SiteSheet from "./SiteSheet";
 import { useTheme } from "./ThemeProvider";
 
 function ThemeToggle() {
@@ -51,7 +52,6 @@ function ThemeToggle() {
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -59,9 +59,6 @@ export default function Nav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // 라우트가 바뀌면 모바일 메뉴는 닫는다
-  useEffect(() => setMobileOpen(false), [pathname]);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
@@ -82,8 +79,13 @@ export default function Nav() {
           {SITE.name}
         </Link>
 
-        <div className="hidden md:flex items-center gap-7">
-          <ul className="flex items-center gap-7">
+        {/*
+          서랍은 한 벌만 둔다.
+          데스크톱·모바일로 나눠 두 벌을 렌더하면, 숨긴 쪽의 서랍이
+          display:none 안에 갇혀 열리지 않는다. 링크만 좁은 화면에서 접는다.
+        */}
+        <div className="flex items-center gap-3 md:gap-7">
+          <ul className="hidden items-center gap-7 md:flex">
             {NAV_ITEMS.map((item) => (
               <li key={item.href}>
                 <Link
@@ -106,50 +108,11 @@ export default function Nav() {
               </li>
             ))}
           </ul>
+          <SiteSheet />
           <ThemeToggle />
-        </div>
-
-        <div className="flex items-center gap-3 md:hidden">
-          <ThemeToggle />
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="text-slate-400 hover:text-ice-400 transition-colors"
-            aria-label="메뉴 토글"
-            aria-expanded={mobileOpen}
-          >
-            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
-              {mobileOpen ? <path d="M6 6l12 12M6 18L18 6" /> : <path d="M4 8h16M4 16h16" />}
-            </svg>
-          </button>
         </div>
       </div>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass border-t border-white/5 overflow-hidden"
-          >
-            <ul className="flex flex-col py-3 px-6">
-              {NAV_ITEMS.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={`block py-3 text-sm font-medium transition-colors ${
-                      isActive(item.href) ? "text-ice-400" : "text-slate-300 hover:text-ice-400"
-                    }`}
-                  >
-                    {item.label}
-                    <span className="ml-2 text-xs text-slate-500">{item.ko}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.nav>
   );
 }

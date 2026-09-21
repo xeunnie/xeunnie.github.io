@@ -6,6 +6,7 @@ import Link from "next/link";
 import { PROJECTS } from "@/lib/constants";
 import type { Career } from "@/lib/constants";
 import TechBadge from "@/components/TechBadge";
+import SiteSheet from "@/components/SiteSheet";
 
 const TYPE_STYLE = {
   "full-time": { label: "정규직", color: "bg-ice-100 text-ice-400 border-ice-500/25" },
@@ -42,14 +43,15 @@ export default function CareerDetail({ career, prev, next }: Props) {
       <nav className="fixed top-0 inset-x-0 z-50 glass border-b border-white/5">
         <div className="mx-auto max-w-5xl px-6 h-16 flex items-center justify-between">
           <Link
-            href="/about#career"
+            href="/collaboration"
             className="flex items-center gap-2 text-sm text-slate-400 hover:text-ice-400 transition-colors"
           >
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M11 3L5 9l6 6" />
             </svg>
-            한 줄 소개
+            협업 기록
           </Link>
+          <SiteSheet />
         </div>
       </nav>
 
