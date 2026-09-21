@@ -1,153 +1,177 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import Link from "next/link";
 import { PROJECTS } from "@/lib/constants";
-import type { Project } from "@/lib/constants";
 import TechBadge from "./TechBadge";
 
-const CATEGORY_STYLE = {
-  company: { label: "회사", color: "border-slate-800 bg-slate-950 text-slate-300", dot: "bg-ice-500" },
-  personal: { label: "개인", color: "border-emerald-500/20 bg-slate-950 text-slate-300", dot: "bg-emerald-400" },
-} as const;
-
-function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const style = CATEGORY_STYLE[project.category];
-  const shot = project.shots?.[0];
-  const flip = index % 2 === 1; // 좌우를 번갈아 두면 카드가 세 장 쌓여도 지루하지 않다
-
-  return (
-    <motion.article
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-    >
-      <Link
-        href={`/projects/${project.slug}`}
-        className="group grid items-center gap-8 rounded-3xl border border-slate-800/60 bg-slate-950 p-6 transition-all duration-300 hover:border-ice-500/25 hover:shadow-[0_14px_40px_rgb(15_23_42_/_0.09)] sm:p-8 md:grid-cols-2 md:gap-12"
-      >
-        <div className={flip ? "md:order-2" : ""}>
-          <div className="mb-4 flex flex-wrap items-center gap-2">
-            <span className="font-mono text-sm font-semibold text-ice-500">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <span
-              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${style.color}`}
-            >
-              <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
-              {style.label}
-            </span>
-            {project.company && <span className="text-xs text-slate-400">{project.company}</span>}
-            <span className="text-xs text-slate-500">{project.period}</span>
-          </div>
-
-          <h3 className="text-2xl font-bold leading-tight tracking-tight text-slate-50 transition-colors group-hover:text-ice-500 sm:text-3xl">
-            {project.title}
-          </h3>
-          <p className="mt-2 text-sm font-medium text-ice-400">{project.subtitle}</p>
-          <p className="mt-4 text-sm leading-relaxed text-slate-300">{project.description}</p>
-
-          <div className="mt-5 flex flex-wrap gap-1.5">
-            {project.techs.slice(0, 5).map((tech) => (
-              <TechBadge key={tech} name={tech} size="sm" />
-            ))}
-            {project.techs.length > 5 && (
-              <span className="self-center text-xs text-slate-500">
-                +{project.techs.length - 5}
-              </span>
-            )}
-          </div>
-
-          <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-ice-500 transition-all group-hover:gap-3">
-            자세히 보기
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 3l5 5-5 5" />
-            </svg>
-          </span>
-        </div>
-
-        {/* 이미지가 있으면 화면을, 없으면 번호를 크게 — 빈 액자를 두지 않는다 */}
-        <div
-          className={`overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 ${
-            flip ? "md:order-1" : ""
-          }`}
-        >
-          {shot ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={shot.src}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              className="aspect-[4/3] w-full object-cover object-left-top transition-transform duration-500 group-hover:scale-[1.04]"
-            />
-          ) : (
-            <div className="flex aspect-[4/3] w-full items-center justify-center">
-              <span className="font-mono text-7xl font-bold text-slate-800 transition-colors group-hover:text-ice-500/30">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-            </div>
-          )}
-        </div>
-      </Link>
-    </motion.article>
-  );
-}
-
-/** 홈에 놓이는 미리보기. 전체 목록은 /projects 가 담당한다. */
+/**
+ * 대표 작업 셋.
+ * 카드 세 장을 위아래로 쌓으니 두 화면을 넘어가 세로로 보기 불편했다.
+ * 전시장처럼 한 점씩 크게 건다 — 위에서 고르면 가운데 액자만 바뀐다.
+ * 별명 구간과 같은 방식이라, 사이트 안에서 같은 동작은 같은 모양이 된다.
+ */
 export default function Projects() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [picked, setPicked] = useState(0);
 
   const featured = [...PROJECTS]
     .sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999))
     .slice(0, 3);
+  const current = featured[picked];
+  const shot = current.shots?.[0];
   const rest = PROJECTS.length - featured.length;
 
   return (
-    <section id="projects" className="relative flex min-h-screen items-center py-28" ref={ref}>
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="projects" className="flex min-h-screen items-center py-24" ref={ref}>
+      <div className="mx-auto w-full max-w-6xl px-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="flex flex-wrap items-end justify-between gap-4 mb-4"
+          transition={{ duration: 0.5 }}
+          className="mb-8 flex flex-wrap items-baseline justify-between gap-4"
         >
-          <h2 className="text-3xl font-bold tracking-tight text-slate-50">대표 작업 셋</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl">
+            대표 작업 셋
+          </h2>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 text-sm font-medium text-ice-400 hover:gap-3 transition-all"
+            className="text-sm font-medium text-slate-400 underline-offset-4 transition-colors hover:text-ice-500 hover:underline"
           >
             전체 {PROJECTS.length}개 보기
-            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 3l6 6-6 6" />
-            </svg>
           </Link>
         </motion.div>
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={inView ? { scaleX: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="h-px w-16 bg-ice-500 origin-left mb-12"
-        />
 
-        <div className="space-y-6">
-          {featured.map((project, i) => (
-            <ProjectCard key={project.slug} project={project} index={i} />
-          ))}
+        {/* 고르는 자리 */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.12 }}
+          className="mb-8 flex flex-wrap gap-2"
+        >
+          {featured.map((p, i) => {
+            const on = i === picked;
+            return (
+              <button
+                key={p.slug}
+                onClick={() => setPicked(i)}
+                aria-pressed={on}
+                className={`relative rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                  on
+                    ? "border-ice-500/40 text-ice-500"
+                    : "border-slate-800/60 text-slate-400 hover:border-ice-500/25 hover:text-ice-500"
+                }`}
+              >
+                {on && (
+                  <motion.span
+                    layoutId="featured-pill"
+                    className="chip-on absolute inset-0 -z-10 rounded-full"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
+                )}
+                <span className="font-mono text-[11px] tabular-nums opacity-60">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="ml-2">{p.title}</span>
+              </button>
+            );
+          })}
+        </motion.div>
+
+        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-14">
+          {/* 액자 — 한 점만 크게 */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.18 }}
+            className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900"
+          >
+            <AnimatePresence mode="wait">
+              {shot ? (
+                <motion.img
+                  key={shot.src}
+                  src={shot.src}
+                  alt={shot.caption}
+                  loading="lazy"
+                  decoding="async"
+                  initial={{ opacity: 0, scale: 1.02 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.35 }}
+                  className="aspect-[16/10] w-full object-cover object-left-top"
+                />
+              ) : (
+                <motion.div
+                  key={current.slug}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex aspect-[16/10] w-full items-center justify-center"
+                >
+                  <span className="font-mono text-7xl font-bold text-slate-800">
+                    {String(picked + 1).padStart(2, "0")}
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* 설명 — 도록의 캡션처럼 */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.slug}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}
+              className="min-w-0"
+            >
+              <p className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
+                <span>{current.company ?? current.org}</span>
+                <span aria-hidden className="h-3 w-px bg-slate-800" />
+                <span className="font-mono">{current.period}</span>
+              </p>
+
+              <h3 className="text-2xl font-bold leading-tight tracking-tight text-slate-50 sm:text-3xl">
+                {current.title}
+              </h3>
+              <p className="mt-2.5 text-[15px] font-medium text-ice-500">{current.subtitle}</p>
+              <p className="mt-5 text-[15px] leading-[1.85] text-slate-300">
+                {current.description}
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-1.5">
+                {current.techs.slice(0, 5).map((tech) => (
+                  <TechBadge key={tech} name={tech} size="sm" />
+                ))}
+                {current.techs.length > 5 && (
+                  <span className="self-center text-xs text-slate-500">
+                    +{current.techs.length - 5}
+                  </span>
+                )}
+              </div>
+
+              <Link
+                href={`/projects/${current.slug}`}
+                className="group mt-7 inline-flex items-center gap-2 text-sm font-semibold text-ice-500 transition-all hover:gap-3"
+              >
+                자세히 보기
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                  <path d="M5 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        {/* 같은 곳으로 가는 링크를 두 번 두지 않는다 — 위의 "전체 보기" 하나면 된다 */}
         {rest > 0 && (
           <motion.p
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="mt-8 text-sm text-slate-500"
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-10 text-sm text-slate-500"
           >
             이 외에 {rest}개의 프로젝트가 더 있습니다.
           </motion.p>

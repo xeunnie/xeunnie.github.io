@@ -31,7 +31,7 @@ export default function ProjectsOpening() {
   return (
     <section className="flex min-h-screen items-center pt-28 pb-20">
       <div className="mx-auto w-full max-w-6xl px-6">
-        <motion.h1 {...rise(0.05)} className="text-[11px] font-semibold tracking-[0.1em] text-ice-500">
+        <motion.h1 {...rise(0.05)} className="text-[10px] font-semibold tracking-[0.16em] text-ice-500">
           프로젝트
         </motion.h1>
 
@@ -39,14 +39,14 @@ export default function ProjectsOpening() {
           {...rise(0.12)}
           className="mt-7 max-w-4xl text-[clamp(1.8rem,5vw,3.4rem)] font-bold leading-[1.22] tracking-tight text-slate-50"
         >
-          만들어 놓고도
+          오래 붙들고 있던
           <br />
-          자꾸 들여다보게 됩니다
+          것들입니다
         </motion.p>
 
         <motion.p {...rise(0.22)} className="mt-8 max-w-2xl text-lg leading-[1.8] text-slate-400">
-          하나하나 이름을 붙여 키운 것들이라, 제 손을 떠난 뒤에도 잘 돌아가는지 마음이 쓰입니다.
-          고칠 게 보이면 지금도 고칩니다.
+          하나하나 손이 많이 갔습니다. 넘긴 뒤에도 잘 돌아가는지 자꾸 확인하게 되고, 고칠 게
+          보이면 지금도 고칩니다.
         </motion.p>
 
         <motion.dl {...rise(0.3)} className="mt-12 flex flex-wrap gap-x-12 gap-y-6">

@@ -2,14 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import {
-  PROJECTS,
-  HERO_PROOF,
-  PIPELINE,
-  DEV_SINCE,
-  workedMonths,
-  formatMonths,
-} from "@/lib/constants";
+import { HERO_PROOF, PIPELINE, DEV_SINCE } from "@/lib/constants";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -20,17 +13,6 @@ function rise(delay: number) {
     transition: { duration: 0.7, delay, ease: EASE },
   };
 }
-
-/**
- * 개발을 시작한 해와 실무 경력은 다른 축이라 나란히 둔다.
- * 경력은 실제 재직한 달만 합산한다 — 부트캠프 기간을 경력으로 세지 않기 위해서.
- */
-const STATS = [
-  { value: `${DEV_SINCE} —`, label: "개발 시작" },
-  { value: formatMonths(workedMonths()), label: "실무 경력" },
-  { value: `${PROJECTS.length}`, label: "프로젝트" },
-  { value: `${PROJECTS.filter((p) => p.award).length}`, label: "수상" },
-];
 
 export default function Hero() {
   return (
@@ -122,24 +104,6 @@ export default function Hero() {
           </Link>
         </motion.div>
 
-        <motion.dl
-          {...rise(0.5)}
-          className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-slate-800 bg-slate-800 sm:grid-cols-4"
-        >
-          {STATS.map((s) => (
-            <div key={s.label} className="bg-slate-950 px-4 py-5">
-              <dt className="sr-only">{s.label}</dt>
-              <dd>
-                <span className="block text-xl sm:text-2xl font-bold text-slate-50 tabular-nums">
-                  {s.value}
-                </span>
-                <span className="mt-1.5 block text-xs sm:text-sm text-slate-500">
-                  {s.label}
-                </span>
-              </dd>
-            </div>
-          ))}
-        </motion.dl>
       </div>
     </section>
   );

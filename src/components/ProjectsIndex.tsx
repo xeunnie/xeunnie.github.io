@@ -78,6 +78,7 @@ function ProjectCard({
   index,
   no,
   scopeTag,
+  group,
 }: {
   project: Project;
   index: number;
@@ -85,6 +86,8 @@ function ProjectCard({
   no: number;
   /** 맡은 범위순으로 볼 때만 — 왜 이 순서인지 카드에서 보이게 */
   scopeTag?: string;
+  /** 같은 제품군에 속한 경우 그 이름 */
+  group?: string;
 }) {
   const style = CATEGORY_STYLE[project.category];
   const shot = project.shots?.[0];
@@ -147,6 +150,9 @@ function ProjectCard({
               <span className="text-[11px] font-semibold tracking-[0.06em] text-amber-400">
                 대표 작업
               </span>
+            )}
+            {group && (
+              <span className="ml-auto text-[11px] font-medium text-slate-500">{group}</span>
             )}
           </div>
 
@@ -468,8 +474,9 @@ export default function ProjectsIndex() {
         </motion.div>
 
         {/*
-          한 줄에 하나씩. 같은 제품군은 상자로 감싸는 대신 머리글과 왼쪽 선으로 묶는다 —
-          상자 안에 상자가 들어가면 어디까지가 한 덩어리인지 되레 알기 어렵다.
+          한 줄에 하나씩.
+          같은 제품군을 머리글과 왼쪽 선으로 묶어 봤더니 목록 위에 또 한 겹이 얹혀 어수선했다.
+          정렬이 이미 같은 것끼리 붙여 주므로, 카드에 이름표 하나만 조용히 단다.
         */}
         {/*
           정렬을 바꾸면 묶는 기준 자체가 달라져 카드의 key 가 통째로 바뀐다.
@@ -487,23 +494,17 @@ export default function ProjectsIndex() {
           >
             {blocks.map((b, i) =>
               b.group ? (
-                <section key={b.key}>
-                  <div className="mb-4 flex flex-wrap items-center gap-3">
-                    <h2 className="text-sm font-bold tracking-tight text-ice-500">{b.group}</h2>
-                    <span aria-hidden className="h-px min-w-8 flex-1 bg-slate-800" />
-                    <span className="text-xs text-slate-500">{b.note}</span>
-                  </div>
-                  <div className="space-y-4 border-l-2 border-ice-500/25 pl-4 sm:pl-6">
-                    {b.items.map((p, j) => (
-                      <ProjectCard
-                        key={p.slug}
-                        project={p}
-                        index={j}
-                        no={numberOf.get(p.slug) ?? j + 1}
-                        scopeTag={sort === "scope" ? SCOPE_LABEL[scopeKey(p.role)] : undefined}
-                      />
-                    ))}
-                  </div>
+                <section key={b.key} className="space-y-6">
+                  {b.items.map((p, j) => (
+                    <ProjectCard
+                      key={p.slug}
+                      project={p}
+                      index={j}
+                      no={numberOf.get(p.slug) ?? j + 1}
+                      group={b.group}
+                      scopeTag={sort === "scope" ? SCOPE_LABEL[scopeKey(p.role)] : undefined}
+                    />
+                  ))}
                 </section>
               ) : (
                 <ProjectCard
