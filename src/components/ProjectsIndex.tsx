@@ -46,8 +46,15 @@ function endKey(period: string): number {
   return Number(y) * 10000 + Number(m) * 100 + Number(d);
 }
 
+/**
+ * 목록의 한 줄.
+ * 두 칸으로 좁게 쌓아 두니 카드 하나에 열 가지가 들어가 빽빽했다.
+ * 한 줄에 하나씩, 캡처를 왼쪽에 크게 두고 글은 오른쪽에서 읽게 바꿨다.
+ * 카드에서 걷어낸 것: 상세 섹션 개수, 수상 문구 중복, 작은 글씨의 역할 줄.
+ */
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const style = CATEGORY_STYLE[project.category];
+  const shot = project.shots?.[0];
 
   return (
     <motion.article
@@ -59,17 +66,19 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     >
       <Link
         href={`/projects/${project.slug}`}
-        className="group flex h-full flex-col p-6 rounded-2xl border border-slate-800/60 bg-slate-900/25 hover:border-ice-500/25 hover:bg-slate-900/50 card-hover transition-all duration-300"
+        className={`group grid gap-5 rounded-2xl border border-slate-800/60 bg-slate-900/20 p-5 transition-colors duration-300 hover:border-ice-500/30 sm:gap-8 sm:p-7 ${
+          shot ? "lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]" : ""
+        }`}
       >
-        {project.shots?.[0] &&
+        {shot &&
           (project.shotsLayout === "phone" ? (
             // 세로 캡처는 16:9 로 자르면 윗부분만 남으므로 세 장을 나란히 둔다
-            <div className="mb-5 flex aspect-[16/9] w-full items-start justify-center gap-2 overflow-hidden rounded-lg border border-slate-800 bg-slate-900 px-4 pt-4">
-              {project.shots.slice(0, 3).map((shot) => (
+            <div className="flex aspect-[16/10] w-full items-start justify-center gap-2 overflow-hidden rounded-xl border border-slate-800 bg-slate-900 px-5 pt-5">
+              {project.shots!.slice(0, 3).map((s) => (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
-                  key={shot.src}
-                  src={shot.src}
+                  key={s.src}
+                  src={s.src}
                   alt=""
                   loading="lazy"
                   decoding="async"
@@ -80,74 +89,68 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           ) : (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
-              src={project.shots[0].src}
+              src={shot.src}
               alt=""
               loading="lazy"
               decoding="async"
-              className="mb-5 aspect-[16/9] w-full rounded-lg border border-slate-800 object-cover object-left-top"
+              className="aspect-[16/10] w-full rounded-xl border border-slate-800 object-cover object-left-top"
             />
           ))}
 
-        <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span
-            className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${style.color}`}
-          >
-            <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
-            {style.label}
-          </span>
-          {project.featured && (
-            <span className="text-[10px] font-medium tracking-wider uppercase px-2 py-0.5 rounded-full border border-amber-500/25 bg-amber-500/10 text-amber-400">
-              대표
+        <div className="flex min-w-0 flex-col">
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <span
+              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${style.color}`}
+            >
+              <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
+              {style.label}
             </span>
-          )}
-          {project.award && (
-            <span className="inline-flex items-center gap-1 text-[10px] font-medium tracking-wider uppercase px-2 py-0.5 rounded-full border border-amber-400/30 bg-amber-400/10 text-amber-300">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
-                <circle cx="12" cy="8" r="6" />
-                <path d="M8.2 13.9 7 22l5-3 5 3-1.2-8.1" />
+            {project.featured && (
+              <span className="rounded-full border border-amber-500/25 bg-amber-500/10 px-2 py-0.5 text-[11px] font-medium text-amber-400">
+                대표
+              </span>
+            )}
+            {project.award && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 text-[11px] font-medium text-amber-400">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
+                  <circle cx="12" cy="8" r="6" />
+                  <path d="M8.2 13.9 7 22l5-3 5 3-1.2-8.1" />
+                </svg>
+                수상
+              </span>
+            )}
+            <span className="text-xs text-slate-500">
+              {project.company ?? project.org}
+              <span className="mx-1.5 text-slate-700">·</span>
+              <span className="font-mono">{project.period}</span>
+            </span>
+          </div>
+
+          <h2 className="text-[22px] font-bold tracking-tight text-slate-50 transition-colors group-hover:text-ice-500">
+            {project.title}
+          </h2>
+          <p className="mt-1.5 text-[15px] font-medium text-ice-500">{project.subtitle}</p>
+
+          <p className="mt-4 text-[15px] leading-[1.8] text-slate-300">{project.description}</p>
+
+          <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-3 pt-6">
+            <div className="flex min-w-0 flex-wrap gap-1.5">
+              {project.techs.slice(0, 5).map((tech) => (
+                <TechBadge key={tech} name={tech} size="sm" />
+              ))}
+              {project.techs.length > 5 && (
+                <span className="self-center text-xs text-slate-500">
+                  +{project.techs.length - 5}
+                </span>
+              )}
+            </div>
+            <span className="ml-auto inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-ice-500 transition-all group-hover:gap-2.5">
+              자세히
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <path d="M5 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              수상
             </span>
-          )}
-          {project.company && <span className="text-xs text-slate-400">@ {project.company}</span>}
-          <span className="ml-auto text-xs font-mono text-slate-500">{project.period}</span>
-        </div>
-
-        <h2 className="text-xl font-bold text-slate-50 group-hover:text-ice-300 transition-colors">
-          {project.title}
-        </h2>
-        <p className="text-sm text-ice-400 font-medium mt-1">{project.subtitle}</p>
-        <p className="text-xs font-mono text-slate-500 mt-2.5">{project.role}</p>
-
-        <p className="text-sm text-slate-300 leading-relaxed mt-4 flex-1">{project.description}</p>
-
-        <div className="flex flex-wrap gap-1.5 mt-5">
-          {project.techs.slice(0, 6).map((tech) => (
-            <TechBadge key={tech} name={tech} size="sm" />
-          ))}
-          {project.techs.length > 6 && (
-            <span className="text-xs text-slate-500 self-center ml-1">
-              +{project.techs.length - 6}
-            </span>
-          )}
-        </div>
-
-        {project.award && (
-          <p className="mt-4 text-xs text-amber-400 leading-relaxed">{project.award}</p>
-        )}
-
-        <div className="mt-5 pt-4 border-t border-slate-800/60 flex items-center justify-between">
-          <span className="text-xs text-slate-500">
-            {project.sections?.length
-              ? `상세 ${project.sections.length}개 섹션`
-              : `핵심 ${project.highlights.length}개`}
-          </span>
-          <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ice-400 group-hover:gap-2.5 transition-all">
-            자세히
-            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 3l6 6-6 6" />
-            </svg>
-          </span>
+          </div>
         </div>
       </Link>
     </motion.article>
@@ -380,7 +383,11 @@ export default function ProjectsIndex() {
           </div>
         </motion.div>
 
-        <motion.div layout className="grid md:grid-cols-2 gap-5">
+        {/*
+          한 줄에 하나씩. 같은 제품군은 상자로 감싸는 대신 머리글과 왼쪽 선으로 묶는다 —
+          상자 안에 상자가 들어가면 어디까지가 한 덩어리인지 되레 알기 어렵다.
+        */}
+        <motion.div layout className="space-y-6">
           <AnimatePresence mode="popLayout">
             {blocks.map((b, i) =>
               b.group ? (
@@ -391,16 +398,15 @@ export default function ProjectsIndex() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.4, delay: Math.min(i * 0.05, 0.3) }}
-                  className="md:col-span-2 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-5"
                 >
-                  <div className="flex items-baseline gap-3 mb-4 px-1">
-                    <h2 className="text-sm font-semibold tracking-tight text-ice-500">
-                      {b.group}
-                    </h2>
-                    <span className="text-xs text-slate-400">{b.items.length}개 프로젝트</span>
-                    <span className="ml-auto text-xs text-slate-400">같은 제품군</span>
+                  <div className="mb-4 flex flex-wrap items-center gap-3">
+                    <h2 className="text-sm font-bold tracking-tight text-ice-500">{b.group}</h2>
+                    <span aria-hidden className="h-px min-w-8 flex-1 bg-slate-800" />
+                    <span className="text-xs text-slate-500">
+                      같은 제품군 {b.items.length}개
+                    </span>
                   </div>
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-4 border-l-2 border-ice-500/25 pl-4 sm:pl-6">
                     {b.items.map((p, j) => (
                       <ProjectCard key={p.slug} project={p} index={j} />
                     ))}
