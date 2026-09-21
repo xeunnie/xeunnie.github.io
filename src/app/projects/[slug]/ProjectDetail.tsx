@@ -1,10 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 import { SITE } from "@/lib/constants";
 import ShotCarousel from "@/components/ShotCarousel";
+import DetailSections from "@/components/DetailSections";
+import Lightbox from "@/components/Lightbox";
 import type { Project, Career } from "@/lib/constants";
 import TechBadge from "@/components/TechBadge";
 
@@ -47,6 +50,8 @@ export default function ProjectDetail({
 }: Props) {
   const lead = project.shots?.[0];
   const rest = project.shots?.slice(1) ?? [];
+  const shots = project.shots ?? [];
+  const [zoom, setZoom] = useState<number | null>(null);
 
   return (
     <main className="min-h-screen">
@@ -130,12 +135,19 @@ export default function ProjectDetail({
               </p>
               {lead && (
                 <figure>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={lead.src}
-                    alt={lead.caption}
-                    className="w-full rounded-xl border border-slate-800 bg-slate-900"
-                  />
+                  <button
+                    type="button"
+                    onClick={() => setZoom(0)}
+                    aria-label="대표 화면 크게 보기"
+                    className="group block w-full cursor-zoom-in overflow-hidden rounded-xl border border-slate-800 bg-slate-900"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={lead.src}
+                      alt={lead.caption}
+                      className="w-full transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </button>
                   <figcaption className="mt-3 text-xs leading-relaxed text-slate-500">
                     {lead.caption}
                   </figcaption>
@@ -177,7 +189,11 @@ export default function ProjectDetail({
                 <h2 className="text-sm font-semibold tracking-tight text-ice-500">화면</h2>
                 <p className="text-xs text-slate-500">좌우로 넘겨 보실 수 있습니다</p>
               </div>
-              <ShotCarousel shots={rest} phone={project.shotsLayout === "phone"} />
+              <ShotCarousel
+                shots={rest}
+                phone={project.shotsLayout === "phone"}
+                onOpen={(i) => setZoom(i + 1)}
+              />
               <p className="mt-6 text-xs leading-relaxed text-slate-500">
                 {project.shotsNote ??
                   "실제 운영 화면입니다. 손님·직원의 이름과 CCTV에 잡힌 이용객은 알아볼 수 없게 처리했고, 내부 접속 주소는 잘라냈습니다."}
@@ -185,74 +201,12 @@ export default function ProjectDetail({
             </ScrollSection>
           )}
 
-          {/* 상세는 접어 둔다. 앞의 둘만 펼쳐 두고, 필요한 사람이 나머지를 연다 */}
           {project.sections && project.sections.length > 0 && (
             <ScrollSection>
-              <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
-                <h2 className="text-sm font-semibold tracking-tight text-ice-500">자세히</h2>
-                <p className="text-xs text-slate-500">궁금한 것만 펼쳐 보셔도 됩니다</p>
-              </div>
-              <div className="space-y-3">
-                {project.sections.map((section, i) => {
-                  // 접혀 있을 때 제목만 보이면 무엇이 들었는지 알 수 없다.
-                  // 첫 항목의 앞머리를 미리 보여 준다.
-                  const peek = section.items[0].split(" — ")[0];
-                  return (
-                    <details
-                      key={section.title}
-                      open={i < 2}
-                      className="group rounded-xl border border-slate-800/60 bg-slate-900/25 transition-colors hover:border-slate-800"
-                    >
-                      <summary className="flex cursor-pointer select-none items-start gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
-                        <div className="min-w-0 flex-1">
-                          <span className="text-sm font-semibold text-slate-200">
-                            {section.title}
-                          </span>
-                          <span className="mt-1 block truncate text-xs text-slate-500 group-open:hidden">
-                            {peek}
-                          </span>
-                        </div>
-                        <span className="mt-0.5 flex shrink-0 items-center gap-2">
-                          <span className="text-xs text-slate-500">{section.items.length}</span>
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            className="text-slate-500 transition-transform duration-200 group-open:rotate-180 group-open:text-ice-500"
-                          >
-                            <path d="M4 6l4 4 4-4" />
-                          </svg>
-                        </span>
-                      </summary>
-                      <div className="space-y-4 px-5 pb-5">
-                        {section.items.map((item) => (
-                          <Bullet key={item} text={item} />
-                        ))}
-                      </div>
-                    </details>
-                  );
-                })}
-              </div>
-            </ScrollSection>
-          )}
-
-          {/* 한 일과 따로 둔다 — 남한테 얻은 것은 성과 목록에 섞이면 묻힌다 */}
-          {project.learned && project.learned.length > 0 && (
-            <ScrollSection>
-              <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">배운 것</h2>
-              <ul className="space-y-4 rounded-2xl border border-slate-800/60 bg-slate-900/25 p-6">
-                {project.learned.map((line) => (
-                  <li key={line} className="flex gap-3">
-                    <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ice-500/60" />
-                    <p className="text-sm leading-relaxed text-slate-300">
-                      <Marked text={line} />
-                    </p>
-                  </li>
-                ))}
-              </ul>
+              <DetailSections
+                sections={project.sections}
+                renderItem={(item) => <Bullet text={item} />}
+              />
             </ScrollSection>
           )}
 
@@ -380,6 +334,15 @@ export default function ProjectDetail({
       <footer className="border-t border-slate-800/60 py-8 text-center">
         <p className="text-sm text-slate-500">&copy; {new Date().getFullYear()} {SITE.name}</p>
       </footer>
+
+      {zoom !== null && (
+        <Lightbox
+          shots={shots}
+          index={zoom}
+          onIndex={setZoom}
+          onClose={() => setZoom(null)}
+        />
+      )}
     </main>
   );
 }
