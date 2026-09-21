@@ -12,8 +12,9 @@ import type { Project, Career } from "@/lib/constants";
 import TechBadge from "@/components/TechBadge";
 
 const CATEGORY_LABEL = { company: "회사 프로젝트", personal: "개인 프로젝트" } as const;
+const CATEGORY_DOT = { company: "bg-ice-500", personal: "bg-emerald-400" } as const;
 const CATEGORY_STYLE = {
-  company: "border border-slate-800 bg-slate-900 text-slate-400",
+  company: "border border-slate-800 bg-slate-950 text-slate-300",
   personal: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
 } as const;
 
@@ -76,11 +77,14 @@ export default function ProjectDetail({
         </div>
       </nav>
 
-      <section className="pt-32 pb-16 mesh-bg">
+      <section className="flex min-h-[78vh] items-center pt-32 pb-20">
         <div className="mx-auto max-w-4xl px-6">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <div className="flex items-center gap-3 mb-4">
-              <span className={`text-[10px] font-medium tracking-wider uppercase px-2.5 py-1 rounded-full ${CATEGORY_STYLE[project.category]}`}>
+              <span
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium ${CATEGORY_STYLE[project.category]}`}
+              >
+                <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${CATEGORY_DOT[project.category]}`} />
                 {CATEGORY_LABEL[project.category]}
               </span>
               {project.company && <span className="text-xs text-slate-500">@ {project.company}</span>}
@@ -120,19 +124,23 @@ export default function ProjectDetail({
       </section>
 
       <section className="py-16">
-        <div className="mx-auto max-w-4xl px-6 space-y-20">
+        <div className="mx-auto max-w-4xl px-6 space-y-28">
           {/* 맥락 먼저 — 무엇을 왜 만들었는지 */}
           <ScrollSection>
-            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">무엇을 만들었나</h2>
+            <h2 className="mb-7 text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">무엇을 만들었나</h2>
             {/* 대표 화면 한 장을 글 옆에 둔다 — 무엇을 만들었는지가 글보다 빨리 읽힌다 */}
             <div
               className={
                 lead ? "grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start" : ""
               }
             >
-              <p className="text-base leading-relaxed text-slate-300">
-                <Marked text={project.overview} subtle />
-              </p>
+              <div className="space-y-4">
+                {toParagraphs(project.overview).map((para) => (
+                  <p key={para} className="text-[17px] leading-[1.85] text-slate-300">
+                    <Marked text={para} subtle />
+                  </p>
+                ))}
+              </div>
               {lead && (
                 <figure>
                   <button
@@ -158,7 +166,7 @@ export default function ProjectDetail({
 
           {/* 요약은 앞의 넷만 펼쳐 두고 나머지는 접는다 — 전부 같은 무게로 쌓이면 안 읽힌다 */}
           <ScrollSection>
-            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-8">
+            <h2 className="mb-8 text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">
               이 프로젝트의 핵심
             </h2>
             <div className="space-y-5">
@@ -186,7 +194,7 @@ export default function ProjectDetail({
           {rest.length > 0 && (
             <ScrollSection>
               <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
-                <h2 className="text-sm font-semibold tracking-tight text-ice-500">화면</h2>
+                <h2 className="text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">화면</h2>
                 <p className="text-xs text-slate-500">좌우로 넘겨 보실 수 있습니다</p>
               </div>
               <ShotCarousel
@@ -211,7 +219,7 @@ export default function ProjectDetail({
           )}
 
           <ScrollSection>
-            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">쓴 기술</h2>
+            <h2 className="mb-7 text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">쓴 기술</h2>
             <div className="flex flex-wrap gap-2">
               {project.techs.map((tech) => (
                 <TechBadge key={tech} name={tech} />
@@ -221,7 +229,7 @@ export default function ProjectDetail({
 
           {project.links && project.links.length > 0 && (
             <ScrollSection>
-              <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">링크</h2>
+              <h2 className="mb-7 text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">링크</h2>
               <div className="flex flex-wrap gap-3">
                 {project.links.map((link) => (
                   <a
@@ -248,7 +256,7 @@ export default function ProjectDetail({
       {(related.length > 0 || career) && (
         <section className="border-t border-slate-800/60 py-12">
           <div className="mx-auto max-w-4xl px-6">
-            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">
+            <h2 className="mb-7 text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">
               이어서 볼 것
             </h2>
 
@@ -416,4 +424,17 @@ function Marked({ text, subtle = false }: { text: string; subtle?: boolean }) {
       )}
     </>
   );
+}
+
+/**
+ * 개요는 한 문단으로 들어오는데, 대여섯 문장이 이어지면 눈이 미끄러진다.
+ * 두 문장씩 끊어 문단으로 나눈다. 원문은 건드리지 않는다.
+ */
+function toParagraphs(text: string, per = 2): string[] {
+  const parts = text.match(/[^.]+\.(?:\s|$)/g) ?? [text];
+  const out: string[] = [];
+  for (let i = 0; i < parts.length; i += per) {
+    out.push(parts.slice(i, i + per).join("").trim());
+  }
+  return out.filter(Boolean);
 }

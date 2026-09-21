@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import type { ProjectSection } from "@/lib/constants";
 
 interface Props {
@@ -28,8 +29,8 @@ export default function DetailSections({ sections, renderItem }: Props) {
 
   return (
     <div>
-      <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="text-sm font-semibold tracking-tight text-ice-500">자세히</h2>
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">자세히</h2>
         <button
           type="button"
           onClick={() => setOpen(allOpen ? new Set() : new Set(sections.map((_, i) => i)))}
@@ -38,6 +39,10 @@ export default function DetailSections({ sections, renderItem }: Props) {
           {allOpen ? "모두 접기" : `모두 펼치기 (${sections.length})`}
         </button>
       </div>
+
+      <p className="mb-7 text-sm leading-relaxed text-slate-400">
+        궁금한 항목을 펼치면 그때 무엇이 문제였고 어떻게 판단했는지 나옵니다.
+      </p>
 
       <div className="space-y-2.5">
         {sections.map((section, i) => {
@@ -57,7 +62,7 @@ export default function DetailSections({ sections, renderItem }: Props) {
                   type="button"
                   onClick={() => toggle(i)}
                   aria-expanded={isOpen}
-                  className="flex w-full items-start gap-4 px-5 py-4 text-left"
+                  className="flex w-full items-start gap-4 px-5 py-4 text-left transition-colors hover:bg-slate-900/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ice-500/30"
                 >
                   <span
                     className={`mt-0.5 font-mono text-xs font-semibold tabular-nums transition-colors ${
@@ -69,7 +74,7 @@ export default function DetailSections({ sections, renderItem }: Props) {
 
                   <span className="min-w-0 flex-1">
                     <span
-                      className={`block text-sm font-semibold transition-colors ${
+                      className={`block text-base font-semibold transition-colors ${
                         isOpen ? "text-ice-500" : "text-slate-200"
                       }`}
                     >
@@ -101,13 +106,31 @@ export default function DetailSections({ sections, renderItem }: Props) {
                 </button>
               </h3>
 
-              {isOpen && (
-                <div className="space-y-4 border-t border-ice-500/15 px-5 pb-5 pt-5">
-                  {section.items.map((item) => (
-                    <div key={item}>{renderItem(item)}</div>
-                  ))}
-                </div>
-              )}
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    key="body"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="space-y-4 border-t border-ice-500/15 px-5 pb-5 pt-5">
+                      {section.items.map((item, j) => (
+                        <motion.div
+                          key={item}
+                          initial={{ opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.25, delay: 0.05 + j * 0.03 }}
+                        >
+                          {renderItem(item)}
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </section>
           );
         })}

@@ -8,8 +8,8 @@ import type { Project } from "@/lib/constants";
 import TechBadge from "./TechBadge";
 
 const CATEGORY_STYLE = {
-  company: { label: "회사", color: "border-slate-800 bg-slate-900 text-slate-400" },
-  personal: { label: "개인", color: "border-emerald-500/20 bg-emerald-500/10 text-emerald-400" },
+  company: { label: "회사", color: "border-slate-800 bg-slate-950 text-slate-300", dot: "bg-ice-500" },
+  personal: { label: "개인", color: "border-emerald-500/20 bg-slate-950 text-slate-300", dot: "bg-emerald-400" },
 } as const;
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
@@ -36,8 +36,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               {String(index + 1).padStart(2, "0")}
             </span>
             <span
-              className={`rounded-full border px-2 py-0.5 text-[10px] font-medium tracking-wider ${style.color}`}
+              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${style.color}`}
             >
+              <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
               {style.label}
             </span>
             {project.company && <span className="text-xs text-slate-400">{project.company}</span>}
