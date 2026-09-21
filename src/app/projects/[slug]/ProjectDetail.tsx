@@ -245,6 +245,23 @@ export default function ProjectDetail({
             </ScrollSection>
           )}
 
+          {/* 한 일과 따로 둔다 — 남한테 얻은 것은 성과 목록에 섞이면 묻힌다 */}
+          {project.learned && project.learned.length > 0 && (
+            <ScrollSection>
+              <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">배운 것</h2>
+              <ul className="space-y-4 rounded-2xl border border-slate-800/60 bg-slate-900/25 p-6">
+                {project.learned.map((line) => (
+                  <li key={line} className="flex gap-3">
+                    <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ice-500/60" />
+                    <p className="text-sm leading-relaxed text-slate-300">
+                      <Marked text={line} />
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </ScrollSection>
+          )}
+
           <ScrollSection>
             <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">쓴 기술</h2>
             <div className="flex flex-wrap gap-2">
