@@ -49,18 +49,18 @@ export default function Hero() {
           {...rise(0.12)}
           className="text-[clamp(2.3rem,7vw,4.4rem)] font-bold leading-[1.12] text-slate-50"
         >
-          돌아가게 만들고,
+          화면만 아는 프론트엔드는
           <br />
-          더 잘 돌아가게 만듭니다
+          되고 싶지 않았습니다
         </motion.h1>
 
         <motion.p
           {...rise(0.2)}
           className="mt-7 text-lg text-slate-400 leading-relaxed max-w-xl mx-auto"
         >
-          3D 관제, 실시간 미디어, 모바일 앱까지.
+          디자인도, 서버도, 배포도 한 번씩은 끝까지 해 봤습니다.
           <br className="hidden sm:block" />
-          브라우저 밖에서 생기는 문제도 제 몫이라고 생각합니다.
+          덕분에 문제가 어디서 났는지 먼저 짚습니다.
         </motion.p>
 
         {/* 분야 나열 대신 실제로 푼 문제를 먼저 보여준다 */}

@@ -61,16 +61,16 @@ export const ABOUT_TRAITS: AboutTrait[] = [
  */
 export const HERO_PROOF = [
   {
-    text: "폐쇄망에 WebRTC CCTV를 붙이고, 현장에서 고쳐 가며 운영을 이어 갔습니다",
+    text: "지하철 폐쇄망에 CCTV를 붙이고, 현장에서 고쳐 가며 운영했습니다",
     href: "/projects/busan-metro",
   },
   {
-    text: "클라우드 웹앱과 매장 사설망 프린터를 브릿지로 연결",
+    text: "클라우드 웹앱과 매장 안 프린터 사이를 잇는 프로그램을 만들었습니다",
     href: "/projects/vgolf-fnb",
   },
   {
-    text: "zod 계약 테스트로 증상 없는 서버 데이터 오류를 화면에 닿기 전에 잡습니다",
-    href: "/projects/vgolf-app",
+    text: "돌아가던 앱을 다시 재서, 저장 한 번에 7.89ms 걸리던 것을 0.058ms로",
+    href: "/projects/vgolf-pm30",
   },
 ] as const;
 
@@ -95,7 +95,7 @@ export const NICKNAMES: Nickname[] = [
   {
     name: "뚝딱이",
     story:
-      "맡기면 나옵니다. React Native 앱은 처음이었지만 화면 구현부터 네이티브 설정, 릴리스 서명, Play Console 제출까지 혼자 끌고 가 555커밋으로 스토어에 올렸습니다. 올린 뒤에도 심사 대응과 버그 수정을 이어 가며 버전을 올렸습니다.",
+      "일단 만들어 내는 편입니다. React Native 앱은 처음이었지만 화면 구현부터 네이티브 설정, 릴리스 서명, Play Console 제출까지 혼자 끌고 가 555커밋으로 스토어에 올렸습니다. 올린 뒤에도 심사 대응과 버그 수정을 이어 가며 버전을 올렸습니다.",
     href: "/projects/vgolf-app",
     hrefLabel: "VGOLF 앱",
   },
