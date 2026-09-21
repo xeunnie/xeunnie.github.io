@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 import { SITE } from "@/lib/constants";
+import ShotCarousel from "@/components/ShotCarousel";
 import type { Project, Career } from "@/lib/constants";
 import TechBadge from "@/components/TechBadge";
 
@@ -44,6 +45,9 @@ export default function ProjectDetail({
   related,
   career,
 }: Props) {
+  const lead = project.shots?.[0];
+  const rest = project.shots?.slice(1) ?? [];
+
   return (
     <main className="min-h-screen">
       <nav className="fixed top-0 inset-x-0 z-50 glass border-b border-white/5">
@@ -115,9 +119,29 @@ export default function ProjectDetail({
           {/* 맥락 먼저 — 무엇을 왜 만들었는지 */}
           <ScrollSection>
             <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">무엇을 만들었나</h2>
-            <p className="text-base leading-relaxed text-slate-300">
-              <Marked text={project.overview} subtle />
-            </p>
+            {/* 대표 화면 한 장을 글 옆에 둔다 — 무엇을 만들었는지가 글보다 빨리 읽힌다 */}
+            <div
+              className={
+                lead ? "grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start" : ""
+              }
+            >
+              <p className="text-base leading-relaxed text-slate-300">
+                <Marked text={project.overview} subtle />
+              </p>
+              {lead && (
+                <figure>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={lead.src}
+                    alt={lead.caption}
+                    className="w-full rounded-xl border border-slate-800 bg-slate-900"
+                  />
+                  <figcaption className="mt-3 text-xs leading-relaxed text-slate-500">
+                    {lead.caption}
+                  </figcaption>
+                </figure>
+              )}
+            </div>
           </ScrollSection>
 
           {/* 요약은 앞의 넷만 펼쳐 두고 나머지는 접는다 — 전부 같은 무게로 쌓이면 안 읽힌다 */}
@@ -147,44 +171,14 @@ export default function ProjectDetail({
             )}
           </ScrollSection>
 
-          {project.shots && project.shots.length > 0 && (
+          {rest.length > 0 && (
             <ScrollSection>
-              <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">
-                화면
-              </h2>
-              {/* 세로 캡처는 한 장씩 전폭으로 두면 화면 몇 개 분량이 되므로 격자로 */}
-              <div
-                className={
-                  project.shotsLayout === "phone"
-                    ? "grid grid-cols-2 sm:grid-cols-3 gap-x-5 gap-y-8"
-                    : project.shotsLayout === "grid"
-                      ? "grid gap-x-5 gap-y-8 sm:grid-cols-2"
-                      : "flex flex-col gap-10"
-                }
-              >
-                {project.shots.map((shot) => (
-                  <figure key={shot.src}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={shot.src}
-                      alt={shot.caption}
-                      loading="lazy"
-                      decoding="async"
-                      className={`w-full border border-slate-800 bg-slate-900 ${
-                        project.shotsLayout === "phone" ? "rounded-2xl" : "rounded-xl"
-                      } ${project.shotsLayout === "grid" ? "object-top" : ""}`}
-                    />
-                    <figcaption
-                      className={`mt-3 leading-relaxed text-slate-400 ${
-                        project.shotsLayout === "phone" ? "text-xs" : "text-sm"
-                      }`}
-                    >
-                      {shot.caption}
-                    </figcaption>
-                  </figure>
-                ))}
+              <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
+                <h2 className="text-sm font-semibold tracking-tight text-ice-500">화면</h2>
+                <p className="text-xs text-slate-500">좌우로 넘겨 보실 수 있습니다</p>
               </div>
-              <p className="mt-6 text-xs text-slate-500 leading-relaxed">
+              <ShotCarousel shots={rest} phone={project.shotsLayout === "phone"} />
+              <p className="mt-6 text-xs leading-relaxed text-slate-500">
                 {project.shotsNote ??
                   "실제 운영 화면입니다. 손님·직원의 이름과 CCTV에 잡힌 이용객은 알아볼 수 없게 처리했고, 내부 접속 주소는 잘라냈습니다."}
               </p>

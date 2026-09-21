@@ -176,7 +176,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "busan-metro",
-    rank: 2,
+    rank: 1,
     title: "부산 도시철도 통합 관제",
     subtitle: "3D 역사 관제 + WebRTC CCTV 실시간 스트리밍",
     category: "company",
@@ -855,7 +855,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "vgolf-fnb",
-    rank: 1,
+    rank: 2,
     team: "클라우드팀",
     group: "VGOLF",
     title: "VGOLF F&B",
