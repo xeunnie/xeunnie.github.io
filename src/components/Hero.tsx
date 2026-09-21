@@ -35,12 +35,12 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-[92vh] flex items-center justify-center px-6 pt-28 pb-20"
+      className="relative flex min-h-screen items-center justify-center px-6 pt-24 pb-16"
     >
       <div className="w-full max-w-3xl mx-auto text-center">
         <motion.p
           {...rise(0.05)}
-          className="text-sm font-medium text-ice-500 mb-6 tracking-tight"
+          className="mb-5 text-sm font-medium tracking-tight text-ice-500"
         >
           Frontend Developer · {DEV_SINCE}년부터
         </motion.p>
@@ -56,79 +56,62 @@ export default function Hero() {
 
         <motion.p
           {...rise(0.2)}
-          className="mt-7 text-lg text-slate-400 leading-relaxed max-w-xl mx-auto"
+          className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-400"
         >
           디자인도, 서버도, 배포도 한 번씩은 끝까지 해 봤습니다.
           <br className="hidden sm:block" />
           덕분에 문제가 어디서 났는지 먼저 짚습니다.
         </motion.p>
 
-        {/* 분야 나열 대신 실제로 푼 문제를 먼저 보여준다 */}
-        <motion.ul {...rise(0.3)} className="mt-10 flex flex-col gap-2.5 text-left">
+        {/*
+          여기 있던 세 줄은 각각 프로젝트 상세로 들어가는 링크였다.
+          첫 화면에서 누를 것이 여럿이면 어디부터 볼지 고르다 지친다.
+          읽히기만 하면 되는 문장이라 링크를 걷어냈다 — 누르는 곳은 아래 하나뿐이다.
+        */}
+        <motion.ul {...rise(0.3)} className="mt-8 flex flex-col gap-2 text-left">
           {HERO_PROOF.map((p) => (
-            <li key={p.href}>
-              <Link
-                href={p.href}
-                className="group flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-900/50 px-4 py-3.5 transition-colors hover:border-ice-500/40"
+            <li
+              key={p.href}
+              className="flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-900/50 px-4 py-3"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mt-0.5 shrink-0 text-ice-500"
+                aria-hidden
               >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="mt-0.5 shrink-0 text-ice-500"
-                  aria-hidden
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span className="flex-1 text-[15px] text-slate-200 leading-relaxed group-hover:text-slate-50 transition-colors">
-                  {p.text}
-                </span>
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className="mt-1 shrink-0 text-slate-600 group-hover:text-ice-500 transition-colors"
-                  aria-hidden
-                >
-                  <path d="M5 3l5 5-5 5" />
-                </svg>
-              </Link>
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span className="flex-1 text-[15px] leading-relaxed text-slate-200">{p.text}</span>
             </li>
           ))}
         </motion.ul>
 
-        <motion.div
-          {...rise(0.4)}
-          className="mt-10 flex flex-wrap items-center justify-center gap-3"
-        >
+        {/* 첫 화면의 단 하나의 행동 */}
+        <motion.div {...rise(0.4)} className="mt-8 flex justify-center">
           <Link
             href="/projects"
-            className="rounded-full bg-ice-500 px-7 py-3.5 text-[15px] font-semibold text-slate-950 transition-colors hover:bg-ice-600"
+            className="group inline-flex items-center gap-2 rounded-full bg-ice-500 px-8 py-4 text-[15px] font-semibold text-slate-950 transition-colors hover:bg-ice-600"
           >
-            프로젝트 보기
-          </Link>
-          <Link
-            href="/growth"
-            className="rounded-full border border-slate-700 px-7 py-3.5 text-[15px] font-semibold text-slate-200 transition-colors hover:border-slate-500 hover:text-slate-50"
-          >
-            타임라인
+            무엇을 만들었는지 보기
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="transition-transform group-hover:translate-x-0.5" aria-hidden>
+              <path d="M5 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </Link>
         </motion.div>
 
         <motion.dl
           {...rise(0.5)}
-          className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-slate-800 bg-slate-800"
+          className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-slate-800 bg-slate-800 sm:grid-cols-4"
         >
           {STATS.map((s) => (
-            <div key={s.label} className="bg-slate-950 px-4 py-6">
+            <div key={s.label} className="bg-slate-950 px-4 py-5">
               <dt className="sr-only">{s.label}</dt>
               <dd>
                 <span className="block text-xl sm:text-2xl font-bold text-slate-50 tabular-nums">

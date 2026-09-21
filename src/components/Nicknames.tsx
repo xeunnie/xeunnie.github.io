@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import Link from "next/link";
 import { NICKNAMES } from "@/lib/constants";
 
 /**
@@ -100,15 +99,15 @@ export default function Nicknames() {
           >
             {current.story}
           </motion.p>
-          <Link
-            href={current.href}
-            className="group mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ice-400 transition-all hover:gap-2.5"
+          <motion.p
+            key={`${current.name}-src`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.28, delay: 0.1 }}
+            className="mt-5 text-xs text-slate-500"
           >
-            {current.hrefLabel}
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 3l5 5-5 5" />
-            </svg>
-          </Link>
+            {current.hrefLabel}에서 있었던 일입니다
+          </motion.p>
         </motion.div>
       </div>
     </section>

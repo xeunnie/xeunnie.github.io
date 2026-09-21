@@ -141,6 +141,7 @@ export default function Projects() {
           ))}
         </div>
 
+        {/* 같은 곳으로 가는 링크를 두 번 두지 않는다 — 위의 "전체 보기" 하나면 된다 */}
         {rest > 0 && (
           <motion.p
             initial={{ opacity: 0 }}
@@ -148,10 +149,7 @@ export default function Projects() {
             transition={{ duration: 0.5, delay: 0.6 }}
             className="mt-8 text-sm text-slate-500"
           >
-            이 외에 {rest}개의 프로젝트가 더 있습니다.{" "}
-            <Link href="/projects" className="text-ice-400 hover:text-ice-300 transition-colors">
-              프로젝트 페이지에서 전체 보기 →
-            </Link>
+            이 외에 {rest}개의 프로젝트가 더 있습니다.
           </motion.p>
         )}
       </div>
