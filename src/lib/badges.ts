@@ -116,16 +116,16 @@ export const BADGES = {
 export type BadgeKey = keyof typeof BADGES;
 
 export const CORE_SKILLS = [
-  { title: "Frontend Core", badges: ["react", "nextjs", "typescript", "vue"] as BadgeKey[] },
-  { title: "Realtime & 3D", badges: ["webrtc", "livekit", "websocket", "threejs", "webgl"] as BadgeKey[] },
-  { title: "Testing & QA", badges: ["storybook", "jest", "rtl", "cypress", "playwright"] as BadgeKey[] },
-  { title: "Backend & Infra", badges: ["springboot", "kotlin", "go", "docker", "kafka", "redis"] as BadgeKey[] },
+  { title: "프론트엔드", badges: ["react", "nextjs", "typescript", "vue"] as BadgeKey[] },
+  { title: "실시간 · 3D", badges: ["webrtc", "livekit", "websocket", "threejs", "webgl"] as BadgeKey[] },
+  { title: "테스트", badges: ["storybook", "jest", "rtl", "cypress", "playwright"] as BadgeKey[] },
+  { title: "백엔드 · 인프라", badges: ["springboot", "kotlin", "go", "docker", "kafka", "redis"] as BadgeKey[] },
 ] as const;
 
 export const MORE_SKILLS = [
-  { title: "Language", badges: ["javascript", "java"] as BadgeKey[] },
-  { title: "Frameworks", badges: ["svelte", "zustand", "reactquery", "redux", "pinia"] as BadgeKey[] },
-  { title: "Database", badges: ["mysql", "postgresql", "mongodb", "mariadb", "s3"] as BadgeKey[] },
-  { title: "DevOps", badges: ["kubernetes", "jenkins", "haproxy", "nginx", "gcp"] as BadgeKey[] },
-  { title: "Monitoring", badges: ["prometheus", "grafana", "jmeter", "sentry", "codecov"] as BadgeKey[] },
+  { title: "언어", badges: ["javascript", "java"] as BadgeKey[] },
+  { title: "프레임워크 · 라이브러리", badges: ["svelte", "zustand", "reactquery", "redux", "pinia"] as BadgeKey[] },
+  { title: "데이터베이스", badges: ["mysql", "postgresql", "mongodb", "mariadb", "s3"] as BadgeKey[] },
+  { title: "배포 · 운영", badges: ["kubernetes", "jenkins", "haproxy", "nginx", "gcp"] as BadgeKey[] },
+  { title: "모니터링", badges: ["prometheus", "grafana", "jmeter", "sentry", "codecov"] as BadgeKey[] },
 ] as const;

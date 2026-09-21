@@ -11,8 +11,8 @@
   --rz-faint: #6d747d;   /* 흰 종이 4.72 — 이전 #9aa1ab 은 2.61 로 AA 미달이었다 */
   --rz-line: #dfe2e7;
   --rz-line-soft: #eceef1;
-  --rz-accent: #1e5f8c;
-  --rz-accent-soft: #eef4f9;
+  --rz-accent: #c20663;   /* 사이트와 같은 마젠타 — 흰 종이 6.0:1 */
+  --rz-accent-soft: #fbeef4;
   --rz-paper: #ffffff;
   --rz-desk: #e8eaee;
 
@@ -52,7 +52,7 @@
   text-decoration: none;
   transition: color 0.2s;
 }
-.rz-bar-back:hover { color: #7fb8dd; }
+.rz-bar-back:hover { color: #ff7fb5; }
 
 .rz-bar-spacer { flex: 1 1 auto; }
 
@@ -168,12 +168,10 @@
   align-items: baseline;
   gap: 10px;
   margin: 0 0 12px;
-  font-size: 0.82em;
-  font-family: var(--rz-mono);
-  font-weight: 600;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--rz-accent);
+  font-size: 1.02em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--rz-ink);
   break-after: avoid;
   page-break-after: avoid;
 }
@@ -350,11 +348,9 @@
   page-break-inside: avoid;
 }
 .rz-skill-label {
-  font-family: var(--rz-mono);
-  font-size: 0.76em;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--rz-faint);
+  font-size: 0.84em;
+  font-weight: 600;
+  color: var(--rz-muted);
 }
 .rz-skill-row .rz-techs { margin-top: 0; }
 
@@ -452,11 +448,77 @@
   .rz-section { margin-top: 15pt; }
   .rz-entry { padding: 7pt 0; }
 
-  a { color: inherit; text-decoration: none; }
+  /*
+    링크를 검게 눕히면 PDF 안에서 눌리는 줄을 아무도 모른다.
+    색은 남기고 밑줄만 접어 둔다 — 눌러 볼 수 있다는 표시.
+  */
+  a { color: var(--rz-accent); text-decoration: none; }
+  .rz-contact a { text-decoration: underline; text-underline-offset: 2px; }
 
   /* 표·목록이 페이지 경계에서 잘려 첫 줄만 남는 것 방지 */
   .rz-h2 { break-after: avoid; page-break-after: avoid; }
   .rz-entry-head { break-after: avoid; page-break-after: avoid; }
   .rz-stats { break-inside: avoid; page-break-inside: avoid; }
   .rz-bullets li { break-inside: avoid; page-break-inside: avoid; }
+}
+
+/* ─── 프로젝트 이름 링크 ─── */
+.rz-proj-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--rz-accent-soft);
+}
+.rz-proj-link:hover {
+  color: var(--rz-accent);
+  border-bottom-color: var(--rz-accent);
+}
+
+/* ─── 맺음 ─── */
+.rz-tail {
+  margin: 22px 0 0;
+  padding: 10px 14px;
+  border-left: 2px solid var(--rz-accent);
+  background: var(--rz-accent-soft);
+  font-size: 0.86em;
+  color: var(--rz-muted);
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.rz-tail a {
+  color: var(--rz-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.rz-oneline-tight li { font-size: 0.94em; }
+
+/* 분량 고르는 칸이 셋으로 늘어 좁은 화면에서는 줄을 바꾼다 */
+@media (max-width: 720px) {
+  .rz-bar { flex-wrap: wrap; }
+  .rz-bar-spacer { display: none; }
+  .rz-seg { order: 3; width: 100%; }
+  .rz-seg button { flex: 1 1 auto; }
+}
+
+/* 이름만 늘어놓는 목록 — 이력서 분량에서 "그 외 프로젝트" 에 쓴다 */
+.rz-namelist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px 22px;
+}
+.rz-namelist li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  font-size: 0.94em;
+  color: var(--rz-ink);
+}
+.rz-namelist .rz-entry-period { margin-left: auto; white-space: nowrap; }
+
+@media (max-width: 640px) {
+  .rz-namelist { grid-template-columns: 1fr; }
 }

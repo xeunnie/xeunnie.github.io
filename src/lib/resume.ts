@@ -9,20 +9,21 @@ export interface ResumeStat {
   value: string;
 }
 
-export const RESUME_HEADLINE = "실시간·3D·모바일 앱까지, 현장에서 쓰이는 서비스를 만들어 온 프론트엔드 개발자";
+export const RESUME_HEADLINE =
+  "디자인부터 서버·배포까지 한 번씩 끝까지 해 본 프론트엔드 개발자";
 
 export const RESUME_SUMMARY = [
-  "폐쇄망 WebRTC CCTV, LiveKit SFU 화상회의, WebSocket·SSE 실시간 동기화 등 브라우저에서 다루기 까다로운 미디어·실시간 영역을 반복해서 맡아 왔습니다.",
-  "Three.js 3D 관제 시스템과 GPS 기반 골프장 운영 서비스처럼 실제 현장에서 매일 돌아가는 프로덕션을 개발하고, 현장 배포·즉시 수정까지 책임졌습니다.",
-  "React Native 앱을 개발부터 네이티브 설정·릴리스 서명·스토어 제출까지 단독으로 수행하며 웹 밖의 배포 파이프라인도 직접 다뤘습니다.",
-  "FSD 아키텍처, zod 2층 계약 테스트, API 응답 계약 문서화처럼 '왜 이렇게 했는지'가 남는 구조를 선호하고, 되돌린 결정도 근거와 함께 기록합니다.",
+  "브라우저에서 다루기 까다로운 것들을 반복해서 맡아 왔습니다. 폐쇄망 지하철의 WebRTC CCTV, LiveKit SFU 화상회의, WebSocket·SSE 실시간 동기화가 그런 일이었습니다.",
+  "만든 것이 현장에서 매일 돌아갑니다. Three.js 3D 관제와 GPS 기반 골프장 운영 서비스를 개발했고, 현장에 배포한 뒤 그 자리에서 고치는 일까지 맡았습니다.",
+  "화면 밖도 필요한 만큼 했습니다. React Native 앱을 네이티브 설정·릴리스 서명·스토어 제출까지 혼자 올렸고, 서버가 필요한 자리에서는 MSA 7개 서비스를 직접 설계해 구현했습니다.",
+  "왜 그렇게 했는지를 남깁니다. 되돌린 결정도 근거와 함께 적어 두고, 인수인계 전에는 구조와 판단 근거를 문서로 정리했습니다.",
 ];
 
 export const RESUME_STATS: ResumeStat[] = [
-  { label: "Focus", value: "React · TypeScript · Next.js" },
-  { label: "Realtime", value: "WebRTC · WebSocket · SSE" },
-  { label: "Beyond Web", value: "React Native · Three.js" },
-  { label: "Also", value: "Kotlin · Go · Spring Boot" },
+  { label: "주로", value: "React · TypeScript · Next.js" },
+  { label: "실시간", value: "WebRTC · WebSocket · SSE" },
+  { label: "웹 밖", value: "React Native · Three.js" },
+  { label: "서버도", value: "Kotlin · Go · Spring Boot" },
 ];
 
 /** 문서에 굳이 넣지 않는 프로젝트 슬러그 (요약본 기준) */
