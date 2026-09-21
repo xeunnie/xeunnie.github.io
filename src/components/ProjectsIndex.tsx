@@ -76,15 +76,20 @@ function belongsTo(p: Project): string {
 function ProjectCard({
   project,
   index,
+  no,
   scopeTag,
 }: {
   project: Project;
   index: number;
+  /** 목록에서 몇 번째인지 — 팜플렛처럼 번호를 크게 세운다 */
+  no: number;
   /** 맡은 범위순으로 볼 때만 — 왜 이 순서인지 카드에서 보이게 */
   scopeTag?: string;
 }) {
   const style = CATEGORY_STYLE[project.category];
   const shot = project.shots?.[0];
+  // 캡처가 한쪽에만 쭉 붙어 있으면 열세 줄이 같은 리듬으로 흐른다. 한 줄씩 번갈아 놓는다.
+  const flip = no % 2 === 0;
 
   return (
     <motion.article
@@ -95,9 +100,14 @@ function ProjectCard({
       <Link
         href={`/projects/${project.slug}`}
         className={`group grid gap-5 rounded-2xl border border-slate-800/60 bg-slate-900/20 p-5 transition-colors duration-300 hover:border-ice-500/30 sm:gap-8 sm:p-7 ${
-          shot ? "lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]" : ""
+          shot
+            ? flip
+              ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]"
+              : "lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]"
+            : ""
         }`}
       >
+        <div className={flip ? "lg:order-2" : ""}>
         {shot &&
           (project.shotsLayout === "phone" ? (
             // 세로 캡처는 16:9 로 자르면 윗부분만 남으므로 세 장을 나란히 둔다
@@ -124,8 +134,22 @@ function ProjectCard({
               className="aspect-[16/10] w-full rounded-xl border border-slate-800 object-cover object-left-top"
             />
           ))}
+        </div>
 
         <div className="flex min-w-0 flex-col">
+          {/* 번호와 가는 줄 — 도록의 도판 번호처럼 */}
+          <div className="mb-4 flex items-center gap-3">
+            <span className="font-mono text-sm font-bold tabular-nums text-ice-500">
+              {String(no).padStart(2, "0")}
+            </span>
+            <span aria-hidden className="h-px w-8 bg-slate-800" />
+            {project.featured && (
+              <span className="text-[11px] font-semibold tracking-[0.06em] text-amber-400">
+                대표 작업
+              </span>
+            )}
+          </div>
+
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <span
               className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${style.color}`}
@@ -133,11 +157,6 @@ function ProjectCard({
               <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
               {style.label}
             </span>
-            {project.featured && (
-              <span className="rounded-full border border-amber-500/25 bg-amber-500/10 px-2 py-0.5 text-[11px] font-medium text-amber-400">
-                대표
-              </span>
-            )}
             {project.award && (
               <span className="inline-flex items-center gap-1 rounded-full border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 text-[11px] font-medium text-amber-400">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
@@ -293,6 +312,17 @@ export default function ProjectsIndex() {
     });
     return out;
   }, [major, sort]);
+
+  /**
+   * 번호는 화면에 보이는 순서를 따라야 한다.
+   * rank 순으로 매기면 제품군으로 묶인 뒤 01 다음에 07 이 오는 일이 생긴다.
+   */
+  const numberOf = useMemo(() => {
+    const m = new Map<string, number>();
+    let n = 0;
+    blocks.forEach((b) => b.items.forEach((p) => m.set(p.slug, ++n)));
+    return m;
+  }, [blocks]);
 
   // 자주 쓰는 두 축만 펼쳐 두고 나머지는 눌러서 연다
   const [moreFilters, setMoreFilters] = useState(false);
@@ -469,6 +499,7 @@ export default function ProjectsIndex() {
                         key={p.slug}
                         project={p}
                         index={j}
+                        no={numberOf.get(p.slug) ?? j + 1}
                         scopeTag={sort === "scope" ? SCOPE_LABEL[scopeKey(p.role)] : undefined}
                       />
                     ))}
@@ -479,6 +510,7 @@ export default function ProjectsIndex() {
                   key={b.key}
                   project={b.items[0]}
                   index={i}
+                  no={numberOf.get(b.items[0].slug) ?? i + 1}
                   scopeTag={sort === "scope" ? SCOPE_LABEL[scopeKey(b.items[0].role)] : undefined}
                 />
               )

@@ -63,18 +63,22 @@ export const ABOUT_TRAITS: AboutTrait[] = [
 /**
  * 첫 화면에서 30초 안에 읽혀야 하는 것.
  * 분야 나열이 아니라 "남들이 잘 안 겪는 문제를 실제로 풀었다"는 증거로 고른다.
+ * lead 는 멀리서도 눈에 걸리는 한 조각 — 문장을 다 읽기 전에 먼저 보이는 말.
  */
 export const HERO_PROOF = [
   {
-    text: "지하철 폐쇄망에 CCTV를 붙이고, 현장에서 고쳐 가며 운영했습니다",
+    lead: "폐쇄망",
+    text: "지하철 안에 CCTV를 붙이고, 현장에서 고쳐 가며 운영했습니다",
     href: "/projects/busan-metro",
   },
   {
-    text: "클라우드 웹앱과 매장 안 프린터 사이를 잇는 프로그램을 만들었습니다",
+    lead: "매장 안",
+    text: "클라우드 웹앱과 주방 프린터 사이를 잇는 프로그램을 만들었습니다",
     href: "/projects/vgolf-fnb",
   },
   {
-    text: "돌아가던 앱을 다시 재서, 저장 한 번에 7.89ms 걸리던 것을 0.058ms로",
+    lead: "7.89ms → 0.058ms",
+    text: "돌아가던 앱을 다시 재서 저장 한 번을 이만큼 줄였습니다",
     href: "/projects/vgolf-pm30",
   },
 ] as const;

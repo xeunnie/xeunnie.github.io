@@ -210,7 +210,7 @@ export default function Chronicle({ posts }: { posts: BlogPost[] }) {
 
   return (
     <section className="py-16">
-      <div className="mx-auto max-w-5xl px-6">
+      <div className="mx-auto max-w-6xl px-6">
         {/* 정렬은 프로젝트 목록과 같은 밑줄 탭으로 — 사이트 안에서 같은 동작은 같은 모양이어야 한다 */}
         <div className="mb-14 flex flex-wrap items-center gap-x-5 gap-y-2 border-y border-slate-800 py-3">
           <span className="font-mono text-xs tabular-nums text-slate-500">

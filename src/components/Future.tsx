@@ -15,7 +15,7 @@ export default function Future() {
 
   return (
     <section className="py-20" ref={ref}>
-      <div className="mx-auto max-w-4xl px-6">
+      <div className="mx-auto max-w-6xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

@@ -40,7 +40,7 @@ export default function CareerDetail({ career, prev, next }: Props) {
   return (
     <main className="min-h-screen">
       <nav className="fixed top-0 inset-x-0 z-50 glass border-b border-white/5">
-        <div className="mx-auto max-w-4xl px-6 h-16 flex items-center justify-between">
+        <div className="mx-auto max-w-5xl px-6 h-16 flex items-center justify-between">
           <Link
             href="/about#career"
             className="flex items-center gap-2 text-sm text-slate-400 hover:text-ice-400 transition-colors"
@@ -54,7 +54,7 @@ export default function CareerDetail({ career, prev, next }: Props) {
       </nav>
 
       <section className="pt-32 pb-16 mesh-bg">
-        <div className="mx-auto max-w-4xl px-6">
+        <div className="mx-auto max-w-5xl px-6">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -81,7 +81,7 @@ export default function CareerDetail({ career, prev, next }: Props) {
       </section>
 
       <section className="py-16">
-        <div className="mx-auto max-w-4xl px-6 space-y-20">
+        <div className="mx-auto max-w-5xl px-6 space-y-20">
           <ScrollSection>
             <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">무엇을 만들었나</h2>
             <p className="text-base text-slate-300 leading-relaxed">{career.summary}</p>
@@ -176,7 +176,7 @@ export default function CareerDetail({ career, prev, next }: Props) {
       </section>
 
       <section className="border-t border-slate-800/60 py-12">
-        <div className="mx-auto max-w-4xl px-6 flex justify-between items-center">
+        <div className="mx-auto max-w-5xl px-6 flex justify-between items-center">
           {prev ? (
             <Link
               href={`/career/${prev.id}`}

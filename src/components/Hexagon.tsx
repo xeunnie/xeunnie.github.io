@@ -85,6 +85,19 @@ export default function Hexagon() {
           style={{ transformOrigin: `${C}px ${C}px` }}
         />
 
+        {/* 가리킨 축만 선을 굵게 — 어느 방향을 보고 있는지 */}
+        {at !== null && (
+          <line
+            x1={C}
+            y1={C}
+            x2={point(at, 1)[0]}
+            y2={point(at, 1)[1]}
+            stroke="var(--acc)"
+            strokeWidth="1.5"
+            strokeOpacity="0.5"
+          />
+        )}
+
         {/* 꼭짓점 — 가리키는 축만 커진다 */}
         {HEX_AXES.map((a, i) => {
           const [x, y] = point(i, a.value / MAX);
@@ -94,14 +107,39 @@ export default function Hexagon() {
               key={a.label}
               cx={x}
               cy={y}
-              r={on ? 6 : 3.5}
               fill="var(--acc)"
               initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.3, delay: 0.5 + i * 0.05 }}
+              animate={inView ? { opacity: 1, r: on ? 7 : 3.5 } : { opacity: 0 }}
+              transition={{
+                opacity: { duration: 0.3, delay: 0.5 + i * 0.05 },
+                r: { type: "spring", stiffness: 420, damping: 24 },
+              }}
             />
           );
         })}
+
+        {/* 가운데 — 아무것도 안 가리키면 축 개수, 가리키면 그 축의 값 */}
+        <text
+          x={C}
+          y={C - 6}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          className="text-[9px]"
+          fill="var(--g-faint)"
+        >
+          {at === null ? "여섯 축" : HEX_AXES[at].label}
+        </text>
+        <text
+          x={C}
+          y={C + 12}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          className="text-[15px]"
+          fontWeight="700"
+          fill={at === null ? "var(--g-faint)" : "var(--acc)"}
+        >
+          {at === null ? `1 — ${MAX}` : `${HEX_AXES[at].value} / ${MAX}`}
+        </text>
 
         {/* 축 이름 — 원 바깥으로 살짝 밀어 겹치지 않게 */}
         {HEX_AXES.map((a, i) => {
@@ -121,10 +159,34 @@ export default function Hexagon() {
             </text>
           );
         })}
+
+        {/*
+          손댈 자리. 점은 3.5px 라 마우스로 맞추기 어렵고 손가락으로는 불가능하다.
+          꼭짓점 둘레에 보이지 않는 넓은 원을 깔아 그 위에서 반응하게 한다.
+        */}
+        {HEX_AXES.map((a, i) => {
+          const [x, y] = point(i, 1.05);
+          return (
+            <circle
+              key={`hit-${a.label}`}
+              cx={x}
+              cy={y}
+              r={34}
+              fill="transparent"
+              style={{ cursor: "pointer" }}
+              onMouseEnter={() => setAt(i)}
+              onMouseLeave={() => setAt(null)}
+              onFocus={() => setAt(i)}
+              onBlur={() => setAt(null)}
+            >
+              <title>{`${a.label} ${a.value}/${MAX} — ${a.note}`}</title>
+            </circle>
+          );
+        })}
       </motion.svg>
 
       <div>
-        <ul className="divide-y divide-slate-800/60 border-y border-slate-800/60">
+        <ul className="-mx-3 divide-y divide-slate-800/60 border-y border-slate-800/60">
           {HEX_AXES.map((a, i) => (
             <motion.li
               key={a.label}
@@ -133,13 +195,31 @@ export default function Hexagon() {
               transition={{ duration: 0.4, delay: 0.3 + i * 0.06 }}
               onMouseEnter={() => setAt(i)}
               onMouseLeave={() => setAt(null)}
-              className={`flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3 transition-colors ${
+              onFocus={() => setAt(i)}
+              onBlur={() => setAt(null)}
+              tabIndex={0}
+              className={`flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-lg px-3 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ice-500/40 ${
                 at === i ? "bg-ice-50" : ""
               }`}
             >
-              <span className="w-28 shrink-0 text-sm font-semibold text-slate-100">{a.label}</span>
+              <span
+                className={`w-32 shrink-0 text-sm font-semibold transition-colors ${
+                  at === i ? "text-ice-500" : "text-slate-100"
+                }`}
+              >
+                {a.label}
+              </span>
               <span className="min-w-0 flex-1 text-[13px] leading-relaxed text-slate-400">
                 {a.note}
+              </span>
+              {/* 값은 가리킬 때만 — 평소엔 등급표처럼 보이지 않게 */}
+              <span
+                className={`ml-auto font-mono text-xs tabular-nums transition-opacity ${
+                  at === i ? "text-ice-500 opacity-100" : "opacity-0"
+                }`}
+                aria-hidden
+              >
+                {a.value}/{MAX}
               </span>
             </motion.li>
           ))}

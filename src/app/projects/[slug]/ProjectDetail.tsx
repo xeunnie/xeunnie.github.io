@@ -57,7 +57,7 @@ export default function ProjectDetail({
   return (
     <main className="landing min-h-screen">
       <nav className="fixed top-0 inset-x-0 z-50 glass border-b border-white/5">
-        <div className="mx-auto max-w-4xl px-6 h-16 flex items-center justify-between">
+        <div className="mx-auto max-w-5xl px-6 h-16 flex items-center justify-between">
           <Link
             href="/projects"
             className="flex items-center gap-2 text-sm text-slate-400 hover:text-ice-400 transition-colors"
@@ -238,7 +238,7 @@ export default function ProjectDetail({
       )}
 
       <section className="py-16">
-        <div className="mx-auto max-w-4xl px-6 space-y-28">
+        <div className="mx-auto max-w-5xl px-6 space-y-28">
           {/* 요약은 앞의 넷만 펼쳐 두고 나머지는 접는다 — 전부 같은 무게로 쌓이면 안 읽힌다 */}
           <ScrollSection>
             <h2 className="mb-8 text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">
@@ -365,7 +365,7 @@ export default function ProjectDetail({
 
       {(related.length > 0 || career) && (
         <section className="border-t border-slate-800/60 py-12">
-          <div className="mx-auto max-w-4xl px-6">
+          <div className="mx-auto max-w-5xl px-6">
             <h2 className="mb-7 text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">
               이어서 볼 것
             </h2>
@@ -427,7 +427,7 @@ export default function ProjectDetail({
       )}
 
       <section className="border-t border-slate-800/60 py-12">
-        <div className="mx-auto max-w-4xl px-6 flex justify-between items-center">
+        <div className="mx-auto max-w-5xl px-6 flex justify-between items-center">
           {prevProject ? (
             <Link href={`/projects/${prevProject.slug}`} className="group flex items-center gap-3 text-sm text-slate-400 hover:text-ice-400 transition-colors">
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 3L5 9l6 6" /></svg>
