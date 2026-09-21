@@ -14,7 +14,7 @@ const CATEGORY_STYLE = {
 } as const;
 
 type Axis = "kind" | "company" | "school" | "team" | "group";
-type Sort = "family" | "time";
+type Sort = "pick" | "time" | "scope";
 
 /** 프로젝트에서 축별 값을 뽑는다. 값이 없으면 그 축의 필터 대상이 아니다. */
 const AXIS_VALUE: Record<Axis, (p: Project) => string | undefined> = {
@@ -52,16 +52,44 @@ function endKey(period: string): number {
  * 한 줄에 하나씩, 캡처를 왼쪽에 크게 두고 글은 오른쪽에서 읽게 바꿨다.
  * 카드에서 걷어낸 것: 상세 섹션 개수, 수상 문구 중복, 작은 글씨의 역할 줄.
  */
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+/**
+ * 맡은 범위를 role 문구에서 읽는다.
+ * 기여도를 따로 적어 두면 18개를 손으로 매겨야 하고, 매길 때마다 후해진다.
+ * 이미 적어 둔 역할 문구가 가장 정직한 근거다.
+ */
+function scopeKey(role: string): number {
+  if (/단독|전담|전체 구축/.test(role)) return 0;
+  if (/팀장|리드|주도/.test(role)) return 1;
+  if (/참여|팀원/.test(role)) return 3;
+  // 나머지는 한 파트를 맡은 것으로 본다. 키워드가 없다고 "참여" 로 내리면
+  // 혼자 디자인까지 한 작업이 거들기만 한 것처럼 보인다.
+  return 2;
+}
+
+const SCOPE_LABEL = ["단독·전담", "팀장·주도", "파트 담당", "참여"] as const;
+
+/** 소속 — 타임라인순에서 덩어리를 나누는 기준 */
+function belongsTo(p: Project): string {
+  return p.company ?? p.org ?? "개인 프로젝트";
+}
+
+function ProjectCard({
+  project,
+  index,
+  scopeTag,
+}: {
+  project: Project;
+  index: number;
+  /** 맡은 범위순으로 볼 때만 — 왜 이 순서인지 카드에서 보이게 */
+  scopeTag?: string;
+}) {
   const style = CATEGORY_STYLE[project.category];
   const shot = project.shots?.[0];
 
   return (
     <motion.article
-      layout
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
     >
       <Link
@@ -119,6 +147,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 수상
               </span>
             )}
+            {scopeTag && (
+              <span className="rounded-full border border-ice-500/40 bg-ice-100 px-2 py-0.5 text-[11px] font-semibold text-ice-500">
+                {scopeTag}
+              </span>
+            )}
             <span className="text-xs text-slate-500">
               {project.company ?? project.org}
               <span className="mx-1.5 text-slate-700">·</span>
@@ -161,7 +194,7 @@ export default function ProjectsIndex() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const [selected, setSelected] = useState<Partial<Record<Axis, string>>>({});
-  const [sort, setSort] = useState<Sort>("family");
+  const [sort, setSort] = useState<Sort>("pick");
 
   /** 축마다 실제로 존재하는 값과 개수를 데이터에서 뽑는다. 프로젝트가 늘면 옵션도 저절로 늘어난다. */
   const axes = useMemo(
@@ -198,6 +231,11 @@ export default function ProjectsIndex() {
   const visible = useMemo(() => {
     const byTime = (a: Project, b: Project) => endKey(b.period) - endKey(a.period);
     if (sort === "time") return [...filtered].sort(byTime);
+    if (sort === "scope")
+      return [...filtered].sort((a, b) => {
+        const d = scopeKey(a.role) - scopeKey(b.role);
+        return d !== 0 ? d : (a.rank ?? 999) - (b.rank ?? 999);
+      });
     // 큐레이션 순서 우선 — rank 가 없으면 featured, 그다음 최신순
     return [...filtered].sort((a, b) => {
       const ra = a.rank ?? 999;
@@ -208,32 +246,47 @@ export default function ProjectsIndex() {
     });
   }, [filtered, sort]);
 
-  /**
-   * 같은 group 을 가진 프로젝트끼리 묶는다. 한 제품이 여러 앱으로 쪼개져도
-   * 목록에서 한 덩어리로 보이게 하기 위한 것. 시간순 보기에서는 묶지 않는다.
-   */
   const major = useMemo(() => visible.filter((p) => !p.minor), [visible]);
   const minor = useMemo(() => visible.filter((p) => p.minor), [visible]);
 
-  const blocks = useMemo<{ key: string; group?: string; items: Project[] }[]>(() => {
-    if (sort === "time") return major.map((p) => ({ key: p.slug, items: [p] }));
+  /**
+   * 보기마다 묶는 기준이 다르다.
+   *   추천순   — 같은 제품군끼리. 한 제품이 여러 앱으로 쪼개져도 한 덩어리로 보이게.
+   *   타임라인순 — 소속끼리. "플럭시티에서 이걸 했고, 그 전엔 여기서 이걸 했다" 가 읽히게.
+   *   맡은 범위순 — 묶지 않고 단독부터 쭉. 묶으면 범위 순서가 끊긴다.
+   */
+  const blocks = useMemo<
+    { key: string; group?: string; note?: string; items: Project[] }[]
+  >(() => {
+    if (sort === "scope") return major.map((p) => ({ key: p.slug, items: [p] }));
+
+    const keyOf = (p: Project) => (sort === "time" ? belongsTo(p) : p.group);
 
     const counts = new Map<string, number>();
     major.forEach((p) => {
-      if (p.group) counts.set(p.group, (counts.get(p.group) ?? 0) + 1);
+      const k = keyOf(p);
+      if (k) counts.set(k, (counts.get(k) ?? 0) + 1);
     });
 
-    const out: { key: string; group?: string; items: Project[] }[] = [];
+    const out: { key: string; group?: string; note?: string; items: Project[] }[] = [];
     const placed = new Set<string>();
     major.forEach((p) => {
-      if (p.group && counts.get(p.group)! > 1) {
-        if (placed.has(p.group)) return;
-        placed.add(p.group);
-        out.push({
-          key: `g:${p.group}`,
-          group: p.group,
-          items: major.filter((q) => q.group === p.group),
-        });
+      const k = keyOf(p);
+      if (k && counts.get(k)! > 1) {
+        if (placed.has(k)) return;
+        placed.add(k);
+        const items = major.filter((q) => keyOf(q) === k);
+        // 소속 덩어리에는 언제부터 언제까지였는지를 같이 적는다
+        const span =
+          sort === "time"
+            ? (() => {
+                const ends = items.map((q) => endKey(q.period));
+                const from = String(Math.min(...ends)).slice(0, 4);
+                const to = String(Math.max(...ends)).slice(0, 4);
+                return from === to ? from : `${from} — ${to}`;
+              })()
+            : "같은 제품군";
+        out.push({ key: `g:${k}`, group: k, note: `${span} · ${items.length}개`, items });
       } else {
         out.push({ key: p.slug, items: [p] });
       }
@@ -355,8 +408,9 @@ export default function ProjectsIndex() {
               <div className="ml-auto flex items-center gap-4">
                 {(
                   [
-                    { key: "family" as const, label: "제품군순" },
-                    { key: "time" as const, label: "시간순" },
+                    { key: "pick" as const, label: "추천순" },
+                    { key: "time" as const, label: "타임라인순" },
+                    { key: "scope" as const, label: "맡은 범위순" },
                   ]
                 ).map((o) => (
                   <button
@@ -387,37 +441,50 @@ export default function ProjectsIndex() {
           한 줄에 하나씩. 같은 제품군은 상자로 감싸는 대신 머리글과 왼쪽 선으로 묶는다 —
           상자 안에 상자가 들어가면 어디까지가 한 덩어리인지 되레 알기 어렵다.
         */}
-        <motion.div layout className="space-y-6">
-          <AnimatePresence mode="popLayout">
+        {/*
+          정렬을 바꾸면 묶는 기준 자체가 달라져 카드의 key 가 통째로 바뀐다.
+          이럴 때 항목마다 따로 빠져나가게 두면(popLayout) 나간 카드가 남아 쌓였다.
+          목록 전체를 한 덩어리로 보고 교체한다 — 먼저 사라지고, 그다음 들어온다.
+        */}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={`${sort}|${Object.entries(selected).sort().join()}`}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.22 }}
+            className="space-y-6"
+          >
             {blocks.map((b, i) =>
               b.group ? (
-                <motion.section
-                  key={b.key}
-                  layout
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.4, delay: Math.min(i * 0.05, 0.3) }}
-                >
+                <section key={b.key}>
                   <div className="mb-4 flex flex-wrap items-center gap-3">
                     <h2 className="text-sm font-bold tracking-tight text-ice-500">{b.group}</h2>
                     <span aria-hidden className="h-px min-w-8 flex-1 bg-slate-800" />
-                    <span className="text-xs text-slate-500">
-                      같은 제품군 {b.items.length}개
-                    </span>
+                    <span className="text-xs text-slate-500">{b.note}</span>
                   </div>
                   <div className="space-y-4 border-l-2 border-ice-500/25 pl-4 sm:pl-6">
                     {b.items.map((p, j) => (
-                      <ProjectCard key={p.slug} project={p} index={j} />
+                      <ProjectCard
+                        key={p.slug}
+                        project={p}
+                        index={j}
+                        scopeTag={sort === "scope" ? SCOPE_LABEL[scopeKey(p.role)] : undefined}
+                      />
                     ))}
                   </div>
-                </motion.section>
+                </section>
               ) : (
-                <ProjectCard key={b.key} project={b.items[0]} index={i} />
+                <ProjectCard
+                  key={b.key}
+                  project={b.items[0]}
+                  index={i}
+                  scopeTag={sort === "scope" ? SCOPE_LABEL[scopeKey(b.items[0].role)] : undefined}
+                />
               )
             )}
-          </AnimatePresence>
-        </motion.div>
+          </motion.div>
+        </AnimatePresence>
 
         {minor.length > 0 && (
           <section className="mt-14 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-6 sm:p-7">
