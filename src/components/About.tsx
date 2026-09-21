@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { ABOUT_TRAITS, ABOUT_INTRO } from "@/lib/constants";
+import { ABOUT_TRAITS, ABOUT_INTRO, MOTTO, ABOUT_STANCE } from "@/lib/constants";
 
 export default function About() {
   const ref = useRef(null);
@@ -16,8 +16,20 @@ export default function About() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl font-bold tracking-tight text-slate-50 mb-4">중요하게 보는 것</h2>
-          <div className="h-px w-16 bg-ice-500 mb-8" />
+          {/* 좌우명이 먼저 읽히고, 아래 두 문단이 그 말을 받는다 */}
+          <figure className="mb-10 max-w-3xl">
+            <blockquote className="text-[clamp(1.6rem,4.2vw,2.6rem)] font-bold leading-[1.28] tracking-tight text-slate-50">
+              <span className="text-ice-500">“</span>
+              {MOTTO.line}
+              <span className="text-ice-500">”</span>
+            </blockquote>
+            <figcaption className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-400">
+              <span>{MOTTO.ko}</span>
+              <span className="text-slate-600">·</span>
+              <span className="text-slate-500">{MOTTO.by}</span>
+            </figcaption>
+          </figure>
+
           <div className="max-w-2xl space-y-4 mb-14">
             {ABOUT_INTRO.map((p) => (
               <p key={p} className="text-base text-slate-300 leading-relaxed">
@@ -27,6 +39,30 @@ export default function About() {
           </div>
         </motion.div>
 
+        {/* 기준을 늘어놓기 전에, 스스로를 어떻게 보는지부터 */}
+        <div className="mb-14 grid gap-10 md:grid-cols-2">
+          {ABOUT_STANCE.map((block, i) => (
+            <motion.div
+              key={block.heading}
+              initial={{ opacity: 0, y: 18 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+            >
+              <h3 className="mb-4 text-xl font-bold tracking-tight text-slate-50">
+                {block.heading}
+              </h3>
+              <div className="space-y-3">
+                {block.paragraphs.map((t) => (
+                  <p key={t} className="text-sm leading-relaxed text-slate-300">
+                    {t}
+                  </p>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <h3 className="mb-6 text-sm font-semibold tracking-tight text-ice-500">중요하게 보는 것</h3>
         <div className="grid md:grid-cols-2 gap-5">
           {ABOUT_TRAITS.map((trait, i) => (
             <motion.div
