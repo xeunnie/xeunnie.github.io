@@ -257,92 +257,125 @@ export default function ProjectsIndex() {
   return (
     <section className="relative py-16" ref={ref}>
       <div className="mx-auto max-w-6xl px-6">
+        {/*
+          필터는 목록보다 조용해야 한다. 상자로 감싸는 대신 가로줄로만 칸을 나누고,
+          누르는 것(칩)만 동그랗게 남겨 어디를 누르는지 한눈에 보이게 했다.
+        */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5 }}
-          className="mb-10 rounded-2xl border border-slate-800/60 bg-slate-900/20 p-5"
+          className="mb-12 border-y border-slate-800"
         >
-          <div className="flex flex-col gap-3">
+          <div className="divide-y divide-slate-800/60">
             {shownAxes.map((a) => (
-              <div key={a.axis} className="flex flex-wrap items-center gap-2">
-                <span className="w-20 shrink-0 font-mono text-[10px] tracking-wider uppercase text-slate-500">
+              <div
+                key={a.axis}
+                className="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:gap-5"
+              >
+                <span className="shrink-0 text-[11px] font-semibold tracking-[0.06em] text-slate-500 sm:w-16">
                   {a.label}
                 </span>
-                {a.options.map((o) => {
-                  const on = selected[a.axis] === o.value;
-                  return (
-                    <button
-                      key={o.value}
-                      onClick={() => toggle(a.axis, o.value)}
-                      aria-pressed={on}
-                      className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
-                        on
-                          ? "border-ice-500/40 bg-ice-100 text-ice-300"
-                          : "border-slate-800/60 bg-slate-900/40 text-slate-400 hover:border-ice-500/20 hover:text-ice-400"
-                      }`}
-                    >
-                      {o.value}
-                      <span className="ml-1.5 opacity-60">{o.count}</span>
-                    </button>
-                  );
-                })}
+                <div className="flex min-w-0 flex-wrap gap-1.5">
+                  {a.options.map((o) => {
+                    const on = selected[a.axis] === o.value;
+                    return (
+                      <button
+                        key={o.value}
+                        onClick={() => toggle(a.axis, o.value)}
+                        aria-pressed={on}
+                        className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs transition-all ${
+                          on
+                            ? "border-ice-500/60 bg-ice-100 font-semibold text-ice-500"
+                            : "border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-100"
+                        }`}
+                      >
+                        {o.value}
+                        <span
+                          className={`font-mono text-[10px] tabular-nums ${
+                            on ? "text-ice-500/70" : "text-slate-500"
+                          }`}
+                        >
+                          {o.count}
+                        </span>
+                        {/* 켜진 칩에는 끄는 자리를 보여 준다 */}
+                        {on && (
+                          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                            <path d="M3 3l6 6M9 3l-6 6" strokeLinecap="round" />
+                          </svg>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             ))}
-          </div>
 
-          {/* 축 다섯 줄을 한 번에 펼쳐 두면 목록보다 필터가 더 커 보인다 */}
-          {extraAxes.length > 0 && (
-            <button
-              onClick={() => setMoreFilters((v) => !v)}
-              className="mt-3 inline-flex items-center gap-1.5 text-xs text-slate-400 transition-colors hover:text-ice-400"
-            >
-              {moreFilters ? "필터 접기" : `${extraAxes.map((a) => a.label).join(" · ")} 필터`}
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className={`transition-transform ${moreFilters ? "rotate-180" : ""}`}
-              >
-                <path d="M4 6l4 4 4-4" />
-              </svg>
-            </button>
-          )}
-
-          <div className="mt-4 pt-4 border-t border-slate-800/60 flex flex-wrap items-center gap-3">
-            <span className="text-xs text-slate-400">
-              {visible.length}개 표시
-              {activeCount > 0 && <span className="text-slate-600"> / 전체 {PROJECTS.length}</span>}
-            </span>
-            {activeCount > 0 && (
-              <button
-                onClick={() => setSelected({})}
-                className="text-xs text-ice-400 hover:text-ice-300 transition-colors"
-              >
-                필터 해제
-              </button>
-            )}
-            <div className="ml-auto inline-flex rounded-lg border border-slate-800/60 bg-slate-900/40 p-0.5">
-              {(
-                [
-                  { key: "family" as const, label: "제품군순" },
-                  { key: "time" as const, label: "시간순" },
-                ]
-              ).map((o) => (
+            {/* 축 다섯 줄을 한 번에 펼쳐 두면 목록보다 필터가 더 커 보인다 */}
+            {extraAxes.length > 0 && (
+              <div className="py-2.5">
                 <button
-                  key={o.key}
-                  onClick={() => setSort(o.key)}
-                  aria-pressed={sort === o.key}
-                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
-                    sort === o.key ? "bg-ice-100 text-ice-300" : "text-slate-500 hover:text-slate-300"
-                  }`}
+                  onClick={() => setMoreFilters((v) => !v)}
+                  className="inline-flex items-center gap-1.5 text-xs text-slate-500 transition-colors hover:text-ice-500"
                 >
-                  {o.label}
+                  {moreFilters ? "조건 접기" : `${extraAxes.map((a) => a.label).join(" · ")}으로도 고르기`}
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className={`transition-transform ${moreFilters ? "rotate-180" : ""}`}
+                  >
+                    <path d="M4 6l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </button>
-              ))}
+              </div>
+            )}
+
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 py-3">
+              <span className="font-mono text-xs tabular-nums text-slate-500">
+                <span className="font-semibold text-slate-100">{visible.length}</span>
+                <span className="mx-1 text-slate-700">/</span>
+                {PROJECTS.length}
+              </span>
+              {activeCount > 0 && (
+                <button
+                  onClick={() => setSelected({})}
+                  className="text-xs text-ice-500 underline-offset-4 transition-colors hover:underline"
+                >
+                  전체 보기
+                </button>
+              )}
+              {/* 정렬은 누르는 칩이 아니라 고르는 탭 — 밑줄로 직선을 맞춘다 */}
+              <div className="ml-auto flex items-center gap-4">
+                {(
+                  [
+                    { key: "family" as const, label: "제품군순" },
+                    { key: "time" as const, label: "시간순" },
+                  ]
+                ).map((o) => (
+                  <button
+                    key={o.key}
+                    onClick={() => setSort(o.key)}
+                    aria-pressed={sort === o.key}
+                    className={`relative py-1 text-xs transition-colors ${
+                      sort === o.key
+                        ? "font-semibold text-slate-100"
+                        : "text-slate-500 hover:text-slate-300"
+                    }`}
+                  >
+                    {o.label}
+                    {sort === o.key && (
+                      <motion.span
+                        layoutId="sort-underline"
+                        className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-ice-500"
+                      />
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </motion.div>

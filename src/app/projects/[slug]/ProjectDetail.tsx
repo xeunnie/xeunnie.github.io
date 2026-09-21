@@ -55,7 +55,7 @@ export default function ProjectDetail({
   const [zoom, setZoom] = useState<number | null>(null);
 
   return (
-    <main className="min-h-screen">
+    <main className="landing min-h-screen">
       <nav className="fixed top-0 inset-x-0 z-50 glass border-b border-white/5">
         <div className="mx-auto max-w-4xl px-6 h-16 flex items-center justify-between">
           <Link
@@ -77,93 +77,168 @@ export default function ProjectDetail({
         </div>
       </nav>
 
-      <section className="flex min-h-[78vh] items-center pt-32 pb-20">
-        <div className="mx-auto max-w-4xl px-6">
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="flex items-center gap-3 mb-4">
+      {/* ── 여는 면 ──
+          팜플렛 표지처럼 표제를 오른쪽으로 몰고, 그 아래를 두 단으로 나눈다.
+          왼쪽은 판권면처럼 사실만, 오른쪽은 무엇을 만들었는지. 한 화면에서 끝난다. */}
+      <section className="flex min-h-[100svh] items-center px-6 pt-28 pb-16">
+        <div className="mx-auto w-full max-w-5xl">
+          <motion.header
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl"
+          >
+            <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-2">
               <span
                 className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium ${CATEGORY_STYLE[project.category]}`}
               >
                 <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${CATEGORY_DOT[project.category]}`} />
                 {CATEGORY_LABEL[project.category]}
               </span>
-              {project.company && <span className="text-xs text-slate-500">@ {project.company}</span>}
-              {!project.company && project.org && (
-                <span className="text-xs text-slate-500">{project.org}</span>
-              )}
-              <span className="text-xs font-mono text-slate-500">{project.period}</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-50 mb-3">{project.title}</h1>
-            <p className="text-lg text-ice-400 font-medium mb-2">{project.subtitle}</p>
-            <p className="text-sm font-mono text-slate-500">Role: {project.role}</p>
-            {project.award && (
-              <div className="mt-6 inline-flex items-start gap-3 rounded-xl border border-amber-400/25 bg-amber-400/[0.07] px-5 py-4">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0 text-amber-300" aria-hidden>
-                  <circle cx="12" cy="8" r="6" />
-                  <path d="M8.2 13.9 7 22l5-3 5 3-1.2-8.1" />
-                </svg>
-                <div>
-                  <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-amber-300/80 mb-1">
-                    수상
-                  </p>
-                  <p className="text-base font-semibold text-amber-400">{project.award}</p>
-                  {project.awardImage && (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      src={project.awardImage}
-                      alt={project.award}
-                      className="mt-4 max-w-sm w-full rounded-lg border border-amber-400/20"
-                      loading="lazy"
-                    />
-                  )}
-                </div>
-              </div>
-            )}
-          </motion.div>
-        </div>
-      </section>
+            <h1 className="text-[2.5rem] font-bold leading-[1.1] tracking-tight text-slate-50 sm:text-5xl lg:text-6xl">
+              {project.title}
+            </h1>
+            <p className="mt-4 text-lg font-medium leading-snug text-ice-500 sm:text-xl">
+              {project.subtitle}
+            </p>
+          </motion.header>
 
-      <section className="py-16">
-        <div className="mx-auto max-w-4xl px-6 space-y-28">
-          {/* 맥락 먼저 — 무엇을 왜 만들었는지 */}
-          <ScrollSection>
-            <h2 className="mb-7 text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">무엇을 만들었나</h2>
-            {/* 대표 화면 한 장을 글 옆에 둔다 — 무엇을 만들었는지가 글보다 빨리 읽힌다 */}
-            <div
-              className={
-                lead ? "grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start" : ""
-              }
-            >
+          {/* 표제와 본문을 가르는 선 — 오른쪽에서 왼쪽으로 옅어진다 */}
+          <motion.div
+            aria-hidden
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            style={{ transformOrigin: "left" }}
+            className="my-9 h-px w-full bg-gradient-to-r from-ice-500/60 via-slate-700 to-transparent lg:my-12"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="grid gap-10 lg:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] lg:gap-14"
+          >
+            {/* 판권면 — 누가, 언제, 무엇을 맡았는지 */}
+            <dl className="grid grid-cols-2 gap-x-6 gap-y-5 self-start sm:grid-cols-3 lg:grid-cols-1 lg:border-r lg:border-slate-800 lg:pr-10">
+              <div>
+                <dt className="mb-1.5 text-[11px] font-semibold tracking-[0.06em] text-slate-500">
+                  맡은 일
+                </dt>
+                <dd className="text-[13px] leading-relaxed text-slate-200">{project.role}</dd>
+              </div>
+              <div>
+                <dt className="mb-1.5 text-[11px] font-semibold tracking-[0.06em] text-slate-500">
+                  기간
+                </dt>
+                <dd className="font-mono text-[13px] text-slate-200">{project.period}</dd>
+              </div>
+              <div>
+                <dt className="mb-1.5 text-[11px] font-semibold tracking-[0.06em] text-slate-500">
+                  소속
+                </dt>
+                <dd className="text-[13px] leading-relaxed text-slate-200">
+                  {project.company ?? project.org}
+                  {project.team && <span className="block text-slate-400">{project.team}</span>}
+                </dd>
+              </div>
+              {project.award && (
+                <div className="col-span-2 sm:col-span-3 lg:col-span-1">
+                  <dt className="mb-1.5 text-[11px] font-semibold tracking-[0.06em] text-amber-400">
+                    수상
+                  </dt>
+                  <dd className="flex items-start gap-2 text-[13px] font-medium leading-relaxed text-amber-400">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden>
+                      <circle cx="12" cy="8" r="6" />
+                      <path d="M8.2 13.9 7 22l5-3 5 3-1.2-8.1" />
+                    </svg>
+                    {project.award}
+                  </dd>
+                </div>
+              )}
+            </dl>
+
+            {/* 본문 — 첫 문단을 한 단 크게 잡아 들어가는 문이 되게 */}
+            <div>
+              <h2 className="mb-6 text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">
+                무엇을 만들었나
+              </h2>
               <div className="space-y-4">
-                {toParagraphs(project.overview).map((para) => (
-                  <p key={para} className="text-[17px] leading-[1.85] text-slate-300">
+                {toParagraphs(project.overview).map((para, i) => (
+                  <p
+                    key={para}
+                    className={
+                      i === 0
+                        ? "text-[19px] leading-[1.75] text-slate-200"
+                        : "text-[17px] leading-[1.85] text-slate-300"
+                    }
+                  >
                     <Marked text={para} subtle />
                   </p>
                 ))}
               </div>
-              {lead && (
-                <figure>
-                  <button
-                    type="button"
-                    onClick={() => setZoom(0)}
-                    aria-label="대표 화면 크게 보기"
-                    className="group block w-full cursor-zoom-in overflow-hidden rounded-xl border border-slate-800 bg-slate-900"
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={lead.src}
-                      alt={lead.caption}
-                      className="w-full transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
-                  </button>
-                  <figcaption className="mt-3 text-xs leading-relaxed text-slate-500">
-                    {lead.caption}
-                  </figcaption>
-                </figure>
-              )}
             </div>
-          </ScrollSection>
+          </motion.div>
 
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1 }}
+            className="mt-12 flex items-center gap-2 font-mono text-[11px] text-slate-500"
+          >
+            아래로
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+              <path d="M8 3v10M4 9l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </motion.p>
+        </div>
+      </section>
+
+      {/* 여는 면 바로 다음 한 장 — 글로 읽은 것을 눈으로 확인하는 자리 */}
+      {(lead || project.awardImage) && (
+        <ScrollSection className="pb-24">
+          <div className="mx-auto grid max-w-5xl items-end gap-6 px-6 lg:grid-cols-[minmax(0,1fr)_auto]">
+            {lead && (
+              <figure>
+                <button
+                  type="button"
+                  onClick={() => setZoom(0)}
+                  aria-label="대표 화면 크게 보기"
+                  className="group block w-full cursor-zoom-in overflow-hidden rounded-2xl border border-slate-800 bg-slate-900"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={lead.src}
+                    alt={lead.caption}
+                    className="w-full transition-transform duration-700 group-hover:scale-[1.02]"
+                  />
+                </button>
+                <figcaption className="mt-3 text-xs leading-relaxed text-slate-500">
+                  {lead.caption}
+                </figcaption>
+              </figure>
+            )}
+            {project.awardImage && (
+              <figure className={lead ? "lg:w-60" : "mx-auto max-w-md"}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={project.awardImage}
+                  alt={project.award ?? "수상"}
+                  loading="lazy"
+                  className="w-full rounded-xl border border-amber-400/25"
+                />
+                <figcaption className="mt-3 text-xs leading-relaxed text-slate-500">
+                  {project.award}
+                </figcaption>
+              </figure>
+            )}
+          </div>
+        </ScrollSection>
+      )}
+
+      <section className="py-16">
+        <div className="mx-auto max-w-4xl px-6 space-y-28">
           {/* 요약은 앞의 넷만 펼쳐 두고 나머지는 접는다 — 전부 같은 무게로 쌓이면 안 읽힌다 */}
           <ScrollSection>
             <h2 className="mb-8 text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">
@@ -215,6 +290,41 @@ export default function ProjectDetail({
                 sections={project.sections}
                 renderItem={(item) => <Bullet text={item} />}
               />
+            </ScrollSection>
+          )}
+
+          {project.learned && project.learned.length > 0 && (
+            <ScrollSection>
+              <h2 className="mb-2 text-xl font-bold tracking-tight text-slate-50 sm:text-2xl">
+                이 프로젝트에서 배운 것
+              </h2>
+              <p className="mb-8 text-sm leading-relaxed text-slate-400">
+                끝난 뒤에 남은 것들을 적었습니다.
+              </p>
+              <ol className="divide-y divide-slate-800/60 border-y border-slate-800/60">
+                {project.learned.map((item, i) => {
+                  const [head, ...body] = item.split(" — ");
+                  const text = body.join(" — ");
+                  return (
+                    <li
+                      key={item}
+                      className="grid gap-x-8 gap-y-2 py-7 sm:grid-cols-[minmax(0,13rem)_minmax(0,1fr)]"
+                    >
+                      <p className="flex items-baseline gap-3">
+                        <span className="font-mono text-xs font-semibold tabular-nums text-ice-500">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span className="text-base font-bold tracking-tight text-slate-100">
+                          {text ? head : "배운 것"}
+                        </span>
+                      </p>
+                      <p className="max-w-[38rem] text-[16px] leading-[1.9] text-slate-300">
+                        <Marked text={text || head} subtle />
+                      </p>
+                    </li>
+                  );
+                })}
+              </ol>
             </ScrollSection>
           )}
 
