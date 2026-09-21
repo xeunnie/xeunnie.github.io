@@ -11,7 +11,6 @@ import {
   PROJECTS,
   EDUCATION,
   ACTIVITIES,
-  PEER_REVIEWS,
 } from "@/lib/constants";
 import type { BadgeKey } from "@/lib/constants";
 import { RESUME_HEADLINE, RESUME_STATS, RESUME_SUMMARY } from "@/lib/resume";
@@ -278,18 +277,6 @@ export default function ResumeDoc() {
               </li>
             ))}
           </ul>
-        </Section>
-
-        {/* ── 동료 평가 ── */}
-        <Section title="Peer Reviews">
-          {PEER_REVIEWS.map((r) => (
-            <blockquote key={r.name} className="rz-quote">
-              <p>“{detail ? r.content : r.highlight}”</p>
-              <footer>
-                {r.name} · {r.role} · {r.relation}
-              </footer>
-            </blockquote>
-          ))}
         </Section>
 
         <div className="rz-foot">

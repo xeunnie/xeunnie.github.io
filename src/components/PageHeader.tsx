@@ -11,20 +11,20 @@ interface Props {
 
 export default function PageHeader({ title, lede, aside }: Props) {
   return (
-    <section className="pt-32 pb-12 mesh-bg border-b border-slate-800/40">
+    <section className="flex min-h-[72vh] items-center pt-32 pb-16">
       <div className="mx-auto max-w-6xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
+          className="flex w-full flex-col gap-10 md:flex-row md:items-end md:justify-between"
         >
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-50">
+            <h1 className="text-[2.5rem] font-bold leading-[1.1] tracking-tight text-slate-50 sm:text-5xl lg:text-6xl">
               {title}
             </h1>
             {lede && (
-              <p className="mt-4 text-base text-slate-400 leading-relaxed max-w-2xl">{lede}</p>
+              <p className="mt-6 max-w-2xl text-pretty text-lg leading-[1.8] text-slate-400">{lede}</p>
             )}
           </div>
           {aside && <div className="shrink-0">{aside}</div>}

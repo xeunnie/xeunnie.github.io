@@ -21,7 +21,7 @@ export default async function GrowthPage() {
   return (
     <>
       <Nav />
-      <main className="min-h-screen">
+      <main className="landing min-h-screen">
         <PageHeader
           title="타임라인"
           lede="2021년 첫 인턴십부터 지금까지, 해마다 한 일과 그 덕분에 할 수 있게 된 것을 적었습니다. 그때 쓴 블로그 글도 시기별로 함께 붙여 두었습니다."
