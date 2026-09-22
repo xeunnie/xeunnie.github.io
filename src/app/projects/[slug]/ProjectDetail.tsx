@@ -199,6 +199,63 @@ export default function ProjectDetail({
         </div>
       </section>
 
+      {/*
+        상세를 열자마자 읽혀야 하는 세 칸.
+        무엇이 막혔고 · 무엇을 했고 · 어떻게 됐는지.
+        결과 칸만 면을 깔고 수치에 형광펜을 쳐서, 훑어도 숫자가 먼저 걸리게 한다.
+      */}
+      {project.par && (
+        <ScrollSection className="pb-20">
+          <div className="mx-auto max-w-5xl px-6">
+            <ol className="grid gap-px overflow-hidden rounded-2xl border border-slate-800 bg-slate-800 lg:grid-cols-3">
+              {(
+                [
+                  { key: "problem", label: "PROBLEM", text: project.par.problem },
+                  { key: "action", label: "ACTION", text: project.par.action },
+                  { key: "result", label: "RESULT", text: project.par.result },
+                ] as const
+              ).map((step, i) => {
+                const last = step.key === "result";
+                return (
+                  <motion.li
+                    key={step.key}
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 0.45, delay: i * 0.1 }}
+                    className={`p-7 sm:p-8 ${last ? "bg-ice-50" : "bg-slate-950"}`}
+                  >
+                    <h2 className="mb-5 flex items-center gap-2.5">
+                      <span
+                        aria-hidden
+                        className={`h-1.5 w-1.5 rounded-full ${last ? "bg-ice-500" : "bg-slate-600"}`}
+                      />
+                      <span
+                        className={`font-mono text-[11px] font-bold tracking-[0.18em] ${
+                          last ? "text-ice-500" : "text-slate-500"
+                        }`}
+                      >
+                        {step.label}
+                      </span>
+                      <span aria-hidden className="h-px flex-1 bg-slate-800" />
+                      <span className="font-mono text-[11px] tabular-nums text-slate-600">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </h2>
+                    <p
+                      className={`text-[15px] leading-[1.9] ${last ? "text-slate-200" : "text-slate-300"}`}
+                    >
+                      {/* 결과에서만 형광펜 — 문제·한 일에서까지 칠하면 얼룩이 된다 */}
+                      <Marked text={step.text} subtle={!last} />
+                    </p>
+                  </motion.li>
+                );
+              })}
+            </ol>
+          </div>
+        </ScrollSection>
+      )}
+
       {/* 여는 면 바로 다음 한 장 — 글로 읽은 것을 눈으로 확인하는 자리 */}
       {(lead || project.awardImage) && (
         <ScrollSection className="pb-24">
@@ -510,7 +567,7 @@ function Bullet({ text, lead = false }: { text: string; lead?: boolean }) {
  * 단위가 붙은 수치만 고른다 — 아무 숫자나 칠하면 형광펜이 배경색이 된다.
  */
 const MEASURE =
-  /(\d[\d,.]*\s?(?:커밋|개월|개|건|명|줄|파일|편|배|ms|초|분|시간|일|주|년|KB|MB|GB|LOC|%|px))/g;
+  /(\d[\d,.]*\s?(?:커밋|개월|개|건|명|줄|종|파일|편|배|ms|초|분|시간|일|주|년|Mbps|KB|MB|GB|LOC|%|px))/g;
 
 function Marked({ text, subtle = false }: { text: string; subtle?: boolean }) {
   const parts = text.split(MEASURE);
