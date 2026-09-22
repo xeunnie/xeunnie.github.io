@@ -69,7 +69,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     slug: "onmeet",
-    rank: 6,
+    rank: 7,
     org: "코리아IT 풀스택 과정",
     award: "코리아IT 풀스택 과정 수강생 우수상",
     awardImage: "/shot/award-onmeet.jpg",
@@ -309,7 +309,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "plug-platform",
-    rank: 8,
+    rank: 9,
     team: "DX 기술팀",
     group: "Plug Platform",
     title: "Plug Platform",
@@ -386,7 +386,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "plug-atlas",
-    rank: 7,
+    rank: 8,
     team: "DX 기술팀",
     group: "Plug Platform",
     title: "Plug Atlas",
@@ -466,7 +466,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "vgolf-pm30",
-    rank: 4,
+    rank: 5,
     team: "클라우드팀",
     group: "VGOLF",
     title: "VGOLF 경기관제 PM30",
@@ -598,7 +598,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "vgolf",
-    rank: 10,
+    rank: 4,
     team: "클라우드팀",
     group: "VGOLF",
     title: "Vgolf",
@@ -1122,7 +1122,7 @@ export const PROJECTS: Project[] = [
     company: "플럭시티",
     team: "클라우드팀",
     group: "VGOLF",
-    rank: 9,
+    rank: 10,
     title: "VGOLF 스코어카드",
     subtitle: "라운드 결과 공유 웹 — 인앱브라우저 이미지 저장",
     category: "company",
@@ -1299,7 +1299,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "argos",
-    rank: 5,
+    rank: 6,
     title: "Argos",
     subtitle: "AI 실시간 수업 분석 플랫폼",
     category: "personal",
