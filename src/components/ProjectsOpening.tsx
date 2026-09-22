@@ -39,14 +39,14 @@ export default function ProjectsOpening() {
           {...rise(0.12)}
           className="mt-7 max-w-4xl text-[clamp(1.8rem,5vw,3.4rem)] font-bold leading-[1.22] tracking-tight text-slate-50"
         >
-          오래 붙들고 있던
+          한 땀 한 땀
           <br />
-          것들입니다
+          짠 것들입니다
         </motion.p>
 
         <motion.p {...rise(0.22)} className="mt-8 max-w-2xl text-lg leading-[1.8] text-slate-400">
-          하나하나 손이 많이 갔습니다. 넘긴 뒤에도 잘 돌아가는지 자꾸 확인하게 되고, 고칠 게
-          보이면 지금도 고칩니다.
+          누군가 오늘도 쓰고 있는 화면들이라, 넘긴 뒤에도 마음이 쓰입니다. 고칠 게 보이면
+          지금도 고칩니다.
         </motion.p>
 
         <motion.dl {...rise(0.3)} className="mt-12 flex flex-wrap gap-x-12 gap-y-6">
