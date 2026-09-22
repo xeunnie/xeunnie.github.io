@@ -18,9 +18,9 @@ export interface Activity {
 
 export const ACTIVITIES: Activity[] = [
   {
-    name: "Gunbamz Study",
+    name: "군밤즈 스터디",
     category: "dev",
-    org: "Gunbamz Study",
+    org: "FESI Study",
     period: "2025.01 — 현재",
     role: "스터디 팀장",
     active: true,
@@ -35,7 +35,7 @@ export const ACTIVITIES: Activity[] = [
     ],
   },
   {
-    name: "Front Ninjas Study",
+    name: "프론트 닌자스 스터디",
     category: "dev",
     org: "Front Ninjas",
     period: "2024.09 — 현재",
@@ -85,7 +85,7 @@ export const ACTIVITIES: Activity[] = [
     projects: ["ppiyo"],
   },
   {
-    name: "Kubernetes & Docker Study",
+    name: "쿠버네티스 · 도커 스터디",
     category: "dev",
     org: "Kubernetes DevOps Study",
     period: "2025.01 — 2025.03",

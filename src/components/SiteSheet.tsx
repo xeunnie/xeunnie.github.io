@@ -17,7 +17,7 @@ const HOME = {
  * NAV_ITEMS 를 그대로 펼치면 이력서가 협업 기록 앞에 끼어든다 —
  * 이력서는 다 보고 마지막에 한 장으로 확인하는 자리다.
  */
-const ORDER = ["/", "/projects", "/about", "/collaboration", "/growth", "/resume"];
+const ORDER = ["/", "/projects", "/about", "/collaboration", "/growth", "/activity", "/resume"];
 const PAGES = [HOME, ...NAV_ITEMS, ...MORE_ITEMS].sort(
   (a, b) => ORDER.indexOf(a.href) - ORDER.indexOf(b.href)
 );

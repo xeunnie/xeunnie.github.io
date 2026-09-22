@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ACTIVITIES, PROJECTS } from "@/lib/constants";
 import type { Activity } from "@/lib/constants";
 
-function Row({ a, i, inView }: { a: Activity; i: number; inView: boolean }) {
+export function ActivityRow({ a, i, inView }: { a: Activity; i: number; inView: boolean }) {
   const projects = (a.projects ?? [])
     .map((slug) => PROJECTS.find((p) => p.slug === slug))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
@@ -112,7 +112,7 @@ export default function Activities() {
 
         <ul className="divide-y divide-slate-800/60 border-y border-slate-800/60">
           {dev.map((a, i) => (
-            <Row key={a.name} a={a} i={i} inView={inView} />
+            <ActivityRow key={a.name} a={a} i={i} inView={inView} />
           ))}
         </ul>
 
@@ -150,7 +150,7 @@ export default function Activities() {
               >
                 <ul className="mt-6 divide-y divide-slate-800/60 border-y border-slate-800/60">
                   {lead.map((a, i) => (
-                    <Row key={a.name} a={a} i={i} inView />
+                    <ActivityRow key={a.name} a={a} i={i} inView />
                   ))}
                 </ul>
               </motion.div>

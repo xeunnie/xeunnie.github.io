@@ -49,6 +49,13 @@ export const MORE_ITEMS: NavItem[] = [
     desc: "디자이너·백엔드·현장 담당자와 어떻게 맞춰 갔는지, 그분들이 해 주신 이야기와 함께 두었습니다.",
   },
   {
+    label: "Activity",
+    ko: "활동",
+    href: "/activity",
+    question: "퇴근하고 나서는 뭘 하냐면요",
+    desc: "스터디 다섯 개와, 개발을 시작하기 전에 팀을 이끌던 기록을 모았습니다.",
+  },
+  {
     label: "Growth",
     ko: "타임라인",
     href: "/growth",
