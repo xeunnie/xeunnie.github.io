@@ -78,7 +78,6 @@ function ProjectCard({
   index,
   no,
   scopeTag,
-  group,
 }: {
   project: Project;
   index: number;
@@ -86,8 +85,6 @@ function ProjectCard({
   no: number;
   /** 맡은 범위순으로 볼 때만 — 왜 이 순서인지 카드에서 보이게 */
   scopeTag?: string;
-  /** 같은 제품군에 속한 경우 그 이름 */
-  group?: string;
 }) {
   const style = CATEGORY_STYLE[project.category];
   const shot = project.shots?.[0];
@@ -151,8 +148,8 @@ function ProjectCard({
                 대표 작업
               </span>
             )}
-            {group && (
-              <span className="ml-auto text-[11px] font-medium text-slate-500">{group}</span>
+            {project.group && (
+              <span className="ml-auto text-[11px] font-medium text-slate-500">{project.group}</span>
             )}
           </div>
 
@@ -276,16 +273,17 @@ export default function ProjectsIndex() {
 
   /**
    * 보기마다 묶는 기준이 다르다.
-   *   추천순   — 같은 제품군끼리. 한 제품이 여러 앱으로 쪼개져도 한 덩어리로 보이게.
+   *   추천순   — 묶지 않는다. 홈의 대표 작업과 같은 순서로 1번부터 쭉.
    *   타임라인순 — 소속끼리. "플럭시티에서 이걸 했고, 그 전엔 여기서 이걸 했다" 가 읽히게.
    *   맡은 범위순 — 묶지 않고 단독부터 쭉. 묶으면 범위 순서가 끊긴다.
    */
   const blocks = useMemo<
     { key: string; group?: string; note?: string; items: Project[] }[]
   >(() => {
-    if (sort === "scope") return major.map((p) => ({ key: p.slug, items: [p] }));
+    // 추천순은 큐레이션한 순서 그대로 보여 준다 — 제품군으로 묶으면 그 순서가 흐트러진다
+    if (sort !== "time") return major.map((p) => ({ key: p.slug, items: [p] }));
 
-    const keyOf = (p: Project) => (sort === "time" ? belongsTo(p) : p.group);
+    const keyOf = (p: Project) => belongsTo(p);
 
     const counts = new Map<string, number>();
     major.forEach((p) => {
@@ -501,7 +499,6 @@ export default function ProjectsIndex() {
                       project={p}
                       index={j}
                       no={numberOf.get(p.slug) ?? j + 1}
-                      group={b.group}
                       scopeTag={sort === "scope" ? SCOPE_LABEL[scopeKey(p.role)] : undefined}
                     />
                   ))}

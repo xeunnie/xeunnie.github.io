@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { HERO_PROOF, PIPELINE, DEV_SINCE } from "@/lib/constants";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -91,17 +90,30 @@ export default function Hero() {
           ))}
         </motion.ul>
 
-        {/* 첫 화면의 단 하나의 행동 */}
-        <motion.div {...rise(0.4)} className="mt-8 flex justify-center">
-          <Link
-            href="/projects"
-            className="group inline-flex items-center gap-2 rounded-full bg-ice-500 px-8 py-4 text-[15px] font-semibold text-slate-950 transition-colors hover:bg-ice-600"
+        {/*
+          처음 온 사람을 첫 화면에서 다른 페이지로 보내지 않는다.
+          홈을 순서대로 한 번 읽고 나서 갈 곳을 고르는 편이 헤매지 않는다.
+          그래서 여기 있는 하나뿐인 행동은 "다음 구간으로 내려가기" 다.
+        */}
+        <motion.div {...rise(0.42)} className="mt-9 flex justify-center">
+          <a
+            href="#projects"
+            className="group inline-flex items-center gap-2.5 rounded-full bg-ice-500 px-8 py-4 text-[15px] font-semibold text-slate-950 transition-colors hover:bg-ice-600"
           >
-            무엇을 만들었는지 보기
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="transition-transform group-hover:translate-x-0.5" aria-hidden>
-              <path d="M5 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+            대표 작업부터 보기
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className="transition-transform group-hover:translate-y-0.5"
+              aria-hidden
+            >
+              <path d="M8 3v10M4 9l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </Link>
+          </a>
         </motion.div>
 
       </div>

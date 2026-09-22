@@ -750,6 +750,12 @@ export const PROJECTS: Project[] = [
     overview:
       "골프 라운드 기록을 관리하는 React Native 앱입니다. 화면 구현부터 네이티브 설정, 릴리스 서명, Play Console 제출까지 앱 전체를 맡아 개발했습니다. 555커밋 · 화면 21개 · 소스 16.5k LOC · 문서 55편 규모로, FSD 5레이어 아키텍처와 3겹 에러 안전망을 세우고, zod 2층 스키마 기반 실서버 계약 테스트로 백엔드 응답 계약을 프론트가 주도해 정리했습니다. Expo 없이 ios/ · android/ 프로젝트를 직접 소유하며 소셜 로그인 4종, 2겹 스플래시, 릴리스 서명·환경 분리까지 네이티브 영역을 직접 다뤘습니다.",
     techs: ["reactnative", "typescript", "zustand", "reactquery", "zod", "hookform", "nativewind", "reanimated", "mmkv", "axios", "sentry", "jest", "ios", "android", "figma", "storybook"],
+    links: [
+      {
+        label: "Google Play",
+        url: "https://play.google.com/store/apps/details?id=com.pluxity.vgolf",
+      },
+    ],
     shotsLayout: "phone",
     shotsNote:
       "데모 계정으로 찍은 화면입니다. 이용객 이름과 골프장 상호는 알아볼 수 없게 처리했습니다.",
