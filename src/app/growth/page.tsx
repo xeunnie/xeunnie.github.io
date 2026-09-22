@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import Chronicle from "@/components/Chronicle";
+import Activities from "@/components/Activities";
 import { getBlogPosts } from "@/lib/blog";
 import { CHRONICLE } from "@/lib/constants";
 
@@ -43,6 +44,7 @@ export default async function GrowthPage() {
           }
         />
         <Chronicle posts={posts} />
+        <Activities />
       </main>
       <Footer />
     </>
