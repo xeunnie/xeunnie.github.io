@@ -82,7 +82,7 @@ export const PROJECTS: Project[] = [
     title: "OnMeet",
     subtitle: "AI 회의록 자동 생성 B2B 화상회의 SaaS 플랫폼",
     category: "personal",
-    period: "2024 — 2026",
+    period: "2026.01 — 2026.03",
     role: "팀장 · Frontend 단독 개발 + Backend MSA 설계·구현",
     description:
       "프론트 구현 + Polyglot MSA 7개 서비스 설계 — Go 전환으로 메모리 96% 감소, LiveKit SFU로 대역폭 O(N²)→O(N)",
@@ -94,6 +94,36 @@ export const PROJECTS: Project[] = [
       { label: "기술 발표 자료", url: "https://presentation.onmeet.cloud/slide/1/" },
       { label: "GitHub", url: "https://github.com/evencoding/onmeet-frontend" },
       { label: "조직 전체", url: "https://github.com/evencoding" },
+    ],
+    shotsLayout: "grid",
+    shotsNote:
+      "제품 화면이 아니라 기술 발표 자료입니다. 무엇을 왜 그렇게 만들었는지를 팀이 직접 정리한 문서라, 결과 화면보다 이쪽이 더 많은 걸 보여 준다고 봤습니다.",
+    shots: [
+      {
+        src: "/shot/onmeet-intro.jpg",
+        caption:
+          "AI가 회의를 기록하고 요약하는 B2B 화상회의 플랫폼. MSA 7개 서비스 · 5개 언어 · LiveKit 기반 WebRTC로 만들었습니다.",
+      },
+      {
+        src: "/shot/onmeet-team.jpg",
+        caption:
+          "팀 구성 — 팀장을 맡아 프로젝트 총괄과 프론트 전반, Video Service(화상회의·채팅·대기실)를 담당했습니다. 백엔드 3명과 역할을 나눠 붙였습니다.",
+      },
+      {
+        src: "/shot/onmeet-frontend.jpg",
+        caption:
+          "프론트엔드 아키텍처 — Feature-Sliced 구조, 4개 MSA의 중복 fetch를 묶은 Service Fetch Factory, EventSource 대신 fetch + ReadableStream으로 직접 구현한 SSE 파서, 회의실 Phase 상태 머신.",
+      },
+      {
+        src: "/shot/onmeet-security.jpg",
+        caption:
+          "다층 보안(Defense in Depth) — RSA-2048 키 페어와 JWKS 공개 검증, 게이트웨이의 Cookie→Bearer 변환과 Rate Limiting, 파일 서비스의 MIME 스푸핑·Path Traversal 방어까지 요청 한 번이 지나는 길을 전부 막았습니다.",
+      },
+      {
+        src: "/shot/onmeet-retro.jpg",
+        caption:
+          "회고 — 상태 관리 전략, SSE 파서를 직접 구현한 이유(EventSource는 헤더를 못 싣습니다), VAC 패턴으로 597줄을 225줄로 줄인 과정, 빌드·성능에서 덜어 낸 것들을 정리했습니다.",
+      },
     ],
     highlights: [
       "코리아IT 풀스택 과정 수강생 우수상 — 팀장으로 기획부터 배포까지 주도",
