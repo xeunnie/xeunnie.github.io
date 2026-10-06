@@ -1675,11 +1675,37 @@ export const PROJECTS: Project[] = [
     overview:
       "한화시스템 Beyond SW 풀스택 부트캠프 최종 프로젝트입니다. Vue 기반의 대시보드로 스크럼 관리, 실시간 알림, 채팅 기능을 통합했습니다. 프론트엔드를 맡아 개발하며 100개 이상의 API를 연동하고, 렌더링 최소화 전략과 Pinia 상태 관리를 적용해 대규모 코드베이스를 안정적으로 유지했습니다. Jenkins CI/CD 파이프라인 구축, Kafka 기반 채팅 시스템 구현, Prometheus + Grafana 모니터링 등 백엔드 협업에도 적극 기여했습니다.",
     techs: ["vue", "javascript", "pinia", "springboot", "kafka", "redis", "mariadb", "jenkins", "kubernetes", "prometheus", "grafana"],
+    shotsLayout: "grid",
     shots: [
+      {
+        src: "/shot/calit-landing.jpg",
+        caption:
+          "랜딩 — 백로그 관리·실시간 피드백·공동 회의록·QA/에러 보드를 하나의 워크스페이스로 묶는다는 걸 첫 화면에서 보여 줍니다.",
+      },
+      {
+        src: "/shot/calit-dashboard.jpg",
+        caption:
+          "개인 대시보드 — 남은 태스크·완료율·참여 중인 워크스페이스를 위에 두고, 우선순위 태스크와 다가오는 회의를 카드로 모았습니다.",
+      },
       {
         src: "/shot/calit-kanban.jpg",
         caption:
           "칸반 보드 — 할 일·진행 중·완료로 카드를 옮기고, 같은 데이터를 리스트와 타임라인으로도 봅니다. 담당자와 마감일이 카드에 함께 붙습니다.",
+      },
+      {
+        src: "/shot/calit-meeting-edit.jpg",
+        caption:
+          "회의록 작성 — 작성자·참여자·날짜를 붙이고, 회의 중 나온 이슈를 바로 연동해 보드로 넘깁니다.",
+      },
+      {
+        src: "/shot/calit-meeting-detail.jpg",
+        caption:
+          "회의록 상세 — 본문 옆에 참여자 목록을 두고, 연결된 이슈를 태그로 보여 줍니다.",
+      },
+      {
+        src: "/shot/calit-chat.jpg",
+        caption:
+          "채팅 — Kafka 기반 실시간 메시지. 대화방 목록과 주고받은 파일을 오른쪽 패널에서 함께 봅니다.",
       },
     ],
     highlights: [
