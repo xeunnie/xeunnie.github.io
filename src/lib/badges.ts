@@ -111,6 +111,9 @@ export const BADGES = {
   gemini: { label: "Gemini", logoColor: "8E75B2" },
   vercel: { label: "Vercel", logoColor: "000000" },
   vitest: { label: "Vitest", logoColor: "6E9F18" },
+  express: { label: "Express", logoColor: "000000" },
+  prisma: { label: "Prisma", logoColor: "2D3748" },
+  resium: { label: "Resium", logoColor: "6CADDF" },
 } satisfies Record<string, Badge>;
 
 export type BadgeKey = keyof typeof BADGES;

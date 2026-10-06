@@ -120,17 +120,19 @@ export const CHRONICLE: ChronicleYear[] = [
     story: [
       "연초에는 프론트엔드 심화 과정과 스터디에서 개인 프로젝트를 연달아 했습니다. 번개팅에서 CI/CD를 처음부터 세우고, ChatFlow에서 Kubernetes 카나리 배포와 WebRTC를 붙이고, 해커톤에서 20시간 만에 MVP를 배포했습니다.",
       "4월에 플럭시티 DX 기술팀에 합류했습니다. 부산 도시철도 관제에서 협업처가 CCTV 연동 코드도 문서도 주지 않아, WebRTC를 먼저 조사해 가능한 연결 방식을 미리 준비해 간 뒤 현장에서 하나씩 붙여 보며 맞는 것을 찾았습니다. CCTV는 실제 운영까지 올라갔고, 사무실에서 재현되지 않는 버그는 현장에서 고쳐 다시 배포했습니다.",
+      "여름에는 탄천물재생센터 악취 관제를 혼자 맡았습니다. 고정 센서·드론 측정·대기확산 모델링이 전부 다른 형식으로 쌓이기만 하던 걸 Cesium 3D 지형 하나 위에 겹쳐 올렸고, 화면만이 아니라 수집 API와 DB, 인터넷이 닿지 않는 서버로의 배포까지 끝까지 가져갔습니다. 데이터가 많으면 화면 구조부터 달라져야 한다는 걸 이때 배웠습니다.",
       "같은 시기에 프로젝트마다 복사되던 컴포넌트와 API 호출을 모노레포 패키지로 옮겼습니다. 다른 프로젝트에서 가져다 쓰는 코드를 만든 건 이때가 처음입니다.",
     ],
     moments: [
       { when: "2025.01 — 03", what: "코드잇 프론트엔드 심화 우수 수료 · 번개팅, ChatFlow, PPIYO 완주" },
       { when: "2025.04", what: "플럭시티 DX 기술팀 입사" },
       { when: "2025.05 — 09", what: "부산 도시철도 통합 관제 — WebRTC CCTV 현장 운영, 시설물 9종 API 연동" },
+      { when: "2025.06 — 08", what: "탄천 악취 모니터링 — Cesium 3D 위에 센서·드론·CALPUFF 확산을 올리고, 수집 API와 온프레미스 배포까지" },
       { when: "2025.04 — 09", what: "Plug Platform — 디자인 시스템·공통 API 계층 모노레포화 (머지 PR 17건)" },
       { when: "2025.10 — 11", what: "Plug Atlas — Cesium 지도 IoT 관제의 이벤트·알람 도메인 전반 구현" },
       { when: "2025.11", what: "클라우드팀으로 이동 — VGOLF 프로덕션 서비스 합류" },
     ],
-    projects: ["busan-metro", "plug-platform", "plug-atlas", "thunderting", "chatflow", "ppiyo"],
+    projects: ["busan-metro", "tancheon", "plug-platform", "plug-atlas", "thunderting", "chatflow", "ppiyo"],
     gained: [
       "Jest·RTL·Cypress로 단위·E2E 테스트 자동화, Kubernetes 카나리 배포",
       "Three.js·Cesium으로 3D 모델과 지도 위 객체 다루기",
@@ -140,8 +142,11 @@ export const CHRONICLE: ChronicleYear[] = [
       "외부 협업처의 API 스펙을 타입으로 고정해 화면이 응답 형태를 추측하지 않게 하기",
       "정보를 주지 않는 상대와 일할 때, 가능한 경우를 미리 준비해 가서 맞는 방식 찾기",
       "폐쇄망 현장에 배포하고 그 자리에서 고쳐 다시 올리기",
+      "많은 데이터를 프론트에서 줄이는 대신, 보여 줄 단위를 먼저 정하고 서버에서 집계해 내려받기",
+      "Express·Prisma로 수집 API를 직접 만들고 응답 형식까지 화면에 맞춰 설계하기",
+      "인터넷이 닿지 않는 서버에 Docker 이미지를 파일로 옮겨 배포하기",
     ],
-    techs: ["react", "typescript", "threejs", "cesium", "webrtc", "sse", "zustand", "storybook", "pnpm"],
+    techs: ["react", "typescript", "threejs", "cesium", "webrtc", "sse", "zustand", "storybook", "pnpm", "express", "prisma", "postgresql", "docker"],
   },
   {
     year: "2026",

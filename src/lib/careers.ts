@@ -51,7 +51,7 @@ export const CAREERS: Career[] = [
     type: "full-time",
     chapter: "3D·실시간 관제 SI · 폐쇄망 현장 배포",
     summary:
-      "3D·지도 기반 관제 SI의 프론트엔드 책임자로 일했습니다. 그 전 1년간 부트캠프와 스터디에서 익힌 것을 실무에서 본격적으로 쓴 곳입니다. 폐쇄망 현장에서 WebRTC CCTV를 운영까지 올렸고, 프로젝트마다 복사되던 컴포넌트와 API 호출을 모노레포 패키지로 옮겼습니다.",
+      "3D·지도 기반 관제 SI의 프론트엔드 책임자로 일했습니다. 그 전 1년간 부트캠프와 스터디에서 익힌 것을 실무에서 본격적으로 쓴 곳입니다. 폐쇄망 현장에서 WebRTC CCTV를 운영까지 올렸고, 탄천 악취 관제는 화면·수집 API·DB·배포까지 혼자 끝까지 맡았으며, 프로젝트마다 복사되던 컴포넌트와 API 호출을 모노레포 패키지로 옮겼습니다.",
     details: [
       "3D 역사 관제 — 자체 엔진으로 GLTF 모델을 띄우고 층별 전환·POI·장치 상태를 하나의 실시간 관제 화면에 통합",
       "다중 CCTV 동시 스트리밍과 ICE 상태 기반 재연결 로직 구현",
@@ -62,14 +62,17 @@ export const CAREERS: Career[] = [
       "공통 API 계층 — fetch를 ky로 리팩토링해 인터셉터·에러 처리·prefix URL을 수렴하고, useApi/useSWRApi 훅과 요청·응답 타입 체계를 api-hooks 패키지로 분리",
       "도메인 서비스 공통화 — auth·user·role·building·file 서비스를 common-services로 이관해 프로젝트 간 중복 제거",
       "Plug Atlas(Cesium 실외 지도 IoT 관제) — 머지 PR 11건 · +8,239/−2,227줄. 센서 종류별 이벤트 조건 관리부터 조회·통계·실시간 알람·조치 이력까지 이벤트 도메인 전반을 구현",
-      "다수 관제 SI (탄천·성남 AIOT·GS 인증) — 프로젝트별 폐쇄망·내부망 환경에 맞는 배포 전략 수립 및 서버 프록시 보안 설정",
+      "탄천 악취 모니터링 단독 개발 — 화면·수집 API·DB 스키마·온프레미스 배포까지 전 범위. 고정 센서 8대·드론 측정·CALPUFF 대기확산 모델링을 Cesium 3D 지형 하나에 통합",
+      "탄천 — 하루치 격자×고도×분 확산 데이터를 분 단위 집계 + compact 튜플 응답으로 줄여 브라우저에서 재생 가능한 크기로 축소",
+      "탄천 수집 API — Express·Prisma·PostgreSQL로 센서 단건·배치 수집과 임계값 알람을 구현하고, SSE로 관제 화면에 실시간 브로드캐스트",
+      "다수 관제 SI (탄천·성남 AIOT·GS 인증) — 프로젝트별 폐쇄망·내부망 환경에 맞는 배포 전략 수립 및 서버 프록시 보안 설정 (탄천은 Docker 이미지를 파일로 옮겨 적재하는 온프레미스 배포)",
     ],
     projects: [
       "부산 도시철도 통합 관제(사상하단선)",
       "Plug Platform (모노레포 디자인 시스템)", "Plug Atlas (Cesium IoT 관제)",
-      "탄천 오염도 모니터링", "GS 인증 플랫폼", "성남 AIOT 관제",
+      "탄천 악취 모니터링", "GS 인증 플랫폼", "성남 AIOT 관제",
     ],
-    techs: ["react", "typescript", "threejs", "webgl", "cesium", "webrtc", "sse", "websocket", "webview", "storybook", "zustand", "ky", "pnpm"],
+    techs: ["react", "typescript", "threejs", "webgl", "cesium", "webrtc", "sse", "websocket", "webview", "storybook", "zustand", "ky", "pnpm", "express", "prisma", "postgresql", "docker"],
   },
   {
     company: "웹비즈 크리에이티브",
