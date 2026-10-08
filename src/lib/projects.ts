@@ -1821,9 +1821,29 @@ export const PROJECTS: Project[] = [
     description:
       "PWA로 FCP 3.2s→1.2s, Zustand+RQ로 리렌더 50%↓ — Jest·Cypress·CircleCI 완전 자동화 CI/CD",
     overview:
-      "코드잇 프론트엔드 단기심화 최종 프로젝트입니다. Next.js 기반의 실시간 모임 매칭 플랫폼으로, 기획부터 배포까지 팀장으로서 전방위 리딩했습니다. SSR + ISR 최적화로 초기 로딩 속도를 개선하고, PWA 적용으로 FCP를 3.2s에서 1.2s로 단축했습니다. Zustand + React-Query 병행으로 불필요한 리렌더링 50% 감소, API 호출량 40% 감소를 달성했습니다. Jest + RTL 단위 테스트, Cypress E2E 테스트 20개 이상 작성, CircleCI + Codecov 기반 완전 자동화 CI/CD 파이프라인을 구축했습니다.",
+      "코드잇 프론트엔드 단기심화 최종 프로젝트입니다. Next.js 기반의 실시간 모임 매칭 플랫폼으로, 팀장을 맡아 부트캠프를 갓 마친 프론트엔드 개발자 세 명과 함께 기획부터 배포까지 진행했습니다. SSR + ISR 최적화로 초기 로딩 속도를 개선하고, PWA 적용으로 FCP를 3.2s에서 1.2s로 단축했습니다. Zustand + React-Query 병행으로 불필요한 리렌더링 50% 감소, API 호출량 40% 감소를 달성했습니다. Jest + RTL 단위 테스트, Cypress E2E 테스트 20개 이상 작성, CircleCI + Codecov 기반 완전 자동화 CI/CD 파이프라인을 구축했습니다.",
     techs: ["nextjs", "typescript", "reactquery", "zustand", "tailwind", "framer", "webpack", "pwa", "jest", "cypress", "circleci", "sentry", "codecov", "jira", "indexeddb"],
+    shotsLayout: "grid",
+    shotsNote: "배포했던 서비스 화면입니다.",
+    shots: [
+      {
+        src: "/shot/thunderting-list.webp",
+        caption:
+          "번개 목록 — 카페·술·보드게임·맛집 카테고리와 지역·날짜로 거르고, 참여 인원과 개설 확정·마감 여부를 카드에서 바로 봅니다.",
+      },
+      {
+        src: "/shot/thunderting-detail.webp",
+        caption:
+          "번개 상세 — 주최자 정보, 모임 설명, 지도 위 장소, 이전 번개 리뷰를 한 화면에 두고 하단에서 바로 참여합니다.",
+      },
+      {
+        src: "/shot/thunderting-review.webp",
+        caption:
+          "리뷰 — 카테고리별로 모아 보고, 평점 분포와 함께 최신순·평점순·참여 인원순으로 정렬합니다.",
+      },
+    ],
     highlights: [
+      "팀장 — 부트캠프를 갓 마친 프론트엔드 개발자 3명과 함께, 각자 역량을 끌어올릴 수 있도록 역할을 나눠 진행",
       "PWA 적용 — FCP 3.2s → 1.2s 단축",
       "Zustand + React-Query 병행 — 리렌더링 50% 감소, API 호출 40% 감소",
       "SSR + ISR 최적화 — 초기 로딩 및 SEO 대응",
@@ -1880,6 +1900,12 @@ export const PROJECTS: Project[] = [
           "IndexedDB(idb) 기반 로컬 캐싱 — 오프라인 환경 대응",
         ],
       },
+    ],
+    learned: [
+      "팀장으로 팀을 이끄는 법을 가장 많이 배운 프로젝트입니다. 실무 경력이 있는 사람은 저 하나였고, 나머지 세 명은 부트캠프를 막 마친 상태였습니다. 제가 아는 것은 가르쳐 주고 모르는 것은 같이 찾아보며 진행했는데, 설명하다 보면 제가 어설프게 알던 부분이 드러나서 저도 함께 배웠습니다.",
+      "일을 나눌 때 가장 공을 들인 건, 누가 무엇을 맡아야 각자 역량을 최대치로 끌어올릴 수 있을지였습니다. 일정만 보고 나누지 않고 사람을 보고 나눴고, 모두가 자기 자리에서 최선을 다할 수 있게 만드는 데 가장 많은 고민을 썼습니다.",
+      "기능을 만드는 데서 멈추지 않고 PWA, 테스트 자동화, CI/CD 같은 고도화까지 함께 밀고 나갔습니다. 돌아가게 만든 다음 더 낫게 만드는 과정이 정말 재미있었습니다.",
+      "마감을 앞두고 다 같이 밤을 새웠지만 힘들었던 기억이 없습니다. 혼자 잘하는 것보다 팀으로 일하는 게 더 즐거울 수 있다는 걸 알게 된 경험입니다.",
     ],
   },
   {
