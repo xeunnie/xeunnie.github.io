@@ -1,9 +1,13 @@
+import type { ProjectSection, ProjectShot } from "./projects";
+
 export interface ActivityLink {
   label: string;
   url: string;
 }
 
 export interface Activity {
+  /** 상세 페이지 주소 — /activity/[slug] */
+  slug: string;
   name: string;
   category: "dev" | "leadership";
   org: string;
@@ -14,10 +18,19 @@ export interface Activity {
   links?: ActivityLink[];
   /** 이 활동에서 나온 프로젝트 slug — 상세로 이어준다 */
   projects?: string[];
+  /** 상세 페이지 첫머리 — 왜 시작했고 어떻게 굴러갔는지 */
+  overview?: string;
+  /** 상세 페이지 본문 — 주차별 주제, 운영 방식처럼 묶어서 보여 줄 것 */
+  sections?: ProjectSection[];
+  /** 이 활동에서 배운 것. 한 줄에 하나씩 */
+  learned?: string[];
+  /** 발표 자료·결과물 캡처. public/ 기준 경로 */
+  shots?: ProjectShot[];
 }
 
 export const ACTIVITIES: Activity[] = [
   {
+    slug: "gunbamz",
     name: "군밤즈 스터디",
     category: "dev",
     org: "FESI Study",
@@ -35,6 +48,7 @@ export const ACTIVITIES: Activity[] = [
     ],
   },
   {
+    slug: "front-ninjas",
     name: "프론트 닌자스 스터디",
     category: "dev",
     org: "Front Ninjas",
@@ -53,6 +67,7 @@ export const ACTIVITIES: Activity[] = [
     ],
   },
   {
+    slug: "devlog-challengers",
     name: "Devlog Challengers",
     category: "dev",
     org: "Devlog Challengers",
@@ -70,6 +85,7 @@ export const ACTIVITIES: Activity[] = [
     ],
   },
   {
+    slug: "ppiyakthon",
     name: "삐약톤 (Google Developers 해커톤)",
     category: "dev",
     org: "Google Developers",
@@ -85,6 +101,7 @@ export const ACTIVITIES: Activity[] = [
     projects: ["ppiyo"],
   },
   {
+    slug: "k8s-docker",
     name: "쿠버네티스 · 도커 스터디",
     category: "dev",
     org: "Kubernetes DevOps Study",
@@ -100,6 +117,7 @@ export const ACTIVITIES: Activity[] = [
     projects: ["chatflow"],
   },
   {
+    slug: "ajou-press",
     name: "아주대학교 학보사",
     category: "leadership",
     org: "Ajou Press",
@@ -112,6 +130,7 @@ export const ACTIVITIES: Activity[] = [
     ],
   },
   {
+    slug: "shalla",
     name: "Shalla 영어회화 동아리",
     category: "leadership",
     org: "서울경인 연합",
@@ -124,6 +143,7 @@ export const ACTIVITIES: Activity[] = [
     ],
   },
   {
+    slug: "nubi-ajou",
     name: "Nubi Ajou 글로벌 교류단",
     category: "leadership",
     org: "아주대학교",
@@ -137,6 +157,7 @@ export const ACTIVITIES: Activity[] = [
     ],
   },
   {
+    slug: "link-supporters",
     name: "링크 산학협력 서포터즈",
     category: "leadership",
     org: "링크사업단",
@@ -149,6 +170,7 @@ export const ACTIVITIES: Activity[] = [
     ],
   },
   {
+    slug: "job-supporters",
     name: "일자리 서포터즈",
     category: "leadership",
     org: "경기도",

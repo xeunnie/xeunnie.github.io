@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
-import { SITE, PROJECTS, CAREERS } from "@/lib/constants";
+import { SITE, PROJECTS, CAREERS, ACTIVITIES } from "@/lib/constants";
 
 export const dynamic = "force-static";
 
 /**
  * 빌드 시 sitemap.xml 을 만든다.
- * PROJECTS / CAREERS 에서 직접 읽으므로, 프로젝트가 추가되면 여기는 손대지 않아도 된다.
+ * PROJECTS / CAREERS / ACTIVITIES 에서 직접 읽으므로, 프로젝트가 추가되면 여기는 손대지 않아도 된다.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = SITE.url.replace(/\/$/, "");
@@ -32,5 +32,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.5,
   }));
 
-  return [...staticRoutes, ...projectRoutes, ...careerRoutes];
+  const activityRoutes: MetadataRoute.Sitemap = ACTIVITIES.map((a) => ({
+    url: `${base}/activity/${a.slug}`,
+    changeFrequency: "yearly",
+    priority: 0.4,
+  }));
+
+  return [...staticRoutes, ...projectRoutes, ...careerRoutes, ...activityRoutes];
 }

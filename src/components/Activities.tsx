@@ -20,7 +20,12 @@ export function ActivityRow({ a, i, inView }: { a: Activity; i: number; inView: 
     >
       <div className="lg:sticky lg:top-28 lg:self-start">
         <p className="flex flex-wrap items-center gap-2">
-          <span className="text-base font-bold tracking-tight text-slate-100">{a.name}</span>
+          <Link
+            href={`/activity/${a.slug}`}
+            className="text-base font-bold tracking-tight text-slate-100 underline-offset-4 transition-colors hover:text-ice-500 hover:underline"
+          >
+            {a.name}
+          </Link>
           {a.active && (
             <span className="rounded-full bg-ice-100 px-2 py-0.5 text-[10px] font-semibold text-ice-500">
               진행 중

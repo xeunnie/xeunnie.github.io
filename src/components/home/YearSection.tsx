@@ -120,7 +120,7 @@ export default function YearSection({ block }: { block: YearBlock }) {
               {activities.map((a) => (
                 <li key={a.name}>
                   <Link
-                    href="/activity"
+                    href={`/activity/${a.slug}`}
                     className="group grid gap-1 py-5 sm:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_auto] sm:items-baseline sm:gap-8"
                   >
                     <span className="font-semibold text-slate-100 transition-colors group-hover:text-ice-500">{a.name}</span>
