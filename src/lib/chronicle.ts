@@ -49,7 +49,7 @@ export const CHRONICLE: ChronicleYear[] = [
     year: "2022",
     headline: "코드 리뷰를 받는 실무 코드베이스에서 처음 일했습니다",
     story: [
-      "블록체인 지갑 회사에서 인턴으로 일했습니다. React·TypeScript로 된 오픈소스 크롬 익스텐션이었고, 티켓 단위로 기능을 받아 작업했습니다.",
+      "블록체인 지갑 회사에서 인턴으로 일했습니다. React·TypeScript로 된 오픈소스 크롬 익스텐션이었고, 프론트엔드 시니어분 밑에서 티켓 단위로 기능을 받아 작업하며 렌더링 최적화, content script와 provider 주입 같은 깊은 부분까지 배웠습니다.",
       "동작하는 코드를 올려도 바로 머지되지는 않았습니다. 리뷰 코멘트에 맞춰 같은 기능을 여러 번 다시 올리면서, 조건문을 단순하게 쓰고 필요 없는 코드를 지우는 습관이 생겼습니다.",
     ],
     moments: [
@@ -57,6 +57,7 @@ export const CHRONICLE: ChronicleYear[] = [
       { when: "2022.10", what: "Kujira 체인 추가 — 체인 상수·에셋·목록 등록까지 신규 체인 온보딩 전 과정" },
       { when: "2022.11", what: "이더리움 ERC20 토큰 리스트·검색 페이지 제작" },
       { when: "2022.12", what: "CW20 검색을 전 체인 지원으로 확장, 검색 입력 디바운스 도입" },
+      { when: "2022", what: "인턴 주간 코드 스터디 — 매주 발표하며 간결한 코드·메모리 누수 없는 리팩토링 공부" },
     ],
     projects: ["cosmostation-extension"],
     gained: [
@@ -64,6 +65,7 @@ export const CHRONICLE: ChronicleYear[] = [
       "작업을 티켓 단위로 끊고, 리뷰받기 좋게 커밋을 나눠 PR로 올리기",
       "입력 디바운스로 불필요한 조회 줄이기",
       "다국어(i18n) 리소스 구조 다루기",
+      "렌더링 최적화와 메모리 누수 없는 리팩토링을 의식하며 코드 짜기",
     ],
     techs: ["react", "typescript", "redux", "emotion", "webpack"],
   },
