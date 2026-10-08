@@ -145,6 +145,10 @@ export const ACTIVITIES: Activity[] = [
         ],
       },
     ],
+    learned: [
+      "자바스크립트와 타입스크립트가 어떻게 동작하는지 세세하게 파고들었습니다. AI로 개발하는 세대가 되었지만, 쓰는 언어를 정확히 알 때 코드를 한 단계 더 발전시킬 수 있다는 걸 배웠습니다.",
+      "단순히 돌아가게 만드는 개발이 아니라 깊이 있게 개발하는 데 도움이 됐고, 기술자라는 마음으로 개발하게 된 계기였습니다.",
+    ],
     links: [
       { label: "스터디 조직", url: "https://github.com/Front-Ninjas" },
       { label: "모던 JS 딥다이브", url: "https://github.com/Front-Ninjas/modern-javascript-deep-dive" },
