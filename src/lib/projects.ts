@@ -1672,18 +1672,45 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "boot-up",
-    minor: true,
+    rank: 15,
     title: "BOOT_UP",
     subtitle: "부트캠프 수강생 커뮤니티 — 백엔드 · 프론트 · DevOps 전 단계",
     category: "personal",
     org: "한화시스템 Beyond SW Camp",
     period: "2024.07 — 2024.08",
-    role: "Backend · Frontend(Vue) · DevOps (팀 5인, 단계별 역할 전환)",
+    role: "Backend · Frontend(Vue) 리드 · DevOps (팀 5인, 단계별 역할 전환)",
     description:
       "같은 서비스를 백엔드 → 프론트 → 배포까지 세 번에 나눠 만든 캠프 프로젝트 — 프론트 단계에서는 커밋 54건, DevOps 단계는 혼자 맡음",
     overview:
-      "한화시스템 BEYOND SW캠프 수강생 전용 커뮤니티 플랫폼입니다. 캠프가 디스코드만 쓰고 있어 기수 간·수료자 간 소통이 끊긴다는 문제에서 출발해, 커뮤니티·공지사항·출결 알림·스터디룸 예약을 하나로 묶었습니다. 특별한 점은 같은 서비스를 단계별로 다시 만들었다는 것입니다 — 2차에서 Spring 백엔드를, 3차에서 Vue 프론트를, 마지막에 Docker·GitHub Actions 배포를 붙였습니다. 덕분에 하나의 도메인을 서버·화면·배포 세 시점에서 보게 됐고, 이후 프로젝트에서 백엔드와 이야기할 때의 기준이 여기서 생겼습니다.",
-    techs: ["java", "springboot", "querydsl", "gradle", "vue", "javascript", "websocket", "mysql", "docker", "github"],
+      "한화시스템 BEYOND SW캠프 수강생 전용 커뮤니티 플랫폼입니다. 캠프가 디스코드만 쓰고 있어 기수 간·수료자 간 소통이 끊긴다는 문제에서 출발해, 커뮤니티·공지사항·출결 알림·스터디룸 예약을 하나로 묶었습니다. 특별한 점은 같은 서비스를 단계별로 다시 만들었다는 것입니다 — 2차에서 Spring 백엔드를, 3차에서 Vue 프론트를, 마지막에 Docker·GitHub Actions 배포를 붙였습니다. 덕분에 하나의 도메인을 서버·화면·배포 세 시점에서 보게 됐고, 이후 프로젝트에서 백엔드와 이야기할 때의 기준이 여기서 생겼습니다. 제 첫 백엔드 프로젝트로 N+1 문제, DB 분산, AWS 구성, 모니터링까지 직접 부딪혀 봤고, 프론트 단계에서는 리더로서 Vue 작업을 총괄했습니다.",
+    techs: ["java", "springboot", "querydsl", "gradle", "vue", "javascript", "websocket", "kafka", "mysql", "mariadb", "haproxy", "aws", "s3", "nginx", "docker", "github"],
+    shotsLayout: "grid",
+    shotsNote: "설계 문서와 배포했던 서비스 화면입니다. 화면 속 팀원 이름은 가렸습니다.",
+    shots: [
+      {
+        src: "/shot/boot-up-architecture.webp",
+        caption:
+          "서비스 구성 — Nginx로 Vue를 내보내고, 회원·게시글·채팅·예약을 각각의 EC2 위 Spring Boot로 나눴습니다. 채팅은 Kafka, 이미지는 S3, 데이터는 RDS(MySQL)에 둡니다.",
+      },
+      {
+        src: "/shot/boot-up-db-replication.webp",
+        caption:
+          "DB 분산 — MariaDB를 Active·Standby 마스터와 읽기 전용 슬레이브로 나눠, 쓰기는 마스터로 보내고 읽기는 HAProxy를 거쳐 슬레이브들로 나눕니다.",
+      },
+      {
+        src: "/shot/boot-up-erd.webp",
+        caption:
+          "ERD — 회원을 중심으로 커뮤니티·중고거래·채팅·스터디룸 예약·캘린더가 이어집니다.",
+      },
+      {
+        src: "/shot/boot-up-projects.webp",
+        caption: "프로젝트 소개 — 기수별로 팀과 프로젝트를 모아 봅니다.",
+      },
+      {
+        src: "/shot/boot-up-chat.webp",
+        caption: "중고거래 채팅 — 왼쪽에 거래 중인 상품 목록, 오른쪽에 대화가 이어집니다.",
+      },
+    ],
     links: [
       { label: "GitHub", url: "https://github.com/xeunnie/be06-2nd-Dopamines-BOOT_UP" },
       { label: "프론트엔드 레포", url: "https://github.com/xeunnie/be06-3rd-Dopamines-BOOT_UP" },
@@ -1694,6 +1721,8 @@ export const PROJECTS: Project[] = [
     ],
     highlights: [
       "같은 서비스를 3단계로 — 2차 Spring 백엔드 → 3차 Vue 프론트 → DevOps 배포까지 역할을 바꿔가며 수행",
+      "첫 백엔드 프로젝트 — N+1 문제, MariaDB 이중화와 HAProxy 읽기 분산, AWS(EC2·RDS·S3) 구성, 모니터링까지 직접 다뤄 봄",
+      "프론트 단계 리드 — 백엔드를 함께 만든 팀원들과 Vue 작업을 총괄",
       "프론트 단계 커밋 54건 — 통합검색, 마켓 찜·검색, 댓글·대댓글, 게시글 상세, 공지사항, 메인",
       "백엔드에서 QueryDSL 동적 쿼리와 검색 기능 구현",
       "전역 예외처리와 BaseResponse 성공·에러 코드 체계를 세워 응답 형태를 팀 전체가 공유",
@@ -1712,8 +1741,9 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
-        title: "3차 — Vue 프론트엔드 (커밋 54건)",
+        title: "3차 — Vue 프론트엔드 리드 (커밋 54건)",
         items: [
+          "프론트 단계의 리더로 Vue 작업을 총괄 — 백엔드를 함께 만든 팀원들과 화면을 나눠 맡고, 서버 쪽 사정을 아는 사람끼리 API를 맞춰 감",
           "커뮤니티 게시판 전반 — 목록·상세·작성·수정, 댓글과 대댓글 조회를 화면에 연결",
           "통합검색 구현 — 게시판·마켓·공지사항을 가로지르는 검색 화면 구성",
           "마켓 찜하기와 마켓 검색 완성, 메인 페이지·공지사항 화면 정리",
@@ -1731,6 +1761,15 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
+        title: "백엔드 — 처음 부딪혀 본 것들",
+        items: [
+          "N+1 — 목록 조회에서 연관 데이터를 가져오는 쿼리가 건수만큼 늘어나는 문제를 직접 겪고 줄여 봄",
+          "DB 분산 — MariaDB를 Active·Standby 마스터와 읽기 전용 슬레이브로 나누고, 읽기 요청은 HAProxy로 분산",
+          "AWS 구성 — 서비스별 EC2, RDS(MySQL), S3 이미지 업로드, Nginx 정적 배포까지 직접 세팅",
+          "모니터링 — 서버를 올린 뒤 상태를 지켜보는 체계를 붙여, 만드는 것 너머의 운영을 처음 경험",
+        ],
+      },
+      {
         title: "팀 문서화",
         items: [
           "백엔드 위키 8편 — API 명세(Swagger), 시퀀스 다이어그램, 기능 테스트, 코드 컨벤션, 시스템·소프트웨어 아키텍처, 성능 개선",
@@ -1738,6 +1777,12 @@ export const PROJECTS: Project[] = [
           "기술 선택에 근거를 남기는 방식 — 'Vue를 왜 골랐는가'를 React와 비교해 팀의 상황(JS 숙련도, 남은 기간) 기준으로 서술",
         ],
       },
+    ],
+    learned: [
+      "제 첫 백엔드 프로젝트입니다. N+1 문제, DB 분산, AWS 세팅, 모니터링 시스템을 직접 해 보면서 프론트엔드 개발자로서 시야가 크게 넓어졌습니다.",
+      "API를 설계하고 백엔드를 세팅하며 익힌 것들은 실무에서 정말 많이 써먹었습니다. 서버와 백엔드를 아는 프론트엔드 개발자가 되면서 맡을 수 있는 일의 범위가 크게 늘었고, 백엔드 개발자들이 하는 고민을 저도 같이 하게 됐습니다. 이후 현업에서 협업할 때 가장 많이 꺼내 쓴 경험입니다.",
+      "팀원들이 정말 열정적이었습니다. 부트캠프에서 배우는 고급 기술을 하나라도 더 응용해 보느라 바빴고, 그냥 돌아가는 백엔드가 아니라 좋은 백엔드 코드를 짜려는 팀원들 덕분에 많이 성장했습니다.",
+      "프론트 단계에서는 리더로서 Vue 작업을 총괄했습니다. 백엔드와 터놓고 제대로 협업한 첫 경험이었고, 서로에게 정말 많은 도움이 됐습니다.",
     ],
   },
   {
