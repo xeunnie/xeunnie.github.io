@@ -179,15 +179,36 @@ export const ACTIVITIES: Activity[] = [
     name: "삐약톤 (Google Developers 해커톤)",
     category: "dev",
     org: "Google Developers",
-    period: "2024.06",
-    role: "Frontend Developer",
+    period: "2025.01",
+    role: "프론트엔드 · 스터디 상세 페이지",
     active: false,
+    overview:
+      "Google Developers 커뮤니티의 해커톤 삐약톤에 참여해, 짧은 시간 안에 위치 기반 스터디 모집 서비스 PPIYo를 만들고 배포했습니다. 시간은 짧았지만 완성도 높은 결과물을 냈고, 디자이너·프론트엔드·백엔드가 막힘 없이 맞물려 돌아갔습니다.",
     highlights: [
-      "20시간 제한 해커톤에서 Figma → React + TypeScript로 MVP 완성",
-      "WebSocket 및 브라우저 저장소를 활용한 실시간 서비스 구현",
-      "디자이너·백엔드와 애자일 방식의 빠른 기획-개발-피드백 루프 수행",
+      "디자이너 1 · 프론트엔드 3 · 백엔드 3명이 짧은 시간 동안 스터디 모집 서비스를 기획부터 배포까지",
+      "스터디 상세 페이지를 맡아 카카오맵 위에 모임 장소와 주변 장소 목록을 띄우고, 새벽까지 백엔드 API와 맞춰 가며 연결",
+      "Figma 와이어프레임과 Swagger로 화면과 API를 맞추고, 기능 브랜치와 PR로 쉬지 않고 합치며 진행",
     ],
-    links: [{ label: "팀 조직", url: "https://github.com/chickHackathon" }],
+    sections: [
+      {
+        title: "만든 것",
+        items: [
+          "카테고리별 스터디 검색과 모집글 작성",
+          "참여자들의 중간 지점을 계산해 모이기 좋은 장소를 추천하고, 그 주변 1km 안의 장소를 찾아 줌",
+          "프론트엔드는 React · TypeScript · Redux, Netlify 배포 / 백엔드는 Spring Boot · MariaDB · EC2 · Docker",
+        ],
+      },
+    ],
+    learned: [
+      "이전에 배운 것들을 바탕으로 개발에 대한 용기가 생긴 계기였습니다.",
+      "이미 여러 라이브러리와 선택지를 알고 있는 상태에서 시작해서 진행이 빠르게 이루어졌습니다.",
+      "디자이너·프론트엔드·백엔드 협업이 원활했고, 다 같이 안정적인 서비스를 만들면서 많이 배웠습니다.",
+    ],
+    links: [
+      { label: "팀 조직", url: "https://github.com/chickHackathon" },
+      { label: "프론트엔드 레포", url: "https://github.com/chickHackathon/Frontend" },
+      { label: "배포", url: "https://bbiyagiez.netlify.app/" },
+    ],
     projects: ["ppiyo"],
   },
   {

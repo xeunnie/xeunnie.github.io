@@ -2002,7 +2002,7 @@ export const PROJECTS: Project[] = [
       "20시간 해커톤 집중 개발 — 카카오 맵 API 기반 중간 거리 계산 + 1km 반경 추천 장소 시스템",
     overview:
       "구글 삐약톤 해커톤에서 20시간 집중 개발로 완성한 위치 기반 스터디 모집 플랫폼입니다. 카카오 맵 API를 연동하여 스터디원들의 중간 거리를 계산하고 1km 반경 내 추천 장소를 리스트업하는 기능을 구현했습니다. PWA 적용으로 모바일 환경에서도 최적화된 사용성을 제공하며, Storybook을 도입해 디자이너와의 협업 효율을 높였습니다.",
-    techs: ["react", "typescript", "emotion", "framer", "pwa", "storybook"],
+    techs: ["react", "typescript", "redux", "axios", "framer", "pwa", "netlify"],
     highlights: [
       "20시간 집중 개발을 통해 MVP를 완성하여 해커톤 기간 내 배포",
       "카카오 맵 API 연동 — 스터디원 위치 기반 중간 거리 계산 시스템 구현",
