@@ -24,7 +24,7 @@ export const EDUCATION: Education[] = [
     major: "풀스택 웹 포트폴리오 보강 과정",
     period: "2024 — 2026",
     highlights: [
-      "OnMeet — 팀장으로 AI 회의록 자동 생성 화상회의 플랫폼을 기획부터 배포까지 주도, 과정 내 수강생 우수상",
+      "OnMeet — 팀장을 맡아 AI 회의록 자동 생성 화상회의 플랫폼을 팀원들과 기획부터 배포까지 개발, 과정 내 수강생 우수상",
       "제1회 코리아IT아카데미 바이브코딩 공모전 500팀 중 3위, 장려상 — Argos 프론트엔드 전담",
     ],
     techs: ["react", "typescript", "nextjs", "supabase", "livekit", "kafka"],

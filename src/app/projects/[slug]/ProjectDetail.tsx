@@ -437,7 +437,7 @@ export default function ProjectDetail({
                 className="group mb-4 flex items-center justify-between gap-4 rounded-xl border border-slate-800 bg-slate-900/40 px-5 py-4 transition-colors hover:border-ice-500/40"
               >
                 <span>
-                  <span className="block text-xs text-slate-500 mb-1">이 프로젝트를 한 자리</span>
+                  <span className="block text-xs text-slate-500 mb-1">이 프로젝트를 맡았던 곳</span>
                   <span className="text-sm font-semibold text-slate-100 group-hover:text-ice-400 transition-colors">
                     {career.career.company}
                     {career.career.team ? ` · ${career.career.team}` : ""}

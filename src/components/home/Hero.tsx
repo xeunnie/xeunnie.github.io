@@ -65,7 +65,7 @@ export default function Hero() {
         >
           프론트엔드를 중심에 두고, 필요하면 API·DB·배포까지 직접 만듭니다.{" "}
           <br className="hidden sm:block" />
-          그래서 문제가 화면 밖에서 나도 어디서 났는지 먼저 짚습니다.
+          그래서 문제가 화면 밖에서 생겨도 어디서 생겼는지부터 살펴봅니다.
         </motion.p>
       </div>
 
@@ -73,7 +73,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.85 }}
-        className="mx-auto mt-16 grid w-[calc(100%-3rem)] max-w-[calc(72rem-3rem)] gap-6 border-t border-slate-800 pt-6 sm:grid-cols-3 sm:gap-10"
+        className="mx-auto mt-16 grid w-[calc(100%-3rem)] max-w-[calc(72rem-3rem)] gap-6 border-t border-slate-800 pt-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4"
       >
         {HERO_PROOF.map((p) => (
           <li key={p.href}>

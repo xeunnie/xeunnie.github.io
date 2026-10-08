@@ -21,7 +21,7 @@ export default function ActivityOpening() {
   const stats = [
     { value: running, label: "지금 하고 있는 것" },
     { value: dev.length, label: "스터디 · 해커톤" },
-    { value: lead.length, label: "팀을 이끈 기록" },
+    { value: lead.length, label: "팀을 맡았던 기록" },
   ];
 
   return (
@@ -42,7 +42,7 @@ export default function ActivityOpening() {
 
         <motion.p {...rise(0.22)} className="mt-8 max-w-2xl text-lg leading-[1.8] text-slate-400">
           스터디는 주차마다 발표하고 기록을 남깁니다. 개발을 시작하기 전에는 학보사와 동아리에서
-          팀을 이끌었고, 그때 배운 것들이 지금 사람들과 일하는 방식에 남아 있습니다.
+          팀을 맡아 일을 나누고 함께 꾸렸고, 그때 배운 것들이 지금 사람들과 일하는 방식에 남아 있습니다.
         </motion.p>
 
         <motion.dl {...rise(0.3)} className="mt-12 flex flex-wrap gap-x-12 gap-y-6">

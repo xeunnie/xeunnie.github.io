@@ -32,7 +32,7 @@ export default function Contact() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-lg text-slate-400 mb-10 max-w-md mx-auto"
         >
-          새로운 기회나 협업에 열려 있습니다.
+          새로운 기회나 함께 일할 제안을 기다리고 있습니다.
         </motion.p>
 
         <motion.div

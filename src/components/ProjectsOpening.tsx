@@ -45,7 +45,7 @@ export default function ProjectsOpening() {
         </motion.p>
 
         <motion.p {...rise(0.22)} className="mt-8 max-w-2xl text-lg leading-[1.8] text-slate-400">
-          누군가 오늘도 쓰고 있는 화면들이라, 넘긴 뒤에도 마음이 쓰입니다. 고칠 게 보이면
+          누군가 오늘도 쓰고 있는 화면들이라 넘긴 뒤에도 계속 살핍니다. 고칠 게 보이면
           지금도 고칩니다.
         </motion.p>
 

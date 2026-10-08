@@ -66,7 +66,7 @@ function scopeKey(role: string): number {
   return 2;
 }
 
-const SCOPE_LABEL = ["단독·전담", "팀장·주도", "파트 담당", "참여"] as const;
+const SCOPE_LABEL = ["단독·전담", "팀장·리드", "파트 담당", "참여"] as const;
 
 /** 소속 — 타임라인순에서 덩어리를 나누는 기준 */
 function belongsTo(p: Project): string {

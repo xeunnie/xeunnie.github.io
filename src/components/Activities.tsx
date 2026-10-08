@@ -129,7 +129,7 @@ export default function Activities() {
             aria-expanded={open}
             className="inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-ice-500"
           >
-            {open ? "접기" : `개발 전에 팀을 이끌던 기록 ${lead.length}건`}
+            {open ? "접기" : `개발 전에 팀을 맡았던 기록 ${lead.length}건`}
             <svg
               width="12"
               height="12"

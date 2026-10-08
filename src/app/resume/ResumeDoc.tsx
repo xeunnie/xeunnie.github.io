@@ -131,7 +131,7 @@ export default function ResumeDoc() {
 
         <p className="rz-hint">
           지금 보시는 분량: <b>{VIEWS.find((v) => v.key === view)!.note}</b>. 인쇄 창이 열리면
-          대상을 <b>PDF로 저장</b>으로 바꾸세요. 크롬의 인쇄 미리보기에서 저장하면 문서 안의
+          대상을 <b>PDF로 저장</b>으로 바꿔 주세요. 크롬의 인쇄 미리보기에서 저장하면 문서 안의
           주소와 프로젝트 이름이 눌리는 링크로 남습니다.
         </p>
       </div>

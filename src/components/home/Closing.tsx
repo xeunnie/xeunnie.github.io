@@ -39,7 +39,7 @@ export default function Closing() {
             연락
           </h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-slate-400">
-            새로운 기회나 협업에 열려 있습니다.
+            새로운 기회나 함께 일할 제안을 기다리고 있습니다.
           </p>
 
           <dl className="mt-10 grid grid-cols-[4.5rem_1fr] gap-y-3 text-[15px]">

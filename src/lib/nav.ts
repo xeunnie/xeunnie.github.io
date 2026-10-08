@@ -53,7 +53,7 @@ export const MORE_ITEMS: NavItem[] = [
     ko: "활동",
     href: "/activity",
     question: "퇴근하고 나서는 뭘 하냐면요",
-    desc: "스터디 다섯 개와, 개발을 시작하기 전에 팀을 이끌던 기록을 모았습니다.",
+    desc: "스터디 다섯 개와, 개발을 시작하기 전에 팀을 맡았던 기록을 모았습니다.",
   },
   {
     label: "Growth",
