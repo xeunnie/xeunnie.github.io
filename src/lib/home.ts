@@ -6,7 +6,8 @@ import type { Project } from "./projects";
 import type { Activity } from "./activities";
 
 /**
- * 홈은 한 해씩 위에서 아래로 읽힌다.
+ * 홈은 가장 최근 해부터 한 해씩 거슬러 내려간다.
+ * 처음 보는 사람이 두세 화면 안에 지금 하는 일을 보도록 — 성장 과정은 내려갈수록 거슬러 읽힌다.
  * 데이터는 타임라인(CHRONICLE)·프로젝트(PROJECTS)·활동(ACTIVITIES)을 그대로 쓰고,
  * 여기서는 "어느 해에 무엇을 어떤 크기로 보여 줄지" 만 정한다.
  */
@@ -29,7 +30,7 @@ const startYear = (period: string) => period.slice(0, 4);
 export const HIGHLIGHTS = new Set([...PROJECTS].sort(byRank).slice(0, 3).map((p) => p.slug));
 
 export const YEARS: YearBlock[] = [...CHRONICLE]
-  .sort((a, b) => a.year.localeCompare(b.year))
+  .sort((a, b) => b.year.localeCompare(a.year))
   .map((chronicle) => {
     const projects = chronicle.projects
       .map((slug) => PROJECTS.find((p) => p.slug === slug))
