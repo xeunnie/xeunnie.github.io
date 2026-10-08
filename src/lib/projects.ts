@@ -1529,6 +1529,22 @@ export const PROJECTS: Project[] = [
         src: "/shot/cosmo-wallet.webp",
         caption: "지갑 메인 — 체인별 잔액과 위임·보상 현황 아래로, 가져온 토큰이 코인 목록에 이어서 붙습니다.",
       },
+      {
+        src: "/shot/cosmo-select-chain.webp",
+        caption: "체인 선택 — EVM 네트워크와 Cosmos 생태계 체인을 나눠 보여 줍니다. 새로 추가한 체인도 이 목록에 이어서 붙습니다.",
+      },
+      {
+        src: "/shot/cosmo-import-empty.webp",
+        caption: "토큰 가져오기 첫 화면 — 지원 목록 안내와 검색창, 목록에 없을 때 직접 추가로 넘어가는 버튼을 둡니다.",
+      },
+      {
+        src: "/shot/cosmo-custom-token.webp",
+        caption: "직접 추가 — 컨트랙트 주소·심볼·소수 자릿수를 받고, 가짜 토큰에 대한 주의 문구를 먼저 보여 줍니다.",
+      },
+      {
+        src: "/shot/cosmo-chain-manage.webp",
+        caption: "체인 관리 — 쓰는 체인만 켜 두도록 체인마다 켜고 끕니다.",
+      },
     ],
     highlights: [
       "Kujira 체인 추가 — 체인 상수·심볼 에셋·체인 목록 등록까지 신규 체인 온보딩 전 과정",
