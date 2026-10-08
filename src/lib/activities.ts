@@ -44,6 +44,12 @@ export const ACTIVITIES: Activity[] = [
       "2025년 1월부터 9월까지 31주차, 주제마다 레포를 하나씩 만들고 이론·실습·트러블슈팅을 위키로 정리",
       "2025년 5월부터 정리한 내용을 Substack에 시리즈로 연재 — React 렌더링, WebP, PWA, 번들링, 자바스크립트 동작 원리, 리액트 훅, 모듈 시스템, 타입스크립트",
     ],
+    shots: [
+      {
+        src: "/shot/gunbamz-substack.webp",
+        caption: "Substack 연재 — 주차마다 공부한 내용을 시리즈로 정리해 올렸습니다.",
+      },
+    ],
     sections: [
       {
         title: "진행 방식",
