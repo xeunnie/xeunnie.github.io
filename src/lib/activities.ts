@@ -34,17 +34,74 @@ export const ACTIVITIES: Activity[] = [
     name: "군밤즈 스터디",
     category: "dev",
     org: "FESI Study",
-    period: "2025.01 — 현재",
+    period: "2025.01 — 2025.09",
     role: "스터디 팀장",
-    active: true,
+    active: false,
+    overview:
+      "사수 없이 일하는 프론트엔드 주니어들이 모여 만든 스터디입니다. 궁금했던 기술이나 실무에서 손대고 싶던 개선을 혼자 붙잡지 않고, 함께 제대로 파 보면서 정당하게 성장하자는 마음으로 시작했습니다. 주제마다 이론과 실습을 나눠 맡고, 직접 만들어 측정하고 뜯어 본 결과를 레포 위키에 남긴 뒤 다 같이 리뷰했습니다.",
     highlights: [
-      "프론트엔드 딥다이브 스터디를 기획하고 리드 — 주차마다 주제 하나를 실습까지 끌고 감",
-      "31주차까지 누적, 주차별 레포로 기록 — CSR/SSR·SSG 렌더링, 테스트, CI/CD, React Query, SWR, useTransition, 번들링, 코드 스플리팅, 메모이제이션, WebP, PWA, 웹 접근성, 마이크로 프론트엔드, 브라우저 렌더링, 웹 아키텍처, CDN",
-      "매주 발표 후 정리를 남기는 방식 — 읽고 끝내지 않고 실습과 문서가 함께 남게 함",
+      "스터디를 만들고 팀장으로 운영 — 회의를 이끌고, 주제와 진행 방식을 먼저 발제해 스터디의 깊이를 지킴",
+      "2025년 1월부터 9월까지 31주차, 주제마다 레포를 하나씩 만들고 이론·실습·트러블슈팅을 위키로 정리",
+      "2025년 5월부터 정리한 내용을 Substack에 시리즈로 연재 — React 렌더링, WebP, PWA, 번들링, 자바스크립트 동작 원리, 리액트 훅, 모듈 시스템, 타입스크립트",
+    ],
+    sections: [
+      {
+        title: "진행 방식",
+        items: [
+          "회의에서 다음 주제를 정함 — 각자 궁금했던 기술과 실무에서 막혔던 개선 과제에서 출발",
+          "주제를 이론과 실습으로 나누고, 팀원마다 페이지나 시나리오를 하나씩 맡아 직접 구현",
+          "Lighthouse, 빌드 결과물, 커버리지, 네트워크 요청처럼 눈으로 확인할 수 있는 근거를 남기고 함께 리뷰",
+        ],
+      },
+      {
+        title: "렌더링 방식 비교",
+        items: [
+          "같은 페이지를 CSR·SSR·SSG로 만들어 Lighthouse 성능을 비교 — CSR 89, SSR 94, SSG 100",
+          "이미지가 많은 페이지에서 SSG는 LCP 1,250ms·CLS 0.01, CSR은 1,860ms·0.15",
+          "CSR에서 SSG·SSR·ISR로 바꾸자 First Load JS가 120kB대에서 101kB로 줄어듦",
+          "빌드 결과물을 열어 봄 — SSG 페이지는 Link 이동 시 HTML 없이 hover 때 미리 받은 JSON으로 하이드레이션하고, HTML 속 빈 주석은 텍스트 노드가 합쳐져 하이드레이션이 어긋나는 것을 막는 용도",
+          "쇼핑몰 페이지마다 렌더링 방식을 고름 — 메인 ISR, 검색 SSR, 설정 CSR, 상세는 빌드 시간과 저장 공간을 따져 SSG와 SSR 사이에서 결정",
+        ],
+      },
+      {
+        title: "테스트",
+        items: [
+          "Jest·RTL 이론과 테스트 커버리지 정리, 회원가입 통합 테스트를 직접 맡음 — 6개 시나리오, 구문 커버리지 97%",
+          "커버되지 않은 줄을 따라가 쓰이지 않는 로직을 찾음",
+          "jsdom에 없는 alert, 즉시 resolve되는 mock 때문에 로딩 상태를 못 잡는 문제 등 막힌 지점을 트러블슈팅으로 모음",
+          "JSDOM은 CSSOM을 만들지 않아 미디어쿼리와 display:none을 판별하지 못한다는 것을 실험으로 확인",
+        ],
+      },
+      {
+        title: "CI/CD와 서버 상태",
+        items: [
+          "GitHub Actions로 lint·build·test 파이프라인, Codecov 리포트, Vercel 프리뷰 배포, Sentry 에러 수집을 연결",
+          "실패한 테스트는 커버리지를 낮추지 않는다는 것을 확인하고, Codecov 목표치를 팀 상황에 맞게 조정",
+          "모임 상세 페이지의 useEffect 패칭을 React Query로 바꾸고, SSR 하이드레이션 불일치와 중복 호출을 해결",
+          "SWR을 도입해 같은 데이터를 두 곳에서 부를 때 나던 중복 요청을 1번으로 줄임",
+        ],
+      },
+      {
+        title: "그 뒤로 다룬 주제",
+        items: [
+          "Webpack 설정, Lazy Loading과 Suspense, useTransition, 웹 크롤링, Google Analytics",
+          "React 렌더링과 Fiber, 메모이제이션과 key, WebP, PWA, 번들링과 번들러, 코드 스플리팅",
+          "자바스크립트 동작 원리, 리액트 훅, 모듈 시스템, 타입스크립트 타입 넓히기와 좁히기, 웹 접근성",
+          "마이크로 프론트엔드, 객체지향, async/await, 브라우저 렌더링, 웹 아키텍처, CDN",
+        ],
+      },
+    ],
+    learned: [
+      "성능 개선이나 기술을 이론으로만 알 때와 직접 만들어 뜯어 봤을 때의 이해는 달랐습니다. 다 같이 리뷰하면서 혼자서는 놓쳤을 부분도 짚을 수 있었습니다.",
+      "팀장으로서 하나의 주제를 이렇게 섬세하게 뜯어보며 공부할 수 있어서 좋았습니다.",
+      "사수가 없는 환경의 개발자들이 더 나은 개발자가 되려고 애쓰는 모습이 보기 좋았고, 다 같이 으쌰으쌰 배워 나가는 시간이 즐거웠습니다.",
     ],
     links: [
       { label: "스터디 조직", url: "https://github.com/FESIStudy" },
+      { label: "렌더링 위키", url: "https://github.com/FESIStudy/W1_RenderingExplore_SSG/wiki" },
+      { label: "테스트 위키", url: "https://github.com/FESIStudy/W2_Test_SignupSignin/wiki" },
       { label: "주차별 레포", url: "https://github.com/orgs/FESIStudy/repositories" },
+      { label: "Substack 연재", url: "https://gunbamz.substack.com/" },
     ],
   },
   {
