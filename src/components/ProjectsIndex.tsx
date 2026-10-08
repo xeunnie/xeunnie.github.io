@@ -4,14 +4,14 @@ import { useMemo, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { PROJECTS } from "@/lib/constants";
+import { BADGES, PROJECTS } from "@/lib/constants";
 import type { Project } from "@/lib/constants";
-import TechBadge from "./TechBadge";
+import Plate, { PlateNo } from "@/components/gallery/Plate";
+import { Cover } from "@/components/home/Work";
 
-const CATEGORY_STYLE = {
-  company: { label: "회사", color: "border-slate-800 bg-slate-950 text-slate-300", dot: "bg-ice-500" },
-  personal: { label: "개인", color: "border-emerald-500/20 bg-slate-950 text-slate-300", dot: "bg-emerald-400" },
-} as const;
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+const CATEGORY_LABEL = { company: "회사", personal: "개인" } as const;
 
 type Axis = "kind" | "company" | "school" | "team" | "group";
 type Sort = "pick" | "time" | "scope";
@@ -47,12 +47,6 @@ function endKey(period: string): number {
 }
 
 /**
- * 목록의 한 줄.
- * 두 칸으로 좁게 쌓아 두니 카드 하나에 열 가지가 들어가 빽빽했다.
- * 한 줄에 하나씩, 캡처를 왼쪽에 크게 두고 글은 오른쪽에서 읽게 바꿨다.
- * 카드에서 걷어낸 것: 상세 섹션 개수, 수상 문구 중복, 작은 글씨의 역할 줄.
- */
-/**
  * 맡은 범위를 role 문구에서 읽는다.
  * 기여도를 따로 적어 두면 18개를 손으로 매겨야 하고, 매길 때마다 후해진다.
  * 이미 적어 둔 역할 문구가 가장 정직한 근거다.
@@ -73,141 +67,134 @@ function belongsTo(p: Project): string {
   return p.company ?? p.org ?? "개인 프로젝트";
 }
 
-function ProjectCard({
+/** 작은 목록의 번호 — i. ii. iii. */
+function roman(n: number): string {
+  const table: [number, string][] = [
+    [10, "x"],
+    [9, "ix"],
+    [5, "v"],
+    [4, "iv"],
+    [1, "i"],
+  ];
+  let out = "";
+  for (const [v, s] of table) {
+    while (n >= v) {
+      out += s;
+      n -= v;
+    }
+  }
+  return out;
+}
+
+/**
+ * 목록의 한 점.
+ * 상자 카드 대신 액자 하나와 그 아래 설명판. 두 줄로 걸되 오른쪽 줄을 반 칸 내려
+ * 벽에 엇갈려 걸린 것처럼 둔다 — 같은 높이로 줄 세우면 표처럼 읽힌다.
+ */
+function ProjectPlate({
   project,
-  index,
   no,
   scopeTag,
 }: {
   project: Project;
-  index: number;
-  /** 목록에서 몇 번째인지 — 팜플렛처럼 번호를 크게 세운다 */
+  /** 화면에 보이는 순서 */
   no: number;
-  /** 맡은 범위순으로 볼 때만 — 왜 이 순서인지 카드에서 보이게 */
+  /** 맡은 범위순으로 볼 때만 — 왜 이 순서인지 설명판에서 보이게 */
   scopeTag?: string;
 }) {
-  const style = CATEGORY_STYLE[project.category];
-  const shot = project.shots?.[0];
-  // 캡처가 한쪽에만 쭉 붙어 있으면 열세 줄이 같은 리듬으로 흐른다. 한 줄씩 번갈아 놓는다.
-  const flip = no % 2 === 0;
+  const where = [project.company ?? project.org, project.team].filter(Boolean).join(" · ");
+  const stack = project.techs
+    .slice(0, 5)
+    .map((t) => BADGES[t]?.label ?? t)
+    .join(", ");
+  const more = project.techs.length - 5;
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 1, ease: EASE }}
+      className="min-w-0"
     >
       <Link
         href={`/projects/${project.slug}`}
-        className={`group grid gap-5 rounded-2xl border border-slate-800/60 bg-slate-900/20 p-5 transition-colors duration-300 hover:border-ice-500/30 sm:gap-8 sm:p-7 ${
-          shot
-            ? flip
-              ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]"
-              : "lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]"
-            : ""
-        }`}
+        aria-label={`${project.title} 자세히 보기`}
+        className="block"
       >
-        <div className={flip ? "lg:order-2" : ""}>
-        {shot &&
-          (project.shotsLayout === "phone" ? (
-            // 세로 캡처는 16:9 로 자르면 윗부분만 남으므로 세 장을 나란히 둔다
-            <div className="flex aspect-[16/10] w-full items-start justify-center gap-2 overflow-hidden rounded-xl border border-slate-800 bg-slate-900 px-5 pt-5">
-              {project.shots!.slice(0, 3).map((s) => (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
-                  key={s.src}
-                  src={s.src}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  className="w-[28%] rounded-md border border-slate-800"
-                />
-              ))}
-            </div>
-          ) : (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={shot.src}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              className="aspect-[16/10] w-full rounded-xl border border-slate-800 object-cover object-left-top"
-            />
-          ))}
-        </div>
-
-        <div className="flex min-w-0 flex-col">
-          {/* 번호와 가는 줄 — 도록의 도판 번호처럼 */}
-          <div className="mb-4 flex items-center gap-3">
-            <span className="font-mono text-sm font-bold tabular-nums text-ice-500">
-              {String(no).padStart(2, "0")}
-            </span>
-            <span aria-hidden className="h-px w-8 bg-slate-800" />
-            {project.featured && (
-              <span className="text-[11px] font-semibold tracking-[0.06em] text-amber-400">
-                대표 작업
-              </span>
-            )}
-            {project.group && (
-              <span className="ml-auto text-[11px] font-medium text-slate-500">{project.group}</span>
-            )}
-          </div>
-
-          <div className="mb-3 flex flex-wrap items-center gap-2">
-            <span
-              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${style.color}`}
-            >
-              <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
-              {style.label}
-            </span>
-            {project.award && (
-              <span className="inline-flex items-center gap-1 rounded-full border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 text-[11px] font-medium text-amber-400">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
-                  <circle cx="12" cy="8" r="6" />
-                  <path d="M8.2 13.9 7 22l5-3 5 3-1.2-8.1" />
-                </svg>
-                수상
-              </span>
-            )}
-            {scopeTag && (
-              <span className="rounded-full border border-ice-500/40 bg-ice-100 px-2 py-0.5 text-[11px] font-semibold text-ice-500">
-                {scopeTag}
-              </span>
-            )}
-            <span className="text-xs text-slate-500">
-              {project.company ?? project.org}
-              <span className="mx-1.5 text-slate-700">·</span>
-              <span className="font-mono">{project.period}</span>
-            </span>
-          </div>
-
-          <h2 className="text-[22px] font-bold tracking-tight text-slate-50 transition-colors group-hover:text-ice-500">
-            {project.title}
-          </h2>
-          <p className="mt-1.5 text-[15px] font-medium text-ice-500">{project.subtitle}</p>
-
-          <p className="mt-4 text-[15px] leading-[1.8] text-slate-300">{project.description}</p>
-
-          <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-3 pt-6">
-            <div className="flex min-w-0 flex-wrap gap-1.5">
-              {project.techs.slice(0, 5).map((tech) => (
-                <TechBadge key={tech} name={tech} size="sm" />
-              ))}
-              {project.techs.length > 5 && (
-                <span className="self-center text-xs text-slate-500">
-                  +{project.techs.length - 5}
-                </span>
-              )}
-            </div>
-            <span className="ml-auto inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-ice-500 transition-all group-hover:gap-2.5">
-              자세히
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                <path d="M5 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-          </div>
-        </div>
+        <Plate>
+          <Cover project={project} />
+        </Plate>
       </Link>
+
+      <div className="wall-label mt-10 min-w-0 sm:mt-12">
+        <p className="flex items-baseline gap-3">
+          <PlateNo n={no} />
+          {project.featured && (
+            <span className="text-[11px] tracking-[0.12em] text-ice-500">대표 작업</span>
+          )}
+          {project.group && (
+            <span className="ml-auto truncate text-[11px] tracking-[0.08em] text-slate-500">
+              {project.group}
+            </span>
+          )}
+        </p>
+
+        <h2 className="mt-4 text-[clamp(1.45rem,2.2vw,1.8rem)] font-semibold leading-[1.25] tracking-[-0.035em] text-slate-50">
+          <Link
+            href={`/projects/${project.slug}`}
+            className="transition-colors duration-500 hover:text-ice-500"
+          >
+            {project.title}
+          </Link>
+        </h2>
+        <p className="mt-2 text-[15px] leading-relaxed text-slate-400">{project.subtitle}</p>
+
+        <span aria-hidden className="rule mt-7 text-slate-500" />
+
+        <p className="mt-7 text-pretty text-[15px] leading-[1.9] text-slate-300">
+          {project.description}
+        </p>
+
+        <dl className="mt-7 grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-3 gap-y-2 text-[13px] leading-relaxed">
+          <dt className="pt-px">유형</dt>
+          <dd className="text-slate-300">{CATEGORY_LABEL[project.category]}</dd>
+          <dt className="pt-px">기간</dt>
+          <dd className="tabular-nums text-slate-300">{project.period}</dd>
+          {where && (
+            <>
+              <dt className="pt-px">소속</dt>
+              <dd className="text-slate-300">{where}</dd>
+            </>
+          )}
+          <dt className="pt-px">기술</dt>
+          <dd className="text-slate-300">
+            {stack}
+            {more > 0 && <span className="text-slate-500"> 외 {more}</span>}
+          </dd>
+          {scopeTag && (
+            <>
+              <dt className="pt-px">범위</dt>
+              <dd className="text-slate-100">{scopeTag}</dd>
+            </>
+          )}
+          {project.award && (
+            <>
+              <dt className="pt-px">수상</dt>
+              <dd className="text-amber-400">{project.award}</dd>
+            </>
+          )}
+        </dl>
+
+        <Link
+          href={`/projects/${project.slug}`}
+          tabIndex={-1}
+          className="group mt-8 inline-flex items-center gap-3 text-[13px] font-medium text-slate-100"
+        >
+          <span className="h-px w-6 bg-current transition-all duration-500 group-hover:w-10 group-hover:bg-ice-500" />
+          <span className="transition-colors group-hover:text-ice-500">자세히 보기</span>
+        </Link>
+      </div>
     </motion.article>
   );
 }
@@ -328,6 +315,9 @@ export default function ProjectsIndex() {
     return m;
   }, [blocks]);
 
+  /** 벽에 거는 순서 — 묶음을 풀어 한 줄로. 번호와 같은 순서다. */
+  const hung = useMemo(() => blocks.flatMap((b) => b.items), [blocks]);
+
   // 자주 쓰는 두 축만 펼쳐 두고 나머지는 눌러서 연다
   const [moreFilters, setMoreFilters] = useState(false);
   const extraAxes = axes.slice(2);
@@ -345,28 +335,26 @@ export default function ProjectsIndex() {
   const activeCount = Object.keys(selected).length;
 
   return (
-    <section className="relative py-16" ref={ref}>
+    <section className="relative pt-8 pb-40" ref={ref}>
       <div className="mx-auto max-w-6xl px-6">
         {/*
-          필터는 목록보다 조용해야 한다. 상자로 감싸는 대신 가로줄로만 칸을 나누고,
-          누르는 것(칩)만 동그랗게 남겨 어디를 누르는지 한눈에 보이게 했다.
+          고르는 자리는 목록보다 조용해야 한다. 칩도 상자도 없이 글자만 두고,
+          고른 것에만 가는 밑줄을 긋는다.
         */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5 }}
-          className="mb-12 border-y border-slate-800"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 1, ease: EASE }}
+          className="mb-28 sm:mb-36"
         >
-          <div className="divide-y divide-slate-800/60">
+          <div className="space-y-5">
             {shownAxes.map((a) => (
               <div
                 key={a.axis}
-                className="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:gap-5"
+                className="grid gap-3 sm:grid-cols-[7rem_minmax(0,1fr)] sm:items-baseline sm:gap-6"
               >
-                <span className="shrink-0 text-[11px] font-semibold tracking-[0.06em] text-slate-500 sm:w-16">
-                  {a.label}
-                </span>
-                <div className="flex min-w-0 flex-wrap gap-1.5">
+                <span className="text-[11px] tracking-[0.16em] text-slate-500">{a.label}</span>
+                <div className="flex min-w-0 flex-wrap gap-x-6 gap-y-3">
                   {a.options.map((o) => {
                     const on = selected[a.axis] === o.value;
                     return (
@@ -374,26 +362,20 @@ export default function ProjectsIndex() {
                         key={o.value}
                         onClick={() => toggle(a.axis, o.value)}
                         aria-pressed={on}
-                        className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs transition-all ${
+                        className={`group inline-flex items-baseline gap-1 border-b pb-1 text-[13px] transition-colors duration-500 ${
                           on
-                            ? "border-ice-500/60 bg-ice-100 font-semibold text-ice-500"
-                            : "border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-100"
+                            ? "border-slate-100 text-slate-50"
+                            : "border-transparent text-slate-500 hover:border-slate-700 hover:text-slate-200"
                         }`}
                       >
                         {o.value}
-                        <span
-                          className={`font-mono text-[10px] tabular-nums ${
-                            on ? "text-ice-500/70" : "text-slate-500"
+                        <sup
+                          className={`font-serif text-[12px] italic tabular-nums ${
+                            on ? "text-ice-500" : "text-slate-500"
                           }`}
                         >
                           {o.count}
-                        </span>
-                        {/* 켜진 칩에는 끄는 자리를 보여 준다 */}
-                        {on && (
-                          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                            <path d="M3 3l6 6M9 3l-6 6" strokeLinecap="round" />
-                          </svg>
-                        )}
+                        </sup>
                       </button>
                     );
                   })}
@@ -401,154 +383,143 @@ export default function ProjectsIndex() {
               </div>
             ))}
 
-            {/* 축 다섯 줄을 한 번에 펼쳐 두면 목록보다 필터가 더 커 보인다 */}
+            {/* 축 다섯 줄을 한 번에 펼쳐 두면 목록보다 고르는 자리가 더 커 보인다 */}
             {extraAxes.length > 0 && (
-              <div className="py-2.5">
+              <div className="sm:pl-[calc(7rem+1.5rem)]">
                 <button
                   onClick={() => setMoreFilters((v) => !v)}
-                  className="inline-flex items-center gap-1.5 text-xs text-slate-500 transition-colors hover:text-ice-500"
+                  aria-expanded={moreFilters}
+                  className="inline-flex items-center gap-2 text-[12px] text-slate-500 transition-colors hover:text-slate-200"
                 >
+                  <span aria-hidden className="font-serif text-[15px] leading-none">
+                    {moreFilters ? "−" : "+"}
+                  </span>
                   {moreFilters ? "조건 접기" : `${extraAxes.map((a) => a.label).join(" · ")}으로도 고르기`}
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className={`transition-transform ${moreFilters ? "rotate-180" : ""}`}
-                  >
-                    <path d="M4 6l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
                 </button>
               </div>
             )}
+          </div>
 
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 py-3">
-              <span className="font-mono text-xs tabular-nums text-slate-500">
-                <span className="font-semibold text-slate-100">{visible.length}</span>
-                <span className="mx-1 text-slate-700">/</span>
-                {PROJECTS.length}
+          <div className="mt-10 flex flex-wrap items-end gap-x-8 gap-y-5 border-t border-slate-800 pt-6">
+            <p className="flex items-baseline gap-4">
+              <span className="font-serif text-[28px] leading-none tabular-nums text-slate-50">
+                {visible.length}
+                <span className="mx-1.5 text-[18px] italic text-slate-500">of</span>
+                <span className="text-slate-500">{PROJECTS.length}</span>
               </span>
               {activeCount > 0 && (
                 <button
                   onClick={() => setSelected({})}
-                  className="text-xs text-ice-500 underline-offset-4 transition-colors hover:underline"
+                  className="border-b border-slate-700 pb-0.5 text-[12px] text-slate-400 transition-colors hover:border-slate-100 hover:text-slate-100"
                 >
                   전체 보기
                 </button>
               )}
-              {/* 정렬은 누르는 칩이 아니라 고르는 탭 — 밑줄로 직선을 맞춘다 */}
-              <div className="ml-auto flex items-center gap-4">
-                {(
-                  [
-                    { key: "pick" as const, label: "추천순" },
-                    { key: "time" as const, label: "타임라인순" },
-                    { key: "scope" as const, label: "맡은 범위순" },
-                  ]
-                ).map((o) => (
-                  <button
-                    key={o.key}
-                    onClick={() => setSort(o.key)}
-                    aria-pressed={sort === o.key}
-                    className={`relative py-1 text-xs transition-colors ${
-                      sort === o.key
-                        ? "font-semibold text-slate-100"
-                        : "text-slate-500 hover:text-slate-300"
-                    }`}
-                  >
-                    {o.label}
-                    {sort === o.key && (
-                      <motion.span
-                        layoutId="sort-underline"
-                        className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-ice-500"
-                      />
-                    )}
-                  </button>
-                ))}
-              </div>
+            </p>
+            {/* 정렬은 고르는 탭 — 가는 밑줄 하나가 옮겨 다닌다 */}
+            <div className="ml-auto flex items-center gap-6">
+              {(
+                [
+                  { key: "pick" as const, label: "추천순" },
+                  { key: "time" as const, label: "타임라인순" },
+                  { key: "scope" as const, label: "맡은 범위순" },
+                ]
+              ).map((o) => (
+                <button
+                  key={o.key}
+                  onClick={() => setSort(o.key)}
+                  aria-pressed={sort === o.key}
+                  className={`relative pb-1.5 text-[13px] transition-colors duration-500 ${
+                    sort === o.key ? "text-slate-50" : "text-slate-500 hover:text-slate-200"
+                  }`}
+                >
+                  {o.label}
+                  {sort === o.key && (
+                    <motion.span
+                      layoutId="sort-underline"
+                      transition={{ duration: 0.6, ease: EASE }}
+                      className="absolute inset-x-0 bottom-0 h-px bg-slate-100"
+                    />
+                  )}
+                </button>
+              ))}
             </div>
           </div>
         </motion.div>
 
         {/*
-          한 줄에 하나씩.
-          같은 제품군을 머리글과 왼쪽 선으로 묶어 봤더니 목록 위에 또 한 겹이 얹혀 어수선했다.
-          정렬이 이미 같은 것끼리 붙여 주므로, 카드에 이름표 하나만 조용히 단다.
-        */}
-        {/*
-          정렬을 바꾸면 묶는 기준 자체가 달라져 카드의 key 가 통째로 바뀐다.
-          이럴 때 항목마다 따로 빠져나가게 두면(popLayout) 나간 카드가 남아 쌓였다.
-          목록 전체를 한 덩어리로 보고 교체한다 — 먼저 사라지고, 그다음 들어온다.
+          두 줄로 엇갈려 건다. 오른쪽 줄은 반 칸 내려 걸어 리듬을 만든다.
+          정렬을 바꾸면 번호·순서가 통째로 바뀌므로 목록 전체를 한 덩어리로 교체한다.
         */}
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={`${sort}|${Object.entries(selected).sort().join()}`}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22 }}
-            className="space-y-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.45, ease: EASE }}
+            className="grid gap-y-28 sm:gap-y-36 lg:grid-cols-2 lg:gap-x-24 lg:gap-y-32"
           >
-            {blocks.map((b, i) =>
-              b.group ? (
-                <section key={b.key} className="space-y-6">
-                  {b.items.map((p, j) => (
-                    <ProjectCard
-                      key={p.slug}
-                      project={p}
-                      index={j}
-                      no={numberOf.get(p.slug) ?? j + 1}
-                      scopeTag={sort === "scope" ? SCOPE_LABEL[scopeKey(p.role)] : undefined}
-                    />
-                  ))}
-                </section>
-              ) : (
-                <ProjectCard
-                  key={b.key}
-                  project={b.items[0]}
-                  index={i}
-                  no={numberOf.get(b.items[0].slug) ?? i + 1}
-                  scopeTag={sort === "scope" ? SCOPE_LABEL[scopeKey(b.items[0].role)] : undefined}
+            {hung.map((p, i) => (
+              <div key={p.slug} className={`min-w-0 ${i % 2 === 1 ? "lg:pt-40" : ""}`}>
+                <ProjectPlate
+                  project={p}
+                  no={numberOf.get(p.slug) ?? i + 1}
+                  scopeTag={sort === "scope" ? SCOPE_LABEL[scopeKey(p.role)] : undefined}
                 />
-              )
-            )}
+              </div>
+            ))}
           </motion.div>
         </AnimatePresence>
 
+        {visible.length === 0 && (
+          <p className="py-24 text-center text-[13px] text-slate-500">
+            조건에 맞는 프로젝트가 없습니다.
+          </p>
+        )}
+
         {minor.length > 0 && (
-          <section className="mt-14 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-6 sm:p-7">
-            <h2 className="text-base font-bold text-slate-100 mb-2">
-              부트캠프·스터디 프로젝트 {minor.length}개
-            </h2>
-            <p className="text-sm text-slate-400 leading-relaxed mb-6 max-w-2xl">
-              20시간 해커톤부터 두 달짜리 팀 프로젝트까지 기간과 팀 구성, 스택이 제각각입니다.
-              한 서비스의 백엔드·프론트·DevOps를 모두 맡아 본 것도 있습니다.
-            </p>
-            <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-1">
-              {minor.map((p) => (
+          <section className="mt-44 grid gap-10 border-t border-slate-800 pt-12 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-20">
+            <div>
+              <p className="flex items-center gap-4 text-slate-500">
+                <span className="font-serif text-[20px] italic text-slate-300">Addenda</span>
+                <span aria-hidden className="rule" />
+              </p>
+              <h2 className="mt-6 text-[19px] font-semibold tracking-[-0.03em] text-slate-100">
+                부트캠프·스터디 프로젝트 {minor.length}개
+              </h2>
+              <p className="mt-4 text-pretty text-[13px] leading-[1.9] text-slate-500">
+                20시간 해커톤부터 두 달짜리 팀 프로젝트까지 기간과 팀 구성, 스택이 제각각입니다.
+                한 서비스의 백엔드·프론트·DevOps를 모두 맡아 본 것도 있습니다.
+              </p>
+            </div>
+            <ul className="border-t border-slate-800 lg:border-t-0">
+              {minor.map((p, i) => (
                 // 그리드 항목은 기본 min-width:auto 라, 내용이 길면 칸을 밀어낸다
-                <li key={p.slug} className="min-w-0">
+                <li key={p.slug} className="min-w-0 border-b border-slate-800">
                   <Link
                     href={`/projects/${p.slug}`}
-                    className="group flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5 border-b border-slate-800/50 py-2 text-sm"
+                    className="group grid grid-cols-[2.5rem_minmax(0,1fr)] items-baseline gap-x-3 py-5 sm:grid-cols-[2.5rem_minmax(0,1fr)_auto]"
                   >
-                    <span className="font-medium text-slate-200 transition-colors group-hover:text-ice-400">
-                      {p.title}
+                    <span className="font-serif text-[15px] italic text-slate-500">
+                      {roman(i + 1)}.
                     </span>
-                    <span className="min-w-0 flex-1 truncate text-xs text-slate-500">{p.subtitle}</span>
-                    <span className="font-mono text-[11px] text-slate-500">{p.org ?? p.period}</span>
+                    <span className="min-w-0">
+                      <span className="block text-[15px] font-medium tracking-[-0.02em] text-slate-100 transition-colors duration-500 group-hover:text-ice-500">
+                        {p.title}
+                      </span>
+                      <span className="mt-1 block text-[13px] leading-relaxed text-slate-500">
+                        {p.subtitle}
+                      </span>
+                    </span>
+                    <span className="col-start-2 mt-2 text-[12px] tabular-nums text-slate-500 sm:col-start-3 sm:mt-0">
+                      {p.org ?? p.period}
+                    </span>
                   </Link>
                 </li>
               ))}
             </ul>
           </section>
-        )}
-
-        {visible.length === 0 && (
-          <p className="text-sm text-slate-500 py-12 text-center">
-            조건에 맞는 프로젝트가 없습니다.
-          </p>
         )}
       </div>
     </section>
