@@ -32,17 +32,19 @@ function Chevron() {
 /** 마지막 구간 — 연락처, 이력서, 그리고 더 볼 곳 */
 export default function Closing() {
   return (
-    <section id="contact" className="scroll-mt-16 border-t border-slate-800/70 py-28 sm:py-36">
-      <div className="mx-auto grid max-w-6xl gap-16 px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
+    <section id="contact" className="scroll-mt-16 py-32 sm:py-44">
+      <div className="mx-auto max-w-6xl px-6">
+      <div className="grid gap-16 border-t border-slate-700/80 pt-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
         <motion.div {...fade()}>
-          <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-slate-50">
+          <p className="font-serif text-[22px] italic text-slate-300">Contact</p>
+          <h2 className="mt-6 text-[clamp(2rem,5vw,3.4rem)] font-semibold leading-[1.1] tracking-[-0.045em] text-slate-50">
             연락
           </h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-slate-400">
             새로운 기회나 함께 일할 제안을 기다리고 있습니다.
           </p>
 
-          <dl className="mt-10 grid grid-cols-[4.5rem_1fr] gap-y-3 text-[15px]">
+          <dl className="wall-label mt-12 grid grid-cols-[4.5rem_1fr] gap-y-3 text-[15px]">
             <dt className="text-slate-500">메일</dt>
             <dd>
               <a href={`mailto:${SITE.email}`} className="text-slate-100 underline-offset-4 transition-colors hover:text-ice-500 hover:underline">
@@ -59,7 +61,7 @@ export default function Closing() {
 
           <Link
             href="/resume"
-            className="mt-10 inline-flex items-center gap-2 rounded-full bg-ice-500 px-6 py-3 text-sm font-semibold text-slate-950 transition-colors hover:bg-ice-600"
+            className="group mt-12 inline-flex items-center gap-3 border-b border-slate-50 pb-1.5 text-[15px] font-medium text-slate-50 transition-colors hover:border-ice-500 hover:text-ice-500"
           >
             이력서 보기
             <Chevron />
@@ -67,11 +69,14 @@ export default function Closing() {
         </motion.div>
 
         <motion.nav {...fade(0.1)} aria-label="더 보기">
-          <p className="text-[11px] font-semibold tracking-[0.14em] text-slate-500">더 보기</p>
-          <ul className="mt-5 divide-y divide-slate-800/70 border-y border-slate-800/70">
-            {MORE.map((m) => (
+          <p className="flex items-center gap-4 text-[11px] tracking-[0.16em] text-slate-500">
+            <span aria-hidden className="rule" />더 보기
+          </p>
+          <ul className="mt-6 divide-y divide-slate-800 border-y border-slate-800">
+            {MORE.map((m, i) => (
               <li key={m.href}>
-                <Link href={m.href} className="group flex items-baseline gap-4 py-5">
+                <Link href={m.href} className="group flex items-baseline gap-5 py-6">
+                  <span className="w-6 font-serif text-[15px] italic text-slate-500">{["i", "ii", "iii", "iv", "v"][i]}.</span>
                   <span className="min-w-0 flex-1">
                     <span className="block font-semibold text-slate-100 transition-colors group-hover:text-ice-500">{m.title}</span>
                     <span className="mt-1 block text-[14px] leading-relaxed text-slate-400">{m.text}</span>
@@ -84,6 +89,7 @@ export default function Closing() {
             ))}
           </ul>
         </motion.nav>
+      </div>
       </div>
     </section>
   );

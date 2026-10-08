@@ -45,3 +45,8 @@ export const YEARS: YearBlock[] = [...CHRONICLE]
       ),
     };
   });
+
+/** 홈에 걸린 순서대로 매긴 번호 — 크게 보여 주는 작업과 작은 작업을 한 줄로 센다 */
+export const PLATE_NO = new Map<string, number>(
+  YEARS.flatMap((y) => [...y.works, ...y.smallWorks]).map((p, i) => [p.slug, i + 1])
+);

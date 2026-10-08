@@ -19,9 +19,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <div className="border-t border-slate-800/70">
-          <Nicknames />
-        </div>
+        <Nicknames />
         {YEARS.map((block) => (
           <YearSection key={block.id} block={block} />
         ))}

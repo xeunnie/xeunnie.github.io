@@ -16,99 +16,100 @@ export default function Nicknames() {
   const current = NICKNAMES[picked];
 
   return (
-    <section className="flex min-h-screen items-center py-24" ref={ref}>
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="flex min-h-screen items-center py-32" ref={ref}>
+      <div className="mx-auto w-full max-w-6xl px-6">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >
           {/* 고른 별명이 제목을 완성한다 — 문장이 살아 움직이는 게 이 구간의 인상이다 */}
-          <h2 className="text-3xl font-bold leading-snug tracking-tight text-slate-50 sm:text-4xl">
+          <h2 className="text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-[1.35] tracking-[-0.04em] text-slate-50">
             명함에는 프론트엔드 개발자,
             <br />
             현장에서는{" "}
-            <span className="relative inline-block">
-              <motion.span
-                key={current.name}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="inline-block text-ice-500"
-              >
-                {current.name}
-              </motion.span>
-              <motion.span
-                layoutId="nickname-underline"
-                className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-ice-500/35"
-                transition={{ type: "spring", stiffness: 340, damping: 30 }}
-              />
-            </span>
+            <motion.span
+              key={current.name}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-block text-ice-500"
+            >
+              {current.name}
+            </motion.span>
           </h2>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-400">
+          <p className="mt-6 max-w-2xl text-[16px] leading-[1.9] text-slate-400">
             일하는 방식을 길게 설명하는 것보다, 그동안 불린 이름을 보여 드리는 편이 빠를 것
             같았습니다.
           </p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="mt-8 flex flex-wrap gap-2"
-        >
-          {NICKNAMES.map((n, i) => {
-            const on = i === picked;
-            return (
-              <button
-                key={n.name}
-                onClick={() => setPicked(i)}
-                aria-pressed={on}
-                className={`relative rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-                  on
-                    ? "border-ice-500/40 text-ice-500"
-                    : "border-slate-800/60 text-slate-400 hover:border-ice-500/25 hover:text-ice-400"
-                }`}
-              >
-                {on && (
-                  // 선택 표시가 칩 사이를 미끄러지듯 따라간다
-                  <motion.span
-                    layoutId="nickname-pill"
-                    className="chip-on absolute inset-0 -z-10 rounded-full"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                  />
-                )}
-                {n.name}
-              </button>
-            );
-          })}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.25 }}
-          className="mt-6 rounded-2xl border border-slate-800/60 bg-slate-900/25 p-7"
-        >
-          <motion.p
-            key={current.name}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.28 }}
-            className="text-base leading-relaxed text-slate-300"
-          >
-            {current.story}
-          </motion.p>
-          <motion.p
-            key={`${current.name}-src`}
+        <div className="mt-16 grid gap-12 border-t border-slate-700/80 pt-12 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] lg:gap-20">
+          <motion.ol
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.28, delay: 0.1 }}
-            className="mt-5 text-xs text-slate-500"
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 1, delay: 0.15 }}
+            className="flex flex-wrap gap-x-6 gap-y-3 lg:flex-col lg:gap-1"
           >
-            {current.hrefLabel}에서 있었던 일입니다
-          </motion.p>
-        </motion.div>
+            {NICKNAMES.map((n, i) => {
+              const on = i === picked;
+              return (
+                <li key={n.name}>
+                  <button
+                    onClick={() => setPicked(i)}
+                    aria-pressed={on}
+                    className="group flex items-baseline gap-3 py-1.5 text-left"
+                  >
+                    <span className={`w-6 font-serif text-[15px] italic transition-colors ${on ? "text-ice-500" : "text-slate-500"}`}>
+                      {["i", "ii", "iii", "iv", "v", "vi"][i]}.
+                    </span>
+                    <span
+                      className={`text-[15px] transition-colors ${
+                        on ? "font-semibold text-slate-50" : "text-slate-400 group-hover:text-slate-200"
+                      }`}
+                    >
+                      {n.name}
+                    </span>
+                    <span
+                      aria-hidden
+                      className={`hidden h-px self-center bg-ice-500 transition-all duration-500 lg:block ${on ? "w-8 opacity-100" : "w-0 opacity-0"}`}
+                    />
+                  </button>
+                </li>
+              );
+            })}
+          </motion.ol>
+
+          <motion.figure
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="relative min-h-[12rem]"
+          >
+            <span aria-hidden className="absolute -top-6 -left-1 font-serif text-[5rem] leading-none text-slate-700 select-none">
+              &ldquo;
+            </span>
+            <motion.blockquote
+              key={current.name}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="relative pt-6 text-[clamp(1.05rem,1.6vw,1.25rem)] leading-[1.95] text-slate-200"
+            >
+              {current.story}
+            </motion.blockquote>
+            <motion.figcaption
+              key={`${current.name}-src`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mt-8 flex items-center gap-4 text-[12px] tracking-[0.08em] text-slate-500"
+            >
+              <span aria-hidden className="rule" />
+              {current.hrefLabel}에서 있었던 일입니다
+            </motion.figcaption>
+          </motion.figure>
+        </div>
       </div>
     </section>
   );

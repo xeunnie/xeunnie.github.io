@@ -56,8 +56,8 @@ export default function YearIndex() {
                   <a
                     href={`#${y.id}`}
                     aria-current={on ? "location" : undefined}
-                    className={`flex items-center gap-2.5 text-[12px] tabular-nums transition-colors ${
-                      on ? "font-semibold text-slate-50" : "text-slate-600 hover:text-slate-300"
+                    className={`flex items-center gap-2.5 font-serif italic transition-all ${
+                      on ? "text-[17px] text-slate-50" : "text-[14px] text-slate-600 hover:text-slate-300"
                     }`}
                   >
                     {y.chronicle.year}

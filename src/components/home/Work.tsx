@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { BADGES } from "@/lib/constants";
 import type { Project } from "@/lib/constants";
+import Plate, { PlateNo } from "@/components/gallery/Plate";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -19,8 +20,8 @@ export function Cover({ project, phoneCount = 3 }: { project: Project; phoneCoun
   // 제목은 카드 아래에 따로 붙으므로 여기서는 되풀이하지 않는다.
   if (shots.length === 0) {
     return (
-      <div className="flex aspect-[16/10] w-full flex-col justify-between bg-slate-900 p-5 sm:p-7">
-        <span className="text-[11px] tabular-nums text-slate-500">{project.period}</span>
+      <div className="flex aspect-[16/10] w-full flex-col justify-between bg-slate-900 p-6 sm:p-9">
+        <span className="font-serif text-[15px] italic text-slate-500">{project.period}</span>
         <span>
           <span className="block text-[clamp(1.25rem,2.4vw,1.75rem)] font-extrabold leading-[1.2] tracking-[-0.035em] text-slate-50">
             {project.subtitle}
@@ -67,10 +68,15 @@ interface Props {
   highlight: boolean;
   /** 화면을 오른쪽에 둘지 — 좌우를 번갈아 두면 길게 내려가도 단조롭지 않다 */
   flip: boolean;
+  /** 홈에 걸린 순서 */
+  no?: number;
 }
 
-/** 크게 보여 주는 프로젝트 한 건 — 큰 화면 한 장과 옆의 짧은 설명 */
-export default function Work({ project, highlight, flip }: Props) {
+/**
+ * 크게 보여 주는 작업 한 건.
+ * 한쪽에는 액자에 넣은 대표 화면, 다른 쪽에는 작품 옆 설명판처럼 짧은 정보.
+ */
+export default function Work({ project, highlight, flip, no }: Props) {
   const where = [project.company, project.team].filter(Boolean).join(" · ") || project.org;
   const stack = project.techs
     .slice(0, 5)
@@ -81,47 +87,50 @@ export default function Work({ project, highlight, flip }: Props) {
   return (
     <motion.article
       id={`work-${project.slug}`}
-      initial={{ opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.8, ease: EASE }}
-      className="grid scroll-mt-24 items-center gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-16"
+      transition={{ duration: 1.1, ease: EASE }}
+      className={`grid scroll-mt-24 items-end gap-10 lg:gap-20 ${flip ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]" : "lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]"}`}
     >
       <Link
         href={`/projects/${project.slug}`}
         aria-label={`${project.title} 자세히 보기`}
-        className={`group block overflow-hidden border border-slate-800 ${flip ? "lg:order-2" : ""}`}
+        className={`block ${flip ? "lg:order-2" : ""}`}
       >
-        <div className="transition-transform duration-700 ease-out group-hover:scale-[1.02]">
+        <Plate>
           <Cover project={project} />
-        </div>
+        </Plate>
       </Link>
 
-      <div className={`min-w-0 ${flip ? "lg:order-1 lg:ml-auto lg:w-full lg:max-w-md" : ""}`}>
-        {highlight && (
-          <p className="mb-3 text-[11px] font-semibold tracking-[0.14em] text-ice-500">대표 프로젝트</p>
-        )}
-        <h3 className="text-[clamp(1.6rem,3vw,2.1rem)] font-bold leading-tight tracking-tight text-slate-50">
+      <div className={`wall-label min-w-0 lg:pb-2 ${flip ? "lg:order-1" : ""}`}>
+        <p className="flex items-baseline gap-3">
+          {no && <PlateNo n={no} />}
+          {highlight && <span className="text-[11px] tracking-[0.12em] text-ice-500">대표 작업</span>}
+        </p>
+        <h3 className="mt-4 text-[clamp(1.6rem,2.8vw,2.15rem)] font-semibold leading-[1.2] tracking-[-0.035em] text-slate-50">
           {project.title}
         </h3>
         <p className="mt-2 text-[15px] text-slate-400">{project.subtitle}</p>
 
-        <p className="mt-6 text-[15px] leading-[1.85] text-slate-300">{project.description}</p>
+        <span aria-hidden className="rule mt-7 text-slate-500" />
 
-        <dl className="mt-6 grid grid-cols-[3.5rem_1fr] gap-y-1.5 border-t border-slate-800 pt-5 text-[13px] leading-relaxed">
-          <dt className="text-slate-500">기간</dt>
+        <p className="mt-7 text-[15px] leading-[1.9] text-slate-300">{project.description}</p>
+
+        <dl className="mt-7 grid grid-cols-[3.5rem_1fr] gap-x-3 gap-y-2 text-[13px] leading-relaxed">
+          <dt className="pt-px">기간</dt>
           <dd className="tabular-nums text-slate-300">{project.period}</dd>
           {where && (
             <>
-              <dt className="text-slate-500">소속</dt>
+              <dt className="pt-px">소속</dt>
               <dd className="text-slate-300">{where}</dd>
             </>
           )}
-          <dt className="text-slate-500">기술</dt>
+          <dt className="pt-px">기술</dt>
           <dd className="text-slate-300">{stack}</dd>
           {project.award && (
             <>
-              <dt className="text-slate-500">수상</dt>
+              <dt className="pt-px">수상</dt>
               <dd className="text-amber-400">{project.award}</dd>
             </>
           )}
@@ -129,12 +138,10 @@ export default function Work({ project, highlight, flip }: Props) {
 
         <Link
           href={`/projects/${project.slug}`}
-          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-ice-500 transition-all hover:gap-3"
+          className="group mt-8 inline-flex items-center gap-3 text-[13px] font-medium text-slate-100"
         >
-          자세히 보기
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
-            <path d="M6 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <span className="h-px w-6 bg-current transition-all duration-500 group-hover:w-10 group-hover:bg-ice-500" />
+          <span className="transition-colors group-hover:text-ice-500">자세히 보기</span>
         </Link>
       </div>
     </motion.article>

@@ -1,7 +1,10 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { HERO_PROOF, DEV_SINCE } from "@/lib/constants";
+
+const ROMAN = ["i", "ii", "iii", "iv", "v"];
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -19,22 +22,45 @@ const LINES = [
  * 스크롤하면 바로 첫 해가 시작된다.
  */
 export default function Hero() {
+  // 마우스를 따라 벽에 옅은 빛이 머문다 — 조명 아래 서 있는 느낌만
+  const ref = useRef<HTMLElement>(null);
+  const onMove = (e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--x", `${e.clientX - r.left}px`);
+    el.style.setProperty("--y", `${e.clientY - r.top}px`);
+  };
+
   return (
     <section
+      ref={ref}
       id="top"
-      className="relative flex min-h-[100svh] flex-col justify-between pt-28 pb-10"
+      onMouseMove={onMove}
+      className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden pt-28 pb-10"
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-6">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 transition-opacity duration-700"
+        style={{
+          background:
+            "radial-gradient(700px circle at var(--x, 70%) var(--y, 30%), color-mix(in srgb, var(--acc) 6%, transparent), transparent 60%)",
+        }}
+      />
+
+      <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-6">
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-sm font-medium text-slate-500"
+          transition={{ duration: 1, delay: 0.1 }}
+          className="flex items-baseline gap-4 text-slate-500"
         >
-          Frontend Developer · {DEV_SINCE} —
+          <span className="font-serif text-[22px] italic text-slate-200">Frontend Developer</span>
+          <span aria-hidden className="rule self-center" />
+          <span className="font-serif text-[18px] italic">{DEV_SINCE} —</span>
         </motion.p>
 
-        <h1 className="mt-6 text-[clamp(2.75rem,8.4vw,7.25rem)] font-extrabold leading-[1.04] tracking-[-0.045em] text-slate-50">
+        <h1 className="mt-10 text-[clamp(2.6rem,8vw,6.9rem)] font-bold leading-[1.06] tracking-[-0.05em] text-slate-50">
           {LINES.map((line, i) => (
             // 줄마다 아래에서 밀려 올라온다 — 넘치는 부분은 잘라 깔끔하게
             <span key={i} className="block overflow-hidden pb-[0.06em]">
@@ -54,7 +80,7 @@ export default function Hero() {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1.1, delay: 0.55, ease: EASE }}
-          className="mt-10 h-px w-24 origin-left bg-ice-500"
+          className="mt-12 h-px w-24 origin-left bg-ice-500"
         />
 
         <motion.p
@@ -73,15 +99,18 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.85 }}
-        className="mx-auto mt-16 grid w-[calc(100%-3rem)] max-w-[calc(72rem-3rem)] gap-6 border-t border-slate-800 pt-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4"
+        className="relative mx-auto mt-16 grid w-[calc(100%-3rem)] max-w-[calc(72rem-3rem)] gap-8 border-t border-slate-700/80 pt-7 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4"
       >
-        {HERO_PROOF.map((p) => (
+        {HERO_PROOF.map((p, i) => (
           <li key={p.href}>
             <a href={`#work-${p.href.split("/").pop()}`} className="group block">
-              <p className="text-[15px] font-bold tracking-tight text-slate-100 transition-colors group-hover:text-ice-500">
-                {p.lead}
+              <p className="flex items-baseline gap-3">
+                <span className="font-serif text-[16px] italic text-slate-500">{ROMAN[i]}.</span>
+                <span className="text-[15px] font-semibold tracking-tight text-slate-100 transition-colors group-hover:text-ice-500">
+                  {p.lead}
+                </span>
               </p>
-              <p className="mt-1.5 text-[13px] leading-relaxed text-slate-500">{p.text}</p>
+              <p className="mt-2 pl-7 text-[13px] leading-relaxed text-slate-500">{p.text}</p>
             </a>
           </li>
         ))}

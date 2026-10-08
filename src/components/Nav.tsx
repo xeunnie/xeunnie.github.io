@@ -68,13 +68,13 @@ export default function Nav() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled || pathname !== "/" ? "glass shadow-lg shadow-black/10" : "bg-transparent"
+        scrolled || pathname !== "/" ? "glass" : "bg-transparent"
       }`}
     >
       <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
         <Link
           href="/"
-          className="text-[15px] font-bold tracking-tight text-slate-50 hover:text-ice-400 transition-colors"
+          className="font-serif text-[21px] italic tracking-normal text-slate-50 hover:text-ice-400 transition-colors"
         >
           {SITE.name}
         </Link>

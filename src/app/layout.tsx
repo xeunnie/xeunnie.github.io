@@ -2,7 +2,17 @@ import type { Metadata, Viewport } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SITE } from "@/lib/constants";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Instrument_Serif } from "next/font/google";
 import "./globals.css";
+
+/** 숫자와 라틴 글자에만 쓰는 세리프 — 연도·번호·이름이 조금 더 '걸린 작품'처럼 보이게 */
+const serif = Instrument_Serif({
+  weight: "400",
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-instrument",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -63,8 +73,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0d10" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f5f1" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f0f0e" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -85,7 +95,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="ko" className={`scroll-smooth ${serif.variable}`} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="" />
         <link
