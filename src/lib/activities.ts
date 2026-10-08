@@ -42,6 +42,7 @@ export const ACTIVITIES: Activity[] = [
     highlights: [
       "스터디를 만들고 팀장으로 운영 — 회의를 이끌고, 주제와 진행 방식을 먼저 발제해 스터디의 깊이를 지킴",
       "2025년 1월부터 9월까지 31주차, 주제마다 레포를 하나씩 만들고 이론·실습·트러블슈팅을 위키로 정리",
+      "Webpack 주차에는 번개팅의 next.config를 실습 재료로 가져옴 — 번들 분석기, Terser, contenthash, 트리 셰이킹, PWA 런타임 캐싱, Sentry 설정",
       "2025년 5월부터 정리한 내용을 Substack에 시리즈로 연재 — React 렌더링, WebP, PWA, 번들링, 자바스크립트 동작 원리, 리액트 훅, 모듈 시스템, 타입스크립트",
     ],
     shots: [
