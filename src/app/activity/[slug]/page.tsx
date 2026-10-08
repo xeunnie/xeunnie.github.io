@@ -119,7 +119,8 @@ export default async function ActivityDetailPage({ params }: Props) {
 
           {activity.shots && activity.shots.length > 0 && (
             <section className="mt-20">
-              <ul className="grid gap-x-8 gap-y-12 sm:grid-cols-2">
+              {/* 한 장뿐이면 2열 그리드의 반쪽에 갇히지 않게 전체 폭으로 */}
+              <ul className={`grid gap-x-8 gap-y-12 ${activity.shots.length > 1 ? "sm:grid-cols-2" : ""}`}>
                 {activity.shots.map((shot) => (
                   <li key={shot.src}>
                     <figure>
