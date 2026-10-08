@@ -109,13 +109,35 @@ export const ACTIVITIES: Activity[] = [
     name: "프론트 닌자스 스터디",
     category: "dev",
     org: "Front Ninjas",
-    period: "2024.09 — 현재",
+    period: "2025.01 — 2025.09",
     role: "스터디 팀장",
-    active: true,
+    active: false,
+    overview:
+      "매일 쓰는 자바스크립트와 타입스크립트, 그리고 그 위에서 돌아가는 도구들을 제대로 이해하려고 만든 서적 스터디입니다. 『모던 자바스크립트 Deep Dive』와 『우아한 타입스크립트 with 리액트』 두 권을 함께 읽으며 장마다 각자 정리 노트를 남겼습니다. 중간에 느려지고 멈춘 시기도 있었지만, 도구를 쓸 줄 아는 데서 그치지 않고 왜 그렇게 동작하는지까지 알고 쓰려 했던 공부입니다.",
     highlights: [
-      "모던 자바스크립트 딥다이브, 우아한 타입스크립트 등 기술 서적 기반 이론→구현→발표 스터디",
-      "코드 리뷰 및 기술 토론 운영으로 실무에 가까운 협업 경험 축적",
-      "코드 품질, 타입 안정성, 아키텍처 설계 관점에서 논의",
+      "스터디를 만들고 운영 — 두 레포의 장별 구조와, 일차마다 키워드와 질문을 꺼내는 토론 템플릿을 직접 만듦",
+      "모던 자바스크립트 Deep Dive 26장, 우아한 타입스크립트 13장까지 진행 — 장마다 멤버별 정리 노트",
+      "직접 쓴 정리 노트 51개 — 자바스크립트 22개, 타입스크립트 29개",
+    ],
+    sections: [
+      {
+        title: "도구와 이어 본 것",
+        items: [
+          "타입스크립트 컴파일 — tsc가 코드를 읽고 검사해 자바스크립트로 내보내는 단계(Scanner → Parser → Binder → Checker → Emitter)와 target에 따른 트랜스파일 결과 비교",
+          "프로젝트 관리 — tsc --noEmit --incremental, type-coverage, allowJs에서 strict로 가는 점진적 마이그레이션, pnpm·Turborepo·Nx 모노레포 비교, declare global과 번들러 주입",
+          "상태 관리 — 책에 나온 MobX·Redux·Recoil·Zustand에 Jotai·Valtio·TanStack Query·XState·Effector를 더해, 9개 라이브러리를 어떤 상황에 맞는지로 비교",
+          "리액트 훅의 타입 — useRef 오버로드(MutableRefObject와 RefObject), 빈 배열 useState의 never[] 함정, useEffect 안의 async, eslint-plugin-react-hooks",
+          "API 에러 처리 — 에러 클래스, axios 인터셉터, ErrorBoundary, React Query를 함께 쓰는 구조",
+        ],
+      },
+      {
+        title: "공부한 방식",
+        items: [
+          "책 내용을 옮기는 데서 멈추지 않고, 지금 쓰는 도구와 맞닿는 지점을 찾아 덧붙임",
+          "\"타입 정보는 컴파일 때 지워지는데 타입 가드는 왜 런타임에도 유효해야 할까\", \"strict mode보다 린트 도구가 선호되는 이유는\" 같은 질문을 스스로 던지고 답하는 식으로 정리",
+          "2월에는 하루 한 장 꼴로 읽었고, 봄 이후로는 2~4주에 한 장으로 느려지며 2025년 9월에 멈춤",
+        ],
+      },
     ],
     links: [
       { label: "스터디 조직", url: "https://github.com/Front-Ninjas" },
