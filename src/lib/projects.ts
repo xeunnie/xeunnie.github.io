@@ -957,7 +957,7 @@ export const PROJECTS: Project[] = [
     links: [
       {
         label: "Google Play",
-        url: "https://play.google.com/store/apps/details?id=com.pluxity.vgolf",
+        url: "https://play.google.com/store/apps/details?id=com.pluxity.vgolf&hl=ko",
       },
     ],
     shotsLayout: "phone",
