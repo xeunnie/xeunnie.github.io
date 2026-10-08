@@ -1,217 +1,218 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { PROJECTS } from "@/lib/constants";
+import { PROJECTS, BADGES } from "@/lib/constants";
 import type { Career } from "@/lib/constants";
-import TechBadge from "@/components/TechBadge";
 import SiteSheet from "@/components/SiteSheet";
+import { PlateNo } from "@/components/gallery/Plate";
 
-const TYPE_STYLE = {
-  "full-time": { label: "정규직", color: "bg-ice-100 text-ice-400 border-ice-500/25" },
-  intern: { label: "인턴", color: "bg-amber-500/10 text-amber-400 border-amber-500/20" },
-  education: { label: "교육", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+const TYPE_LABEL = {
+  "full-time": { ko: "정규직", mark: "Full-time" },
+  intern: { ko: "인턴", mark: "Internship" },
+  education: { ko: "교육", mark: "Education" },
 } as const;
 
-function ScrollSection({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+const fade = {
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 1, ease: EASE },
+};
+
+/** 왼쪽에 구간 이름, 오른쪽에 내용 — 가는 선과 여백으로만 나눈다 */
+function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 32 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay }}
+    <motion.section
+      {...fade}
+      className="grid gap-8 border-t border-slate-800 py-16 first:border-t-0 sm:py-24 lg:grid-cols-[minmax(0,12rem)_minmax(0,1fr)] lg:gap-16"
     >
-      {children}
-    </motion.div>
+      <h2 className="flex items-center gap-4 self-start text-[12px] tracking-[0.12em] text-slate-500 lg:pt-1">
+        <span aria-hidden className="rule" />
+        {title}
+      </h2>
+      <div className="min-w-0">{children}</div>
+    </motion.section>
   );
 }
 
 interface Props {
   career: Career;
+  /** 경력 순서 — 오래된 것부터 1 */
+  no: number;
   prev: { id: number; name: string } | null;
   next: { id: number; name: string } | null;
 }
 
-export default function CareerDetail({ career, prev, next }: Props) {
-  const style = TYPE_STYLE[career.type];
+export default function CareerDetail({ career, no, prev, next }: Props) {
+  const type = TYPE_LABEL[career.type];
+  const stack = career.techs.map((t) => BADGES[t]?.label).filter(Boolean);
 
   return (
     <main className="min-h-screen">
-      <nav className="fixed top-0 inset-x-0 z-50 glass border-b border-white/5">
-        <div className="mx-auto max-w-5xl px-6 h-16 flex items-center justify-between">
+      <nav className="glass fixed inset-x-0 top-0 z-50">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           <Link
             href="/collaboration"
-            className="flex items-center gap-2 text-sm text-slate-400 hover:text-ice-400 transition-colors"
+            className="group inline-flex items-center gap-3 text-[13px] text-slate-400 transition-colors hover:text-slate-100"
           >
-            <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M11 3L5 9l6 6" />
-            </svg>
+            <span aria-hidden className="h-px w-5 bg-current transition-all duration-500 group-hover:w-8" />
             협업 기록
           </Link>
           <SiteSheet />
         </div>
       </nav>
 
-      <section className="pt-32 pb-16 mesh-bg">
-        <div className="mx-auto max-w-5xl px-6">
+      {/* 첫머리 — 큰 이름 하나와 옆의 설명판 */}
+      <header className="flex min-h-[72vh] items-end pt-36 pb-20">
+        <div className="mx-auto w-full max-w-6xl px-6">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 1, ease: EASE }}
+            className="grid gap-12 border-b border-slate-700/80 pb-12 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-end lg:gap-20"
           >
-            <div className="flex flex-wrap items-center gap-3 mb-4">
-              <span className={`text-[10px] font-medium tracking-wider uppercase px-2.5 py-1 rounded-full border ${style.color}`}>
-                {style.label}
-              </span>
-              {career.team && (
-                <span className="text-[10px] font-medium tracking-wider px-2.5 py-1 rounded-full bg-slate-800/80 text-slate-400 border border-slate-700/40">
-                  {career.team}
-                </span>
-              )}
-              <span className="text-xs font-mono text-slate-500">{career.period}</span>
+            <div className="min-w-0">
+              <p className="mb-8 flex items-center gap-4">
+                <span className="font-serif text-[22px] italic text-slate-300">{type.mark}</span>
+                <span aria-hidden className="rule text-slate-500" />
+                <PlateNo n={no} />
+              </p>
+              <h1 className="text-[clamp(2.6rem,7vw,5.2rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-slate-50">
+                {career.company}
+              </h1>
+              <p className="mt-6 text-[clamp(1.05rem,1.8vw,1.25rem)] leading-snug tracking-[-0.02em] text-slate-400">
+                {career.role}
+              </p>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-50 mb-3">
-              {career.company}
-            </h1>
-            <p className="text-lg text-ice-400 font-medium mb-2">{career.role}</p>
-            <p className="text-sm font-mono text-slate-500">{career.chapter}</p>
+
+            <dl className="wall-label grid grid-cols-[3.5rem_1fr] gap-x-3 gap-y-2.5 text-[13px] leading-relaxed lg:pb-2">
+              <dt className="pt-px">기간</dt>
+              <dd className="tabular-nums text-slate-300">{career.period}</dd>
+              <dt className="pt-px">구분</dt>
+              <dd className="text-slate-300">{type.ko}</dd>
+              {career.team && (
+                <>
+                  <dt className="pt-px">소속</dt>
+                  <dd className="text-slate-300">{career.team}</dd>
+                </>
+              )}
+              <dt className="pt-px">시기</dt>
+              <dd className="text-slate-300">{career.chapter}</dd>
+            </dl>
           </motion.div>
         </div>
-      </section>
+      </header>
 
-      <section className="py-16">
-        <div className="mx-auto max-w-5xl px-6 space-y-20">
-          <ScrollSection>
-            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">무엇을 만들었나</h2>
-            <p className="text-base text-slate-300 leading-relaxed">{career.summary}</p>
-          </ScrollSection>
+      <div className="mx-auto max-w-6xl px-6 pb-16">
+        <Block title="무엇을 만들었나">
+          <p className="max-w-[44rem] text-[clamp(1.05rem,1.6vw,1.2rem)] leading-[1.95] text-slate-200">
+            {career.summary}
+          </p>
+        </Block>
 
-          <ScrollSection>
-            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-8">한 일</h2>
-            <div className="space-y-6">
-              {career.details.map((d, i) => {
-                const [title, ...rest] = d.split(" — ");
-                const desc = rest.join(" — ");
+        <Block title="한 일">
+          <ol className="divide-y divide-slate-800/70 border-y border-slate-800">
+            {career.details.map((d, i) => {
+              const [title, ...rest] = d.split(" — ");
+              const desc = rest.join(" — ");
+              return (
+                <li key={d} className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-4 py-6 sm:grid-cols-[3.5rem_minmax(0,1fr)]">
+                  <span aria-hidden className="font-serif text-[17px] italic tabular-nums leading-[1.6] text-slate-500">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  {desc ? (
+                    <div className="min-w-0">
+                      <p className="text-[15px] font-semibold leading-[1.6] tracking-[-0.02em] text-slate-100">{title}</p>
+                      <p className="mt-2 max-w-[42rem] text-[15px] leading-[1.85] text-slate-400">{desc}</p>
+                    </div>
+                  ) : (
+                    <p className="max-w-[42rem] text-[15px] leading-[1.85] text-slate-300">{title}</p>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </Block>
+
+        {career.projects && career.projects.length > 0 && (
+          <Block title="맡은 프로젝트">
+            <ul className="divide-y divide-slate-800/70 border-y border-slate-800">
+              {career.projects.map((name) => {
+                // 상세 페이지가 있는 프로젝트면 링크로, 아니면 이름만
+                const hit = PROJECTS.find((x) => name.includes(x.title) || x.title.includes(name));
                 return (
-                  <motion.div
-                    key={d}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-40px" }}
-                    transition={{ duration: 0.5, delay: i * 0.06 }}
-                    className="relative pl-6 border-l-2 border-ice-500/20 hover:border-ice-500/50 transition-colors"
-                  >
-                    <span className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-ice-500" />
-                    {desc ? (
-                      <>
-                        <p className="text-sm font-semibold text-slate-200 mb-1">{title}</p>
-                        <p className="text-sm text-slate-400 leading-relaxed">{desc}</p>
-                      </>
+                  <li key={name}>
+                    {hit ? (
+                      <Link
+                        href={`/projects/${hit.slug}`}
+                        className="group flex items-center justify-between gap-6 py-4"
+                      >
+                        <span className="text-[15px] font-semibold tracking-[-0.02em] text-slate-100 transition-colors group-hover:text-ice-500">
+                          {name}
+                        </span>
+                        <span
+                          aria-hidden
+                          className="h-px w-5 shrink-0 bg-slate-600 transition-all duration-500 group-hover:w-9 group-hover:bg-ice-500"
+                        />
+                      </Link>
                     ) : (
-                      <p className="text-sm text-slate-300 leading-relaxed">{title}</p>
+                      <span className="block py-4 text-[15px] text-slate-400">{name}</span>
                     )}
-                  </motion.div>
+                  </li>
                 );
               })}
-            </div>
-          </ScrollSection>
+            </ul>
+          </Block>
+        )}
 
-          {career.projects && career.projects.length > 0 && (
-            <ScrollSection>
-              <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">맡은 프로젝트</h2>
-              <div className="flex flex-wrap gap-2">
-                {career.projects.map((name, i) => {
-                  // 상세 페이지가 있는 프로젝트면 링크로, 아니면 그대로 칩
-                  const hit = PROJECTS.find(
-                    (x) => name.includes(x.title) || x.title.includes(name)
-                  );
-                  const cls =
-                    "inline-flex items-center gap-1.5 text-sm px-4 py-2 rounded-xl bg-slate-800/60 text-slate-300 border border-slate-700/40 transition-all";
-                  return (
-                    <motion.div
-                      key={name}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.3, delay: i * 0.05 }}
-                    >
-                      {hit ? (
-                        <Link
-                          href={`/projects/${hit.slug}`}
-                          className={`${cls} hover:border-ice-500/40 hover:text-ice-400`}
-                        >
-                          {name}
-                          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                            <path d="M5 3l5 5-5 5" />
-                          </svg>
-                        </Link>
-                      ) : (
-                        <span className={cls}>{name}</span>
-                      )}
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </ScrollSection>
-          )}
+        <Block title="쓴 기술">
+          <p className="max-w-[42rem] text-[15px] leading-[2] text-slate-300">
+            {stack.map((label, i) => (
+              <span key={label}>
+                {label}
+                {i < stack.length - 1 && <span className="mx-2.5 text-slate-600">/</span>}
+              </span>
+            ))}
+          </p>
+        </Block>
+      </div>
 
-          <ScrollSection>
-            <h2 className="text-sm font-semibold tracking-tight text-ice-500 mb-6">쓴 기술</h2>
-            <div className="flex flex-wrap gap-2">
-              {career.techs.map((tech, i) => (
-                <motion.div
-                  key={tech}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: i * 0.04 }}
-                >
-                  <TechBadge name={tech} />
-                </motion.div>
-              ))}
-            </div>
-          </ScrollSection>
-        </div>
-      </section>
-
-      <section className="border-t border-slate-800/60 py-12">
-        <div className="mx-auto max-w-5xl px-6 flex justify-between items-center">
+      <nav aria-label="다른 경력" className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="grid gap-8 border-t border-slate-700/80 pt-10 sm:grid-cols-2">
           {prev ? (
-            <Link
-              href={`/career/${prev.id}`}
-              className="group flex items-center gap-3 text-sm text-slate-400 hover:text-ice-400 transition-colors"
-            >
-              <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M11 3L5 9l6 6" />
-              </svg>
-              <div>
-                <p className="text-xs text-slate-600 mb-0.5">이전</p>
-                <p className="group-hover:text-ice-400">{prev.name}</p>
-              </div>
+            <Link href={`/career/${prev.id}`} className="group block">
+              <span className="flex items-center gap-3 text-[11px] tracking-[0.16em] text-slate-500">
+                <span aria-hidden className="h-px w-5 bg-current transition-all duration-500 group-hover:w-8" />
+                이전
+              </span>
+              <span className="mt-3 block text-[clamp(1.2rem,2vw,1.5rem)] font-semibold tracking-[-0.03em] text-slate-200 transition-colors group-hover:text-ice-500">
+                {prev.name}
+              </span>
             </Link>
-          ) : <div />}
-          {next ? (
-            <Link
-              href={`/career/${next.id}`}
-              className="group flex items-center gap-3 text-sm text-slate-400 hover:text-ice-400 transition-colors text-right"
-            >
-              <div>
-                <p className="text-xs text-slate-600 mb-0.5">다음</p>
-                <p className="group-hover:text-ice-400">{next.name}</p>
-              </div>
-              <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 3l6 6-6 6" />
-              </svg>
+          ) : (
+            <span />
+          )}
+          {next && (
+            <Link href={`/career/${next.id}`} className="group block sm:text-right">
+              <span className="flex items-center gap-3 text-[11px] tracking-[0.16em] text-slate-500 sm:justify-end">
+                다음
+                <span aria-hidden className="h-px w-5 bg-current transition-all duration-500 group-hover:w-8" />
+              </span>
+              <span className="mt-3 block text-[clamp(1.2rem,2vw,1.5rem)] font-semibold tracking-[-0.03em] text-slate-200 transition-colors group-hover:text-ice-500">
+                {next.name}
+              </span>
             </Link>
-          ) : <div />}
+          )}
         </div>
-      </section>
+      </nav>
 
-      <footer className="border-t border-slate-800/60 py-8 text-center">
-        <p className="text-sm text-slate-500">&copy; {new Date().getFullYear()} Seungeun Choi</p>
+      <footer className="border-t border-slate-800 py-10">
+        <p className="mx-auto max-w-6xl px-6 text-[13px] text-slate-500">
+          &copy; {new Date().getFullYear()} Seungeun Choi
+        </p>
       </footer>
     </main>
   );

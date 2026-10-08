@@ -26,21 +26,18 @@ export default async function GrowthPage() {
         <PageHeader
           title="타임라인"
           lede="2021년 첫 인턴십부터 지금까지, 해마다 한 일과 그 덕분에 할 수 있게 된 것을 적었습니다. 그때 쓴 블로그 글도 시기별로 함께 붙여 두었습니다."
+          mark="Growth"
           aside={
-            <div className="flex gap-8">
-              <div>
-                <p className="text-3xl font-bold text-slate-50 font-mono">{CHRONICLE.length}</p>
-                <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mt-1">
-                  연차
-                </p>
+            <dl className="flex gap-12">
+              <div className="flex flex-col-reverse">
+                <dt className="mt-3 text-[11px] tracking-[0.16em] text-slate-500">연차</dt>
+                <dd className="font-serif text-[3.25rem] leading-none tabular-nums text-slate-50">{CHRONICLE.length}</dd>
               </div>
-              <div>
-                <p className="text-3xl font-bold text-slate-50 font-mono">{posts.length}</p>
-                <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mt-1">
-                  블로그 글
-                </p>
+              <div className="flex flex-col-reverse">
+                <dt className="mt-3 text-[11px] tracking-[0.16em] text-slate-500">블로그 글</dt>
+                <dd className="font-serif text-[3.25rem] leading-none tabular-nums text-slate-50">{posts.length}</dd>
               </div>
-            </div>
+            </dl>
           }
         />
         <Chronicle posts={posts} />

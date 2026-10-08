@@ -29,5 +29,5 @@ export default async function CareerPage({ params }: Props) {
   const prev = idx < CAREERS.length - 1 ? { id: idx + 1, name: CAREERS[idx + 1].company } : null;
   const next = idx > 0 ? { id: idx - 1, name: CAREERS[idx - 1].company } : null;
 
-  return <CareerDetail career={career} prev={prev} next={next} />;
+  return <CareerDetail career={career} no={CAREERS.length - idx} prev={prev} next={next} />;
 }

@@ -1,21 +1,28 @@
 "use client";
 
-import { useRef, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
-import { CHRONICLE, PROJECTS, BLOG_SOURCES } from "@/lib/constants";
+import { motion } from "framer-motion";
+import { CHRONICLE, PROJECTS, BLOG_SOURCES, BADGES } from "@/lib/constants";
 import type { ChronicleYear, BlogPost } from "@/lib/constants";
-import TechBadge from "./TechBadge";
 
-const SOURCE_STYLE: Record<string, string> = {
-  tistory: "border-amber-400/30 bg-amber-400/[0.09] text-amber-400",
-  velog: "border-emerald-400/30 bg-emerald-400/[0.09] text-emerald-400",
+const EASE = [0.16, 1, 0.3, 1] as const;
+const ROMAN = ["i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x", "xi", "xii"];
+
+const fade = {
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+  transition: { duration: 1, ease: EASE },
 };
 
-/** 구간 이름 — 한 해 안에서 무엇을 보고 있는지 알려주는 작은 머리글 */
+/** 구간 머리 — 짧은 선과 작은 이름표 */
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-3 text-[11px] font-semibold tracking-[0.06em] text-slate-500">{children}</p>
+    <p className="mb-6 flex items-center gap-4 text-[11px] tracking-[0.16em] text-slate-500">
+      <span aria-hidden className="rule" />
+      {children}
+    </p>
   );
 }
 
@@ -23,32 +30,29 @@ function PostList({ posts }: { posts: BlogPost[] }) {
   if (posts.length === 0) return null;
   return (
     /* 글 목록은 접어 둔다 — 연차 이야기를 읽는 흐름을 끊지 않도록 */
-    <details className="group mt-10 rounded-xl border border-slate-800/60 bg-slate-900/25 p-5">
-      <summary className="flex cursor-pointer select-none items-center justify-between gap-3 text-[11px] font-semibold tracking-[0.06em] text-slate-500 [&::-webkit-details-marker]:hidden">
+    <details className="group mt-14 border-t border-slate-800 pt-6">
+      <summary className="inline-flex cursor-pointer select-none items-center gap-3 text-[13px] font-medium text-slate-400 transition-colors hover:text-slate-100 [&::-webkit-details-marker]:hidden">
+        <span aria-hidden className="h-px w-6 bg-current transition-all duration-500 group-open:w-10" />
         <span>그 해에 쓴 글 {posts.length}편</span>
-        <span className="text-ice-500">
+        <span className="text-slate-500">
           <span className="group-open:hidden">펼치기</span>
           <span className="hidden group-open:inline">접기</span>
         </span>
       </summary>
-      <ul className="mt-4 flex flex-col gap-2.5">
+      <ul className="mt-6 divide-y divide-slate-800/70">
         {posts.map((p) => (
           <li key={p.link}>
             <a
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group/post flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm text-slate-300 transition-colors hover:text-ice-500"
+              className="group/post grid gap-x-6 gap-y-1 py-3 sm:grid-cols-[6.5rem_minmax(0,1fr)_auto] sm:items-baseline"
             >
-              <span className="font-mono text-[11px] tabular-nums text-slate-600">{p.date}</span>
-              <span
-                className={`shrink-0 rounded border px-1.5 py-px font-mono text-[9px] uppercase tracking-wider ${SOURCE_STYLE[p.source]}`}
-              >
-                {p.source}
-              </span>
-              <span className="flex-1 leading-relaxed underline-offset-4 group-hover/post:underline">
+              <span className="text-[12px] tabular-nums text-slate-500">{p.date}</span>
+              <span className="text-[14px] leading-relaxed text-slate-300 transition-colors group-hover/post:text-slate-50">
                 {p.title}
               </span>
+              <span className="font-serif text-[14px] italic text-slate-500">{p.source}</span>
             </a>
           </li>
         ))}
@@ -60,125 +64,101 @@ function PostList({ posts }: { posts: BlogPost[] }) {
 /**
  * 한 해.
  * 연도를 왼쪽에 크게 세우고 이야기는 오른쪽에서 읽게 한다.
- * 점과 세로선으로 시간을 그리던 것을 걷어냈다 — 연도가 이미 시간을 말한다.
+ * 연도가 이미 시간을 말하므로 점과 세로선은 두지 않고, 해 사이는 가는 선과 여백으로만 나눈다.
  * 한 해 안의 순서: 무슨 해였나 → 있었던 일 → 할 수 있게 된 것 → 만든 것 → 쓴 글.
  */
-function YearBlock({
-  year,
-  posts,
-  index,
-}: {
-  year: ChronicleYear;
-  posts: BlogPost[];
-  index: number;
-}) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+function YearBlock({ year, posts, n }: { year: ChronicleYear; posts: BlogPost[]; n: number }) {
   const projects = year.projects
     .map((slug) => PROJECTS.find((p) => p.slug === slug))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
+  const stack = year.techs
+    .map((t) => BADGES[t]?.label)
+    .filter(Boolean)
+    .join(", ");
 
   return (
     <motion.li
-      ref={ref}
-      initial={{ opacity: 0, y: 28 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay: Math.min(index * 0.05, 0.2) }}
-      className="grid gap-6 border-t border-slate-800/60 py-14 first:border-t-0 first:pt-0 lg:grid-cols-[minmax(0,12rem)_minmax(0,1fr)] lg:gap-16"
+      {...fade}
+      className="grid gap-10 border-t border-slate-800 py-28 sm:py-36 lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] lg:gap-20"
     >
       <div className="lg:sticky lg:top-28 lg:self-start">
-        <p className="font-mono text-4xl font-bold tabular-nums text-ice-500 sm:text-5xl">
+        <p className="font-serif text-[15px] italic text-slate-500">{ROMAN[n] ?? n + 1}.</p>
+        <p
+          aria-hidden
+          className="mt-3 font-serif text-[clamp(4.75rem,11vw,8.5rem)] leading-[0.82] tracking-[-0.02em] text-slate-50"
+        >
           {year.year}
         </p>
-        <div aria-hidden className="mt-5 hidden h-0.5 w-12 rounded-full bg-ice-500 lg:block" />
+        <span aria-hidden className="rule mt-8 text-slate-500" />
+        <p className="mt-5 text-[12px] leading-relaxed tracking-[0.06em] text-slate-500">{year.chapter}</p>
       </div>
 
       <div className="min-w-0">
-        <h2 className="max-w-2xl text-2xl font-bold leading-snug tracking-tight text-slate-50 sm:text-3xl">
+        <h2 className="max-w-2xl text-[clamp(1.4rem,2.6vw,1.9rem)] font-semibold leading-[1.45] tracking-[-0.035em] text-slate-50">
+          <span className="sr-only">{year.year}년 — </span>
           {year.headline}
         </h2>
 
-        <div className="mt-6 space-y-4">
+        <div className="mt-8 space-y-5">
           {year.story.map((s) => (
-            <p key={s} className="max-w-[42rem] text-[17px] leading-[1.9] text-slate-300">
+            <p key={s} className="max-w-[42rem] text-[16px] leading-[1.95] text-slate-300">
               {s}
             </p>
           ))}
         </div>
 
-        <div className="mt-10">
+        <div className="mt-16">
           <Label>있었던 일</Label>
-          <ol className="divide-y divide-slate-800/60 border-y border-slate-800/60">
+          <ol className="divide-y divide-slate-800/70 border-y border-slate-800">
             {year.moments.map((m) => (
               <li
                 key={m.when + m.what}
-                className="grid gap-x-6 gap-y-1 py-3.5 sm:grid-cols-[7rem_minmax(0,1fr)]"
+                className="grid gap-x-8 gap-y-1 py-4 sm:grid-cols-[7rem_minmax(0,1fr)] sm:items-baseline"
               >
-                <span className="font-mono text-[13px] tabular-nums text-ice-500">{m.when}</span>
+                <span className="text-[12px] tabular-nums tracking-[0.04em] text-slate-500">{m.when}</span>
                 <span className="text-[15px] leading-[1.8] text-slate-300">{m.what}</span>
               </li>
             ))}
           </ol>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-16">
           <Label>할 수 있게 된 것</Label>
-          <ul className="grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
+          <ul className="grid gap-x-10 gap-y-3 sm:grid-cols-2">
             {year.gained.map((g) => (
-              <li key={g} className="flex min-w-0 items-start gap-2.5">
-                <svg
-                  width="13"
-                  height="13"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="mt-1.5 shrink-0 text-ice-500"
-                  aria-hidden
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span className="text-[15px] leading-[1.75] text-slate-300">{g}</span>
+              <li key={g} className="flex min-w-0 items-start gap-3">
+                <span aria-hidden className="mt-[13.5px] h-px w-3 shrink-0 bg-slate-500" />
+                <span className="text-[15px] leading-[1.8] text-slate-300">{g}</span>
               </li>
             ))}
           </ul>
         </div>
 
         {projects.length > 0 && (
-          <div className="mt-10">
+          <div className="mt-16">
             <Label>그 해에 만든 것</Label>
-            <ul className="divide-y divide-slate-800/60 border-y border-slate-800/60">
+            <ul className="divide-y divide-slate-800/70 border-y border-slate-800">
               {projects.map((p) => (
                 <li key={p.slug}>
                   <Link
                     href={`/projects/${p.slug}`}
-                    className="group flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3"
+                    className="group grid gap-x-6 gap-y-1 py-4 sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)_auto] sm:items-baseline"
                   >
-                    <span className="text-[15px] font-semibold text-slate-100 transition-colors group-hover:text-ice-500">
-                      {p.title}
-                    </span>
-                    {p.award && (
-                      <span className="rounded-full border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 text-[11px] font-medium text-amber-400">
-                        수상
+                    <span className="flex items-baseline gap-3">
+                      <span className="text-[15px] font-semibold tracking-[-0.02em] text-slate-100 transition-colors group-hover:text-ice-500">
+                        {p.title}
                       </span>
-                    )}
-                    <span className="min-w-0 flex-1 truncate text-[13px] text-slate-500">
-                      {p.subtitle}
+                      {p.award && (
+                        <span className="shrink-0 border border-slate-700 px-1.5 py-px text-[10px] tracking-[0.08em] text-amber-400">
+                          수상
+                        </span>
+                      )}
                     </span>
-                    <svg
-                      width="13"
-                      height="13"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      className="shrink-0 text-slate-600 transition-colors group-hover:text-ice-500"
+                    <span className="min-w-0 text-[13px] leading-relaxed text-slate-500">{p.subtitle}</span>
+                    <span
                       aria-hidden
-                    >
-                      <path d="M5 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+                      className="hidden h-px w-5 bg-slate-600 transition-all duration-500 group-hover:w-9 group-hover:bg-ice-500 sm:block sm:self-center"
+                    />
                   </Link>
                 </li>
               ))}
@@ -186,11 +166,12 @@ function YearBlock({
           </div>
         )}
 
-        <div className="mt-8 flex flex-wrap gap-1.5">
-          {year.techs.map((t) => (
-            <TechBadge key={t} name={t} size="sm" />
-          ))}
-        </div>
+        {stack && (
+          <dl className="wall-label mt-12 grid grid-cols-[3.5rem_1fr] gap-x-3 text-[13px] leading-[1.8]">
+            <dt className="pt-px">기술</dt>
+            <dd className="text-slate-400">{stack}</dd>
+          </dl>
+        )}
 
         <PostList posts={posts} />
       </div>
@@ -209,16 +190,16 @@ export default function Chronicle({ posts }: { posts: BlogPost[] }) {
   );
 
   return (
-    <section className="py-16">
+    <section className="pb-16">
       <div className="mx-auto max-w-6xl px-6">
         {/* 정렬은 프로젝트 목록과 같은 밑줄 탭으로 — 사이트 안에서 같은 동작은 같은 모양이어야 한다 */}
-        <div className="mb-14 flex flex-wrap items-center gap-x-5 gap-y-2 border-y border-slate-800 py-3">
-          <span className="font-mono text-xs tabular-nums text-slate-500">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 py-6">
+          <span className="font-serif text-[17px] italic tabular-nums text-slate-400">
             {CHRONICLE[0].year}
-            <span className="mx-1 text-slate-700">—</span>
+            <span className="mx-2 text-slate-600">—</span>
             {CHRONICLE[CHRONICLE.length - 1].year}
           </span>
-          <div className="ml-auto flex items-center gap-4">
+          <div className="ml-auto flex items-center gap-6">
             {(
               [
                 { key: false, label: "오래된 순" },
@@ -229,17 +210,16 @@ export default function Chronicle({ posts }: { posts: BlogPost[] }) {
                 key={String(o.key)}
                 onClick={() => setNewestFirst(o.key)}
                 aria-pressed={newestFirst === o.key}
-                className={`relative py-1 text-xs transition-colors ${
-                  newestFirst === o.key
-                    ? "font-semibold text-slate-100"
-                    : "text-slate-500 hover:text-slate-300"
+                className={`relative py-1.5 text-[12px] tracking-[0.04em] transition-colors ${
+                  newestFirst === o.key ? "text-slate-100" : "text-slate-500 hover:text-slate-300"
                 }`}
               >
                 {o.label}
                 {newestFirst === o.key && (
                   <motion.span
                     layoutId="chronicle-underline"
-                    className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-ice-500"
+                    transition={{ duration: 0.6, ease: EASE }}
+                    className="absolute inset-x-0 -bottom-px h-px bg-current"
                   />
                 )}
               </button>
@@ -248,40 +228,58 @@ export default function Chronicle({ posts }: { posts: BlogPost[] }) {
         </div>
 
         <ol>
-          {years.map((year, i) => (
-            <YearBlock key={year.year} year={year} posts={byYear(year.year)} index={i} />
+          {years.map((year) => (
+            <YearBlock
+              key={year.year}
+              year={year}
+              posts={byYear(year.year)}
+              n={CHRONICLE.indexOf(year)}
+            />
           ))}
         </ol>
 
-        <div className="mt-20 border-t border-slate-800/60 pt-12">
-          <h2 className="mb-2 text-2xl font-bold tracking-tight text-slate-50">블로그</h2>
-          <p className="mb-8 text-[15px] leading-relaxed text-slate-400">
-            {linked > 0
-              ? `두 블로그의 글 ${linked}편을 위 타임라인의 해당 연도에 연결해 두었습니다.`
-              : "글 목록을 불러오지 못했습니다. 아래에서 직접 확인하실 수 있습니다."}
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {BLOG_SOURCES.map((s) => (
-              <a
-                key={s.key}
-                href={s.home}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group rounded-2xl border border-slate-800/60 bg-slate-900/20 p-6 transition-colors hover:border-ice-500/30"
-              >
-                <div className="mb-2 flex items-center justify-between">
-                  <span className="font-mono text-sm font-semibold text-slate-100 transition-colors group-hover:text-ice-500">
-                    {s.name}
-                  </span>
-                  <span className="font-mono text-xs text-slate-500">
-                    {posts.filter((p) => p.source === s.key).length}편
-                  </span>
-                </div>
-                <p className="text-[13px] leading-relaxed text-slate-400">{s.note}</p>
-              </a>
-            ))}
+        <motion.div
+          {...fade}
+          className="grid gap-10 border-t border-slate-700/80 py-28 sm:py-36 lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] lg:gap-20"
+        >
+          <div>
+            <p className="font-serif text-[clamp(2.6rem,5vw,3.6rem)] italic leading-none text-slate-50">Notes</p>
+            <span aria-hidden className="rule mt-8 text-slate-500" />
           </div>
-        </div>
+          <div className="min-w-0">
+            <h2 className="text-[clamp(1.4rem,2.6vw,1.9rem)] font-semibold tracking-[-0.035em] text-slate-50">
+              블로그
+            </h2>
+            <p className="mt-5 max-w-[42rem] text-[16px] leading-[1.9] text-slate-400">
+              {linked > 0
+                ? `두 블로그의 글 ${linked}편을 위 타임라인의 해당 연도에 연결해 두었습니다.`
+                : "글 목록을 불러오지 못했습니다. 아래에서 직접 확인하실 수 있습니다."}
+            </p>
+            <ul className="mt-12 divide-y divide-slate-800/70 border-y border-slate-800">
+              {BLOG_SOURCES.map((s) => (
+                <li key={s.key}>
+                  <a
+                    href={s.home}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group grid gap-x-8 gap-y-1 py-6 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)_auto] sm:items-baseline"
+                  >
+                    <span className="font-semibold tracking-[-0.02em] text-slate-100 transition-colors group-hover:text-ice-500">
+                      {s.name}
+                    </span>
+                    <span className="text-[14px] leading-relaxed text-slate-400">{s.note}</span>
+                    <span className="text-[12px] text-slate-500">
+                      <span className="font-serif text-[17px] italic tabular-nums">
+                        {posts.filter((p) => p.source === s.key).length}
+                      </span>
+                      편
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
