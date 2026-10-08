@@ -1,127 +1,93 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { FUTURE, DEV_SINCE, workedMonths, formatMonths } from "@/lib/constants";
+import { SectionHead } from "./About";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+const fade = (delay = 0) => ({
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 1, ease: EASE, delay },
+});
 
 /**
  * 앞으로 되고 싶은 모습.
- * 지나온 것(타임라인)이 뒤를 보여 준다면 이 구간은 앞을 본다.
- * 그래서 같은 문법으로 그린다 — 세로 선이 위에서 아래로 그어지고,
- * 지금 서 있는 자리에서 3 · 5 · 10 년이 차례로 찍힌다.
+ * 지금 서 있는 자리에서 3 · 5 · 10 년이 가는 세로선 위에 차례로 찍힌다.
  * 바람만 적으면 글이 되므로, 칸마다 그때까지 할 일을 같이 둔다.
  */
 export default function Future() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
-    <section className="py-24" ref={ref}>
+    <section className="py-32 sm:py-44">
       <div className="mx-auto max-w-6xl px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="mb-14"
-        >
-          <p className="mb-3 font-mono text-xs font-semibold tabular-nums text-ice-500">05</p>
-          <h2 className="text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl">
-            앞으로 이런 개발자이고 싶습니다
-          </h2>
+        <motion.div {...fade()} className="mb-20 sm:mb-28">
+          <SectionHead mark="Ahead" title="앞으로 이런 개발자이고 싶습니다" />
         </motion.div>
 
-        <div className="relative pl-10 sm:pl-16">
-          {/* 지나온 쪽은 옅게, 앞으로 갈수록 진하게 — 선이 위에서 아래로 그어진다 */}
+        <div className="relative pl-8 sm:pl-14">
+          {/* 가는 세로선 — 위에서 아래로 천천히 그어진다 */}
           <motion.span
             aria-hidden
             initial={{ scaleY: 0 }}
-            animate={inView ? { scaleY: 1 } : {}}
-            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 1.6, ease: EASE }}
             style={{ transformOrigin: "top" }}
-            className="absolute bottom-8 left-[7px] top-2 w-px bg-gradient-to-b from-slate-700 via-ice-500/60 to-ice-500 sm:left-[11px]"
+            className="absolute bottom-6 left-[3px] top-2 w-px bg-slate-700 sm:left-[5px]"
           />
 
           {/* 출발점 — 앞을 재려면 지금 어디인지부터 */}
-          <motion.div
-            initial={{ opacity: 0, x: -8 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="relative pb-14"
-          >
+          <motion.div {...fade()} className="relative pb-20">
             <span
               aria-hidden
-              className="absolute -left-10 top-1 h-4 w-4 rounded-full border-2 border-slate-700 bg-slate-950 sm:-left-16 sm:h-6 sm:w-6"
+              className="absolute -left-8 top-[7px] h-[7px] w-[7px] rounded-full bg-slate-500 sm:-left-14 sm:h-[11px] sm:w-[11px] sm:top-[5px]"
             />
-            <p className="font-mono text-sm font-semibold text-slate-500">지금</p>
-            <p className="mt-1.5 text-[15px] text-slate-400">
+            <p className="text-[11px] tracking-[0.16em] text-slate-500">지금</p>
+            <p className="mt-2 text-[15px] text-slate-400">
               {DEV_SINCE}년에 시작해 실무 {formatMonths(workedMonths())}째입니다.
             </p>
           </motion.div>
 
           <ol>
             {FUTURE.map((step, i) => (
-              <motion.li
-                key={step.when}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: 0.25 + i * 0.15 }}
-                className="relative pb-16 last:pb-0"
-              >
-                {/* 마디 — 튀어나오듯 찍힌다 */}
-                <motion.span
+              <motion.li key={step.when} {...fade(0.1)} className="relative pb-24 last:pb-0 sm:pb-32">
+                <span
                   aria-hidden
-                  initial={{ scale: 0 }}
-                  animate={inView ? { scale: 1 } : {}}
-                  transition={{
-                    type: "spring",
-                    stiffness: 380,
-                    damping: 20,
-                    delay: 0.35 + i * 0.15,
-                  }}
-                  className="absolute -left-10 top-1 h-4 w-4 rounded-full border-2 border-ice-500 bg-slate-950 sm:-left-16 sm:h-6 sm:w-6"
+                  className={`absolute -left-8 top-[7px] h-[7px] w-[7px] rounded-full border bg-slate-950 sm:-left-14 sm:h-[11px] sm:w-[11px] sm:top-[5px] ${
+                    i === FUTURE.length - 1 ? "border-ice-500" : "border-slate-500"
+                  }`}
                 />
 
-                <div className="grid gap-x-12 gap-y-4 lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)]">
-                  <div className="lg:sticky lg:top-28 lg:self-start">
-                    <p className="font-mono text-sm font-semibold text-ice-500">{step.when}</p>
-                    <h3 className="mt-2 text-2xl font-bold tracking-tight text-slate-50 sm:text-3xl">
+                <div className="grid gap-x-16 gap-y-6 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]">
+                  <div className="lg:sticky lg:top-32 lg:self-start">
+                    <p className="text-[11px] tracking-[0.16em] text-slate-500">{step.when}</p>
+                    <h3 className="mt-4 text-[clamp(1.8rem,3.4vw,2.5rem)] font-semibold leading-none tracking-[-0.045em] text-slate-50">
                       {step.title}
                     </h3>
                   </div>
 
                   <div className="min-w-0">
-                    <p className="max-w-[40rem] text-[17px] leading-[1.9] text-slate-300">
-                      {step.body}
-                    </p>
+                    <p className="max-w-[40rem] text-[17px] leading-[1.95] text-slate-300">{step.body}</p>
 
-                    <p className="mb-3 mt-7 text-[11px] font-semibold tracking-[0.06em] text-slate-500">
-                      그때까지 할 일
-                    </p>
-                    <ul className="max-w-[40rem] divide-y divide-slate-800/60 border-y border-slate-800/60">
-                      {step.doing.map((d, j) => (
-                        <motion.li
-                          key={d}
-                          initial={{ opacity: 0, x: 8 }}
-                          animate={inView ? { opacity: 1, x: 0 } : {}}
-                          transition={{ duration: 0.4, delay: 0.5 + i * 0.15 + j * 0.06 }}
-                          className="flex items-start gap-3 py-3"
-                        >
-                          <svg
-                            width="13"
-                            height="13"
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            className="mt-1.5 shrink-0 text-ice-500"
-                            aria-hidden
-                          >
-                            <path d="M3 8h9M8.5 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                          <span className="text-[15px] leading-[1.8] text-slate-300">{d}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
+                    <dl className="wall-label mt-10 max-w-[36rem]">
+                      <dt className="mb-3">그때까지 할 일</dt>
+                      <dd>
+                        <ul className="border-t border-slate-800">
+                          {step.doing.map((d, j) => (
+                            <li
+                              key={d}
+                              className="grid grid-cols-[1.75rem_minmax(0,1fr)] items-baseline border-b border-slate-800 py-3"
+                            >
+                              <span aria-hidden className="font-serif text-[13px] italic text-slate-500">
+                                {j + 1}
+                              </span>
+                              <span className="text-[14px] leading-[1.8] text-slate-400">{d}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </dd>
+                    </dl>
                   </div>
                 </div>
               </motion.li>

@@ -1,8 +1,10 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import { PEER_REVIEWS } from "@/lib/constants";
+import { SectionHead } from "./About";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 function HighlightedContent({ content, highlight }: { content: string; highlight: string }) {
   const idx = content.indexOf(highlight);
@@ -10,77 +12,79 @@ function HighlightedContent({ content, highlight }: { content: string; highlight
   return (
     <>
       {content.slice(0, idx)}
-      <span className="text-ice-300 font-medium">{highlight}</span>
+      <span className="font-medium text-slate-100">{highlight}</span>
       {content.slice(idx + highlight.length)}
     </>
   );
 }
 
+/**
+ * 동료 평가 — 벽에 적힌 인용처럼.
+ * 한 줄 요약을 크게, 원문은 그 아래 조용하게, 누가 했는지는 작품 설명판처럼.
+ * 인용한 말은 고치지 않는다.
+ */
 export default function PeerReview() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section id="reviews" className="relative py-32 mesh-bg" ref={ref}>
+    <section id="reviews" className="relative py-32 sm:py-44">
       <div className="mx-auto max-w-6xl px-6">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-3xl font-bold tracking-tight text-slate-50 mb-4"
-        >
-          동료 평가
-        </motion.h2>
         <motion.div
-          initial={{ scaleX: 0 }}
-          animate={inView ? { scaleX: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="h-px w-16 bg-ice-500 origin-left mb-6"
-        />
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-sm text-slate-400 mb-14"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 1, ease: EASE }}
+          className="mb-20 grid gap-6 sm:mb-28 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end"
         >
-          함께 일했던 동료들의 이야기 · {PEER_REVIEWS.length}건
-        </motion.p>
+          <SectionHead mark="In their words" title="동료 평가" />
+          <p className="text-[13px] text-slate-500">
+            함께 일했던 동료들의 이야기 · {PEER_REVIEWS.length}건
+          </p>
+        </motion.div>
 
-        <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid gap-x-20 gap-y-24 md:grid-cols-2 md:gap-y-32">
           {PEER_REVIEWS.map((review, i) => (
-            <motion.div
+            <motion.figure
               key={review.name}
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.4 + Math.min(i * 0.08, 0.5) }}
-              className="peer-review-card relative p-6 md:p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 card-hover transition-all duration-300"
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 1, ease: EASE, delay: (i % 2) * 0.12 }}
+              className={`relative ${i % 2 === 1 ? "md:mt-24" : ""}`}
             >
-              <span className="absolute -top-3 left-6 text-4xl text-ice-500/25 font-serif leading-none select-none">
+              <span
+                aria-hidden
+                className="block h-[30px] select-none font-serif text-[64px] leading-none text-ice-500/40"
+              >
                 &ldquo;
               </span>
-              <p className="text-sm text-slate-300 leading-relaxed mb-4 mt-2">
-                <HighlightedContent content={review.content} highlight={review.highlight} />
+              <p className="mt-3 text-[clamp(1.2rem,2vw,1.5rem)] font-semibold leading-[1.55] tracking-[-0.035em] text-slate-50">
+                {review.highlight}
               </p>
-              <div className="px-3 py-2 rounded-lg bg-ice-100 border border-ice-500/10 mb-4">
-                <p className="text-xs text-ice-300 font-medium">&ldquo;{review.highlight}&rdquo;</p>
-              </div>
-              <div className="border-t border-slate-800/60 pt-4">
-                {review.github ? (
-                  <a
-                    href={`https://github.com/${review.github}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-100 transition-colors hover:text-ice-400"
-                  >
-                    {review.name}
-                    <span className="font-mono text-[11px] text-slate-500">@{review.github}</span>
-                  </a>
-                ) : (
-                  <p className="text-sm font-medium text-slate-100">{review.name}</p>
-                )}
-                <p className="text-xs text-slate-500">{review.role} &middot; {review.relation}</p>
-              </div>
-            </motion.div>
+              <blockquote className="mt-6 max-w-[34rem] text-[15px] leading-[1.95] text-slate-400">
+                <HighlightedContent content={review.content} highlight={review.highlight} />
+              </blockquote>
+
+              <figcaption className="mt-8 flex items-start gap-4">
+                <span aria-hidden className="rule mt-[0.7em] text-slate-500" />
+                <span className="text-[12px] leading-[1.8]">
+                  {review.github ? (
+                    <a
+                      href={`https://github.com/${review.github}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-baseline gap-1.5 font-medium text-slate-200 transition-colors duration-500 hover:text-ice-500"
+                    >
+                      {review.name}
+                      <span className="font-mono text-[11px] text-slate-500">@{review.github}</span>
+                    </a>
+                  ) : (
+                    <span className="block font-medium text-slate-200">{review.name}</span>
+                  )}
+                  <span className="block tracking-[0.04em] text-slate-500">
+                    {review.role} &middot; {review.relation}
+                  </span>
+                </span>
+              </figcaption>
+            </motion.figure>
           ))}
         </div>
       </div>

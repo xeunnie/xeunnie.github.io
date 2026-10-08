@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { MORE_ITEMS, COLLABORATIONS, PEER_REVIEWS, CHRONICLE } from "@/lib/constants";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
  * 일하는 방식을 다 읽은 사람에게만 여는 다음 문.
@@ -16,48 +17,50 @@ const COUNTS: Record<string, string> = {
 };
 
 export default function NextUp() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
-    <section className="py-24" ref={ref}>
+    <section className="py-32 sm:py-40">
       <div className="mx-auto max-w-6xl px-6">
         <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="mb-8 text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 1, ease: EASE }}
+          className="mb-10 flex items-center gap-4 text-[11px] font-medium tracking-[0.16em] text-slate-500"
         >
+          <span aria-hidden className="rule" />
           이어서 볼 것
         </motion.h2>
 
-        <ul className="divide-y divide-slate-800/60 border-y border-slate-800/60">
+        <ul className="border-t border-slate-700">
           {MORE_ITEMS.map((item, i) => (
             <motion.li
               key={item.href}
-              initial={{ opacity: 0, y: 14 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 1, ease: EASE, delay: 0.1 + i * 0.1 }}
+              className="border-b border-slate-800"
             >
               <Link
                 href={item.href}
-                className="group flex flex-col gap-2 py-7 sm:flex-row sm:items-baseline sm:gap-8"
+                className="group grid gap-x-10 gap-y-3 py-10 sm:grid-cols-[minmax(0,10rem)_minmax(0,1fr)_auto] sm:items-baseline"
               >
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-xl font-semibold text-slate-100 transition-colors group-hover:text-ice-500 sm:text-2xl">
+                <span aria-hidden className="font-serif text-[26px] italic leading-none text-slate-500 transition-colors duration-500 group-hover:text-slate-200">
+                  {item.label}
+                </span>
+                <div className="min-w-0">
+                  <h3 className="text-[clamp(1.25rem,2.2vw,1.6rem)] font-semibold tracking-[-0.04em] text-slate-100 transition-colors duration-500 group-hover:text-ice-500">
                     {item.question}
                   </h3>
-                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-400">
-                    {item.desc}
-                  </p>
+                  <p className="mt-3 max-w-xl text-[14px] leading-[1.85] text-slate-400">{item.desc}</p>
                 </div>
 
-                <div className="flex items-center gap-3 sm:flex-col sm:items-end sm:gap-1.5">
-                  <span className="font-mono text-xs text-slate-500">{COUNTS[item.href]}</span>
-                  <span className="inline-flex items-center gap-1 text-sm font-medium text-ice-500 transition-all group-hover:gap-2">
+                <div className="flex items-center gap-4 sm:flex-col sm:items-end sm:gap-2">
+                  <span className="text-[12px] text-slate-500">{COUNTS[item.href]}</span>
+                  <span className="inline-flex items-center gap-1.5 text-[13px] text-slate-300 transition-all duration-500 group-hover:gap-3 group-hover:text-ice-500">
                     {item.ko}
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                      <path d="M5 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+                      <path d="M2 8h11M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </span>
                 </div>

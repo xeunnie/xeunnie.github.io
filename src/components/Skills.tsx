@@ -1,115 +1,111 @@
 "use client";
 
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
-import { CORE_SKILLS, MORE_SKILLS } from "@/lib/constants";
-import TechBadge from "./TechBadge";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { BADGES, CORE_SKILLS, MORE_SKILLS } from "@/lib/constants";
+import { SectionHead } from "./About";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+type Group = { title: string; badges: readonly (keyof typeof BADGES)[] };
+
+/** 한 줄 — 왼쪽에 묶음 이름, 오른쪽에 기술 이름을 가운뎃점으로 잇는다. 칩 대신 글자로 */
+function Row({ group, index, muted }: { group: Group; index: number; muted?: boolean }) {
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.9, ease: EASE, delay: Math.min(index * 0.06, 0.3) }}
+      className="grid gap-x-10 gap-y-2 border-b border-slate-800 py-6 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)] sm:items-baseline"
+    >
+      <h4
+        className={`text-[13px] font-medium tracking-[0.02em] ${muted ? "text-slate-500" : "text-slate-400"}`}
+      >
+        {group.title}
+      </h4>
+      <p className={`text-[16px] leading-[1.9] ${muted ? "text-slate-400" : "text-slate-200"}`}>
+        {group.badges.map((key, i) => (
+          <span key={key}>
+            {i > 0 && (
+              <span aria-hidden className="mx-2.5 text-slate-700">
+                ·
+              </span>
+            )}
+            {BADGES[key]?.label}
+          </span>
+        ))}
+      </p>
+    </motion.li>
+  );
+}
 
 export default function Skills() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <section id="skills" className="relative flex min-h-screen items-center py-32" ref={ref}>
-      <div className="mx-auto max-w-6xl px-6">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-3xl font-bold tracking-tight text-slate-50 mb-4"
-        >
-          쓰는 기술
-        </motion.h2>
+    <section id="skills" className="relative flex min-h-screen items-center py-32 sm:py-44">
+      <div className="mx-auto w-full max-w-6xl px-6">
         <motion.div
-          initial={{ scaleX: 0 }}
-          animate={inView ? { scaleX: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="h-px w-16 bg-ice-500 origin-left mb-6"
-        />
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-sm text-slate-400 mb-14"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 1, ease: EASE }}
+          className="mb-16 grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end"
         >
-          주로 쓰는 기술과, 프로젝트에서 필요할 때 써 온 기술
-        </motion.p>
+          <SectionHead mark="Tools" title="쓰는 기술" />
+          <p className="text-[13px] leading-relaxed text-slate-500">
+            주로 쓰는 기술과, 프로젝트에서 필요할 때 써 온 기술
+          </p>
+        </motion.div>
 
-        <h3 className="text-sm font-semibold tracking-tight text-ice-500 mb-5">자주 쓰는 것</h3>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <h3 className="mb-2 text-[11px] tracking-[0.16em] text-slate-500">자주 쓰는 것</h3>
+        <ul className="border-t border-slate-700">
           {CORE_SKILLS.map((group, i) => (
-            <motion.div
-              key={group.title}
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
-              className="group p-5 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 hover:bg-slate-900/50 transition-all duration-300"
-            >
-              <h4 className="text-sm font-semibold tracking-tight text-slate-200 mb-4">
-                {group.title}
-              </h4>
-              <div className="flex flex-wrap gap-1.5">
-                {group.badges.map((key) => (
-                  <TechBadge key={key} name={key} size="sm" />
-                ))}
-              </div>
-            </motion.div>
+            <Row key={group.title} group={group} index={i} />
           ))}
-        </div>
+        </ul>
 
-        <div className="mt-10 text-center">
-          <button
-            onClick={() => setShowMore(!showMore)}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-800/60 bg-slate-900/30 text-sm text-slate-400 hover:border-ice-500/20 hover:text-ice-400 transition-all"
-          >
-            {showMore ? "접기" : "더 보기"}
-            <svg
-              width="14"
-              height="14"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className={`transition-transform duration-300 ${showMore ? "rotate-180" : ""}`}
-            >
-              <path d="M3 5l4 4 4-4" />
-            </svg>
-          </button>
-        </div>
-
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {showMore && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.9, ease: EASE }}
               className="overflow-hidden"
             >
-              <h3 className="text-sm font-semibold tracking-tight text-slate-500 mt-8 mb-5">그 밖에 다뤄 본 것</h3>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
+              <h3 className="mt-16 mb-2 text-[11px] tracking-[0.16em] text-slate-500">그 밖에 다뤄 본 것</h3>
+              <ul className="border-t border-slate-800">
                 {MORE_SKILLS.map((group, i) => (
-                  <motion.div
-                    key={group.title}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: i * 0.05 }}
-                    className="group p-5 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-ice-500/20 hover:bg-slate-900/50 transition-all duration-300"
-                  >
-                    <h4 className="text-sm font-semibold tracking-tight text-slate-300 mb-4">
-                      {group.title}
-                    </h4>
-                    <div className="flex flex-wrap gap-1.5">
-                      {group.badges.map((key) => (
-                        <TechBadge key={key} name={key} size="sm" />
-                      ))}
-                    </div>
-                  </motion.div>
+                  <Row key={group.title} group={group} index={i} muted />
                 ))}
-              </div>
+              </ul>
             </motion.div>
           )}
         </AnimatePresence>
+
+        <div className="mt-10">
+          <button
+            onClick={() => setShowMore(!showMore)}
+            aria-expanded={showMore}
+            className="inline-flex items-center gap-2 border-b border-slate-700 pb-1 text-[13px] text-slate-400 transition-colors duration-500 hover:border-ice-500 hover:text-ice-500"
+          >
+            {showMore ? "접기" : "더 보기"}
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 14 14"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              className={`transition-transform duration-500 ${showMore ? "rotate-180" : ""}`}
+              aria-hidden
+            >
+              <path d="M3 5l4 4 4-4" />
+            </svg>
+          </button>
+        </div>
       </div>
     </section>
   );

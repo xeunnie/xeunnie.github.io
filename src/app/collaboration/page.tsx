@@ -18,6 +18,7 @@ export default function CollaborationPage() {
       <Nav />
       <main className="landing min-h-screen">
         <PageHeader
+          mark="Alongside"
           title="함께 일한 기록"
           lede="혼자 만든 화면은 하나도 없습니다. 어떤 분들과 어떻게 맞춰 갔는지, 그리고 그분들이 저를 어떻게 보셨는지 모았습니다."
         />

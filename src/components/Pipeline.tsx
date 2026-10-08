@@ -1,50 +1,43 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { PIPELINE } from "@/lib/constants";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
  * 디자인 → 프론트엔드 → 백엔드 → 인프라.
  * "각각을 한 번씩은 끝까지 해 봤다" 는 문장은 글로만 두면 잘 안 읽힌다.
- * 네 칸을 나란히 놓아 한눈에 보이게 하고, 지금 서 있는 자리만 표시한다.
+ * 네 칸을 가는 선 위에 나란히 놓고, 지금 서 있는 자리만 표시한다.
  */
 export default function Pipeline() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-
   return (
-    <div ref={ref} className="my-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <ol className="mt-10 mb-2 grid gap-x-8 gap-y-8 sm:grid-cols-2 sm:pl-9 lg:grid-cols-4">
       {PIPELINE.map((step, i) => (
-        <motion.div
+        <motion.li
           key={step.area}
-          initial={{ opacity: 0, y: 14 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.45, delay: i * 0.08 }}
-          className={`relative rounded-xl border p-4 ${
-            step.current
-              ? "border-ice-500/40 bg-ice-100"
-              : "border-slate-800/60 bg-slate-900/25"
-          }`}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.9, ease: EASE, delay: i * 0.08 }}
+          className={`relative border-t pt-4 ${step.current ? "border-ice-500" : "border-slate-700"}`}
         >
-          {/* 칸 사이를 잇는 선 — 지나온 순서가 보이게 */}
-          {i < PIPELINE.length - 1 && (
+          <p className="flex items-baseline justify-between gap-2">
             <span
-              aria-hidden
-              className="absolute right-[-13px] top-1/2 hidden h-px w-3 bg-slate-800 lg:block"
-            />
-          )}
-          <p
-            className={`text-sm font-bold tracking-tight ${
-              step.current ? "text-ice-500" : "text-slate-200"
-            }`}
-          >
-            {step.area}
+              className={`text-[14px] font-semibold tracking-[-0.03em] ${
+                step.current ? "text-ice-500" : "text-slate-100"
+              }`}
+            >
+              {step.area}
+            </span>
+            <span className="font-serif text-[13px] italic text-slate-500">
+              {step.current ? "now" : `0${i + 1}`}
+            </span>
           </p>
-          <p className="mt-1 text-xs text-slate-500">{step.where}</p>
-          <p className="mt-2 text-xs leading-relaxed text-slate-400">{step.detail}</p>
-        </motion.div>
+          <p className="mt-1.5 text-[11px] tracking-[0.08em] text-slate-500">{step.where}</p>
+          <p className="mt-2 text-[12.5px] leading-[1.75] text-slate-400">{step.detail}</p>
+        </motion.li>
       ))}
-    </div>
+    </ol>
   );
 }
