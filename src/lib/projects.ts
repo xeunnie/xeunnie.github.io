@@ -78,7 +78,7 @@ export const PROJECTS: Project[] = [
     rank: 8,
     org: "코리아IT 풀스택 과정",
     award: "코리아IT 풀스택 과정 수강생 우수상",
-    awardImage: "/shot/award-onmeet.jpg",
+    awardImage: "/shot/award-onmeet.webp",
     title: "OnMeet",
     subtitle: "AI 회의록 자동 생성 B2B 화상회의 SaaS 플랫폼",
     category: "personal",
@@ -100,27 +100,27 @@ export const PROJECTS: Project[] = [
       "제품 화면이 아니라 기술 발표 자료입니다. 무엇을 왜 그렇게 만들었는지를 팀이 직접 정리한 문서라, 결과 화면보다 이쪽이 더 많은 걸 보여 준다고 봤습니다.",
     shots: [
       {
-        src: "/shot/onmeet-intro.jpg",
+        src: "/shot/onmeet-intro.webp",
         caption:
           "AI가 회의를 기록하고 요약하는 B2B 화상회의 플랫폼. MSA 7개 서비스 · 5개 언어 · LiveKit 기반 WebRTC로 만들었습니다.",
       },
       {
-        src: "/shot/onmeet-team.jpg",
+        src: "/shot/onmeet-team.webp",
         caption:
           "팀 구성 — 팀장을 맡아 프로젝트 총괄과 프론트 전반, Video Service(화상회의·채팅·대기실)를 담당했습니다. 백엔드 3명과 역할을 나눠 붙였습니다.",
       },
       {
-        src: "/shot/onmeet-frontend.jpg",
+        src: "/shot/onmeet-frontend.webp",
         caption:
           "프론트엔드 아키텍처 — Feature-Sliced 구조, 4개 MSA의 중복 fetch를 묶은 Service Fetch Factory, EventSource 대신 fetch + ReadableStream으로 직접 구현한 SSE 파서, 회의실 Phase 상태 머신.",
       },
       {
-        src: "/shot/onmeet-security.jpg",
+        src: "/shot/onmeet-security.webp",
         caption:
           "다층 보안(Defense in Depth) — RSA-2048 키 페어와 JWKS 공개 검증, 게이트웨이의 Cookie→Bearer 변환과 Rate Limiting, 파일 서비스의 MIME 스푸핑·Path Traversal 방어까지 요청 한 번이 지나는 길을 전부 막았습니다.",
       },
       {
-        src: "/shot/onmeet-retro.jpg",
+        src: "/shot/onmeet-retro.webp",
         caption:
           "회고 — 상태 관리 전략, SSE 파서를 직접 구현한 이유(EventSource는 헤더를 못 싣습니다), VAC 패턴으로 597줄을 225줄로 줄인 과정, 빌드·성능에서 덜어 낸 것들을 정리했습니다.",
       },
@@ -246,39 +246,39 @@ export const PROJECTS: Project[] = [
     ],
     shots: [
       {
-        src: "/shot/busan-3d-asset.jpg",
+        src: "/shot/busan-3d-asset.webp",
         caption:
           "역사 전체를 3D로 띄우고 층을 바꿔 가며 봅니다. 왼쪽에서 설비 종류를 고르면 해당 장비만 도면 위에 남습니다. 상단에는 대합실·승강장·외부 온도와 미세먼지가 실시간으로 붙습니다.",
       },
       {
-        src: "/shot/busan-cctv.jpg",
+        src: "/shot/busan-cctv.webp",
         caption:
           "3D 역사 도면 위에서 CCTV를 고르면 WebRTC 스트림이 모달로 열린다. 좌측은 역사 내 CCTV 68대 목록, 상단은 대합실·승강장·외부 환경값, 우측은 층 전환.",
       },
       {
-        src: "/shot/busan-admin-space.jpg",
+        src: "/shot/busan-admin-space.webp",
         caption:
           "관리자 공간 관리 — 좌측 GLB 장비 라이브러리(화재센서·공기청정기·소방펌프·FAN·물탱크 등)에서 모델을 골라 역사 도면 위에 배치하고, 이동·회전·삭제로 POI를 편집합니다.",
       },
       {
-        src: "/shot/busan-escalator.jpg",
+        src: "/shot/busan-escalator.webp",
         caption:
           "에스컬레이터 상세 — 중간·대합 두 대의 카메라를 동시에 스트리밍하면서 운행 상태와 장애 상태를 함께 표시.",
       },
       {
-        src: "/shot/busan-elevator.jpg",
+        src: "/shot/busan-elevator.webp",
         caption: "엘리베이터 상세 — 대합·내부 카메라 2개와 동작·장애 상태를 한 모달에서.",
       },
       {
-        src: "/shot/busan-shutter.jpg",
+        src: "/shot/busan-shutter.webp",
         caption: "셔터 상세 — 출구 CCTV와 화재수신기 감지 상태를 함께 확인.",
       },
       {
-        src: "/shot/busan-fire.jpg",
+        src: "/shot/busan-fire.webp",
         caption: "화재감지기 39개를 목록과 3D POI로 관리하고 감지 상태를 조회.",
       },
       {
-        src: "/shot/busan-ventilation.jpg",
+        src: "/shot/busan-ventilation.webp",
         caption:
           "환기시설 18개 — 원격 여부, 운전 상태, 제어 모드, 회전 방향까지 제어 정보를 표출.",
       },
@@ -379,27 +379,27 @@ export const PROJECTS: Project[] = [
       "운영 중인 시스템이라 공개 가능한 범위의 화면만, 값은 더미 데이터로 띄워 캡처했습니다.",
     shots: [
       {
-        src: "/shot/tancheon-dashboard.jpg",
+        src: "/shot/tancheon-dashboard.webp",
         caption:
           "처리장 전경을 3D로 띄우고 악취측정기 POI를 올립니다. POI를 누르면 황화수소·암모니아·휘발성유기화합물·복합악취 4종의 농도와 등급(정상·주의·경고·위험)이 뜨고, 임계점을 넘긴 측정기는 붉은 카드로 따로 표시됩니다.",
       },
       {
-        src: "/shot/tancheon-charts.jpg",
+        src: "/shot/tancheon-charts.webp",
         caption:
           "좌측 패널은 악취물질 4종을 측정기 8대별 시계열로 겹쳐 보여 줍니다. 측정기 기준·물질 기준 두 가지로 보는 축을 바꿀 수 있고, 같은 시각의 8개 값을 툴팁 하나에 모아 읽습니다.",
       },
       {
-        src: "/shot/tancheon-simulation.jpg",
+        src: "/shot/tancheon-simulation.webp",
         caption:
           "시뮬레이션 모드 — CALPUFF 확산 모델링 결과와 드론 측정값을 고도별 히트맵으로 재생합니다. 하단 타임라인으로 하루치를 돌려 보고, 고도 레이어(30·60·90·120·150m)를 골라 특정 높이의 분포만 볼 수 있습니다.",
       },
       {
-        src: "/shot/tancheon-statistics.jpg",
+        src: "/shot/tancheon-statistics.webp",
         caption:
           "통계 — 고정형·이동형(드론)을 나눠 기간·악취물질·센서 단위로 조회합니다. 드론은 고도와 위경도까지 함께 보고, 조회 결과를 그대로 CSV로 내려받습니다.",
       },
       {
-        src: "/shot/tancheon-events.jpg",
+        src: "/shot/tancheon-events.webp",
         caption:
           "이벤트 현황 — 임계값을 넘겨 발생한 알람을 측정기·물질·등급·기간으로 조회하고 해제 시각까지 함께 봅니다. 발생 순간에는 SSE로 관제 화면에 토스트가 먼저 뜹니다.",
       },
@@ -506,12 +506,12 @@ export const PROJECTS: Project[] = [
     shotsLayout: "grid",
     shots: [
       {
-        src: "/shot/plug-indoor-editor.jpg",
+        src: "/shot/plug-indoor-editor.webp",
         caption:
           "실내지도 편집 — 왼쪽 Asset 목록에서 센서·FAN·CCTV 같은 장비를 골라 3D 도면 위에 배치합니다. 층을 바꿔 가며 편집하고 배치한 장비에는 이름표가 붙습니다.",
       },
       {
-        src: "/shot/plug-facility.jpg",
+        src: "/shot/plug-facility.webp",
         caption:
           "관제 센터의 시설 관리 — 건물·역사·공장을 탭으로 나누고 카드로 봅니다. 이런 관리 화면을 프로젝트마다 다시 만들지 않도록 공통 패키지로 뽑아냈습니다.",
       },
@@ -583,17 +583,17 @@ export const PROJECTS: Project[] = [
     links: [{ label: "GitHub", url: "https://github.com/pluxity/plug-platform-atlas" }],
     shots: [
       {
-        src: "/shot/atlas-alarm.jpg",
+        src: "/shot/atlas-alarm.webp",
         caption:
           "대시보드 — 위성 지도 위에 공원을 얹고, 왼쪽으로 화재·온습도·변위 경고가 발생 순으로 쌓입니다. 각 알람에서 바로 조치로 넘어갈 수 있습니다.",
       },
       {
-        src: "/shot/atlas-dashboard-all.jpg",
+        src: "/shot/atlas-dashboard-all.webp",
         caption:
           "성남시 시민안심공원 서비스 전체보기 — Cesium 위성 지도에 공원 POI를 얹고, 공원 12곳·CCTV 55대·IoT 센서 153개를 한 화면에서 봅니다. 아래로 장비 상태 분포, 기간별 자동·수동 조치 집계, 공원별 운영상태, 경고 알림과 조치 현황이 이어집니다.",
       },
       {
-        src: "/shot/atlas-dashboard-park.jpg",
+        src: "/shot/atlas-dashboard-park.webp",
         caption:
           "공원별 보기 — 센서를 상태(정상·주의·경계·위험·연결끊김)별로 색이 다른 마커로 지도에 찍습니다. 하단에서 해당 공원의 장치 이력, 종류별 센서 목록, 장치 배터리 알람까지 내려갑니다.",
       },
@@ -680,39 +680,39 @@ export const PROJECTS: Project[] = [
       "테스트 클럽과 테스트 계정으로 PM30 실기기에서 찍은 화면입니다. 기기 식별자는 가렸습니다.",
     shots: [
       {
-        src: "/shot/mob-splash.jpg",
+        src: "/shot/mob-splash.webp",
         caption: "초기 진입 화면. 새 시안에 맞춰 다시 만들었습니다. 기기번호·클럽 로고·언어 선택과 앱·서버 버전이 한 화면에 있습니다.",
       },
       {
-        src: "/shot/mob-hole.jpg",
+        src: "/shot/mob-hole.webp",
         caption: "현재 홀. GPS 위치를 코스 지도에 올리고 남은 거리·고저차·실시간 순위를 보여줍니다.",
       },
       {
-        src: "/shot/mob-score-table.jpg",
+        src: "/shot/mob-score-table.webp",
         caption: "스코어 입력 — 전반·후반 표에서 4명의 홀별 스코어와 합계를 한 번에 봅니다.",
       },
       {
-        src: "/shot/mob-score-hole.jpg",
+        src: "/shot/mob-score-hole.webp",
         caption: "홀 단위 입력. 파 기준(−3 ~ +5) 행에서 한 번에 누르고 좌우로 홀을 넘깁니다.",
       },
       {
-        src: "/shot/mob-longest.jpg",
+        src: "/shot/mob-longest.webp",
         caption: "롱기스트·니어리스트 기록. 거리 표에서 고르고 휠로 세부 값을 넣습니다.",
       },
       {
-        src: "/shot/mob-caddie-note.jpg",
+        src: "/shot/mob-caddie-note.webp",
         caption: "캐디노트 — 태블릿에만 있던 기능을 옮긴 화면. 고객별 라운드 안내 동의·클럽 장비·고객 정보 확인 상태를 봅니다.",
       },
       {
-        src: "/shot/mob-message.jpg",
+        src: "/shot/mob-message.webp",
         caption: "메시지 — 라운드 중 식음·하우스와 주고받습니다. 자주 쓰는 요청은 버튼으로 둡니다.",
       },
       {
-        src: "/shot/mob-message-to.jpg",
+        src: "/shot/mob-message-to.webp",
         caption: "받는 사람 선택. 코스·단체 일행·관리자·식음처럼 그룹 단위로 보내거나 캐디를 검색합니다.",
       },
       {
-        src: "/shot/mob-message-alert.jpg",
+        src: "/shot/mob-message-alert.webp",
         caption: "메시지가 오면 어느 화면에 있든 위에 바로 띄웁니다.",
       },
     ],
@@ -813,51 +813,51 @@ export const PROJECTS: Project[] = [
       "실제 운영 화면입니다. 내장객·캐디 이름은 알아볼 수 없게 처리했습니다.",
     shots: [
       {
-        src: "/shot/tab-hole.jpg",
+        src: "/shot/tab-hole.webp",
         caption:
           "현재 홀. GPS로 잡은 카트 위치에서 홀컵까지 남은 거리와 고저차를 코스 맵 위에 올린다. 오른쪽은 티샷 순서를 정하는 패널.",
       },
       {
-        src: "/shot/tab-hole-detail.jpg",
+        src: "/shot/tab-hole-detail.webp",
         caption:
           "홀 상세 — 그린 경사를 색으로 보여주고, 코스에서 주의할 점을 안내합니다. 오른쪽에서 홀을 바로 골라 넘어갈 수 있습니다.",
       },
       {
-        src: "/shot/tab-scorecard.jpg",
+        src: "/shot/tab-scorecard.webp",
         caption:
           "스코어 카드. 전반·후반을 나눠 홀별 타수와 합계를 보여주고, 버디 이하는 하트로 표시합니다.",
       },
       {
-        src: "/shot/tab-progress.jpg",
+        src: "/shot/tab-progress.webp",
         caption:
           "전체 홀 경기 현황. 18홀에 흩어진 팀의 위치와 대기 팀을 한 화면에서 봅니다. 관제실에서 종일 띄워 두는 화면입니다.",
       },
       {
-        src: "/shot/tab-bookings.jpg",
+        src: "/shot/tab-bookings.webp",
         caption: "그날 예약 목록. 팀마다 카트 번호와 전·후반 코스를 지정하고 라운드를 시작합니다.",
       },
       {
-        src: "/shot/tab-round-setup.jpg",
+        src: "/shot/tab-round-setup.webp",
         caption:
           "라운드 시작 설정 — 캐디 유무, 부(部), 전·후반 코스, 티오프 시각을 고르고 플레이어를 채운다. 빠진 값이 있으면 시작 버튼이 잠깁니다.",
       },
       {
-        src: "/shot/tab-caddie-note.jpg",
+        src: "/shot/tab-caddie-note.webp",
         caption:
           "캐디노트. 고객별 라운드 안내 동의와 클럽 장비 확인 상태를 체크하고, 관제·식음에서 온 메시지와 메모를 같이 봅니다.",
       },
       {
-        src: "/shot/tab-fnb-order.jpg",
+        src: "/shot/tab-fnb-order.webp",
         caption:
           "식음 주문 — 그늘집·레스토랑·스타트하우스를 골라 담습니다. 품절은 주문할 수 없게 막고, 포장 여부를 항목마다 고릅니다.",
       },
       {
-        src: "/shot/tab-fnb-history.jpg",
+        src: "/shot/tab-fnb-history.webp",
         caption:
           "주문 내역. 요청·취소·조리중 같은 상태가 매장에서 바뀌는 대로 따라 움직입니다.",
       },
       {
-        src: "/shot/tab-promotion.jpg",
+        src: "/shot/tab-promotion.webp",
         caption: "라운드 중 특정 지점에 도달하면 뜨는 프로모션 안내.",
       },
     ],
@@ -965,27 +965,27 @@ export const PROJECTS: Project[] = [
       "데모 계정으로 찍은 화면입니다. 이용객 이름과 골프장 상호는 알아볼 수 없게 처리했습니다.",
     shots: [
       {
-        src: "/shot/app-login.jpg",
+        src: "/shot/app-login.webp",
         caption:
           "로그인 — 카카오·네이버·구글·애플 네 가지 소셜 로그인과 이메일 가입을 함께 둡니다. 스토어 심사 요건이라 애플 로그인을 빼놓을 수 없었습니다.",
       },
       {
-        src: "/shot/app-home.jpg",
+        src: "/shot/app-home.webp",
         caption:
           "메인 — 누적 라운드 수와 평균 스코어·베스트·핸디를 위에 두고, 아래로 최근 라운드가 이어집니다. 자동연동과 직접입력을 배지로 구분합니다.",
       },
       {
-        src: "/shot/app-scores.jpg",
+        src: "/shot/app-scores.webp",
         caption:
           "스코어 목록 — 라운드마다 골프장·코스·동반자·타수를 카드로 봅니다. 저장이 끝나면 토스트로 알리고 목록을 새로 고칩니다.",
       },
       {
-        src: "/shot/app-score-input.jpg",
+        src: "/shot/app-score-input.webp",
         caption:
           "스코어 입력 — 라운드 정보와 홀별 입력을 두 단계로 나눴습니다. 파를 고르지 않아도 타수만으로 넣을 수 있고, 홀은 번호나 이동 버튼으로 오갑니다.",
       },
       {
-        src: "/shot/app-score-detail.jpg",
+        src: "/shot/app-score-detail.webp",
         caption:
           "스코어 상세 — 이글·버디·파·보기·더블보기 요약을 먼저 보여주고 전·후반 홀별 표가 이어집니다. 우측 상단에서 공유할 수 있습니다.",
       },
@@ -1124,72 +1124,72 @@ export const PROJECTS: Project[] = [
     techs: ["nextjs", "react", "typescript", "reactquery", "recoil", "pwa", "workbox", "sse", "dndkit", "pdfjs", "exceljs", "escpos", "indexeddb", "scss"],
     shots: [
       {
-        src: "/shot/fnb-order-menu.jpg",
+        src: "/shot/fnb-order-menu.webp",
         caption:
           "주문 화면 — 카테고리 탭으로 나눈 메뉴판과 테이블별 주문서. NEW·BEST·시그니처 같은 태그와 품절 여부를 상태값으로 받아 조건부로 그립니다.",
       },
       {
-        src: "/shot/fnb-order-live.jpg",
+        src: "/shot/fnb-order-live.webp",
         caption:
           "진행중 오더 보드 — 상단에 홀 진행 상황과 캐디 위치가 흐르고, 주문은 테이블 카드로 쌓입니다. 주방·홀에서 종일 띄워 두는 화면이라 새 주문과 상태 변화가 SSE로 바로 꽂히고 새로고침이 필요 없습니다.",
       },
       {
-        src: "/shot/fnb-order-board.jpg",
+        src: "/shot/fnb-order-board.webp",
         caption:
           "정산이 끝난 주문을 모아 보는 화면. 한 팀이 여러 번 나눠 주문한 것을 카드 하나로 묶고, 묶음별 소계와 주문 합계를 같이 보여줍니다.",
       },
       {
-        src: "/shot/fnb-message.jpg",
+        src: "/shot/fnb-message.webp",
         caption:
           "캐디와 라운지가 주고받는 메시지. \"경기과에 무전이 안 되서 여기로 보냅니다\" 같은 실제 사용 기록이 남아 있습니다. 무전이 닿지 않는 코스에서 주문 변경·취소가 이 경로로 들어옵니다.",
       },
       {
-        src: "/shot/fnb-teeoff.jpg",
+        src: "/shot/fnb-teeoff.webp",
         caption:
           "티오프 예약을 불러와 내장객을 테이블에 붙인다. 부·코스로 걸러 찾고 단체 예약도 함께 처리합니다. 예약 데이터는 골프장 기간계에서 넘어옵니다.",
       },
       {
-        src: "/shot/fnb-menu-admin.jpg",
+        src: "/shot/fnb-menu-admin.webp",
         caption:
           "메뉴 관리 — 124개 메뉴를 분류·태그·판매 상태·채널로 관리합니다. 상품 정보는 ERP에서 받아 갱신하고, 매장에서는 판매/중지만 바로 바꿀 수 있게 했습니다.",
       },
       {
-        src: "/shot/fnb-sales.jpg",
+        src: "/shot/fnb-sales.webp",
         caption:
           "매출 조회 — 날짜와 캐디로 걸러 공급가·VAT·판매가를 전표 단위까지 봅니다. 정산 담당자가 그대로 쓰도록 엑셀 내보내기를 붙였습니다.",
       },
       {
-        src: "/shot/fnb-did-installed.jpg",
+        src: "/shot/fnb-did-installed.webp",
         caption:
           "만든 사이니지가 실제로 걸려 있는 모습. 편집기에서 지정한 배경·제목·영문 표기가 그대로 매장 벽면 디스플레이에 표출됩니다.",
       },
       {
-        src: "/shot/fnb-did-editor.jpg",
+        src: "/shot/fnb-did-editor.webp",
         caption:
           "DID 관리 — 1~4분할을 고르고 칸마다 일반/PDF를 지정합니다. 기기별 연결 탭, 배경 이미지, 글자 색, 정렬, 텍스트 3종의 크기를 조절하면 오른쪽 미리보기가 실제 표출과 같은 방식으로 다시 그려집니다.",
       },
       {
-        src: "/shot/fnb-did-output.jpg",
+        src: "/shot/fnb-did-output.webp",
         caption:
           "편집기에서 만든 화면이 실제로 표출된 상태. 해상도가 달라도 위치가 유지되도록 텍스트를 중앙 기준 %오프셋으로 저장하고, 글자 크기는 container-query로 화면 폭을 따라갑니다.",
       },
       {
-        src: "/shot/fnb-did-code.jpg",
+        src: "/shot/fnb-did-code.webp",
         caption:
           "사이니지 기기는 코드 한 번으로 연결합니다. 설치하러 간 사람이 계정도 주소도 몰라도 되도록, 관리자가 발급한 코드만 넣으면 그 매장 화면이 뜨게 했습니다.",
       },
       {
-        src: "/shot/fnb-did-autorun.jpg",
+        src: "/shot/fnb-did-autorun.webp",
         caption:
           "설치 담당자를 위한 안내를 화면 안에 넣었다. 기기를 껐다 켜도 같은 화면이 다시 뜨게 하는 절차와, 반대로 빠져나오는 방법(Alt+F4·모서리 5번 탭)까지 적어 두었습니다. 현장에 개발자가 다시 갈 일을 줄이려고 만든 화면입니다.",
       },
       {
-        src: "/shot/fnb-layout-editor.jpg",
+        src: "/shot/fnb-layout-editor.webp",
         caption:
           "배치도 관리 — 좌측 팔레트에서 4·6·8·10·12인 테이블을 끌어다 놓고 캔버스에서 이동·회전·페이지 추가를 합니다. 겹치지 않도록 충돌을 검사하고, 우측 번호 목록은 ERP와 연동됩니다.",
       },
       {
-        src: "/shot/fnb-layout-live.jpg",
+        src: "/shot/fnb-layout-live.webp",
         caption:
           "같은 배치가 매장 운영 화면으로 그대로 이어집니다. 편집기에서 옮긴 자리가 주문·경과시간이 뜨는 실제 테이블 화면이 됩니다.",
       },
@@ -1362,12 +1362,12 @@ export const PROJECTS: Project[] = [
       "실제 발송된 결과 페이지입니다. 참가자 이름과 골프장 상호·로고는 알아볼 수 없게 처리했습니다.",
     shots: [
       {
-        src: "/shot/card-team.jpg",
+        src: "/shot/card-team.webp",
         caption:
           "라운드가 끝나면 이 페이지 링크가 발송됩니다. 요약(이글·버디·파·보기)과 팀 스코어를 먼저 보여주고, 아래에 전·후반 홀별 표가 이어집니다. 참가자 이름은 서비스가 자체적으로 가운데를 가립니다.",
       },
       {
-        src: "/shot/card-round.jpg",
+        src: "/shot/card-round.webp",
         caption:
           "2인 라운드 결과. 같은 틀이 인원수에 따라 열 수만 달라집니다. 치지 않은 홀은 '-'로 비워 두고 합계에서 뺍니다.",
       },
@@ -1530,7 +1530,7 @@ export const PROJECTS: Project[] = [
     org: "코리아IT 바이브코딩 공모전",
     period: "2026.04",
     award: "제1회 코리아IT아카데미 바이브코딩 공모전(KIT 해커톤) 장려상 — 500팀 중 3위",
-    awardImage: "/shot/award-argos.jpg",
+    awardImage: "/shot/award-argos.webp",
     role: "Frontend 전담 (4개 역할 뷰 전체 구축)",
     description:
       "AI에게 코드만 맡기지 않고 규칙·역할·검증까지 파이프라인으로 짜서 돌린 바이브코딩 프로젝트 — 프론트엔드 약 16,000줄, 500팀 중 3위(장려상)",
@@ -1547,7 +1547,7 @@ export const PROJECTS: Project[] = [
     techs: ["nextjs", "react", "typescript", "supabase", "postgresql", "gemini", "zod", "tailwind", "radix", "recharts", "vitest", "playwright", "vercel", "claude"],
     shots: [
       {
-        src: "/shot/argos-landing.jpg",
+        src: "/shot/argos-landing.webp",
         caption:
           "서비스 소개 화면. 제1회 코리아IT아카데미 바이브코딩 공모전에서 500팀 중 3위(장려상)를 받은 작업입니다.",
       },
@@ -1713,32 +1713,32 @@ export const PROJECTS: Project[] = [
     shotsLayout: "grid",
     shots: [
       {
-        src: "/shot/calit-landing.jpg",
+        src: "/shot/calit-landing.webp",
         caption:
           "랜딩 — 백로그 관리·실시간 피드백·공동 회의록·QA/에러 보드를 하나의 워크스페이스로 묶는다는 걸 첫 화면에서 보여 줍니다.",
       },
       {
-        src: "/shot/calit-dashboard.jpg",
+        src: "/shot/calit-dashboard.webp",
         caption:
           "개인 대시보드 — 남은 태스크·완료율·참여 중인 워크스페이스를 위에 두고, 우선순위 태스크와 다가오는 회의를 카드로 모았습니다.",
       },
       {
-        src: "/shot/calit-kanban.jpg",
+        src: "/shot/calit-kanban.webp",
         caption:
           "칸반 보드 — 할 일·진행 중·완료로 카드를 옮기고, 같은 데이터를 리스트와 타임라인으로도 봅니다. 담당자와 마감일이 카드에 함께 붙습니다.",
       },
       {
-        src: "/shot/calit-meeting-edit.jpg",
+        src: "/shot/calit-meeting-edit.webp",
         caption:
           "회의록 작성 — 작성자·참여자·날짜를 붙이고, 회의 중 나온 이슈를 바로 연동해 보드로 넘깁니다.",
       },
       {
-        src: "/shot/calit-meeting-detail.jpg",
+        src: "/shot/calit-meeting-detail.webp",
         caption:
           "회의록 상세 — 본문 옆에 참여자 목록을 두고, 연결된 이슈를 태그로 보여 줍니다.",
       },
       {
-        src: "/shot/calit-chat.jpg",
+        src: "/shot/calit-chat.webp",
         caption:
           "채팅 — Kafka 기반 실시간 메시지. 대화방 목록과 주고받은 파일을 오른쪽 패널에서 함께 봅니다.",
       },
