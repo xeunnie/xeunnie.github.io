@@ -1883,9 +1883,9 @@ export const PROJECTS: Project[] = [
     period: "2025.02 — 2025.03",
     role: "프로젝트 팀장 (FE 4 / BE 1 / DE 1)",
     description:
-      "PWA로 FCP 3.2s→1.2s, Zustand+RQ로 리렌더 50%↓ — Jest·Cypress·CircleCI 완전 자동화 CI/CD",
+      "웹팩 최적화로 chunk 11.5MB→3.5MB, SEO 67→92 — 상세·채팅·지도를 맡고 CircleCI 자동 배포까지",
     overview:
-      "코드잇 프론트엔드 단기심화 최종 프로젝트입니다. Next.js 기반의 실시간 모임 매칭 플랫폼으로, 팀장을 맡아 부트캠프를 갓 마친 프론트엔드 개발자 세 명과 함께 기획부터 배포까지 진행했습니다. SSR + ISR 최적화로 초기 로딩 속도를 개선하고, PWA 적용으로 FCP를 3.2s에서 1.2s로 단축했습니다. Zustand + React-Query 병행으로 불필요한 리렌더링 50% 감소, API 호출량 40% 감소를 달성했습니다. Jest + RTL 단위 테스트, Cypress E2E 테스트 20개 이상 작성, CircleCI + Codecov 기반 완전 자동화 CI/CD 파이프라인을 구축했습니다.",
+      "코드잇 프론트엔드 단기심화 최종 프로젝트입니다. Next.js 기반의 실시간 모임 매칭 플랫폼으로, 팀장을 맡아 부트캠프를 갓 마친 프론트엔드 개발자 세 명과 함께 기획부터 배포까지 진행했습니다. 모임 상세와 실시간 채팅, 카카오맵을 직접 맡았고, 팀과 함께 웹팩 최적화로 chunk를 11.5MB에서 3.5MB로 줄이고 SEO 점수를 67에서 92로 올렸습니다. 백엔드 API가 나오기 전에는 MSW와 JSON Server로 먼저 개발했고, Jest·Cypress를 통과해야 배포되는 CircleCI 파이프라인을 세웠습니다.",
     techs: ["nextjs", "typescript", "reactquery", "zustand", "tailwind", "framer", "webpack", "pwa", "jest", "cypress", "circleci", "sentry", "codecov", "jira", "indexeddb"],
     shotsLayout: "grid",
     shotsNote: "배포했던 서비스 화면입니다.",
@@ -1911,10 +1911,9 @@ export const PROJECTS: Project[] = [
       "직접 맡은 화면 — 모임 상세(패럴렐 라우트 6개 슬롯), 실시간 채팅(WebSocket·STOMP), 카카오맵",
       "웹팩 최적화로 chunk 11.5MB → 3.5MB, Lighthouse 성능 첫 배포 60점대 → 90점 이상",
       "목록 첫 10개 SSR과 메타·OG 태그로 SEO 점수 67 → 92",
-      "PWA 적용 — FCP 3.2s → 1.2s 단축",
-      "Zustand + React-Query 병행 — 리렌더링 50% 감소, API 호출 40% 감소",
+      "Zustand로 인증·전역 상태, React-Query로 서버 상태를 나눠 중복 요청 방지",
       "백엔드 API 없이도 개발이 멈추지 않게 MSW + JSON Server(Railway)로 먼저 진행",
-      "Jest + RTL 단위 테스트, Cypress E2E 20개+ 작성, CircleCI + Codecov + Netlify 자동 배포",
+      "Jest + RTL 단위 테스트와 Cypress E2E를 통과해야 배포되는 CircleCI + Codecov + Netlify 파이프라인",
     ],
     links: [
       { label: "배포", url: "https://thunderting.site/" },
