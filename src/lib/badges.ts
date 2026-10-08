@@ -114,6 +114,7 @@ export const BADGES = {
   express: { label: "Express", logoColor: "000000" },
   prisma: { label: "Prisma", logoColor: "2D3748" },
   resium: { label: "Resium", logoColor: "6CADDF" },
+  claude: { label: "Claude Code", logoColor: "D97757" },
 } satisfies Record<string, Badge>;
 
 export type BadgeKey = keyof typeof BADGES;

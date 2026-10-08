@@ -160,7 +160,7 @@ export const CHRONICLE: ChronicleYear[] = [
     moments: [
       { when: "2025.12 — 2026.09", what: "VGOLF F&B — ESC/POS 주방 프린팅, 오프라인 부팅 사이니지, WYSIWYG 편집기까지 단독 개발 (520커밋)" },
       { when: "2026.01 — 03", what: "OnMeet — 팀장으로 AI 회의록 화상회의 플랫폼을 기획부터 배포까지, 과정 내 수강생 우수상" },
-      { when: "2026.04", what: "제1회 코리아IT아카데미 바이브코딩 공모전 500팀 중 3위(장려상) — Argos 프론트엔드 전담" },
+      { when: "2026.04", what: "제1회 코리아IT아카데미 바이브코딩 공모전 500팀 중 3위(장려상) — Argos 프론트엔드 전담, AI 에이전트 팀 파이프라인 설계" },
       { when: "2026.06 — 09", what: "VGOLF 앱 — React Native 개발부터 Play Console 제출까지 (555커밋)" },
       { when: "2026.04 —", what: "Tistory에 기술 정리와 실무 트러블슈팅 연재 시작" },
       { when: "2026.09 —", what: "VGOLF 경기관제 PM30 — 모바일 저장소 분리, Recoil → zustand, 테스트 0 → 162개, 태블릿 기능 이관" },
@@ -174,6 +174,7 @@ export const CHRONICLE: ChronicleYear[] = [
       "zod 2층 스키마로 백엔드 응답을 계약 테스트하기",
       "영향·우선순위를 붙인 API 수정 요청서 쓰기",
       "Supabase RLS와 AI SDK로 역할별 데이터 격리 구현하기",
+      "AI에게 규칙·역할·검증 루프를 주고, 만드는 쪽과 검증하는 쪽을 나눠 돌리기",
       "기준을 세워 레거시 코드를 안전하게 걷어내고, 측정한 뒤에 구조 바꾸기",
       "코드를 일부러 깨 보는 변형 검증으로 테스트가 실제로 버그를 잡는지 확인하기",
     ],
