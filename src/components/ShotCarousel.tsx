@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { ProjectShot } from "@/lib/constants";
+import Plate from "@/components/gallery/Plate";
 
 interface Props {
   shots: ProjectShot[];
@@ -9,26 +10,24 @@ interface Props {
   phone?: boolean;
   /** 크게 보기 요청 — 몇 번째 캡처인지 넘긴다 */
   onOpen?: (i: number) => void;
+  /** 번호를 몇 번부터 매길지 — 앞에 대표 화면이 따로 걸려 있으면 2부터 */
+  start?: number;
 }
 
 function Arrow({ dir }: { dir: "prev" | "next" }) {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-      <path
-        d={dir === "prev" ? "M10 3L5 8l5 5" : "M6 3l5 5-5 5"}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden>
+      <path d={dir === "prev" ? "M10 3L5 8l5 5" : "M6 3l5 5-5 5"} strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
 /**
  * 화면 캡처를 좌우로 넘겨 본다.
+ * 한 장 한 장을 액자에 넣어 벽에 나란히 건 것처럼 — 지금 보는 장만 또렷하고 옆 장은 물러나 있다.
  * 스크롤 스냅 위에 조작을 얹는 방식이라 마우스·터치·키보드가 모두 그대로 동작한다.
- * 지금 보는 장만 또렷하게 두고 옆 장은 살짝 죽여서, 어디를 읽어야 하는지 헷갈리지 않게 했다.
  */
-export default function ShotCarousel({ shots, phone = false, onOpen }: Props) {
+export default function ShotCarousel({ shots, phone = false, onOpen, start = 1 }: Props) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [at, setAt] = useState(0);
 
@@ -70,24 +69,25 @@ export default function ShotCarousel({ shots, phone = false, onOpen }: Props) {
     return () => track.removeEventListener("scroll", onScroll);
   }, []);
 
-  // 비율을 고정해 카드 높이를 맞춘다. 지연 로딩 중에도 자리가 잡혀 있어야
+  // 비율을 고정해 높이를 맞춘다. 지연 로딩 중에도 자리가 잡혀 있어야
   // 이미지가 들어올 때 레이아웃이 밀리지 않는다.
   // 세로 캡처는 기기마다 길이가 달라 잘라내지 않고 contain 으로 담는다.
-  const width = phone ? "w-[62%] sm:w-[34%]" : "w-[88%] sm:w-[62%]";
+  const width = phone ? "w-[64%] sm:w-[30%]" : "w-[86%] sm:w-[64%]";
   const media = phone
-    ? "aspect-[9/16] w-full bg-slate-950 object-contain"
-    : "aspect-[16/10] w-full object-cover object-left-top";
+    ? "block aspect-[9/16] w-full bg-[var(--mat)] object-contain"
+    : "block aspect-[16/10] w-full object-cover object-left-top";
 
   const btn =
-    "rounded-full border border-slate-800 p-2 text-slate-400 transition-colors hover:border-ice-500/40 hover:text-ice-500 disabled:opacity-25 disabled:hover:border-slate-800 disabled:hover:text-slate-400";
+    "flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 text-slate-400 transition-colors duration-500 hover:border-slate-400 hover:text-slate-50 disabled:opacity-30 disabled:hover:border-slate-700 disabled:hover:text-slate-400";
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between gap-4">
-        <p className="font-mono text-xs text-slate-500">
-          <span className="text-ice-500">{String(at + 1).padStart(2, "0")}</span>
-          <span className="mx-1 text-slate-700">/</span>
-          {String(shots.length).padStart(2, "0")}
+      <div className="mb-2 flex items-end justify-between gap-4">
+        <p className="font-serif tracking-normal text-slate-500" aria-live="polite">
+          <span className="text-[15px] italic">Pl.&thinsp;</span>
+          <span className="text-[26px] leading-none text-slate-100">{at + start}</span>
+          <span className="mx-2 text-[15px] italic">of</span>
+          <span className="text-[15px]">{shots.length + start - 1}</span>
         </p>
         <div className="flex items-center gap-2">
           <button type="button" onClick={() => go(at - 1)} disabled={at === 0} aria-label="이전 화면" className={btn}>
@@ -105,15 +105,15 @@ export default function ShotCarousel({ shots, phone = false, onOpen }: Props) {
         </div>
       </div>
 
-      {/* 잘린 카드가 실수처럼 보이지 않도록 양 끝을 흐린다 */}
-      <div className="relative">
+      {/* 액자 그림자가 잘리지 않게 트랙 위아래에 여백을 둔다. 양 끝은 벽색으로 흐린다 */}
+      <div className="relative -mx-6 sm:mx-0">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-slate-950 to-transparent"
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-slate-950 to-transparent sm:w-14"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-slate-950 to-transparent"
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-slate-950 to-transparent sm:w-14"
         />
         <div
           ref={trackRef}
@@ -130,55 +130,41 @@ export default function ShotCarousel({ shots, phone = false, onOpen }: Props) {
               go(at - 1);
             }
           }}
-          className="flex snap-x snap-mandatory items-stretch gap-5 overflow-x-auto pb-2 outline-none [-ms-overflow-style:none] [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-ice-500/30 [&::-webkit-scrollbar]:hidden"
+          className="flex snap-x snap-mandatory items-start gap-8 overflow-x-auto px-[7%] pt-8 pb-16 outline-none [-ms-overflow-style:none] [scrollbar-width:none] focus-visible:ring-1 focus-visible:ring-slate-500 sm:gap-14 [&::-webkit-scrollbar]:hidden"
         >
           {shots.map((shot, i) => (
             <figure
               key={shot.src}
-              className={`${width} shrink-0 snap-center transition-all duration-300 ${
-                i === at ? "opacity-100" : "opacity-45 saturate-50"
+              className={`${width} shrink-0 snap-center transition-opacity duration-700 ${
+                i === at ? "opacity-100" : "opacity-35"
               }`}
             >
-              <div
-                className={`flex h-full flex-col overflow-hidden rounded-2xl border bg-slate-900 transition-colors ${
-                  i === at ? "border-ice-500/30" : "border-slate-800"
-                }`}
-              >
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => onOpen?.(i)}
-                    aria-label={`${i + 1}번째 화면 크게 보기`}
-                    className="group/zoom block w-full cursor-zoom-in"
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={shot.src}
-                      alt={shot.caption}
-                      loading="lazy"
-                      decoding="async"
-                      className={media}
-                    />
-                    <span className="pointer-events-none absolute inset-0 bg-slate-950/0 transition-colors group-hover/zoom:bg-slate-950/10" />
-                  </button>
-                  <span className="absolute left-3 top-3 rounded-full bg-slate-950/85 px-2.5 py-1 font-mono text-[11px] font-medium text-slate-300 backdrop-blur">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                {/* 설명은 옅은 형광 바탕에 올려 이미지와 한 덩어리로 보이게 */}
-                <figcaption className="flex-1 border-t border-slate-800 bg-ice-50 px-5 py-4 text-sm leading-relaxed text-slate-300">
-                  {shot.caption}
-                </figcaption>
-              </div>
+              <Plate>
+                <button
+                  type="button"
+                  onClick={() => onOpen?.(i)}
+                  aria-label={`${i + 1}번째 화면 크게 보기`}
+                  className="block w-full cursor-zoom-in"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={shot.src} alt={shot.caption} loading="lazy" decoding="async" className={media} />
+                </button>
+              </Plate>
+              <figcaption className="mt-6 grid grid-cols-[3rem_minmax(0,1fr)] gap-x-3 text-[13px] leading-[1.8] text-slate-400">
+                <span className="font-serif text-[15px] italic leading-[1.6] tracking-normal text-slate-500">
+                  Pl.&thinsp;{i + start}
+                </span>
+                <span>{shot.caption}</span>
+              </figcaption>
             </figure>
           ))}
         </div>
       </div>
 
-      {/* 얼마나 남았는지 — 점을 열세 개 찍는 것보다 막대가 읽기 쉽다 */}
-      <div className="mt-4 h-0.5 w-full overflow-hidden rounded-full bg-slate-800">
+      {/* 얼마나 남았는지 — 가는 선 하나 */}
+      <div className="h-px w-full bg-slate-800">
         <div
-          className="h-full rounded-full bg-ice-500 transition-all duration-300"
+          className="h-full bg-slate-400 transition-all duration-700"
           style={{ width: `${((at + 1) / shots.length) * 100}%` }}
         />
       </div>

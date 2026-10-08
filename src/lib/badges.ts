@@ -1,6 +1,6 @@
 export interface Badge {
   label: string;
-  /** 배지 점 색깔 — 브랜드 색. 테마별 보정은 badgeColor.ts 가 한다 */
+  /** 배지 점 색깔 — 브랜드 색. */
   logoColor?: string;
 }
 
