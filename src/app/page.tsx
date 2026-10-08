@@ -1,29 +1,34 @@
 import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
 import Nicknames from "@/components/Nicknames";
-import Projects from "@/components/Projects";
-import Explore from "@/components/Explore";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import Hero from "@/components/home/Hero";
+import YearSection from "@/components/home/YearSection";
+import YearIndex from "@/components/home/YearIndex";
+import Closing from "@/components/home/Closing";
+import { YEARS } from "@/lib/home";
 
 /**
- * 홈은 한 줄기로만 흐른다.
- * 누구인가(히어로) → 무엇을 만들었나(대표 작업 셋) → 어떤 사람인가(별명)
- * → 더 뜯어볼 곳 → 연락.
- * 히어로의 버튼도 바깥으로 나가지 않고 다음 구간으로 내려간다 —
- * 처음 온 사람은 일단 한 바퀴 읽고 나서 갈 곳을 고르는 편이 헤매지 않는다.
- * 갈림길은 한 바퀴 다 읽은 뒤, "더 뜯어볼 곳" 에서 한꺼번에 연다.
+ * 홈은 한 줄기로 내려간다.
+ * 첫 화면(문장 하나) → 어떤 사람인가(별명) → 2021년부터 한 해씩 → 연락.
+ * 해마다 크게 보여 줄 프로젝트, 작은 프로젝트, 스터디·활동을 같은 자리에 둔다 —
+ * 무엇을 언제 했는지가 따로 놀지 않게.
  */
 export default function Home() {
   return (
-    <div className="landing">
+    <>
       <Nav />
-      <Hero />
-      <Projects />
-      <Nicknames />
-      <Explore />
-      <Contact />
+      <main>
+        <Hero />
+        <div className="border-t border-slate-800/70">
+          <Nicknames />
+        </div>
+        {YEARS.map((block) => (
+          <YearSection key={block.id} block={block} />
+        ))}
+        <Closing />
+      </main>
+      <YearIndex />
       <Footer />
-    </div>
+    </>
   );
 }

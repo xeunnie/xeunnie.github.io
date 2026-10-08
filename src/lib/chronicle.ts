@@ -12,6 +12,8 @@ export interface ChronicleMoment {
 
 export interface ChronicleYear {
   year: string;
+  /** 홈에서 연도 옆에 붙는 짧은 제목. 길면 오른쪽 연도 목록에서 줄이 넘친다. */
+  chapter: string;
   /** 그 해에 한 일을 한 문장으로 — 꾸미지 않고 사실만 */
   headline: string;
   story: string[];
@@ -26,6 +28,7 @@ export interface ChronicleYear {
 export const CHRONICLE: ChronicleYear[] = [
   {
     year: "2021",
+    chapter: "웹 개발 시작",
     headline: "교내 웹사이트를 혼자 맡으며 개발을 시작했습니다",
     story: [
       "아주대학교 커뮤니케이션팀에서 웹 개발 장학인턴으로 일했습니다. 비개발 조직이라 개발 담당은 저 하나였고, 교내 공식 웹사이트 유지보수를 맡았습니다.",
@@ -47,6 +50,7 @@ export const CHRONICLE: ChronicleYear[] = [
   },
   {
     year: "2022",
+    chapter: "첫 실무 코드베이스",
     headline: "코드 리뷰를 받는 실무 코드베이스에서 처음 일했습니다",
     story: [
       "블록체인 지갑 회사에서 인턴으로 일했습니다. React·TypeScript로 된 오픈소스 크롬 익스텐션이었고, 프론트엔드 시니어분 밑에서 티켓 단위로 기능을 받아 작업하며 렌더링 최적화, content script와 provider 주입 같은 깊은 부분까지 배웠습니다.",
@@ -71,6 +75,7 @@ export const CHRONICLE: ChronicleYear[] = [
   },
   {
     year: "2023",
+    chapter: "디자인과 퍼블리싱",
     headline: "공공기관 사이트 약 200페이지를 디자인부터 마크업까지 맡았습니다",
     story: [
       "공공기관 웹사이트를 만드는 회사로 옮겼습니다. 시안을 받아 옮기는 게 아니라 직접 디자인하고, 반응형 마크업과 PHP 연동까지 혼자 진행하는 일이었습니다.",
@@ -92,6 +97,7 @@ export const CHRONICLE: ChronicleYear[] = [
   },
   {
     year: "2024",
+    chapter: "백엔드와 배포",
     headline: "백엔드 부트캠프에서 서버와 배포를 직접 해 봤습니다",
     story: [
       "프론트만으로는 부족하다고 느껴 백엔드 부트캠프에 들어갔습니다. 같은 서비스를 세 번 만들었습니다 — BOOT_UP을 Spring 백엔드로, 다음엔 Vue 프론트로, 마지막엔 Docker와 GitHub Actions로 배포까지.",
@@ -118,6 +124,7 @@ export const CHRONICLE: ChronicleYear[] = [
   },
   {
     year: "2025",
+    chapter: "관제 SI",
     headline: "관제 현장에 CCTV를 붙이고, 공통 패키지를 만들었습니다",
     story: [
       "연초에는 프론트엔드 심화 과정과 스터디에서 개인 프로젝트를 연달아 했습니다. 번개팅에서 CI/CD를 처음부터 세우고, ChatFlow에서 Kubernetes 카나리 배포와 WebRTC를 붙이고, 해커톤에서 20시간 만에 MVP를 배포했습니다.",
@@ -152,6 +159,7 @@ export const CHRONICLE: ChronicleYear[] = [
   },
   {
     year: "2026",
+    chapter: "VGOLF",
     headline: "매장 하드웨어와 앱 스토어까지 다뤄야 하는 서비스를 맡았습니다",
     story: [
       "골프장에서 매일 쓰는 서비스를 맡았습니다. 클라우드에 정적 배포된 웹앱이 매장 사설망 프린터에 닿지 못하는 문제는 로컬 에이전트 브릿지로 풀었고, 망분리된 미니 PC가 네트워크 없이 부팅해도 화면이 뜨도록 서비스워커를 설계했습니다.",
